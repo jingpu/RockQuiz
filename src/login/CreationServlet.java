@@ -11,16 +11,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletContext;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class CreationServlet
  */
-@WebServlet("/LoginServlet")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/CreationServlet")
+public class CreationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public CreationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -45,19 +45,21 @@ public class LoginServlet extends HttpServlet {
 		AccountManager accnt = (AccountManager)servContext.getAttribute("accntManager");
 		
 		if (usrname == "" || pwd == "") {
-			RequestDispatcher dispatch = request.getRequestDispatcher("infoIncorrect.html");
+			RequestDispatcher dispatch = request.getRequestDispatcher("createAccount.html");
 			dispatch.forward(request, response);
 			return;
 		} 
 		
-		if (accnt.infoMatch(usrname, pwd)) {
+		if (accnt.alreadyExist(usrname)) {
+			RequestDispatcher dispatch = request.getRequestDispatcher("nameInUse.jsp");
+			dispatch.forward(request, response);
+		} else {
+			accnt.createNewAccount(usrname, pwd);
 			String usrpage = "userpage.jsp?id=" + usrname;
 			RequestDispatcher dispatch = request.getRequestDispatcher(usrpage);
 			dispatch.forward(request, response);
-		} else {
-			RequestDispatcher dispatch = request.getRequestDispatcher("infoIncorrect.html");
-			dispatch.forward(request, response);
 		}
+			
 		
 	}
 
