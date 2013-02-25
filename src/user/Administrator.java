@@ -8,7 +8,7 @@ package user;
  *
  */
 public class Administrator extends Account{
-	public Administrator(String userId) {
+	public Administrator(String userId){
 		super(userId);
 		// TODO Auto-generated constructor stub
 	}

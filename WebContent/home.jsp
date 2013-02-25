@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
-<%@ page import="user.Account"%>
 <%@ page import="java.util.*" %>
+<%@ page import="user.Account"%>
+<%@ page import="user.Message"%>
+<%@ page import="user.Activity"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -36,7 +39,12 @@
 	}
 	*/
 	// mail messgae
+	List<Message> inbox = user.getMessageInbox();
+	List<Message> sent = user.getMessageSent();
+	List<Message> unread = user.getUnreadMessage();
 	
+	// friends' activity
+	List<Activity> friendsAct = user.getFriendsRecentActivity(); 
 %>
 <title>RockQuiz - <%=userId%></title>
 </head>

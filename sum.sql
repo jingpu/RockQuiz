@@ -2,7 +2,9 @@ CREATE TABLE userTable (
 	userId varchar(20),
 	password varchar(50),
 	registrationTime datetime, 
-	status char(1) -- u/s: u-user;s-admin
+	status char(1), -- u/s: u-user;s-admin
+	gender char(1), -- m/f
+	email varchar(50),
 )
 
 CREATE TABLE userId_history (

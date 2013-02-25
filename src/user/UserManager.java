@@ -28,6 +28,7 @@ public class UserManager{
 
 	private static final List<String> attributes = new LinkedList<String>(
 			Arrays.asList("history", "network", "inbox", "sent"));
+	private static final int recentActivityLoad = 10;
 
 	/** Set DriverManager
 	 * **/
@@ -64,7 +65,8 @@ public class UserManager{
 	 * @param status - the right of the user: (u)ser/(a)dmin
 	 * @return true if this account has been added to the database successfully.
 	 * **/
-	public static boolean addNewAccount(String userId, String password, String status){
+	public static boolean addNewAccount(String userId, String password, 
+			String status, String gender, String email){
 		setDriver();
 		// information invalid - too short
 		try {
@@ -80,7 +82,7 @@ public class UserManager{
 			try {
 				stmt.executeUpdate("CREATE TABLE " + userTable + " ( " +
 						"userId varchar(20), password varchar(50), " +
-						"registrationTime datetime, status char(1));");
+						"registrationTime datetime, status char(1), gender char(1), email char(50));");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				System.out.println("Adding new table fails.");
@@ -92,7 +94,8 @@ public class UserManager{
 		// userId available
 		try {
 			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES (\""
-					+ userId + "\",\"" + password + "\",now(),\"" + status + "\")");
+					+ userId + "\",\"" + password + "\",now(),\"" + status + "\",\"" 
+					+ gender + "\",\"" + email + "\")");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_history( Time datetime, " +
 					"Type char(1), content varchar(50));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_network( userId varchar(20), " +
@@ -153,6 +156,38 @@ public class UserManager{
 		return true;
 	}
 
+	public static String getAccountInfo(String userId, String column){
+		String str = "";
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * from " 
+					+ userTable + " WHERE userId='" + userId + "'");
+			rs.next();
+			str = rs.getString(column);			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return str;
+	}
+	
+	public static void setAccountInfo(String userId, String column, String content){
+		if(column.equals("userId") || column.equals("registrationTime")) {
+			System.out.println(column + " is not allowed to be modified.");
+			return;
+		}
+		setDriver();
+		try {
+			stmt.executeUpdate("UPDATE " + userTable + " SET " + column +"=" + "'" + content 
+					+ "' WHERE userId='" + userId + "'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+	}
+
 	/** Method getFriendsList is to return all friends of the user.
 	 * @param userId - the unique ID of one user
 	 * @return List<String> consisting the user's friends
@@ -162,7 +197,7 @@ public class UserManager{
 		List<String> friends = new LinkedList<String>();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_network" +
-					" WHERE status LIKE 'c'");
+					" WHERE status='c'");
 			while(rs.next()){
 				friends.add(rs.getString("userId"));
 			}
@@ -173,7 +208,7 @@ public class UserManager{
 		close();
 		return friends;
 	}
-
+	
 	/** Method getUnconfirmedFriendsList is to return unprocessed friend requests
 	 * @param userId - the unique ID of one user
 	 * @return List<String> consisting the user's unconfirmed friends
@@ -433,5 +468,26 @@ public class UserManager{
 		}
 		close();
 		return created;
+	}
+	public static List<Activity> getRecentActivity(String userId){
+		List<Activity> recent = new LinkedList<Activity>();
+		setDriver();
+		try{
+			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
+					+ "_history ORDER BY Time DESC");
+			int i = 0;
+			while(rs.next()){
+				Activity act = new Activity(rs.getString("time"), 
+						rs.getString("type"), rs.getString("content"));
+				recent.add(act);
+				i++;
+				if(i == recentActivityLoad) break;
+			}
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return recent;
 	}
 }
