@@ -44,11 +44,6 @@ public class LoginServlet extends HttpServlet {
 		ServletContext servContext = getServletConfig().getServletContext();
 		AccountManager accnt = (AccountManager)servContext.getAttribute("accntManager");
 		
-		if (usrname == "" || pwd == "") {
-			RequestDispatcher dispatch = request.getRequestDispatcher("infoIncorrect.html");
-			dispatch.forward(request, response);
-			return;
-		} 
 		
 		if (accnt.infoMatch(usrname, pwd)) {
 			String usrpage = "userpage.jsp?id=" + usrname;
