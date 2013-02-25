@@ -17,7 +17,7 @@ public class MyQuiz implements Quiz{
 	private final boolean isImmCorrection; //jvm optimization
 	private final List<QuestionBase> questionList;
 	
-		
+	//constructor for a quiz from creator	
 	public MyQuiz(String quizName, String creatorId, String totalScore,
 			String quizDescription, List<String> tags, boolean canPractice,
 			boolean isRandom, boolean isOnePage, boolean isImmCorrection,
@@ -37,7 +37,7 @@ public class MyQuiz implements Quiz{
 	
 	
 	
-
+	//constructor for a quiz from database
 	public MyQuiz(String quizName) {
 		//TODO
 		Connection con = MyDB.getConnection();

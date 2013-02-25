@@ -39,7 +39,6 @@ public abstract class QuestionBase {
 	
 	
 	public abstract String printHTML();
-
     
 	
 	public abstract String getScore(String userInput);
@@ -64,9 +63,5 @@ public abstract class QuestionBase {
 	public String getAnswer() {
 		return answer;
 	}
-	
-	
-	
-	
 	
 }
