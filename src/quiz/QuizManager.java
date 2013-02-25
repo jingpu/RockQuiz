@@ -2,6 +2,8 @@ package quiz;
 
 import java.util.List;
 
+import user.Account;
+
 public interface QuizManager {
 	
 	//Summary page
