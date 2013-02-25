@@ -76,7 +76,7 @@ public class UserManager{
 			try {
 				stmt.executeUpdate("CREATE TABLE " + userTable + " ( " +
 						"userId varchar(20), password varchar(50), " +
-						"registrationTime datetime, status varchar(3));");
+						"registrationTime datetime, status char(1));");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				System.out.println("Adding new table fails.");
@@ -90,11 +90,11 @@ public class UserManager{
 			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES (\""
 					+ userId + "\",\"" + password + "\",\"now()\",\"" + status + ")");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_history( time datetime, " +
-					"type varchar(20), content varchar(20));");
+					"type char(1), content varchar(50));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_network( userId varchar(20), " +
-					"status varchar(3));");
+					"status char(1));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( time datetime, " +
-					"from varchar(20), type varchar(3), " +
+					"from varchar(20), type char(1), " +
 					"title varchar(50) + content text, read char(1) );");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_sent( time datetime, " +
 					"to varchar(20), type varchar(3), " +
@@ -270,7 +270,44 @@ public class UserManager{
 		return content;
 	}
 	
-	public static void addQuizTaken(String userId, String quizId){
-		
+	public static boolean addQuizTaken(String userId, String quizId){
+		setDriver();
+		try{
+			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
+		+ " VALUES (\"now()\", \"t\", \"" + quizId + "\")");
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		close();
+		return true;
+	}
+	
+	public static boolean addQuizCreated(String userId, String quizName){
+		setDriver();
+		try{
+			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
+		+ " VALUES (\"now()\", \"c\", \"" + quizName + "\")");
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		close();
+		return true;
+	}
+	public static boolean addAchievement(String userId, String name){
+		setDriver();
+		try{
+			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
+		+ " VALUES (\"now()\", \"a\", \"" + name + "\")");
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		close();
+		return true;
 	}
 }
