@@ -25,6 +25,8 @@ INSERT INTO Global_Quiz_Info_Table VALUES
     ("quizExample2","More","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
 							   "#His", false, true, false, false);
+
+							   
 						
 
 DROP TABLE IF EXISTS Question_Response_Pool;
