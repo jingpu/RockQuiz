@@ -14,7 +14,6 @@ import database.MyDB;
  */
 public class FillInBlank extends QuestionBase {
 
-
 	public FillInBlank(String questionId) {
 		// TODO Auto-generated constructor stub
 		questionType = "Fill_In_Blank";
@@ -40,14 +39,6 @@ public class FillInBlank extends QuestionBase {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see quiz.QuestionBase#printHTML()
-	 */
-	@Override
-	public String printHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void saveToDatabase() {

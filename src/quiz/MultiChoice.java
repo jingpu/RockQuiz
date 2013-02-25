@@ -78,15 +78,14 @@ public class MultiChoice extends QuestionBase {
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see quiz.QuestionBase#printHTML()
-	 */
+	
 	@Override
-	public String printHTML() {
+	public List<String> getRadioIds() {
 		// TODO Auto-generated method stub
-		return null;
+		return choices;
 	}
-
+	
+	
 	/* (non-Javadoc)
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */

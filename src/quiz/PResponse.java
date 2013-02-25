@@ -80,7 +80,8 @@ public class PResponse extends QuestionBase {
 	@Override
 	public String printHTML() {
 		// TODO Auto-generated method stub
-		return null;
+		String html = super.printHTML();
+		return html + "<p><img src=" + url + "></p>\n";
 	}
 
 	/* (non-Javadoc)

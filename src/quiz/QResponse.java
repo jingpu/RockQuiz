@@ -42,14 +42,6 @@ public class QResponse extends QuestionBase {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see quiz.QuestionBase#printHTML()
-	 */
-	@Override
-	public String printHTML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void saveToDatabase() {

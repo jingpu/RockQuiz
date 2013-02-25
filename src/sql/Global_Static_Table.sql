@@ -81,19 +81,22 @@ DROP TABLE IF EXISTS Multi_Choice_Pool;
 CREATE TABLE Multi_Choice_Pool (  
 	questionId CHAR(32),
 	creator_id CHAR(32),
-    typeIntroduction BLOB,
-    questionDescription BLOB,
+    type_introduction BLOB,
+    question_description BLOB,
     answer BLOB,
     max_score CHAR(4),
     tag_string CHAR(32),
     correct_ratio CHAR(32),
-    choices BLOB
+    choiceA BLOB,
+    choiceB BLOB,
+    choiceC BLOB,
+    choiceD BLOB
 );
 
 INSERT INTO Multi_Choice_Pool VALUES
 	("0001","Patrick", "Same introduction of Multi-Choice questions",
 	 "Who is the first president of USA?", 
-	 "#George Washington#George Washington#George Washington#George Washington#", "5",
+	 "George Washington", "George Washington", "George Washington", "George Washington", "5",
 	  "A","#his#Cul#", "2/3");
 
 
@@ -103,8 +106,8 @@ DROP TABLE IF EXISTS Picture_Response_Pool;
 CREATE TABLE Picture_Response_Pool (   
 	questionId CHAR(32),
 	creator_id CHAR(32),
-    typeIntroduction BLOB,
-    questionDescription BLOB,
+    type_introduction BLOB,
+    question_description BLOB,
     answer BLOB,
     max_score CHAR(4),
     tag_string CHAR(32),

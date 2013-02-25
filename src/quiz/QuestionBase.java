@@ -3,10 +3,9 @@ package quiz;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-
-import database.MyDB;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class QuestionBase {
@@ -19,8 +18,6 @@ public abstract class QuestionBase {
 	protected String maxScore;
 	protected String tagString;
 	protected String correctRatio;
-
-	
 	
 	protected Connection con;
 	protected Statement stmt;
@@ -85,10 +82,45 @@ public abstract class QuestionBase {
 	
 	//called by quiz to print html for every question
 	//essentially, it is a html-string
-	public abstract String printHTML(); 
+	public String printHTML(){
+		StringBuilder html = new StringBuilder();
+		
+		// The type introduction of the question   //TODO: may be integrated into jsp
+		html.append("<h2>Question Type Introduction</h2>\n");
+		html.append("<p>" + typeIntro + "</p>\n");
+
+		// The creator of the question  TODO: link to User's profile page
+		html.append("<h2>Question Creator</h2>\n");
+		html.append("<p>" + creatorId + "</p>\n"); // TODO: should be a hyper
+		
+		//The description of question body
+		html.append("<p>Question:</p>\n");
+		html.append("<p>" + questionDescription + "</p>\n");
+		
+		return html.toString(); 
+	}
     
 	
 	public abstract String getScore(String userInput);
+	
+	
+	
+	//get prompt for JSP to show on the webpage
+	//TODO more types...
+	public String getPrompt() {
+		if (questionType.equals(QR)) return "Your Answer:";
+		return null;
+	}
+	//TODO control string: "text", "hidden", "radio"
+	public String getCtrlType() {
+		if (questionType.equals(MC)) return "radio";
+		else return "text";
+	}
+	
+	//Will be overridden by MultiChoice
+	public List<String> getRadioIds(){
+		return null;
+	}
 	
 	
 	public String getMaxScore() {
