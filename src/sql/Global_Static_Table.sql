@@ -38,13 +38,14 @@ CREATE TABLE Question_Response_Pool (
     type_introduction BLOB,
     question_description BLOB,
     answer BLOB,
-    tag_string CHAR(32),
+    max_score CHAR(4),
+    tag_string CHAR(32),  
     correct_ratio CHAR(32)
 );
 
 INSERT INTO Question_Response_Pool VALUES
-	("0001","Same introduction of Question-Response questions",
-	 "Who is the first president of USA?", "George Washington",
+	("0001", "Patrick", "Same introduction of Question-Response questions",
+	 "Who is the first president of USA?", "George Washington", "5", 
 	 "#his#Cul#", "2/3");
 							   
 
@@ -61,13 +62,14 @@ CREATE TABLE Fill_In_Blank_Pool (
     type_introduction BLOB,
     question_description BLOB,
     answer BLOB,
-    tag_string CHAR(32),
+    max_score CHAR(4),
+    tag_string CHAR(32),  
     correct_ratio CHAR(32)
 );
 
 INSERT INTO Fill_In_Blank_Pool VALUES
-	("0001","Same introduction of Fill-In-Blank-Pool questions",
-	 "#blank# is the first president of USA?", "George Washington",
+	("0001","Patrick", "Same introduction of Fill-In-Blank-Pool questions",
+	 "#blank# is the first president of USA?", "George Washington", "5",
 	 "#his#Cul#", "2/3");
 	 
 
@@ -86,14 +88,15 @@ CREATE TABLE Multi_Choice_Pool (
     choiceC BLOB,
     choiceD BLOB,
     answer BLOB,
-    tagString CHAR(32),
-    correctRatio CHAR(32)
+    max_score CHAR(4),
+    tag_string CHAR(32),
+    correct_ratio CHAR(32)
 );
 
 INSERT INTO Multi_Choice_Pool VALUES
-	("0001","Same introduction of Multi-Choice questions",
+	("0001","Patrick", "Same introduction of Multi-Choice questions",
 	 "Who is the first president of USA?", 
-	 "George Washington", "George Washington", "George Washington", "George Washington",
+	 "George Washington", "George Washington", "George Washington", "George Washington", "5",
 	  "A","#his#Cul#", "2/3");
 
 
@@ -107,12 +110,13 @@ CREATE TABLE Picture_Response_Pool (
     questionDescription BLOB,
     url BLOB,
     answer BLOB,
-    tagString CHAR(32),
-    correctRatio CHAR(32)
+    max_score CHAR(4),
+    tag_string CHAR(32),
+    correct_ratio CHAR(32)
 );
 
 INSERT INTO Picture_Response_Pool VALUES
-	("0001","Same introduction of Picture-Response questions",
+	("0001","Patrick", "Same introduction of Picture-Response questions",
 	 "Who is in the following picture?", "http://dev.mysql.com/doc/refman/5.1/en/comments.html",
-	 "George Washington", "#his#Cul#", "2/3")
+	 "George Washington", "5", "#his#Cul#", "2/3")
 							   
