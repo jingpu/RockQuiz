@@ -34,6 +34,7 @@ DROP TABLE IF EXISTS Question_Response_Pool;
 
 CREATE TABLE Question_Response_Pool (   
 	question_id CHAR(32),
+	creator_id CHAR(32),
     type_introduction BLOB,
     question_description BLOB,
     answer BLOB,
@@ -56,6 +57,7 @@ DROP TABLE IF EXISTS Fill_In_Blank_Pool;
 
 CREATE TABLE Fill_In_Blank_Pool (   
 	question_id CHAR(32),
+	creator_id CHAR(32),
     type_introduction BLOB,
     question_description BLOB,
     answer BLOB,
@@ -76,6 +78,7 @@ DROP TABLE IF EXISTS Multi_Choice_Pool;
 
 CREATE TABLE Multi_Choice_Pool (  
 	questionId CHAR(32),
+	creator_id CHAR(32),
     typeIntroduction BLOB,
     questionDescription BLOB,
     choiceA BLOB,
@@ -99,6 +102,7 @@ DROP TABLE IF EXISTS Picture_Response_Pool;
 
 CREATE TABLE Picture_Response_Pool (   
 	questionId CHAR(32),
+	creator_id CHAR(32),
     typeIntroduction BLOB,
     questionDescription BLOB,
     url BLOB,
