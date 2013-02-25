@@ -17,7 +17,7 @@ CREATE TABLE Global_Quiz_Info_Table (
 INSERT INTO Global_Quiz_Info_Table VALUES
 	("quizExample0","Patrick","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#Geo#His", false, true, false, false),
+							   "#Geo#His#", false, true, false, false),
     ("quizExample1","Molly","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
 							   "#Geo", false, true, false, false),
@@ -54,8 +54,12 @@ CREATE TABLE quizExample0_Event_Table (
 
 INSERT INTO quizExample0_Event_Table VALUES
 	("0","Patrick","2013-01-19 03:14:07", 60000, 8),
-    ("1","Molly","2013-01-19 05:14:07", 600000, 10),
-    ("2","Patrick","2013-02-19 03:14:07", 20000, 10);						   
+    ("1","Molly","2013-01-19 03:14:07", 600000, 9),
+    ("2","Jim","2013-03-19 02:14:07", 50000, 10),
+    ("3","Kate","2013-03-19 05:14:07", 30000, 7),
+    ("4","Molly","2013-01-19 01:14:07", 10000, 6),
+    ("5","Molly","2013-03-19 05:14:07", 3000, 8),
+    ("6","Patrick","2013-02-19 03:14:07", 20000, 7);						   
 
 
 							   

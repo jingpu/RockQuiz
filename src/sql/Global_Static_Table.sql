@@ -7,7 +7,7 @@ CREATE TABLE Global_Quiz_Info_Table (
 	quizName CHAR(32),
     creatorId CHAR(32),
     quizDescription BLOB,
-    tagString CHAR(32),
+    tagString CHAR(255),
     canPractice BOOLEAN,
     isRandom BOOLEAN,
     isOnePage BOOLEAN,
@@ -20,11 +20,11 @@ INSERT INTO Global_Quiz_Info_Table VALUES
 							   "#Geo#His#", false, true, false, false),
     ("quizExample1","Molly","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#Geo#His#", false, true, false, false),
+							   "#Geo", false, true, false, false),
 							   
     ("quizExample2","More","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#Geo#His#", false, true, false, false);
+							   "#His", false, true, false, false);
 							   
 							   
 						

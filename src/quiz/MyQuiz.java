@@ -52,7 +52,6 @@ public class MyQuiz implements Quiz {
 				score = rs.getInt("score");
 
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			// do the real initialization now
@@ -64,7 +63,24 @@ public class MyQuiz implements Quiz {
 		}
 
 		private void saveToDatabase() {
+			Connection con = MyDB.getConnection();
+			try {
+				Statement stmt = con.createStatement();
+				// DEBUG: check if QuizId is already in database
+				ResultSet rs = stmt.executeQuery("SELECT * FROM " + quizName
+						+ "_Event_Table WHERE quizId = \"" + quizId + "\"");
+				assert rs.isBeforeFirst() : "ERROR: quizId = " + quizId
+						+ " is already in " + quizName + "_Content_Table";
 
+				// update quizName_Event_Table -- insert a row
+				String contentRow = "\"" + getQuizId() + "\",\""
+						+ getUserName() + "\",\"" + getSubmittime() + "\", "
+						+ getTimeElapsed() + ", " + getScore();
+				stmt.executeUpdate("INSERT INTO " + quizName
+						+ "_Content_Table VALUES(" + contentRow + ")");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 		private final String getQuizId() {
@@ -99,6 +115,13 @@ public class MyQuiz implements Quiz {
 	private final boolean isOnePage;
 	private final boolean isImmCorrection; // jvm optimization
 	private final List<QuestionBase> questionList;
+
+	private static final String CREATECONTENTTABLEPARAMS = "questionNum CHAR(32), "
+			+ "questionType CHAR(32), " + "questionId CHAR(32 )";
+
+	private static final String CREATEEVENTTABLEPARAMS = "quizId CHAR(32), "
+			+ "userName CHAR(32), " + "submitTime TIMESTAMP, "
+			+ "timeElapsed BIGINT, " + "score INT ";
 
 	public MyQuiz(String quizName, String creatorId, int totalScore,
 			String quizDescription, List<String> tags, boolean canPractice,
@@ -163,7 +186,6 @@ public class MyQuiz implements Quiz {
 			}
 			totalScore = score;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// do the real initialization now
@@ -180,7 +202,35 @@ public class MyQuiz implements Quiz {
 	}
 
 	public void saveToDatabase() {
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// update Global_Quiz_Info_Table -- insert a row
+			String quizRow = "\"" + quizName + "\",\"" + creatorId + "\",\""
+					+ quizDescription + "\",\"" + Helper.generateTags(tags)
+					+ "\"," + canPractice + ", " + isRandom + ", " + isOnePage
+					+ ", " + isImmCorrection;
+			stmt.executeUpdate("INSERT INTO Global_Quiz_Info_Table VALUES("
+					+ quizRow + ")");
 
+			// create quizName_Content_Table
+			stmt.executeUpdate("CREATE TABLE " + quizName + "_Content_Table ( "
+					+ CREATECONTENTTABLEPARAMS + ")");
+			// populate quizName_Content_Table
+			for (int i = 0; i < questionList.size(); i++) {
+				QuestionBase q = questionList.get(i);
+				String contentRow = "\"" + i + "\",\"" + q.getQuestionType()
+						+ "\",\"" + q.getQuestionId() + "\"";
+				stmt.executeUpdate("INSERT INTO " + quizName
+						+ "_Content_Table VALUES(" + contentRow + ")");
+			}
+
+			// create quizName_Event_Table
+			stmt.executeUpdate("CREATE TABLE " + quizName + "_Event_Table ( "
+					+ CREATEEVENTTABLEPARAMS + ")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -234,6 +284,8 @@ public class MyQuiz implements Quiz {
 		html.append("<p>" + creatorId + "</p>\n"); // TODO: should be a hyper
 													// link here
 
+		// TODO display tags
+
 		// TODO A list of the user’s past performance on this specific quiz.
 
 		// A list of the highest performers of all time.
@@ -246,7 +298,7 @@ public class MyQuiz implements Quiz {
 		html.append("</ol>\n");
 
 		// A list of top performers in the last day.
-		List<QuizEvent> highScoresLastday = highScoreEvents(5);
+		List<QuizEvent> highScoresLastday = highScoreLastDayEvents(5);
 		html.append("<h2>High Scores in the Last Day</h2>\n");
 		html.append("<ol>\n");
 		for (QuizEvent e : highScoresLastday) {
@@ -340,53 +392,108 @@ public class MyQuiz implements Quiz {
 	}
 
 	/**
+	 * Returns List of at most num of QuizEvents ordered by the scores
 	 * 
 	 * @param num
 	 *            The number of events returned
 	 * @return List of QuizEvent
 	 */
 	public List<QuizEvent> highScoreEvents(int num) {
-		// TODO
-		return allEvents();
+		Connection con = MyDB.getConnection();
+		ResultSet rs = null;
+		try {
+			Statement stmt = con.createStatement();
+			// query quizExample0_Event_Table
+			rs = stmt.executeQuery("SELECT quizId FROM " + quizName
+					+ "_Event_Table " + "ORDER BY score DESC, timeElapsed ASC "
+					+ "LIMIT 0," + num);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return getQuizEventList(rs);
 	}
 
 	/**
+	 * Returns List of at most num of QuizEvents submitted within a day and
+	 * ordered by the scores
 	 * 
 	 * @param num
 	 *            The number of events returned
 	 * @return List of QuizEvent
 	 */
 	public List<QuizEvent> highScoreLastDayEvents(int num) {
-		// TODO
-		return allEvents();
+		Connection con = MyDB.getConnection();
+		ResultSet rs = null;
+		try {
+			Statement stmt = con.createStatement();
+			// query quizExample0_Event_Table
+			rs = stmt
+					.executeQuery("SELECT quizId FROM "
+							+ quizName
+							+ "_Event_Table "
+							+ "WHERE submitTime >= cast((now() - interval 1 day) as date) "
+							+ "ORDER BY score DESC, timeElapsed ASC "
+							+ "LIMIT 0," + num);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return getQuizEventList(rs);
 	}
 
 	/**
+	 * Returns List of at most num of recent taken QuizEvents
 	 * 
 	 * @param num
 	 *            The number of events returned
 	 * @return List of QuizEvent
 	 */
 	public List<QuizEvent> recentTakenEvents(int num) {
-		// TODO
-		return allEvents();
-	}
 
-	private List<QuizEvent> allEvents() {
-		List<QuizEvent> events = new ArrayList<MyQuiz.QuizEvent>();
 		Connection con = MyDB.getConnection();
+		ResultSet rs = null;
 		try {
 			Statement stmt = con.createStatement();
 			// query quizExample0_Event_Table
-			ResultSet rs = stmt.executeQuery("SELECT quizId FROM " + quizName
+			rs = stmt.executeQuery("SELECT quizId FROM " + quizName
+					+ "_Event_Table " + "ORDER BY submitTime DESC "
+					+ "LIMIT 0," + num);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return getQuizEventList(rs);
+	}
+
+	private List<QuizEvent> allEvents() {
+		Connection con = MyDB.getConnection();
+		ResultSet rs = null;
+		try {
+			Statement stmt = con.createStatement();
+			// query quizExample0_Event_Table
+			rs = stmt.executeQuery("SELECT quizId FROM " + quizName
 					+ "_Event_Table");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return getQuizEventList(rs);
+	}
+
+	/**
+	 * Parse from SQL resultsSet to a List of QuizEvent
+	 * 
+	 * @param rs
+	 *            SQL ResultSet from a query to quizName_Event_Table. It must
+	 *            have the column of 'quizId'
+	 * @return List of QuizEvent
+	 */
+	private List<QuizEvent> getQuizEventList(ResultSet rs) {
+		List<QuizEvent> events = new ArrayList<MyQuiz.QuizEvent>();
+		try {
 			while (rs.next()) {
 				String quizId = rs.getString("quizId");
 				QuizEvent event = new QuizEvent(quizId);
 				events.add(event);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return events;
