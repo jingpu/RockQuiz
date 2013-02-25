@@ -12,15 +12,13 @@ import database.MyDB;
  * @author yang
  *
  */
-public class QResponse extends QuestionBase {
+public class FillInBlank extends QuestionBase {
 
-	/**
-	 * Constructor for connecting database
-	 * @param questionId
-	 */
-	public QResponse(String questionId) {
-		questionType = QR;
-		queryStmt = "SELECT * FROM Question_Response_Pool WHERE question_id = " + questionId;
+
+	public FillInBlank(String questionId) {
+		// TODO Auto-generated constructor stub
+		questionType = "Fill_In_Blank";
+		queryStmt = "SELECT * FROM Fill_In_Blank_Pool WHERE question_id = " + questionId;
 		Connection con = MyDB.getConnection();
 		try {
 			stmt = con.createStatement();
@@ -54,7 +52,7 @@ public class QResponse extends QuestionBase {
 	@Override
 	public void saveToDatabase() {
 		// TODO Auto-generated method stub
-		queryStmt = "INSERT INTO " + QR_Table + "VALUES (\"" +
+		queryStmt = "INSERT INTO " + FIB_Table + "VALUES (\"" +
 					questionId + "\", \"" +
 					creatorId + "\", \"" +
 					typeIntro + "\", \"" +
@@ -63,11 +61,12 @@ public class QResponse extends QuestionBase {
 					maxScore + "\", \"" +
 					tagString + "\", \"" +
 					correctRatio + "\")";
+		
 		try {
-			rs = stmt.executeQuery(queryStmt);
+		rs = stmt.executeQuery(queryStmt);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		// TODO Auto-generated catch block
+		e.printStackTrace();
 		}
 	}
 
@@ -78,6 +77,14 @@ public class QResponse extends QuestionBase {
 	public String getScore(String userInput) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
