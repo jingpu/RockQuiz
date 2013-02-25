@@ -29,6 +29,8 @@ public class UserManager{
 	private static final List<String> attributes = new LinkedList<String>(
 			Arrays.asList("history", "network", "inbox", "sent"));
 
+	/** Set DriverManager
+	 * **/
 	private static void setDriver(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -44,6 +46,8 @@ public class UserManager{
 		}
 	}
 
+	/** Close connection
+	 * **/
 	public static void close() {
 		try {
 			con.close();
@@ -53,12 +57,12 @@ public class UserManager{
 	}
 
 	// account management
-	/** Method addNewAccount is to add a new user tuple into userstats.sql and create all second floor tables
-	 * of this user.
+	/** Method addNewAccount is to add a new user tuple into userstats.sql and create 
+	 * all second floor tables of this user.
 	 * @param userId - the unique ID of one user
 	 * @param password - the encrypted password
-	 * @param status - the right of the user: "norm"/"admin"/"del"
-	 * @return Return true if this account has been added to the database successfully.
+	 * @param status - the right of the user: (u)ser/(a)dmin
+	 * @return true if this account has been added to the database successfully.
 	 * **/
 	public static boolean addNewAccount(String userId, String password, String status){
 		setDriver();
@@ -88,19 +92,20 @@ public class UserManager{
 		// userId available
 		try {
 			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES (\""
-					+ userId + "\",\"" + password + "\",\"now()\",\"" + status + ")");
-			stmt.executeUpdate("CREATE TABLE " + userId + "_history( time datetime, " +
-					"type char(1), content varchar(50));");
+					+ userId + "\",\"" + password + "\",now(),\"" + status + "\")");
+			stmt.executeUpdate("CREATE TABLE " + userId + "_history( Time datetime, " +
+					"Type char(1), content varchar(50));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_network( userId varchar(20), " +
 					"status char(1));");
-			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( time datetime, " +
-					"from varchar(20), type char(1), " +
-					"title varchar(50) + content text, read char(1) );");
-			stmt.executeUpdate("CREATE TABLE " + userId + "_sent( time datetime, " +
-					"to varchar(20), type varchar(3), " +
+			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( Time datetime, " +
+					"fromUser varchar(20), Type char(1), " +
+					"title varchar(50), content text, ifRead char(1) );");
+			stmt.executeUpdate("CREATE TABLE " + userId + "_sent( Time datetime, " +
+					"toUser varchar(20), Type char(1), title varchar(50), " +
 					"content text );");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			//e.printStackTrace();
 			System.out.println("Adding new account fails.");
 			close();
 			return false;
@@ -108,8 +113,13 @@ public class UserManager{
 		close();
 		return true;
 	}
-
-	public boolean deleteAccount(String userId){
+	
+	/** Method deleteAccount is to delete a tuple in userstats.sql and delete all related 
+	 * second floor tables of this user.
+	 * @param userId - the unique ID of one user
+	 * @return true if successfully delete it
+	 * **/
+	public static boolean deleteAccount(String userId){
 		setDriver();
 		// check whether the userId exists
 		try {
@@ -121,7 +131,8 @@ public class UserManager{
 				return false;
 			}
 			rs.close();
-		} catch (SQLException ignore) {
+		} catch (SQLException e) {
+			//e.printStackTrace();
 			System.out.println("Deletion fails (1).");
 			close();
 			return false;
@@ -131,8 +142,9 @@ public class UserManager{
 			for(String attr : attributes) {
 				stmt.executeUpdate("DROP TABLE IF EXISTS " + userId + "_" + attr);
 			}
-			stmt.executeUpdate("DELETE FROM userTable WHERE userId=" + userId );
-		} catch(SQLException ignore){
+			stmt.executeUpdate("DELETE FROM " + userTable + " WHERE userId LIKE '" + userId + "'");
+		} catch(SQLException e){
+			//e.printStackTrace();
 			System.out.println("Deletion fails (2).");
 			close();
 			return false;
@@ -141,13 +153,16 @@ public class UserManager{
 		return true;
 	}
 
-	// networking
+	/** Method getFriendsList is to return all friends of the user.
+	 * @param userId - the unique ID of one user
+	 * @return List<String> consisting the user's friends
+	 * **/
 	public static List<String> getFriendsList(String userId){
 		setDriver();
 		List<String> friends = new LinkedList<String>();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_network" +
-					" WHERE status LIKE 'cnf'");
+					" WHERE status LIKE 'c'");
 			while(rs.next()){
 				friends.add(rs.getString("userId"));
 			}
@@ -159,12 +174,16 @@ public class UserManager{
 		return friends;
 	}
 
+	/** Method getUnconfirmedFriendsList is to return unprocessed friend requests
+	 * @param userId - the unique ID of one user
+	 * @return List<String> consisting the user's unconfirmed friends
+	 * **/
 	public static List<String> getUnconfirmedFriendsList(String userId){
 		setDriver();
 		List<String> friends = new LinkedList<String>();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_network" +
-					" WHERE status LIKE 'unc'");
+					" WHERE status LIKE 'u'");
 			while(rs.next()){
 				friends.add(rs.getString("userId"));
 			}
@@ -175,7 +194,11 @@ public class UserManager{
 		close();
 		return friends;
 	}
-
+	
+	/** Method requestFriend is to update database according to one friend request.
+	 * @param from - the user who makes the request
+	 * @param to - the user who receives the request
+	 * **/
 	public static void requestFriend(String from, String to){
 		setDriver();
 		try {
@@ -183,17 +206,46 @@ public class UserManager{
 					" WHERE userId LIKE '" + from + "'");
 			if(!rs.next()){
 				stmt.executeUpdate("INSERT INTO " + from + "_network" + " VALUES (\""
-						+ to + "\",\"req\")");
+						+ to + "\",\"r\")");
 				stmt.executeUpdate("INSERT INTO " + to + "_network" + " VALUES (\""
-						+ from + "\",\"unc\")");
-				sendMsg(from, to, "frq", "", "");  //frq - friend request msg
-			} else if (rs.getString("status") == "req"){
-				stmt.executeUpdate("UPDATE " + from + "_network" + " SET status='cnf' " +
+						+ from + "\",\"u\")");
+				sendMsg(from, to, "r", "1", "1");  //r - friend request msg
+			} else if (rs.getString("status").equals("r")){
+				stmt.executeUpdate("UPDATE " + from + "_network" + " SET status='c' " +
 						"WHERE userId='" + to + "'");
-				stmt.executeUpdate("UPDATE " + to + "_network" + " SET status='cnf' " +
+				stmt.executeUpdate("UPDATE " + to + "_network" + " SET status='c' " +
 						"WHERE userId='" + from + "'");
-				sendMsg(from, to, "fco", "", ""); //frq - friend confirm msg
-				sendMsg(to, from, "fco", "", "");
+				System.out.println(sendMsg(from, to, "c", "2", "2")); //c - friend confirm msg
+				System.out.println(sendMsg(to, from, "c", "2", "2"));
+			} 
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Message failed.");
+		}
+		close();
+	}
+
+	/** Method processUnconfirmedFriend is to update database according to a friend request process.
+	 * @param me - the user who process this requests
+	 * @param other - the user whose request is to be processed
+	 * **/
+	public static void processUnconfirmedFriend(String me, String other, String decision){
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + me + "_network" +
+					" WHERE userId LIKE '" + other + "'");
+			if(rs.next()) {
+				String status = rs.getString("status");
+				if(status.equals("u") || status.equals("i")){
+					if(decision.equals("c")) {
+						stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='c' " +
+								"WHERE userId='" + me + "'");
+					} 
+					stmt.executeUpdate("UPDATE " + me + "_network" + " SET status='" + decision 
+							+ "' WHERE userId='" + other + "'");
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -202,18 +254,15 @@ public class UserManager{
 		close();
 	}
 
-	public static void processUnconfirmedFriend(String me, String other, String decision){
+	/** Method removeFriend is to update database according to friendship removal
+	 * @param me - user 1
+	 * @param other - user 2
+	 * **/
+	public static void removeFriend(String me, String other){
 		setDriver();
 		try {
-			ResultSet rs = stmt.executeQuery("SELECT * FROM " + me + "_network" +
-					" WHERE status LIKE 'unc'");
-			while(rs.next()){
-				rs.updateString("status", decision);
-				if(decision == "cnf") {
-					stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='cnf' " +
-							"WHERE userId='" + me + "'");
-				}
-			}
+			stmt.executeUpdate("DELETE FROM " + me + "_network WHERE userId='" + other + "'");
+			stmt.executeUpdate("DELETE FROM " + other + "_network WHERE userId='" + me + "'");		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -247,17 +296,17 @@ public class UserManager{
 		String tableName = userId + "_" + box;
 		String content = "";
 		try {
-			if(box == "inbox"){
-				stmt.executeUpdate("UPDATE " + tableName + " SET read='1' " +
-						"WHERE time='" + time + "'");
+			if(box.equals("inbox")){
+				stmt.executeUpdate("UPDATE " + tableName + " SET ifRead='1' " +
+						"WHERE Time='" + time + "'");
 				ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName +
-						" WHERE time='" + time + "' AND from='" + otherUser);
+						" WHERE Time='" + time + "' AND fromUser='" + otherUser);
 				rs.next();
 				content = rs.getString("content");
 				if(!rs.next()) System.out.println("Message Duplicates in Inbox.");
-			} else if (box == "sent"){
+			} else if (box.equals("sent")){
 				ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName +
-						" WHERE time='" + time + "' AND to='" + otherUser);
+						" WHERE Time='" + time + "' AND toUser='" + otherUser);
 				rs.next();
 				content = rs.getString("content");
 				if(!rs.next()) System.out.println("Message Duplicates in Sent.");
@@ -269,12 +318,12 @@ public class UserManager{
 		close();
 		return content;
 	}
-	
+
 	public static boolean addQuizTaken(String userId, String quizId){
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-		+ " VALUES (\"now()\", \"t\", \"" + quizId + "\")");
+					+ " VALUES (now(), \"t\", \"" + quizId + "\")");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -283,12 +332,12 @@ public class UserManager{
 		close();
 		return true;
 	}
-	
+
 	public static boolean addQuizCreated(String userId, String quizName){
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-		+ " VALUES (\"now()\", \"c\", \"" + quizName + "\")");
+					+ " VALUES (now(), \"c\", \"" + quizName + "\")");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -301,7 +350,7 @@ public class UserManager{
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-		+ " VALUES (\"now()\", \"a\", \"" + name + "\")");
+					+ " VALUES (now(), \"a\", \"" + name + "\")");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -6,8 +6,8 @@ CREATE TABLE userTable (
 )
 
 CREATE TABLE userId_history (
-	time datetime,
-	type char(1), 
+	Time datetime,
+	Type char(1), 
 	content varchar(50)
 )
 
@@ -25,19 +25,18 @@ CREATE TABLE userId_network (
 )
 
 CREATE TABLE userId_inbox (
-	time datetime,
-	from varchar(20),
-	type char(1), -- c(challenge)/r(friend request)/c(friend conform)/n(normal text)
+	Time datetime,
+	fromUser varchar(20),
+	Type char(1), -- c(challenge)/r(friend request)/c(friend conform)/n(normal text)
 	title varchar(50),
 	content text,
-	read char(1) -- 1(read)/0(unread)
+	ifRead char(1) -- 1(read)/0(unread)
 )
 
 CREATE TABLE userId_sent (
-	time datetime,
-	to varchar(20),
-	type char(1), -- c(challenge)/r(friend request)/c(friend conform)/n(normal text)
+	Time datetime,
+	toUser varchar(20),
+	Type char(1), -- c(challenge)/r(friend request)/c(friend confirm)/n(normal text)
 	title varchar(50),
 	content text,
-	read char(1) -- 1(read)/0(unread)
 )
