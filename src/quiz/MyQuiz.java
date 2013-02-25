@@ -284,7 +284,12 @@ public class MyQuiz implements Quiz {
 		html.append("<p>" + creatorId + "</p>\n"); // TODO: should be a hyper
 													// link here
 
-		// TODO display tags
+		html.append("<h2>Tags</h2>\n");
+		html.append("<p>\n");
+		for (String tag : tags) {
+			html.append("#" + tag + ", \n");
+		}
+		html.append("</p>\n");
 
 		// TODO A list of the user’s past performance on this specific quiz.
 
