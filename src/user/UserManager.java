@@ -57,6 +57,7 @@ public class UserManager{
 	}
 
 	// account management
+	
 	/** Method addNewAccount is to add a new user tuple into userstats.sql and create 
 	 * all second floor tables of this user.
 	 * @param userId - the unique ID of one user
@@ -109,6 +110,41 @@ public class UserManager{
 			System.out.println("Adding new account fails.");
 			close();
 			return false;
+		}
+		close();
+		return true;
+	}
+	
+	
+	public static boolean alreadyExist(String userId){
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
+					"WHERE userId = \"" + userId + "\"");
+			if(rs.next()) {
+				close();
+				return true;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		close();
+		return false;
+	}
+	
+	public static boolean matchAccount(String userId, String password) {
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
+					"WHERE userId = \"" + userId + "\"" + " AND " + "password = \"" + password + "\"");
+			if(!rs.next()) {
+				close();
+				return false;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		close();
 		return true;
