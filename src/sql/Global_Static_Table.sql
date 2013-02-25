@@ -83,20 +83,17 @@ CREATE TABLE Multi_Choice_Pool (
 	creator_id CHAR(32),
     typeIntroduction BLOB,
     questionDescription BLOB,
-    choiceA BLOB,
-    choiceB BLOB,
-    choiceC BLOB,
-    choiceD BLOB,
     answer BLOB,
     max_score CHAR(4),
     tag_string CHAR(32),
-    correct_ratio CHAR(32)
+    correct_ratio CHAR(32),
+    choices BLOB
 );
 
 INSERT INTO Multi_Choice_Pool VALUES
 	("0001","Patrick", "Same introduction of Multi-Choice questions",
 	 "Who is the first president of USA?", 
-	 "George Washington", "George Washington", "George Washington", "George Washington", "5",
+	 "#George Washington#George Washington#George Washington#George Washington#", "5",
 	  "A","#his#Cul#", "2/3");
 
 
@@ -108,11 +105,11 @@ CREATE TABLE Picture_Response_Pool (
 	creator_id CHAR(32),
     typeIntroduction BLOB,
     questionDescription BLOB,
-    url BLOB,
     answer BLOB,
     max_score CHAR(4),
     tag_string CHAR(32),
-    correct_ratio CHAR(32)
+    correct_ratio CHAR(32),
+    url BLOB
 );
 
 INSERT INTO Picture_Response_Pool VALUES
