@@ -269,4 +269,8 @@ public class UserManager{
 		close();
 		return content;
 	}
+	
+	public static void addQuizTaken(String userId, String quizId){
+		
+	}
 }
