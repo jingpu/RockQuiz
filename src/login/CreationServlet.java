@@ -17,6 +17,11 @@ import javax.servlet.ServletContext;
 import user.UserManager;
 
 /**
+ * @author huijie
+ *
+ */
+
+/**
  * Servlet implementation class CreationServlet
  */
 @WebServlet("/CreationServlet")

@@ -17,6 +17,12 @@ import javax.servlet.ServletContext;
 import user.UserManager;
 
 /**
+ * @author huijie
+ *
+ */
+
+
+/**
  * Servlet implementation class LoginServlet
  */
 @WebServlet("/LoginServlet")
