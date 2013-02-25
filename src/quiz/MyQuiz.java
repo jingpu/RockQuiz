@@ -1,8 +1,15 @@
 package quiz;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import util.Helper;
 import database.MyDB;
 
 public class MyQuiz implements Quiz {
@@ -10,60 +17,73 @@ public class MyQuiz implements Quiz {
 	private final class QuizEvent {
 		private final String quizId;
 		private final String userName;
-		private final String submittime;
-		private final String timeElapsed;
-		private final String score;
+		private final Timestamp submitTime;
+		private final long timeElapsed;
+		private final int score;
 
-		private QuizEvent(String quizId, String userName, String submittime,
-				String timeElapsed, String score) {
+		private QuizEvent(String quizId, String userName, Timestamp submitTime,
+				long timeElapsed, int score) {
 			super();
 			this.quizId = quizId;
 			this.userName = userName;
-			this.submittime = submittime;
+			this.submitTime = submitTime;
 			this.timeElapsed = timeElapsed;
 			this.score = score;
 		}
 
 		private QuizEvent(String quizId) {
-			// load from DB
+			// below declare a set of non-final variable, which is a hack to get
+			// around the exception issue
+			String userName = "error";
+			Timestamp submitTime = null;
+			long timeElapsed = 0;
+			int score = 0;
+
+			Connection con = MyDB.getConnection();
+			try {
+				Statement stmt = con.createStatement();
+				// query quizExample0_Event_Table
+				ResultSet rs = stmt.executeQuery("SELECT * FROM " + quizName
+						+ "_Event_Table WHERE quizId = \"" + quizId + "\"");
+				rs.next();
+				userName = rs.getString("userName");
+				submitTime = rs.getTimestamp("submitTime");
+				timeElapsed = rs.getLong("timeElapsed");
+				score = rs.getInt("score");
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// do the real initialization now
+			this.quizId = quizId;
+			this.userName = userName;
+			this.submitTime = submitTime;
+			this.timeElapsed = timeElapsed;
+			this.score = score;
 		}
 
 		private void saveToDatabase() {
 
 		}
 
-		/**
-		 * @return the quizId
-		 */
 		private final String getQuizId() {
 			return quizId;
 		}
 
-		/**
-		 * @return the userName
-		 */
 		private final String getUserName() {
 			return userName;
 		}
 
-		/**
-		 * @return the submittime
-		 */
-		private final String getSubmittime() {
-			return submittime;
+		private final Timestamp getSubmittime() {
+			return submitTime;
 		}
 
-		/**
-		 * @return the timeElapsed
-		 */
-		private final String getTimeElapsed() {
+		private final long getTimeElapsed() {
 			return timeElapsed;
 		}
 
-		/**
-		 * @return the score
-		 */
-		private final String getScore() {
+		private final int getScore() {
 			return score;
 		}
 
@@ -71,7 +91,7 @@ public class MyQuiz implements Quiz {
 
 	private final String quizName;
 	private final String creatorId;
-	private final String totalScore;
+	private final int totalScore;
 	private final String quizDescription;
 	private final List<String> tags;
 	private final boolean canPractice;
@@ -80,7 +100,7 @@ public class MyQuiz implements Quiz {
 	private final boolean isImmCorrection; // jvm optimization
 	private final List<QuestionBase> questionList;
 
-	public MyQuiz(String quizName, String creatorId, String totalScore,
+	public MyQuiz(String quizName, String creatorId, int totalScore,
 			String quizDescription, List<String> tags, boolean canPractice,
 			boolean isRandom, boolean isOnePage, boolean isImmCorrection,
 			List<QuestionBase> questionList) {
@@ -98,9 +118,65 @@ public class MyQuiz implements Quiz {
 	}
 
 	public MyQuiz(String quizName) {
-		// TODO
-		Connection con = MyDB.getConnection();
+		// below declare a set of non-final variables, which is a hack to get
+		// around the exception issue
+		String creatorId = "error";
+		int totalScore = 0;
+		String quizDescription = "error";
+		List<String> tags = null;
+		boolean canPractice = false;
+		boolean isRandom = false;
+		boolean isOnePage = false;
+		boolean isImmCorrection = false;
+		List<QuestionBase> questionList = null;
 
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query Global_Quiz_Info_Table
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM Global_Quiz_Info_Table WHERE quizName = \""
+							+ quizName + "\"");
+			rs.next();
+			creatorId = rs.getString("creatorId");
+			quizDescription = rs.getString("quizDescription");
+			canPractice = rs.getBoolean("canPractice");
+			isRandom = rs.getBoolean("isRandom");
+			isOnePage = rs.getBoolean("isOnePage");
+			isImmCorrection = rs.getBoolean("isImmediateCorrection");
+			String tagString = rs.getString("tagString");
+			tags = Helper.parseTags(tagString);
+
+			// query quizName_Content_Table
+			int score = 0;
+			questionList = new ArrayList<QuestionBase>();
+			rs = stmt.executeQuery("SELECT * FROM " + quizName
+					+ "_Content_Table");
+			while (rs.next()) {
+				String questionType = rs.getString("questionType");
+				String questionId = rs.getString("questionId");
+				QuestionBase question = QuestionBase.getQuestion(questionType,
+						questionId);
+				if (question != null)
+					score += Integer.parseInt(question.getMaxScore());
+				questionList.add(question);
+			}
+			totalScore = score;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// do the real initialization now
+		this.quizName = quizName;
+		this.creatorId = creatorId;
+		this.totalScore = totalScore;
+		this.quizDescription = quizDescription;
+		this.tags = tags;
+		this.canPractice = canPractice;
+		this.isRandom = isRandom;
+		this.isOnePage = isOnePage;
+		this.isImmCorrection = isImmCorrection;
+		this.questionList = questionList;
 	}
 
 	public void saveToDatabase() {
@@ -241,19 +317,26 @@ public class MyQuiz implements Quiz {
 
 	@Override
 	public String getScore(String quizId) {
-		// TODO Auto-generated method stub
-		return null;
+		QuizEvent event = new QuizEvent(quizId);
+		return "" + event.getScore();
 	}
 
 	@Override
 	public String getMaxScore() {
-		return totalScore;
+		return "" + totalScore;
 	}
 
 	@Override
 	public String getTimeElapsed(String quizId) {
-		// TODO Auto-generated method stub
-		return null;
+		QuizEvent event = new QuizEvent(quizId);
+		long timeElapsed = event.getTimeElapsed();
+		return String.format(
+				"%d:%d",
+				TimeUnit.MILLISECONDS.toMinutes(timeElapsed),
+				TimeUnit.MILLISECONDS.toSeconds(timeElapsed)
+						- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS
+								.toMinutes(timeElapsed)));
+
 	}
 
 	/**
@@ -264,7 +347,7 @@ public class MyQuiz implements Quiz {
 	 */
 	public List<QuizEvent> highScoreEvents(int num) {
 		// TODO
-		return null;
+		return allEvents();
 	}
 
 	/**
@@ -275,7 +358,7 @@ public class MyQuiz implements Quiz {
 	 */
 	public List<QuizEvent> highScoreLastDayEvents(int num) {
 		// TODO
-		return null;
+		return allEvents();
 	}
 
 	/**
@@ -286,6 +369,32 @@ public class MyQuiz implements Quiz {
 	 */
 	public List<QuizEvent> recentTakenEvents(int num) {
 		// TODO
-		return null;
+		return allEvents();
+	}
+
+	private List<QuizEvent> allEvents() {
+		List<QuizEvent> events = new ArrayList<MyQuiz.QuizEvent>();
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query quizExample0_Event_Table
+			ResultSet rs = stmt.executeQuery("SELECT quizId FROM " + quizName
+					+ "_Event_Table");
+			while (rs.next()) {
+				String quizId = rs.getString("quizId");
+				QuizEvent event = new QuizEvent(quizId);
+				events.add(event);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return events;
+	}
+
+	public static void main(String[] args) {
+		MyQuiz quiz = new MyQuiz("quizExample0");
+		// test printSummaryPageHTML method
+		System.out.print(quiz.printSummaryPageHTML("Patrick"));
 	}
 }
