@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Create An Account</title>
+<SCRIPT LANGUAGE="javascript">
+<!--
+
+function judge( ){
+   if (document.forms[0].name.value==""){
+      alert("Please fill in USERNAME!");
+      document.forms[0].name.focus( );
+      return false;
+   }
+
+if (document.forms[0].pwd.value==""){
+      alert("Please fill in PASSWORD!");
+      document.forms[0].name.focus( );
+      return false;
+   }
+
+if (document.forms[0].pwd.value!=document.forms[0].confirm.value){
+      alert("Passwords filled in are not consistent!");
+      document.forms[0].pwd.focus( );
+      document.forms[0].pwd.select( );
+      return false;
+   }
+
+   for (var i=0; i<document.forms[0].age.value.length; i++){
+      var c=document.forms[0].age.value.charAt(i);
+      if (c<"0" || c>"9"){
+         alert("Age should be an integer!");
+         document.forms[0].age.focus( );
+         document.forms[0].age.select( );
+         return false;
+      }
+   }
+
+   var ageValue=parseInt(document.forms[0].age.value);
+   if (ageValue<10){
+      alert("Age not valid! Can't be so young!");
+      document.forms[0].age.focus( );
+      document.forms[0].age.select( );
+      return false;
+   }
+   if (ageValue>150){
+      alert("Age not valid! Can't be so old!");
+      document.forms[0].age.focus( );
+      document.forms[0].age.select( );
+      return false;
+   }
+   
+   var pos=document.forms[0].email.value.indexOf("@");
+   if (pos==-1){
+      alert("Please fill in the correct email address!");
+      document.forms[0].email.focus( );
+      document.forms[0].email.select( );
+      return false;
+   }
+
+   var pos=document.forms[0].email.value.indexOf(".");
+   if (pos==-1){
+      alert("Please fill in the correct email address!");
+      document.forms[0].email.focus( );
+      document.forms[0].email.select( );
+      return false;
+   }
+return true;
+}
+//-->
+</SCRIPT>
+</HEAD>
+<BODY style="BACKGROUND-IMAGE: url(4.gif)">
+<CENTER>
+Welcome to Rock Quiz!<BR>
+Please fill in the following information.<BR>
+<FORM METHOD=POST ACTION="CreationServlet" OnSubmit="return judge( )">
+<TABLE><TR>
+<TD>Username</TD>
+<TD><INPUT TYPE="text" NAME="name"></TD>
+</TR><TR>
+<TD>Password</TD>
+<TD><INPUT TYPE="password" NAME="pwd"></TD>
+</TR><TR>
+<TD>Confirm Password</TD>
+<TD><INPUT TYPE="password" NAME="confirm"></TD>
+</TR><TR>
+<TD>Gender</TD>
+<TD>
+<INPUT TYPE="radio" NAME="gender" VALUE="male" CHECKED>Male
+<INPUT TYPE="radio" NAME="gender" VALUE="female">Female
+</TD>
+</TR><TR>
+<TD>Age</TD>
+<TD><INPUT TYPE="text" NAME="age"></TD>
+</TR><TR>
+<TD>Email</TD>
+<TD><INPUT TYPE="text" NAME="email"></TD>
+</TR></TABLE>
+<TABLE><TR>
+What type of quizzes are you interested in?</TR>
+<TR>
+<TD><INPUT TYPE="checkbox" NAME="favour">Language</TD>
+<TD><INPUT TYPE="checkbox" NAME="favour">Science</TD>
+<TD><INPUT TYPE="checkbox" NAME="favour">Engineering</TD>
+<TD><INPUT TYPE="checkbox" NAME="favour">Arts</TD>
+<TD><INPUT TYPE="checkbox" NAME="favour">Brain Storm</TD>
+</TR></TABLE>
+<TABLE>
+<TD><INPUT TYPE="reset"></TD>
+<TD><INPUT TYPE="submit"></TD>
+</TR></TABLE>
+</FORM>
+</BODY>
+</HTML>
