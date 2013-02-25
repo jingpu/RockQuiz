@@ -118,7 +118,6 @@ public class UserManager{
 		return true;
 	}
 	
-	
 	public static boolean alreadyExist(String userId){
 		setDriver();
 		try {
@@ -192,6 +191,25 @@ public class UserManager{
 		return true;
 	}
 
+	public static boolean deleteAll(){
+		setDriver();
+		try{
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable);
+			while(rs.next()){
+				System.out.println(rs.getString("userId"));
+				deleteAccount(rs.getString("userId"));
+			}
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + userTable);
+			close();
+			return true;
+		} catch(SQLException e){
+			//e.printStackTrace();
+			System.out.println("Deletion fails.");
+			close();
+			return false;
+		}
+	}
+	
 	public static String getAccountInfo(String userId, String column){
 		String str = "";
 		setDriver();
@@ -233,7 +251,7 @@ public class UserManager{
 		List<String> friends = new LinkedList<String>();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_network" +
-					" WHERE status='c'");
+					" WHERE status='f'");
 			while(rs.next()){
 				friends.add(rs.getString("userId"));
 			}
@@ -282,12 +300,12 @@ public class UserManager{
 						+ from + "\",\"u\")");
 				sendMsg(from, to, "r", "1", "1");  //r - friend request msg
 			} else if (rs.getString("status").equals("r")){
-				stmt.executeUpdate("UPDATE " + from + "_network" + " SET status='c' " +
+				stmt.executeUpdate("UPDATE " + from + "_network" + " SET status='f' " +
 						"WHERE userId='" + to + "'");
-				stmt.executeUpdate("UPDATE " + to + "_network" + " SET status='c' " +
+				stmt.executeUpdate("UPDATE " + to + "_network" + " SET status='f' " +
 						"WHERE userId='" + from + "'");
-				System.out.println(sendMsg(from, to, "f", "2", "2")); //f - friend confirm msg
-				System.out.println(sendMsg(to, from, "f", "2", "2"));
+				sendMsg(from, to, "f", "2", "2"); //f - friend confirm msg
+				sendMsg(to, from, "f", "2", "2");
 			} 
 
 		} catch (SQLException e) {
@@ -311,11 +329,12 @@ public class UserManager{
 				String status = rs.getString("status");
 				if(status.equals("u") || status.equals("i")){
 					if(decision.equals("f")) {
-						stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='c' " +
+						stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='f' " +
 								"WHERE userId='" + me + "'");
 						System.out.println(sendMsg(me, other, "f", "2", "2")); //f - friend confirm msg
 						System.out.println(sendMsg(other, me, "f", "2", "2"));
 					} 
+					setDriver();
 					stmt.executeUpdate("UPDATE " + me + "_network" + " SET status='" + decision 
 							+ "' WHERE userId='" + other + "'");
 				}
@@ -364,8 +383,7 @@ public class UserManager{
 		return msg;
 	}
 
-	/**
-	 * @return the content of the message
+	/** @return the content of the message
 	 * **/
 	public static void markReadMsg(String userId, Message msg){
 		setDriver();
@@ -444,6 +462,7 @@ public class UserManager{
 		close();
 		return true;
 	}
+	
 	public static boolean addAchievement(String userId, String name){
 		setDriver();
 		try{
@@ -457,6 +476,7 @@ public class UserManager{
 		close();
 		return true;
 	}
+	
 	public static List<String> getAchievements(String userId){
 		List<String> achieves = new LinkedList<String>();
 		setDriver();
@@ -473,6 +493,7 @@ public class UserManager{
 		close();
 		return achieves;
 	}
+	
 	public static List<String> getQuizTaken(String userId){
 		List<String> taken = new LinkedList<String>();
 		setDriver();
@@ -489,6 +510,7 @@ public class UserManager{
 		close();
 		return taken;
 	}
+	
 	public static List<String> getQuizCreated(String userId){
 		List<String> created = new LinkedList<String>();
 		setDriver();
@@ -505,6 +527,7 @@ public class UserManager{
 		close();
 		return created;
 	}
+	
 	public static List<Activity> getRecentActivity(String userId){
 		List<Activity> recent = new LinkedList<Activity>();
 		setDriver();
