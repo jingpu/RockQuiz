@@ -27,7 +27,7 @@ CREATE TABLE userId_network (
 CREATE TABLE userId_inbox (
 	Time datetime,
 	fromUser varchar(20),
-	Type char(1), -- c(challenge)/r(friend request)/c(friend conform)/n(normal text)
+	Type char(1), -- c(challenge)/r(friend request)/f(friend confirm)/n(normal text)
 	title varchar(50),
 	content text,
 	ifRead char(1) -- 1(read)/0(unread)
@@ -36,7 +36,7 @@ CREATE TABLE userId_inbox (
 CREATE TABLE userId_sent (
 	Time datetime,
 	toUser varchar(20),
-	Type char(1), -- c(challenge)/r(friend request)/c(friend confirm)/n(normal text)
+	Type char(1), -- c(challenge)/r(friend request)/f(friend confirm)/n(normal text)
 	title varchar(50),
 	content text,
 )

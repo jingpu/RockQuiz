@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-/** author: youyuan
+/** @author: youyuan
  *  A UserManager implemented based on interface User.
  *  Its mission is to modify/update users' information 
  *  in database. 
@@ -215,8 +215,8 @@ public class UserManager{
 						"WHERE userId='" + to + "'");
 				stmt.executeUpdate("UPDATE " + to + "_network" + " SET status='c' " +
 						"WHERE userId='" + from + "'");
-				System.out.println(sendMsg(from, to, "c", "2", "2")); //c - friend confirm msg
-				System.out.println(sendMsg(to, from, "c", "2", "2"));
+				System.out.println(sendMsg(from, to, "f", "2", "2")); //f - friend confirm msg
+				System.out.println(sendMsg(to, from, "f", "2", "2"));
 			} 
 
 		} catch (SQLException e) {
@@ -239,9 +239,11 @@ public class UserManager{
 			if(rs.next()) {
 				String status = rs.getString("status");
 				if(status.equals("u") || status.equals("i")){
-					if(decision.equals("c")) {
+					if(decision.equals("f")) {
 						stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='c' " +
 								"WHERE userId='" + me + "'");
+						System.out.println(sendMsg(me, other, "f", "2", "2")); //f - friend confirm msg
+						System.out.println(sendMsg(other, me, "f", "2", "2"));
 					} 
 					stmt.executeUpdate("UPDATE " + me + "_network" + " SET status='" + decision 
 							+ "' WHERE userId='" + other + "'");
@@ -270,12 +272,12 @@ public class UserManager{
 		close();
 	}
 
-	public static String sendMsg(String from, String to, String type, String title, String content){
+	public static Message sendMsg(String from, String to, String type, String title, String content){
 		setDriver();
 		Date now = new Date();
 		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String currentTime = sdf.format(now);
-
+		Message msg = new Message(currentTime, from, to , type, title, content);
 		try {
 			stmt.executeUpdate("INSERT INTO " + from + "_sent" + " VALUES (\"" + currentTime + "\", \""
 					+ to + "\",\"" + type + "\",\"" + title + "\",\"" + content + "\")");
@@ -288,37 +290,62 @@ public class UserManager{
 			e.printStackTrace();
 		}
 		close();
-		return currentTime;
+		return msg;
 	}
 
-	public static String readMsg(String userId, String box, String otherUser, String time){
+	/**
+	 * @return the content of the message
+	 * **/
+	public static void markReadMsg(String userId, Message msg){
 		setDriver();
-		String tableName = userId + "_" + box;
-		String content = "";
 		try {
-			if(box.equals("inbox")){
-				stmt.executeUpdate("UPDATE " + tableName + " SET ifRead='1' " +
-						"WHERE Time='" + time + "'");
-				ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName +
-						" WHERE Time='" + time + "' AND fromUser='" + otherUser);
-				rs.next();
-				content = rs.getString("content");
-				if(!rs.next()) System.out.println("Message Duplicates in Inbox.");
-			} else if (box.equals("sent")){
-				ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName +
-						" WHERE Time='" + time + "' AND toUser='" + otherUser);
-				rs.next();
-				content = rs.getString("content");
-				if(!rs.next()) System.out.println("Message Duplicates in Sent.");
+			stmt.executeUpdate("UPDATE " + userId + "_inbox SET ifRead='1' " +
+						"WHERE Time='" + msg.time + "' AND fromUser='" + msg.from + "'");
+			msg.ifRead = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+	}
+	
+	public static List<Message> getMessagesInbox(String userId){
+		List<Message> msgs = new LinkedList<Message>(); 
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_inbox ORDER BY Time DESC");
+			while(rs.next()){
+				Message msg = new Message(rs.getString("Time"), rs.getString("fromUser"), userId, 
+						rs.getString("Type"), rs.getString("title"), rs.getString("content"));
+				msg.ifRead = rs.getString("ifRead").equals("1");
+				msgs.add(msg);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		close();
-		return content;
+		return msgs;
 	}
-
+	
+	public static List<Message> getMessagesSent(String userId){
+		List<Message> msgs = new LinkedList<Message>(); 
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_sent ORDER BY Time DESC");
+			while(rs.next()){
+				Message msg = new Message(rs.getString("Time"), rs.getString("toUser"), userId, 
+						rs.getString("Type"), rs.getString("title"), rs.getString("content"));
+				msgs.add(msg);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return msgs;
+	}
+	
 	public static boolean addQuizTaken(String userId, String quizId){
 		setDriver();
 		try{
@@ -358,5 +385,53 @@ public class UserManager{
 		}
 		close();
 		return true;
+	}
+	public static List<String> getAchievements(String userId){
+		List<String> achieves = new LinkedList<String>();
+		setDriver();
+		try{
+			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
+					+ "_history WHERE Type=a ORDER BY Time DESC");
+			while(rs.next()){
+				achieves.add(rs.getString("content"));
+			}
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return achieves;
+	}
+	public static List<String> getQuizTaken(String userId){
+		List<String> taken = new LinkedList<String>();
+		setDriver();
+		try{
+			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
+					+ "_history WHERE Type=t ORDER BY Time DESC");
+			while(rs.next()){
+				taken.add(rs.getString("content"));
+			}
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return taken;
+	}
+	public static List<String> getQuizCreated(String userId){
+		List<String> created = new LinkedList<String>();
+		setDriver();
+		try{
+			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
+					+ "_history WHERE Type=c ORDER BY Time DESC");
+			while(rs.next()){
+				created.add(rs.getString("content"));
+			}
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return created;
 	}
 }
