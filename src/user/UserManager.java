@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +16,7 @@ import java.util.List;
  *  Its mission is to modify/update users' information 
  *  in database. 
  * **/
-public class UserManager implements User{
+public class UserManager{
 	private static final String MYSQL_USERNAME = "ccs108youyuan";
 	private static final String MYSQL_PASSWORD = "ooreoquu";
 	private static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
@@ -64,7 +66,10 @@ public class UserManager implements User{
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
 					"WHERE userId LIKE '" + userId + "'");
-			if(rs.next()) return false;
+			if(rs.next()) {
+				close();
+				return false;
+			}
 			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -75,6 +80,7 @@ public class UserManager implements User{
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				System.out.println("Adding new table fails.");
+				close();
 				return false;
 			}
 		}
@@ -96,8 +102,10 @@ public class UserManager implements User{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Adding new account fails.");
+			close();
 			return false;
 		}
+		close();
 		return true;
 	}
 
@@ -109,11 +117,13 @@ public class UserManager implements User{
 					"WHERE userId LIKE '" + userId + "'");
 			if(!rs.next()) {
 				System.out.println("This account doesn't exist.");
+				close();
 				return false;
 			}
 			rs.close();
 		} catch (SQLException ignore) {
 			System.out.println("Deletion fails (1).");
+			close();
 			return false;
 		}
 
@@ -124,8 +134,10 @@ public class UserManager implements User{
 			stmt.executeUpdate("DELETE FROM userTable WHERE userId=" + userId );
 		} catch(SQLException ignore){
 			System.out.println("Deletion fails (2).");
+			close();
 			return false;
 		}
+		close();
 		return true;
 	}
 
@@ -143,9 +155,10 @@ public class UserManager implements User{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		close();
 		return friends;
 	}
-	
+
 	public static List<String> getUnconfirmedFriendsList(String userId){
 		setDriver();
 		List<String> friends = new LinkedList<String>();
@@ -159,9 +172,10 @@ public class UserManager implements User{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		close();
 		return friends;
 	}
-	
+
 	public static void requestFriend(String from, String to){
 		setDriver();
 		try {
@@ -172,18 +186,22 @@ public class UserManager implements User{
 						+ to + "\",\"req\")");
 				stmt.executeUpdate("INSERT INTO " + to + "_network" + " VALUES (\""
 						+ from + "\",\"unc\")");
+				sendMsg(from, to, "frq", "", "");  //frq - friend request msg
 			} else if (rs.getString("status") == "req"){
 				stmt.executeUpdate("UPDATE " + from + "_network" + " SET status='cnf' " +
 						"WHERE userId='" + to + "'");
 				stmt.executeUpdate("UPDATE " + to + "_network" + " SET status='cnf' " +
 						"WHERE userId='" + from + "'");
+				sendMsg(from, to, "fco", "", ""); //frq - friend confirm msg
+				sendMsg(to, from, "fco", "", "");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		close();
 	}
-	
+
 	public static void processUnconfirmedFriend(String me, String other, String decision){
 		setDriver();
 		try {
@@ -200,27 +218,55 @@ public class UserManager implements User{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public void sendMsg(String to, String type, String content){}
-	public void checkInbox(){}
-	
-	// quiz activity
-	@Override
-	public void addQuizTaken(String quizName, String quizId) {
-		// TODO Auto-generated method stub
-
+		close();
 	}
 
-	@Override
-	public void addQuizCreated(String quizName) {
-		// TODO Auto-generated method stub
+	public static String sendMsg(String from, String to, String type, String title, String content){
+		setDriver();
+		Date now = new Date();
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String currentTime = sdf.format(now);
 
+		try {
+			stmt.executeUpdate("INSERT INTO " + from + "_sent" + " VALUES (\"" + currentTime + "\", \""
+					+ to + "\",\"" + type + "\",\"" + title + "\",\"" + content + "\")");
+
+			stmt.executeUpdate("INSERT INTO " + to + "_inbox" + " VALUES (\""+ currentTime + "\", \""
+					+ from + "\",\"" + type + "\",\"" + title + "\",\"" + content + "\",\"0\")");
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return currentTime;
 	}
 
-	@Override
-	public void addAchievement(String name) {
-		// TODO Auto-generated method stub
-
+	public static String readMsg(String userId, String box, String otherUser, String time){
+		setDriver();
+		String tableName = userId + "_" + box;
+		String content = "";
+		try {
+			if(box == "inbox"){
+				stmt.executeUpdate("UPDATE " + tableName + " SET read='1' " +
+						"WHERE time='" + time + "'");
+				ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName +
+						" WHERE time='" + time + "' AND from='" + otherUser);
+				rs.next();
+				content = rs.getString("content");
+				if(!rs.next()) System.out.println("Message Duplicates in Inbox.");
+			} else if (box == "sent"){
+				ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName +
+						" WHERE time='" + time + "' AND to='" + otherUser);
+				rs.next();
+				content = rs.getString("content");
+				if(!rs.next()) System.out.println("Message Duplicates in Sent.");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return content;
 	}
 }
