@@ -22,5 +22,7 @@ public class Administrator extends Account{
 		
 	}
 	
-	
+	public String announce(String accouncement){
+		return accouncement;
+	}
 }

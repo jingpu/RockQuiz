@@ -36,15 +36,23 @@ public class UserManagerTest {
 		UserManager.requestFriend("a2", "a3");
 		UserManager.requestFriend("a2", "a1");
 		UserManager.requestFriend("a4", "a1");
-		UserManager.processUnconfirmedFriend("a3", "a2", "i");
 		UserManager.processUnconfirmedFriend("a1", "a4", "f");
+		UserManager.processUnconfirmedFriend("a3", "a2", "i");
 		UserManager.removeFriend("a1", "a2");
 		System.out.println(UserManager.getFriendsList("a1")); //a4
 		System.out.println(UserManager.getFriendsList("a2"));
 		System.out.println(UserManager.getFriendsList("a3"));
 		System.out.println(UserManager.getFriendsList("a4")); //a1
-		List<Message> msgs = UserManager.getMessagesInbox("a1");
-		for(Message msg : msgs){
+		List<Message> msgsI = UserManager.getMessagesInbox("a1");
+		List<Message> msgsS = UserManager.getMessagesInbox("a1");
+		for(Message msg : msgsI){
+			System.out.println(msg.toString());
+			System.out.println(msg.time);
+			System.out.println(msg.from); //
+			System.out.println(msg.type); //f r f
+		}
+		for(Message msg : msgsS){
+			System.out.println(msg.toString());
 			System.out.println(msg.time);
 			System.out.println(msg.from); //
 			System.out.println(msg.type); //f r f

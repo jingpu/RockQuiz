@@ -101,10 +101,10 @@ public class UserManager{
 					"Type char(1), content varchar(50));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_network( userId varchar(20), " +
 					"status char(1));");
-			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( Time datetime, " +
+			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( Time text, " +
 					"fromUser varchar(20), Type char(1), " +
 					"title varchar(50), content text, ifRead char(1) );");
-			stmt.executeUpdate("CREATE TABLE " + userId + "_sent( Time datetime, " +
+			stmt.executeUpdate("CREATE TABLE " + userId + "_sent( Time text, " +
 					"toUser varchar(20), Type char(1), title varchar(50), " +
 					"content text );");
 		} catch (SQLException e) {
@@ -331,8 +331,8 @@ public class UserManager{
 					if(decision.equals("f")) {
 						stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='f' " +
 								"WHERE userId='" + me + "'");
-						System.out.println(sendMsg(me, other, "f", "2", "2")); //f - friend confirm msg
-						System.out.println(sendMsg(other, me, "f", "2", "2"));
+						sendMsg(me, other, "f", "2", "2"); //f - friend confirm msg
+						sendMsg(other, me, "f", "2", "2");
 					} 
 					setDriver();
 					stmt.executeUpdate("UPDATE " + me + "_network" + " SET status='" + decision 
@@ -362,12 +362,11 @@ public class UserManager{
 		close();
 	}
 
-	public static Message sendMsg(String from, String to, String type, String title, String content){
+	public static void sendMsg(String from, String to, String type, String title, String content){
 		setDriver();
 		Date now = new Date();
-		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String currentTime = sdf.format(now);
-		Message msg = new Message(currentTime, from, to , type, title, content);
 		try {
 			stmt.executeUpdate("INSERT INTO " + from + "_sent" + " VALUES (\"" + currentTime + "\", \""
 					+ to + "\",\"" + type + "\",\"" + title + "\",\"" + content + "\")");
@@ -380,7 +379,6 @@ public class UserManager{
 			e.printStackTrace();
 		}
 		close();
-		return msg;
 	}
 
 	/** @return the content of the message
@@ -391,6 +389,21 @@ public class UserManager{
 			stmt.executeUpdate("UPDATE " + userId + "_inbox SET ifRead='1' " +
 						"WHERE Time='" + msg.time + "' AND fromUser='" + msg.from + "'");
 			msg.ifRead = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+	}
+	
+	public static void deleteMsg(String userId, String box, Message msg){
+		setDriver();
+		String boxTable = userId + "_" + box;
+		String otherType = box.equals("inbox")? "fromUser" : "toUser";
+		String other = box.equals("inbox")? msg.from : msg.to;
+		try {
+			stmt.executeUpdate("DELETE FROM " + boxTable + "WHERE Time='" + msg.time 
+					+ "' AND " + otherType + "='" + other + "'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

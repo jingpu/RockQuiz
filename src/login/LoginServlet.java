@@ -83,7 +83,7 @@ public class LoginServlet extends HttpServlet {
 		
 		if (UserManager.matchAccount(usrname, hashValue)) {
 			//String usrpage = "userpage.jsp?id=" + usrname;
-			String usrpage = "userWelcome.jsp";
+			String usrpage = "home.jsp?id=" + usrname;
 			RequestDispatcher dispatch = request.getRequestDispatcher(usrpage);
 			dispatch.forward(request, response);
 		} else {
