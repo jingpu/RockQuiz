@@ -51,6 +51,9 @@ public class CreationServlet extends HttpServlet {
 		response.setContentType("text/html");
 		String usrname = request.getParameter("name");
 		String pwd = request.getParameter("pwd");
+		String gender = request.getParameter("gender");
+		gender = gender.substring(0, 1);
+		String email = request.getParameter("email");
 		
 		String hashValue = "";
 		try {
@@ -90,7 +93,7 @@ public class CreationServlet extends HttpServlet {
 			RequestDispatcher dispatch = request.getRequestDispatcher("nameInUse.jsp");
 			dispatch.forward(request, response);
 		} else {
-			UserManager.addNewAccount(usrname, hashValue, "u");
+			UserManager.addNewAccount(usrname, hashValue, "u", gender, email);
 			//String usrpage = "userpage.jsp?id=" + usrname;
 			String usrpage = "userWelcome.jsp";
 			RequestDispatcher dispatch = request.getRequestDispatcher(usrpage);
