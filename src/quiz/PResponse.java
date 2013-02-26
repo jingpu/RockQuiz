@@ -12,8 +12,9 @@ import java.sql.SQLException;
 public class PResponse extends QuestionBase {
 	private String url;
 	private static final String typeIntro = "In this type of question, given a picture, user need to answer the related question";
-	public PResponse(String questionType, String questionId, String creatorId,
-			String questionDescription, String answer,
+	
+	
+	public PResponse(String questionType, String creatorId, String questionDescription, String answer,
 			String maxScore, String tagString, String correctRation, String url) {
 		super(questionType, creatorId, questionDescription, answer, maxScore, tagString, correctRation);
 		// TODO Auto-generated constructor stub
@@ -67,7 +68,9 @@ public class PResponse extends QuestionBase {
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p> Please enter proposed question description and answer </p>");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
-		html.append("<p>Picture URL: <img src=\" + url + \"></p>\n");
+		
+		//url information
+		html.append("<p>Picture URL: <input type=\"text\" name=\"url\" ></input></p>\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 		
@@ -85,10 +88,12 @@ public class PResponse extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 		
-		html.append("<h1>This is a question page, please read the question information, and make an answer</h1>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
+		
+		html.append("<img border=\"0\" src=\"" + url + "\" width=\"304\" height=\"228\">");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
 		
 		//Hidden information - questionType and  questionId information

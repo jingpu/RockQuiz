@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS Multi_Choice_Pool;
  -- remove table if it already exists and start from scratch
 
 CREATE TABLE Multi_Choice_Pool (  
-	questionId CHAR(32),
+	question_id CHAR(32),
 	creator_id CHAR(32),
     type_introduction BLOB,
     question_description BLOB,
@@ -104,7 +104,7 @@ DROP TABLE IF EXISTS Picture_Response_Pool;
  -- remove table if it already exists and start from scratch
 
 CREATE TABLE Picture_Response_Pool (   
-	questionId CHAR(32),
+	question_id CHAR(32),
 	creator_id CHAR(32),
     type_introduction BLOB,
     question_description BLOB,

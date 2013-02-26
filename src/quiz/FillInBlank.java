@@ -102,15 +102,12 @@ public class FillInBlank extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 		
-		html.append("<h1>This is a question page, please read the question information, and make an answer</h1>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		
 		//create prefix, blank, suffix
-		html.append(parsePrefix());
-		html.append("<p><input type=\"text\" name=\"answer\" ></input></p>");
-		html.append(parseSuffix());
-		html.append("</p>");
+		html.append("<p>" + parsePrefix() + "<input type=\"text\" name=\"answer\" >" + parseSuffix() + "</input></p>");
 		
 		//Hidden information - questionType and questionId information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");

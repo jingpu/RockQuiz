@@ -180,12 +180,11 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		StringBuilder html = new StringBuilder();
 		
 		// The type introduction of the question   //TODO: may be integrated into jsp
-		html.append("<h1>Question Type Introduction</h1>\n");
+		html.append("<h2>Question Type Introduction</h2>\n");
 	    //	html.append("<p>" + typeIntro + "</p>\n");
 
 		// The creator of the question  TODO: link to User's profile page
-		html.append("<h2>Question Creator</h2>\n");
-		html.append("<p>" + creatorId + "</p>\n"); // TODO: should be a hyper
+		html.append("<p>Question Creator: " + creatorId + "</p>\n"); // TODO: should be a hyper
 		
 		return html.toString(); 
 	}

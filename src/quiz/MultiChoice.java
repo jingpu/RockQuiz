@@ -19,8 +19,7 @@ public class MultiChoice extends QuestionBase {
 	private static final String typeIntro ="MultiChoice question: user should choose one correct answer from choice options";
 	
 	
-	public MultiChoice(String questionType, String questionId,
-			String creatorId, String typeIntro, String questionDescription,
+	public MultiChoice(String questionType, String creatorId, String questionDescription,
 			String answer, String maxScore, String tagString,
 			String correctRation, List<String> choices) {
 		super(questionType, creatorId, questionDescription, answer, maxScore, tagString, correctRation);
@@ -104,16 +103,16 @@ public class MultiChoice extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 		
-		html.append("<h1>This is a question page, please read the question information, and make an answer</h1>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
 		
 		//create choice options
-		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"A. " + choices.get(0) + "\"></input></p>");
-		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"B. " + choices.get(1) + "\"></input></p>");
-		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"C. " + choices.get(2) + "\"></input></p>");
-		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"D. " + choices.get(3) + "\"></input></p>");
+		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"A. " + choices.get(0) + "\">" + choices.get(0) + "</input></p>");
+		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"B. " + choices.get(1) + "\">" + choices.get(1) + "</input></p>");
+		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"C. " + choices.get(2) + "\">" + choices.get(2) + "</input></p>");
+		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"D. " + choices.get(3) + "\">" + choices.get(3) + "</input></p>");
 		
 		
 		//Hidden information - questionType and  questionId information

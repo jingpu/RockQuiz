@@ -75,7 +75,7 @@ public class QResponse extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 		
-		html.append("<h1>This is a question page, please read the question information, and make an answer</h1>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
