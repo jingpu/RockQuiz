@@ -35,7 +35,7 @@ public class MyQuiz implements Quiz {
 			// below declare a set of non-final variable, which is a hack to get
 			// around the exception issue
 			String userName = "error";
-			Timestamp submitTime = null;
+			Timestamp submitTime = new Timestamp(0);
 			long timeElapsed = 0;
 			int score = 0;
 
@@ -74,7 +74,7 @@ public class MyQuiz implements Quiz {
 
 				// update quizName_Event_Table -- insert a row
 				String contentRow = "\"" + getQuizId() + "\",\""
-						+ getUserName() + "\",\"" + getSubmittime() + "\", "
+						+ getUserName() + "\",\"" + getSubmitTime() + "\", "
 						+ getTimeElapsed() + ", " + getScore();
 				stmt.executeUpdate("INSERT INTO " + quizName
 						+ "_Content_Table VALUES(" + contentRow + ")");
@@ -91,7 +91,7 @@ public class MyQuiz implements Quiz {
 			return userName;
 		}
 
-		private final Timestamp getSubmittime() {
+		private final Timestamp getSubmitTime() {
 			return submitTime;
 		}
 
@@ -107,6 +107,7 @@ public class MyQuiz implements Quiz {
 
 	private final String quizName;
 	private final String creatorId;
+	private final Timestamp createTime;
 	private final int totalScore;
 	private final String quizDescription;
 	private final List<String> tags;
@@ -126,7 +127,7 @@ public class MyQuiz implements Quiz {
 	public MyQuiz(String quizName, String creatorId, int totalScore,
 			String quizDescription, List<String> tags, boolean canPractice,
 			boolean isRandom, boolean isOnePage, boolean isImmCorrection,
-			List<QuestionBase> questionList) {
+			List<QuestionBase> questionList, Timestamp createTime) {
 		super();
 		this.quizName = quizName;
 		this.creatorId = creatorId;
@@ -138,6 +139,7 @@ public class MyQuiz implements Quiz {
 		this.isOnePage = isOnePage;
 		this.isImmCorrection = isImmCorrection;
 		this.questionList = questionList;
+		this.createTime = createTime;
 	}
 
 	public MyQuiz(String quizName) {
@@ -146,12 +148,13 @@ public class MyQuiz implements Quiz {
 		String creatorId = "error";
 		int totalScore = 0;
 		String quizDescription = "error";
-		List<String> tags = null;
+		List<String> tags = new ArrayList<String>();
 		boolean canPractice = false;
 		boolean isRandom = false;
 		boolean isOnePage = false;
 		boolean isImmCorrection = false;
-		List<QuestionBase> questionList = null;
+		List<QuestionBase> questionList = new ArrayList<QuestionBase>();
+		Timestamp createTime = new Timestamp(0);
 
 		Connection con = MyDB.getConnection();
 		try {
@@ -169,10 +172,10 @@ public class MyQuiz implements Quiz {
 			isImmCorrection = rs.getBoolean("isImmediateCorrection");
 			String tagString = rs.getString("tagString");
 			tags = Helper.parseTags(tagString);
+			createTime = rs.getTimestamp("createTime");
 
 			// query quizName_Content_Table
 			int score = 0;
-			questionList = new ArrayList<QuestionBase>();
 			rs = stmt.executeQuery("SELECT * FROM " + quizName
 					+ "_Content_Table");
 			while (rs.next()) {
@@ -199,6 +202,7 @@ public class MyQuiz implements Quiz {
 		this.isOnePage = isOnePage;
 		this.isImmCorrection = isImmCorrection;
 		this.questionList = questionList;
+		this.createTime = createTime;
 	}
 
 	public void saveToDatabase() {
@@ -209,7 +213,7 @@ public class MyQuiz implements Quiz {
 			String quizRow = "\"" + quizName + "\",\"" + creatorId + "\",\""
 					+ quizDescription + "\",\"" + Helper.generateTags(tags)
 					+ "\"," + canPractice + ", " + isRandom + ", " + isOnePage
-					+ ", " + isImmCorrection;
+					+ ", " + isImmCorrection + ", \"" + createTime + "\"";
 			stmt.executeUpdate("INSERT INTO Global_Quiz_Info_Table VALUES("
 					+ quizRow + ")");
 
@@ -278,6 +282,10 @@ public class MyQuiz implements Quiz {
 		// The text description of the quiz.
 		html.append("<h2>Quiz Description</h2>\n");
 		html.append("<p>" + quizDescription + "</p>\n");
+
+		// The time created
+		html.append("<h2>Date Created</h2>\n");
+		html.append("<p>" + createTime + "</p>\n");
 
 		// The creator of the quiz(hot linked to the creator’s user page).
 		html.append("<h2>Quiz Creator</h2>\n");
@@ -381,6 +389,11 @@ public class MyQuiz implements Quiz {
 	@Override
 	public String getMaxScore() {
 		return "" + totalScore;
+	}
+
+	@Override
+	public String getQuizName() {
+		return quizName;
 	}
 
 	@Override
