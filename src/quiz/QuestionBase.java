@@ -9,19 +9,16 @@ import java.util.List;
 
 import database.MyDB;
 
-
 public abstract class QuestionBase {   //abstract class cannot be instantiated, but only its subclass
 	protected final String questionType;  //how to use final here?
 	protected final String questionId;
 	protected final String creatorId;
-	protected final String typeIntro;
 	protected final String questionDescription;
 	protected final String answer;
 	protected final String maxScore;
 	protected final String tagString;
 	protected final String correctRatio;
 	
-
 	
 	protected Connection con;
 	protected Statement stmt;
@@ -48,7 +45,6 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		String questionTable = getQuestionTable(questionType);
 		
 		String tmpCreatorId = "error";
-		String tmpTypeIntro = "error";
 		String tmpQuestionDescription = "error";
 		String tmpAnswer = "error";
 		String tmpMaxScore = "error";
@@ -64,7 +60,6 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 			rs.next();
 			
 			tmpCreatorId = rs.getString(2);
-			tmpTypeIntro = rs.getString(3);
 			tmpQuestionDescription = rs.getString(4);
 			tmpAnswer = rs.getString(5);
 			tmpMaxScore = rs.getString(6);
@@ -77,7 +72,6 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		}
 		
 		creatorId = tmpCreatorId;
-	    typeIntro = tmpTypeIntro;
 		questionDescription = tmpQuestionDescription;
 		answer = tmpAnswer;
 		maxScore = tmpMaxScore;
@@ -85,22 +79,18 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		correctRatio = tmpCorrectRatio;
 	};
 	
-	
-	
-	
-	//Create a question from webpage
-	public QuestionBase(String questionType, String creatorId,
-			String typeIntro, String questionDescription, String answer,
+	//Create a question from webpage  -- cannot be used like: QuestionBase base = new QuestionBase();
+	public QuestionBase(String questionType, String creatorId, String questionDescription, String answer,
 			String maxScore, String tagString, String correctRatio) {
 		super();
 		this.questionType = questionType;
 		this.creatorId = creatorId;
-		this.typeIntro = typeIntro;
 		this.questionDescription = questionDescription;
 		this.answer = answer;
 		this.maxScore = maxScore;
 		this.tagString = tagString;
 		this.correctRatio = correctRatio;
+		
 		this.questionId = generateId(questionType);
 	}
 
@@ -125,7 +115,6 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		}
 		return id.toString();
 	}
-
 
 	
 	
@@ -169,24 +158,21 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 	}	
 	
 	
-	
 	//when clicking submit
 	public abstract void saveToDatabase();
 	
 	//called by quiz to print html for every question
 	//essentially, it is a html-string
-	public String printCreateHtml(){
-		StringBuilder html = new StringBuilder();
-		
-		// The type introduction of the question   //TODO: may be integrated into jsp
-		html.append("<h1>Question Type Introduction</h1>\n");
-		html.append("<p>" + typeIntro + "</p>\n");
-
-		// The creator of the question  TODO: link to User's profile page
-		html.append("<h2>Question Creator</h2>\n");
-		html.append("<p>" + creatorId + "</p>\n"); // TODO: should be a hyper
-		
-		return html.toString(); 
+	public static String printCreateHtml(String questionType){
+		if (questionType.equals(QR)) 
+			return QResponse.printCreateHtml();
+		else if (questionType.equals(FIB)) 
+			return FillInBlank.printCreateHtml();
+		else if (questionType.equals(MC))
+			return MultiChoice.printCreateHtml();
+		else if (questionType.equals(PR))
+			return PResponse.printCreateHtml();
+		else return "error";
 	}
 	
 	
@@ -195,7 +181,7 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		
 		// The type introduction of the question   //TODO: may be integrated into jsp
 		html.append("<h1>Question Type Introduction</h1>\n");
-		html.append("<p>" + typeIntro + "</p>\n");
+	    //	html.append("<p>" + typeIntro + "</p>\n");
 
 		// The creator of the question  TODO: link to User's profile page
 		html.append("<h2>Question Creator</h2>\n");
@@ -239,9 +225,9 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 	public String getQuestionId() {
 		return questionId;
 	}
-	public String getTypeIntro() {
-		return typeIntro;
-	}
+//	public String getTypeIntro() {
+//		return typeIntro;
+//	}
 	public String getQuestionDescription() {
 		return questionDescription;
 	}

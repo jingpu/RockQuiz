@@ -11,12 +11,11 @@ import java.sql.SQLException;
  */
 public class PResponse extends QuestionBase {
 	private String url;
-	
+	private static final String typeIntro = "In this type of question, given a picture, user need to answer the related question";
 	public PResponse(String questionType, String questionId, String creatorId,
-			String typeIntro, String questionDescription, String answer,
+			String questionDescription, String answer,
 			String maxScore, String tagString, String correctRation, String url) {
-		super(questionType, questionId, creatorId, typeIntro, questionDescription,
-				answer, maxScore, tagString, correctRation);
+		super(questionType, creatorId, questionDescription, answer, maxScore, tagString, correctRation);
 		// TODO Auto-generated constructor stub
 		this.url = url;
 	}
@@ -60,15 +59,10 @@ public class PResponse extends QuestionBase {
 	}
 
 
-	/* (non-Javadoc)
-	 * @see quiz.QuestionBase#printHTML()
-	 */
-	@Override
-	public String printCreateHtml() {
-		// TODO Auto-generated method stub
 	
+	public static String printCreateHtml() {
+		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append(super.printCreateHtml());
 		html.append("<h1>This page will guide you to create a picture-response question</h1>");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p> Please enter proposed question description and answer </p>");
@@ -76,12 +70,36 @@ public class PResponse extends QuestionBase {
 		html.append("<p>Picture URL: <img src=\" + url + \"></p>\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		
+		//Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
 		return html.toString();
 		
 	}
+	
+	@Override
+	public String printReadHtml() {
+		// TODO Auto-generated method stub
+		StringBuilder html = new StringBuilder();
+		html.append(super.printReadHtml());
+		
+		html.append("<h1>This is a question page, please read the question information, and make an answer</h1>");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
+		html.append("<p>Question Description: ");
+		html.append(questionDescription + "</p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+		
+		//Hidden information - questionType and  questionId information
+		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId\" ></input></p>");
+		html.append("<input type=\"submit\" value = \"Next\"/></form>");
+
+		return html.toString();
+		
+	}
+	
 
 	/* (non-Javadoc)
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
@@ -90,7 +108,7 @@ public class PResponse extends QuestionBase {
 	public String getScore(String userInput) {
 		// TODO Auto-generated method stub
 		if (userInput.equals(answer)) return  maxScore;
-		return null;
+		return "0";
 	}
 
 }
