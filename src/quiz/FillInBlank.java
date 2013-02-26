@@ -14,29 +14,10 @@ import database.MyDB;
  */
 public class FillInBlank extends QuestionBase {
 
-	public FillInBlank(String questionId) {
+	public FillInBlank(String questionType, String questionId) {
 		// TODO Auto-generated constructor stub
-		questionType = "Fill_In_Blank";
-		queryStmt = "SELECT * FROM Fill_In_Blank_Pool WHERE question_id = " + questionId;
-		Connection con = MyDB.getConnection();
-		try {
-			stmt = con.createStatement();
-			stmt.executeQuery("USE c_cs108_yzhao3");
-			rs = stmt.executeQuery(queryStmt);
-			while(rs.next()) {
-				questionId = rs.getString(1);
-				creatorId = rs.getString(2);
-				typeIntro = rs.getString(3);
-				questionDescription = rs.getString(4);
-				answer = rs.getString(5);
-				maxScore = rs.getString(6);
-				tagString = rs.getString(7);
-				correctRatio = rs.getString(8);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		super(questionType, questionId);
+		
 	}
 
 
@@ -67,15 +48,9 @@ public class FillInBlank extends QuestionBase {
 	@Override
 	public String getScore(String userInput) {
 		// TODO Auto-generated method stub
+		if (userInput.equals(answer)) return  maxScore;
 		return null;
 	}
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 
 }

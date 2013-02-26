@@ -10,7 +10,7 @@
 <body>
 <h1>Please choose an existed question template </h1>
 <ul>
-	<li><a href = "create_question_response"></a></li>
+	<li><a href = "create_question_response">create_question_response</a></li>
 	<li><a href = "create_fill_in_blank"></a></li>
 	<li><a href = "create_multi_choice"></a></li>
 	<li><a href = "create_picture_response"></a></li>

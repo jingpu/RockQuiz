@@ -25,7 +25,7 @@ public class PResponse extends QuestionBase {
 	}
 
 
-	public PResponse(String questionId) {
+	public PResponse(String questionType, String questionId) {
 		questionType = PR;
 		queryStmt = "SELECT * FROM Picture_Response_Pool WHERE question_id = " + questionId;
 		Connection con = MyDB.getConnection();
@@ -78,9 +78,9 @@ public class PResponse extends QuestionBase {
 	 * @see quiz.QuestionBase#printHTML()
 	 */
 	@Override
-	public String printHTML() {
+	public String printCreateHtml() {
 		// TODO Auto-generated method stub
-		String html = super.printHTML();
+		String html = super.printCreateHtml();
 		return html + "<p><img src=" + url + "></p>\n";
 	}
 
@@ -90,6 +90,7 @@ public class PResponse extends QuestionBase {
 	@Override
 	public String getScore(String userInput) {
 		// TODO Auto-generated method stub
+		if (userInput.equals(answer)) return  maxScore;
 		return null;
 	}
 
