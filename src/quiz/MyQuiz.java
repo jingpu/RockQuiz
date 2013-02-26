@@ -517,6 +517,23 @@ public class MyQuiz implements Quiz {
 		return events;
 	}
 
+	public int getTakenTimes() {
+		int num = 0;
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query quizExample0_Event_Table
+			ResultSet rs = stmt.executeQuery("SELECT quizId FROM " + quizName
+					+ "_Event_Table");
+			// get the number of rows
+			rs.last();
+			num = rs.getRow();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return num;
+	}
+
 	public static void main(String[] args) {
 		MyQuiz quiz = new MyQuiz("quizExample0");
 		// test printSummaryPageHTML method
