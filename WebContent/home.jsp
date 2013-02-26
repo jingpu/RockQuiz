@@ -106,16 +106,6 @@
 	<%--popular quizzes --%>
 	<h3>Popular Quizzes</h3>
 	
-	<%--my friends activity --%>
-	<h3>Friends Activities</h3>
-	<ul>
-		<%
-			for(Activity act : friendsAct){
-				out.println("<li>" + act.toString() + "</li>");
-			}
-		%>
-	</ul>
-	
 	<%--recent created quizzes --%>
 	<h3>Recent Created Quizzes</h3>
 
@@ -130,7 +120,17 @@
 			}
 		%>
 	</ul>
-
+	
+	<%--my friends activity --%>
+	<h3>Friends Activities</h3>
+	<ul>
+		<%
+			for(Activity act : friendsAct){
+				out.println("<li>" + act.toString() + "</li>");
+			}
+		%>
+	</ul>
+	
 	<%--my quizzes created history--%>
 	<h3>I Create</h3>
 	<ul>
