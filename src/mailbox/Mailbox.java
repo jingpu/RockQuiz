@@ -20,6 +20,7 @@ import user.Message;
 
 /**
  * Servlet implementation class Mailbox
+ * @author youyuan
  */
 @WebServlet("/Mailbox")
 public class Mailbox extends HttpServlet {

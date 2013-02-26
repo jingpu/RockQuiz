@@ -40,73 +40,107 @@
 	int unreadCount = unread.size();
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity();
-	System.out.println("1");
+	System.out.println("mark1");
 	String announce = (String) session.getAttribute("announce");
-	String mailBoxUrl = "Mailbox.jsp?id="+ userId;
+	String mailBoxUrl = "Mailbox.jsp?id=" + userId;
 %>
 <title>RockQuiz - <%=userId%></title>
 </head>
 <body>
+	<%--announce --%>
 	<p><%=announce%></p>
 	<p><%=new Date()%></p>
 	<h2>
 		<%=userId%>
 	</h2>
 
-	<%-- input name="url" type="hidden" value=url /--%>
+	<%--new message --%>
+	<h3>
+		<a href=<%=mailBoxUrl%>>Message(<%=unreadCount%>)
+		</a>
+	</h3>
 
-	<h3><a href= <%=mailBoxUrl%>>Message(<%=unreadCount%>)</a></h3>
-
-<ul>
-	<%
-		for (String msgCode : unread) {
-			Message msg = user.getMessage("inbox", msgCode);
-			String description = msg.title;
-			if (msg.type == "n") {
-				description = "msg.from" + " sends you a message";
+	<ul>
+		<%
+			for (String msgCode : unread) {
+				Message msg = user.getMessage("inbox", msgCode);
+				String description = msg.title;
+				if (msg.type == "n") {
+					description = "msg.from" + " sends you a message";
+				}
+				SimpleDateFormat sdf = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss.S");
+				Date time = sdf.parse(msg.getTime());
+				Date now = new Date();
+				String timeDscr = TimeTrsf.dscr(time, now);
+				out.println("<li>" + description + " " + timeDscr + "/li>");
 			}
-			SimpleDateFormat sdf = new SimpleDateFormat(
-					"yyyy-MM-dd HH:mm:ss.S");
-			Date time = sdf.parse(msg.getTime());
-			Date now = new Date();
-			String timeDscr = TimeTrsf.dscr(time, now);
-			out.println("<li>" + description + " " + timeDscr
-					+ "/li>");
-		}
-	%>
-</ul>
+		%>
+	</ul>
+	
+	<%--my friends list--%>
+	<h3>Friends List</h3>
+	
+	<%--achievements list --%>
 	<h3>Achievements</h3>
-<ul>
-	<%
-		for (String str : achieves) {
-			out.println("<li>" + str + "</li>");
-		}
-	%>
-</ul>
-	<h3>Popular Quizzes</h3>
+	<ul>
+		<%
+			for (String str : achieves) {
+				out.println("<li>" + str + "</li>");
+			}
+		%>
+	</ul>
 
+	<%--quizzes search box--%>
+	<form action="QuizSearchServelet">
+		<p><input type="text" name="quizSearch" placeholder="Search quizzes here">
+		<input type="submit" value="Search"></p>
+	</form>
+	
+	<%--users search box--%>
+	<form action="UserSearchServelet">
+		<p><input type="text" name="userSearch" placeholder="Search user here">
+		<input type="submit" value="Search"></p>
+	</form>
+	
+	<%--popular quizzes --%>
+	<h3>Popular Quizzes</h3>
+	
+	<%--my friends activity --%>
+	<h3>Friends Activities</h3>
+	<ul>
+		<%
+			for(Activity act : friendsAct){
+				out.println("<li>" + act.toString() + "</li>");
+			}
+		%>
+	</ul>
+	
+	<%--recent created quizzes --%>
 	<h3>Recent Created Quizzes</h3>
 
+	<%--my quizzes taken history--%>
 	<h3>I Took</h3>
-<ul>
-	<%
-		for (int i = 0; i < 5; i++) {
-			if (i == taken.size())
-				break;
-			out.println("<li>" + taken.get(i) + "</li>");
-		}
-	%>
-</ul>
-	<h3>I Create</h3>
-<ul>
-	<%
-		for (int i = 0; i < 5; i++) {
-			if (i == taken.size())
-				break;
-			out.println("<li>" + created.get(i) + "</li>");
-		}
-	%>
-<ul>
+	<ul>
+		<%
+			for (int i = 0; i < 5; i++) {
+				if (i == taken.size())
+					break;
+				out.println("<li>" + taken.get(i) + "</li>");
+			}
+		%>
+	</ul>
 
+	<%--my quizzes created history--%>
+	<h3>I Create</h3>
+	<ul>
+		<%
+			for (int i = 0; i < 5; i++) {
+				if (i == taken.size())
+					break;
+				out.println("<li>" + created.get(i) + "</li>");
+			}
+		%>
+	<ul>
 </body>
 </html>
