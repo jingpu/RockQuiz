@@ -14,13 +14,13 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class QuizSummaryPage
  */
 @WebServlet(description = "Servlet for Quiz Summary page using 'quizName' attribute to display certain quiz summary", urlPatterns = { "/QuizSummaryPage" })
-public class QuizSummaryPage extends HttpServlet {
+public class QuizSummaryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public QuizSummaryPage() {
+	public QuizSummaryServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

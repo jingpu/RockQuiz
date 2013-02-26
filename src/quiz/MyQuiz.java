@@ -360,7 +360,7 @@ public class MyQuiz implements Quiz {
 
 	@Override
 	public String getSummaryPage() {
-		String url = "/QuizSummayPage?quizName=" + quizName;
+		String url = "/QuizSummaryServlet?quizName=" + quizName;
 		return url;
 	}
 
