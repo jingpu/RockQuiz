@@ -3,10 +3,7 @@
  */
 package quiz;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-
-import database.MyDB;
 
 /**
  * @author yang
@@ -49,7 +46,7 @@ public class QResponse extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printCreateHtml());
 		html.append("<h1>This page will guide you to create a question-response question</h1>");
-		html.append("<form action=\"QuestionCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p> Please enter proposed question description and answer </p>");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
@@ -67,7 +64,7 @@ public class QResponse extends QuestionBase {
 		html.append(super.printReadHtml());
 		
 		html.append("<h1>This is a question page, please read the question information, and make an answer</h1>");
-		html.append("<form action=\"QuestionCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
