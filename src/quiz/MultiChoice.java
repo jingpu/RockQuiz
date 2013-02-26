@@ -70,6 +70,43 @@ public class MultiChoice extends QuestionBase {
 
 	
 	@Override
+	public String printCreateHtml() {
+		// TODO Auto-generated method stub
+		StringBuilder html = new StringBuilder();
+		html.append(super.printCreateHtml());
+		html.append("<h1>This page will guide you to create a multiChoice question</h1>");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<p> Please enter proposed question description and answer </p>");
+		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+
+		//Choice options
+		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choiceA\" ></input></p>");
+		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choiceB\" ></input></p>");
+		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choiceC\" ></input></p>");
+		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choiceD\" ></input></p>");
+		
+		//Answer and Full Score
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		
+		//Hidden information - question Type and questionId
+		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId\" ></input></p>");
+		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+		
+		return html.toString();
+		
+		
+		
+	}
+
+	@Override
+	public String printReadHtml() {
+		// TODO Auto-generated method stub
+		return super.printReadHtml();
+	}
+
+	@Override
 	public List<String> getRadioIds() {
 		// TODO Auto-generated method stub
 		return choices;

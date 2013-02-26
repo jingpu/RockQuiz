@@ -3,10 +3,7 @@
  */
 package quiz;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-
-import database.MyDB;
 
 /**
  * @author yang
@@ -26,24 +23,13 @@ public class PResponse extends QuestionBase {
 
 
 	public PResponse(String questionType, String questionId) {
-		questionType = PR;
-		queryStmt = "SELECT * FROM Picture_Response_Pool WHERE question_id = " + questionId;
-		Connection con = MyDB.getConnection();
+		super(questionType, questionId);
 		try {
 			stmt = con.createStatement();
 			stmt.executeQuery("USE c_cs108_yzhao3");
 			rs = stmt.executeQuery(queryStmt);
-			while(rs.next()) {
-				questionId = rs.getString(1);
-				creatorId = rs.getString(2);
-				typeIntro = rs.getString(3);
-				questionDescription = rs.getString(4);
-				answer = rs.getString(5);
-				maxScore = rs.getString(6);
-				tagString = rs.getString(7);
-				correctRatio = rs.getString(8);
-				url = rs.getString(9);
-			}
+			rs.next();
+			url = rs.getString(9);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,8 +66,21 @@ public class PResponse extends QuestionBase {
 	@Override
 	public String printCreateHtml() {
 		// TODO Auto-generated method stub
-		String html = super.printCreateHtml();
-		return html + "<p><img src=" + url + "></p>\n";
+	
+		StringBuilder html = new StringBuilder();
+		html.append(super.printCreateHtml());
+		html.append("<h1>This page will guide you to create a picture-response question</h1>");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<p> Please enter proposed question description and answer </p>");
+		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+		html.append("<p>Picture URL: <img src=\" + url + \"></p>\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId\" ></input></p>");
+		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+		return html.toString();
+		
 	}
 
 	/* (non-Javadoc)

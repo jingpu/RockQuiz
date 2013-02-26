@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import database.MyDB;
@@ -46,15 +45,7 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		this.questionType = questionType;
 		this.questionId = questionId;
 		
-		String questionTable;
-		if (questionType.equals(QR)) 
-			questionTable = QR_Table;
-		else if (questionType.equals(FIB)) 
-			questionTable = FIB_Table;
-		else if (questionType.equals(MC))
-			questionTable = MC_Table;
-		else
-			questionTable = PR_Table;
+		String questionTable = getQuestionTable(questionType);
 		
 		String tmpCreatorId = "error";
 		String tmpTypeIntro = "error";
@@ -92,29 +83,75 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		maxScore = tmpMaxScore;
 		tagString = tmpTagString;
 		correctRatio = tmpCorrectRatio;
-		
 	};
 	
+	
+	
+	
 	//Create a question from webpage
-	public QuestionBase(String questionType, String questionId,
-			String creatorId, String typeIntro, String questionDescription,
-			String answer, String maxScore, String tagString,
-			String correctRation) {
+	public QuestionBase(String questionType, String creatorId,
+			String typeIntro, String questionDescription, String answer,
+			String maxScore, String tagString, String correctRatio) {
 		super();
 		this.questionType = questionType;
-		this.questionId = questionId;
 		this.creatorId = creatorId;
 		this.typeIntro = typeIntro;
 		this.questionDescription = questionDescription;
 		this.answer = answer;
 		this.maxScore = maxScore;
 		this.tagString = tagString;
-		this.correctRatio = correctRation;
+		this.correctRatio = correctRatio;
+		this.questionId = generateId(questionType);
 	}
 
-	//	Create a question from database
+
+	private String generateId(String questionType) {
+		Integer id = 0;
+		String questionTable = getQuestionTable(questionType);
+		queryStmt = "SELECT * FROM " + questionTable + " ORDER BY question_id DESC LIMIT 1";
+		Connection con = MyDB.getConnection();
+		try {
+			stmt = con.createStatement();
+			stmt.executeQuery("USE c_cs108_yzhao3");
+			rs = stmt.executeQuery(queryStmt);
+			rs.next();
+			
+			id = Integer.parseInt(rs.getString(1)) + 1;
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return id.toString();
+	}
+
 
 	
+	
+	private String getQuestionTable(String questionType) {
+		String questionTable = null;
+		if (questionType.equals(QR)) 
+			questionTable = QR_Table;
+		else if (questionType.equals(FIB)) 
+			questionTable = FIB_Table;
+		else if (questionType.equals(MC))
+			questionTable = MC_Table;
+		else if (questionType.equals(PR))
+			questionTable = PR_Table;
+		
+		return questionTable;
+	}
+	
+
+	public static String[] getQuestionTypes() {
+		String types[] = new String[4]; 
+		types[0] = QR;
+		types[1] = FIB;
+		types[2] = MC;
+		types[3] = PR; 
+		return types;
+	}
 	
 	//MyQuiz get a question using questionType and questionId
 	public static QuestionBase getQuestion(String questionType, String questionId){
@@ -142,7 +179,7 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		StringBuilder html = new StringBuilder();
 		
 		// The type introduction of the question   //TODO: may be integrated into jsp
-		html.append("<h2>Question Type Introduction</h2>\n");
+		html.append("<h1>Question Type Introduction</h1>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 
 		// The creator of the question  TODO: link to User's profile page
@@ -157,7 +194,7 @@ public abstract class QuestionBase {   //abstract class cannot be instantiated, 
 		StringBuilder html = new StringBuilder();
 		
 		// The type introduction of the question   //TODO: may be integrated into jsp
-		html.append("<h2>Question Type Introduction</h2>\n");
+		html.append("<h1>Question Type Introduction</h1>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 
 		// The creator of the question  TODO: link to User's profile page
