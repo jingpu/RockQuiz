@@ -27,27 +27,17 @@ public class MultiChoice extends QuestionBase {
 		this.choices = choices;
 	}
 
-	public MultiChoice(String questionId) {
-		questionType = MC;
-		queryStmt = "SELECT * FROM Multi_Choice_Pool WHERE question_id = " + questionId;
-		Connection con = MyDB.getConnection();
+	public MultiChoice(String questionType, String questionId) {
+		super(questionType, questionId);
 		try {
 			stmt = con.createStatement();
 			stmt.executeQuery("USE c_cs108_yzhao3");
 			rs = stmt.executeQuery(queryStmt);
-			while(rs.next()) {
-				questionId = rs.getString(1);
-				creatorId = rs.getString(2);
-				typeIntro = rs.getString(3);
-				questionDescription = rs.getString(4);
-				answer = rs.getString(5);
-				maxScore = rs.getString(6);
-				tagString = rs.getString(7);
-				correctRatio = rs.getString(8);
-				choices = new ArrayList<String>();
-				for (int i = 0; i < 3; i++) {
-					choices.add(rs.getString(i + 9));
-				}
+			rs.next();
+		
+			choices = new ArrayList<String>();	
+			for (int i = 0; i < 3; i++) {
+				choices.add(rs.getString(i + 9));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -92,6 +82,7 @@ public class MultiChoice extends QuestionBase {
 	@Override
 	public String getScore(String userInput) {
 		// TODO Auto-generated method stub
+		if (userInput.equals(answer)) return  maxScore;
 		return null;
 	}
 

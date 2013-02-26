@@ -15,7 +15,7 @@
 <%
 	MyQuiz quiz = (MyQuiz)session.getAttribute("quiz");
 	int index; //index for question
-	QuestionBase question = quiz.getQuestion(index); 
+	QuestionBase question = QuestionBase.getQuestion("Question_Response", "1"); 
 	String htmlStr = question.printHTML();
 	String type = question.getQuestionType();
 	String prompt = "Your Answer:";  //TODO: chang based on questionType question.getPrompt();
