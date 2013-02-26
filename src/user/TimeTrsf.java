@@ -6,28 +6,33 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class TimeTrsf {
+	 
+	private static long ahour = 1000*60*60;
+	private static long amin = 1000*60;
+	private static long asec = 1000;
+	
 	public static String dscr(Date date1, Date date2){
 		SimpleDateFormat fmt1 = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat fmt2 = new SimpleDateFormat("yyyy");
 		StringBuilder description = new StringBuilder();
 		if(fmt1.format(date1).equals(fmt1.format(date2))){
+			//System.out.println(fmt1.format(date1));
+			//System.out.println(fmt1.format(date2));
 			long difference = date2.getTime() - date1.getTime();
-			Date diffTime = new Date(difference);
-			Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
-			calendar.setTime(diffTime);   // assigns calendar to given date 
-			int hour = calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
-			int min = calendar.get(Calendar.MINUTE);
-			int sec = calendar.get(Calendar.SECOND);
-			if(hour > 1) {
-				description.append(hour).append(" hours ago");
-			} else if(hour == 1) {
-				description.append(hour).append(" hour ago");
-			} else if(min > 1) {
-				description.append(min).append(" mins ago");
-			} else if(min == 1) {
-				description.append(min).append(" min ago");
-			} else if(sec > 1) {
-				description.append(sec).append(" secs ago");
+			//System.out.println(difference);
+			//Date diffTime = new Date(difference);
+			//System.out.println(fmt1.format(diffTime));
+			
+			if(difference > ahour) {
+				description.append(difference/ahour).append(" hours ago");
+			} else if(difference == ahour) {
+				description.append("1 hour ago");
+			} else if(difference > amin) {
+				description.append(difference/amin).append(" mins ago");
+			} else if(difference == amin) {
+				description.append("1 min ago");
+			} else if(difference > asec) {
+				description.append(difference/asec).append(" secs ago");
 			} else {
 				description.append(" just now");
 			} 

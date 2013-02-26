@@ -16,14 +16,15 @@
 <%
 	String url = request.getRequestURL().toString();
 	String userId = request.getParameter("id");
-	String announce = (String) session.getAttribute("announce");
-	String guest = (String) session.getAttribute("user");
-	if (guest.equals("guest")) {
+	String guest = (String) session.getAttribute("guest");
+	if (userId == null || guest.equals("guest")) {
 		response.sendRedirect("index.html");
+		return;
 	} else if (!guest.equals(userId)) {
-		response.sendRedirect("userpage.jsp?id=" + userId);
+		response.sendRedirect("home.jsp?id=" + guest);
+		return;
 	}
-	Account user = new Account("userId");
+	Account user = new Account(userId);
 	String status = UserManager.getAccountInfo(userId, "status");
 
 	// generate achievements history
@@ -33,76 +34,79 @@
 	// generate quizzes created history
 	List<String> created = user.getQuizCreated();
 	// mail messages
-	List<Message> inbox = user.getMessageInbox();
-	List<Message> sent = user.getMessageSent();
-	List<Message> unread = user.getUnreadMessage();
+	List<String> inbox = user.getMessageInbox();
+	List<String> sent = user.getMessageSent();
+	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity();
+	System.out.println("1");
+	String announce = (String) session.getAttribute("announce");
+	String mailBoxUrl = "Mailbox.jsp?id="+ userId;
 %>
 <title>RockQuiz - <%=userId%></title>
 </head>
 <body>
 	<p><%=announce%></p>
+	<p><%=new Date()%></p>
 	<h2>
-		<p><%=userId%></p>
+		<%=userId%>
 	</h2>
 
-	<form action="Mailbox">
-		<input name="username" type="hidden" value=userId />
-		<%-- input name="url" type="hidden" value=url /--%>
-		<h3>
-			Message(<%=unreadCount%>)
-		</h3>
-	</form>
+	<%-- input name="url" type="hidden" value=url /--%>
+
+	<h3><a href= <%=mailBoxUrl%>>Message(<%=unreadCount%>)</a></h3>
+
+<ul>
 	<%
-		for (Message msg : unread) {
+		for (String msgCode : unread) {
+			Message msg = user.getMessage("inbox", msgCode);
 			String description = msg.title;
 			if (msg.type == "n") {
 				description = "msg.from" + " sends you a message";
 			}
 			SimpleDateFormat sdf = new SimpleDateFormat(
 					"yyyy-MM-dd HH:mm:ss.S");
-			Date time = sdf.parse(msg.time);
+			Date time = sdf.parse(msg.getTime());
 			Date now = new Date();
 			String timeDscr = TimeTrsf.dscr(time, now);
-			out.println("<li><p>" + description + " " + timeDscr
-					+ "</p></li>");
+			out.println("<li>" + description + " " + timeDscr
+					+ "/li>");
 		}
 	%>
-
+</ul>
 	<h3>Achievements</h3>
+<ul>
 	<%
 		for (String str : achieves) {
-			out.println("<li><p>" + str + "</p></li>");
+			out.println("<li>" + str + "</li>");
 		}
 	%>
+</ul>
+	<h3>Popular Quizzes</h3>
 
-	<h3>
-		<p>Popular Quizzes</p>
-	</h3>
+	<h3>Recent Created Quizzes</h3>
 
-	<h3>
-		<p>Recent Created Quizzes</p>
-	</h3>
-
-	<h3>
-		<p>I Recently Took</p>
-	</h3>
+	<h3>I Took</h3>
+<ul>
 	<%
 		for (int i = 0; i < 5; i++) {
-			out.println("<li><p>" + taken.get(i) + "</p></li>");
+			if (i == taken.size())
+				break;
+			out.println("<li>" + taken.get(i) + "</li>");
 		}
 	%>
-	<h3>
-		<p>I Create</p>
-	</h3>
+</ul>
+	<h3>I Create</h3>
+<ul>
 	<%
 		for (int i = 0; i < 5; i++) {
-			out.println("<li><p>" + created.get(i) + "</p></li>");
+			if (i == taken.size())
+				break;
+			out.println("<li>" + created.get(i) + "</li>");
 		}
 	%>
+<ul>
 
-	<%--  --%>
 </body>
 </html>

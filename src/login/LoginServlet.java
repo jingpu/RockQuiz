@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.ServletContext;
@@ -83,12 +84,16 @@ public class LoginServlet extends HttpServlet {
 		
 		if (UserManager.matchAccount(usrname, hashValue)) {
 			//String usrpage = "userpage.jsp?id=" + usrname;
-			String usrpage = "home.jsp?id=" + usrname;
-			RequestDispatcher dispatch = request.getRequestDispatcher(usrpage);
+			HttpSession session = request.getSession();
+	        session.setAttribute("guest", usrname);
+			String homepage = "home.jsp?id=" + usrname;
+			RequestDispatcher dispatch = request.getRequestDispatcher(homepage);
 			dispatch.forward(request, response);
+			return;
 		} else {
 			RequestDispatcher dispatch = request.getRequestDispatcher("infoIncorrect.html");
 			dispatch.forward(request, response);
+			return;
 		}
 		
 	}

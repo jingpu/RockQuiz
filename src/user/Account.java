@@ -57,23 +57,32 @@ public class Account implements User{
 		return UserManager.getQuizCreated(userId);
 	}
 	
-	public List<Message> getMessageInbox(){
+	public boolean sendMessage(Message msg){
+		return UserManager.sendMsg(msg);
+	}
+	
+	public Message getMessage(String box, String msgCode){
+		return UserManager.getMsg(userId, box, msgCode);
+	}
+	
+	public Message readMessage(String box, String msgCode){
+		return UserManager.readMsg(userId, box, msgCode);
+	}
+	
+	public void deleteMessage(String box, String msgCode){
+		UserManager.deleteMsg(userId, box, msgCode);
+	}
+	
+	public List<String> getMessageInbox(){
 		return UserManager.getMessagesInbox(userId);
 	}
 
-	public List<Message> getMessageSent(){
-		return UserManager.getMessagesInbox(userId);
+	public List<String> getMessageSent(){
+		return UserManager.getMessagesSent(userId);
 	}
 	
-	public List<Message> getUnreadMessage(){
-		List<Message> msgs = getMessageInbox();
-		List<Message> unreadMsgs = new LinkedList<Message>();
-		for(Message msg : msgs){
-			if(!msg.ifRead){
-				unreadMsgs.add(msg);
-			}
-		}
-		return unreadMsgs;
+	public List<String> getUnreadMessage(){
+		return UserManager.getUnreadMessages(userId);
 	}
 	
 	public List<String> getFriendsList(){

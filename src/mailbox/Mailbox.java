@@ -1,3 +1,6 @@
+/* replaced by Mailbox.jsp
+ * */
+
 package mailbox;
 
 import java.io.IOException;
@@ -43,15 +46,19 @@ public class Mailbox extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userId = request.getParameter("username");
+		String userId = request.getParameter("id");
+		System.out.println(userId);
 		HttpSession session = request.getSession();
-		String guest = (String) session.getAttribute("user");
-		if(guest.equals("guest")) {
+		String guest = (String) session.getAttribute("guest");
+		System.out.println(guest);
+		if(guest == null || guest.equals("guest")) {
 			RequestDispatcher dispatch = request.getRequestDispatcher("index.html");
 			dispatch.forward(request, response);
+			return;
 		} else if(!guest.equals(userId)){
 			RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp?id=" + guest);
 			dispatch.forward(request, response);
+			return;
 		} else {
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
@@ -64,30 +71,30 @@ public class Mailbox extends HttpServlet {
 			out.println("<title>Mailbox - " + userId + "</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<input name=\"username\" type=\"hidden\" value=" + userId + " />");
 			out.println("<h1>Mailbox</h1>");
 			out.println("<h2>Inbox</h2>");
-			out.println("<table frame=\"hsizes\" rules=\"rows\"><tr><th>From</th><th>Title</th><th>Date</th></tr>");
-			List<Message> msgsInbox = user.getMessageInbox();
-			for(Message msg : msgsInbox){
-				if(msg.ifRead) out.println("<b>");
-				String msgCode = Integer.toHexString((msg.time + "yy" + msg.from).hashCode());
-				out.println("<a href=\"Mailbox.jsp?box=inbox&msg=" + msgCode + "\">" +
-						"<tr><td>"+ msg.from + "</td><td>" + msg.title + "</td><td>" + msg.time + "</td></tr></a>");
-				if(msg.ifRead) out.println("</b>");
+			out.println("<table width=\"300\" frame=\"hsizes\" rules=\"rows\"><tr><th>From</th><th>Title</th><th>Date</th></tr>");
+			List<String> msgsInbox = user.getMessageInbox();
+			for(String msgCode : msgsInbox){
+				Message msg = user.getMessage("inbox", msgCode);
+				if(!msg.getRead()) out.println("<b>");
+				out.println("<a href=\"Mailbox.jsp?id=" + userId + "box=inbox&msg=" + msgCode + "\">" +
+						"<tr><td>"+ msg.from + "</td><td>" + msg.title + "</td><td>" + msg.getTime() + "</td></tr></a>");
+				if(!msg.getRead()) out.println("</b>");
 			}
 			out.println("</table>");
 
 			out.println("<h2>Sent</h2>");
-			out.println("<table frame=\"hsizes\" rules=\"rows\"><tr><th>To</th><th>Title</th><th>Date</th></tr>");
-			List<Message> msgsSent = user.getMessageSent();
-			for(Message msg : msgsSent){
-				String msgCode = Integer.toHexString((msg.time + "yy" + msg.from).hashCode());
-				out.println("<a href=\"Mailbox.jsp?box=sent&msg=" + msgCode + "\">" +
-						"<tr><td>"+ msg.to + "</td><td>" + msg.title + "</td><td>" + msg.time + "</td></tr></a>");
+			out.println("<table width=\"300\" frame=\"hsizes\" rules=\"rows\"><tr><th>To</th><th>Title</th><th>Date</th></tr>");
+			List<String> msgsSent = user.getMessageSent();
+			for(String msgCode : msgsSent){
+				Message msg = user.getMessage("sent", msgCode);
+				out.println("<a href=\"Mailbox.jsp?id=" + userId + "box=sent&msg=" + msgCode + "\">" +
+						"<tr><td>"+ msg.to + "</td><td>" + msg.title + "</td><td>" + msg.getTime() + "</td></tr></a>");
 			}
 			out.println("</table>");
 			out.println("</body></html>");
+			return;
 		}
 	}
 

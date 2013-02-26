@@ -1,6 +1,6 @@
 CREATE TABLE userTable (
 	userId varchar(20),
-	password varchar(50),
+	password char(40),
 	registrationTime datetime, 
 	status char(1), -- u/s: u-user;s-admin
 	gender char(1), -- m/f
@@ -33,12 +33,4 @@ CREATE TABLE userId_inbox (
 	title varchar(50),
 	content text,
 	ifRead char(1) -- 1(read)/0(unread)
-)
-
-CREATE TABLE userId_sent (
-	Time datetime,
-	toUser varchar(20),
-	Type char(1), -- c(challenge)/r(friend request)/f(friend confirm)/n(normal text)
-	title varchar(50),
-	content text,
 )

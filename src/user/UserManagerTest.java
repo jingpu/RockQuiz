@@ -43,19 +43,21 @@ public class UserManagerTest {
 		System.out.println(UserManager.getFriendsList("a2"));
 		System.out.println(UserManager.getFriendsList("a3"));
 		System.out.println(UserManager.getFriendsList("a4")); //a1
-		List<Message> msgsI = UserManager.getMessagesInbox("a1");
-		List<Message> msgsS = UserManager.getMessagesInbox("a1");
-		for(Message msg : msgsI){
+		List<String> msgsI = UserManager.getMessagesInbox("a1");
+		List<String> msgsS = UserManager.getMessagesSent("a1");
+		for(String msg : msgsI){
 			System.out.println(msg.toString());
-			System.out.println(msg.time);
-			System.out.println(msg.from); //
-			System.out.println(msg.type); //f r f
+			Message mail = UserManager.readMsg("a1", "inbox", msg);
+			System.out.println(mail.getTime());
+			System.out.println(mail.from); //
+			System.out.println(mail.type); //f r f
 		}
-		for(Message msg : msgsS){
+		for(String msg : msgsS){
 			System.out.println(msg.toString());
-			System.out.println(msg.time);
-			System.out.println(msg.from); //
-			System.out.println(msg.type); //f r f
+			Message mail = UserManager.readMsg("a1", "sent", msg);
+			System.out.println(mail.getTime());
+			System.out.println(mail.to); //
+			System.out.println(mail.type); //f r f
 		}
 	}
 	

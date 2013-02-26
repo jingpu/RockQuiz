@@ -94,8 +94,8 @@ public class CreationServlet extends HttpServlet {
 			dispatch.forward(request, response);
 		} else {
 			UserManager.addNewAccount(usrname, hashValue, "u", gender, email);
-			//String usrpage = "userpage.jsp?id=" + usrname;
-			String usrpage = "userWelcome.jsp";
+			String usrpage = "home.jsp?id=" + usrname;
+			//String usrpage = "userWelcome.jsp";
 			RequestDispatcher dispatch = request.getRequestDispatcher(usrpage);
 			dispatch.forward(request, response);
 		}

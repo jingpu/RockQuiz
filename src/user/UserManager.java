@@ -1,5 +1,8 @@
 package user;
 
+import java.security.DigestException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -82,7 +85,7 @@ public class UserManager{
 			// TODO Auto-generated catch block
 			try {
 				stmt.executeUpdate("CREATE TABLE " + userTable + " ( " +
-						"userId varchar(20), password varchar(50), " +
+						"userId varchar(20), password varchar(40), " +
 						"registrationTime datetime, status char(1), gender char(1), email char(50));");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -101,11 +104,11 @@ public class UserManager{
 					"Type char(1), content varchar(50));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_network( userId varchar(20), " +
 					"status char(1));");
-			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( Time text, " +
-					"fromUser varchar(20), Type char(1), " +
-					"title varchar(50), content text, ifRead char(1) );");
-			stmt.executeUpdate("CREATE TABLE " + userId + "_sent( Time text, " +
-					"toUser varchar(20), Type char(1), title varchar(50), " +
+			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( code char(40), Time text, " +
+					"fromUser varchar(20), Type char(1), title text, " +
+					"content text, ifRead char(1) );");
+			stmt.executeUpdate("CREATE TABLE " + userId + "_sent( code char(40), Time text, " +
+					"toUser varchar(20), Type char(1), title text, " +
 					"content text );");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -216,8 +219,9 @@ public class UserManager{
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * from " 
 					+ userTable + " WHERE userId='" + userId + "'");
-			rs.next();
-			str = rs.getString(column);			
+			if(rs.next() && rs.getString(column) != null){
+				str = rs.getString(column);			
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -298,14 +302,19 @@ public class UserManager{
 						+ to + "\",\"r\")");
 				stmt.executeUpdate("INSERT INTO " + to + "_network" + " VALUES (\""
 						+ from + "\",\"u\")");
-				sendMsg(from, to, "r", "1", "1");  //r - friend request msg
+				Message msg = new Message(from, to, "r", "", "");
+				sendMsg(msg);  //r - friend request msg
+				setDriver();
 			} else if (rs.getString("status").equals("r")){
 				stmt.executeUpdate("UPDATE " + from + "_network" + " SET status='f' " +
 						"WHERE userId='" + to + "'");
 				stmt.executeUpdate("UPDATE " + to + "_network" + " SET status='f' " +
 						"WHERE userId='" + from + "'");
-				sendMsg(from, to, "f", "2", "2"); //f - friend confirm msg
-				sendMsg(to, from, "f", "2", "2");
+				Message msg1 = new Message(from, to, "f", "", "");
+				sendMsg(msg1);
+				Message msg2 = new Message(to, from, "r", "", "");
+				sendMsg(msg2);
+				setDriver();
 			} 
 
 		} catch (SQLException e) {
@@ -331,8 +340,10 @@ public class UserManager{
 					if(decision.equals("f")) {
 						stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='f' " +
 								"WHERE userId='" + me + "'");
-						sendMsg(me, other, "f", "2", "2"); //f - friend confirm msg
-						sendMsg(other, me, "f", "2", "2");
+						Message msg1 = new Message(me, other, "f", "", "");
+						sendMsg(msg1);
+						Message msg2 = new Message(other, me, "r", "", "");
+						sendMsg(msg2);
 					} 
 					setDriver();
 					stmt.executeUpdate("UPDATE " + me + "_network" + " SET status='" + decision 
@@ -362,48 +373,133 @@ public class UserManager{
 		close();
 	}
 
-	public static void sendMsg(String from, String to, String type, String title, String content){
+	public static boolean sendMsg(Message msg){
 		setDriver();
 		Date now = new Date();
 		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String currentTime = sdf.format(now);
+		
+		String hashValue = "";
+		String str = currentTime + msg.from + msg.to + msg.type + msg.title;
 		try {
-			stmt.executeUpdate("INSERT INTO " + from + "_sent" + " VALUES (\"" + currentTime + "\", \""
-					+ to + "\",\"" + type + "\",\"" + title + "\",\"" + content + "\")");
+			MessageDigest md = MessageDigest.getInstance("SHA");
+			try {
+				md.update(str.getBytes());
+				MessageDigest tc = (MessageDigest)md.clone();
+				byte[] bytes = tc.digest();
+				StringBuffer buff = new StringBuffer();
+				for (int i=0; i<bytes.length; i++) {
+					int val = bytes[i];
+					val = val & 0xff;  // remove higher bits, sign
+					if (val<16) buff.append('0'); // leading 0
+					buff.append(Integer.toString(val, 16));
+				}			
+				hashValue = buff.toString();
+				md.reset();
+			} catch (CloneNotSupportedException cnse) {
+			     try {
+					throw new DigestException("couldn't make digest of partial content");
+				} catch (DigestException e) {
+					e.printStackTrace();
+				}
+			    return false;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		try {
+			stmt.executeUpdate("INSERT INTO " + msg.from + "_sent" + " VALUES (\"" + hashValue + "\",\"" 
+					+ currentTime + "\", \"" + msg.to + "\",\"" + msg.type + "\",\"" + msg.title + "\",\"" 
+					+ msg.content + "\")");
 
-			stmt.executeUpdate("INSERT INTO " + to + "_inbox" + " VALUES (\""+ currentTime + "\", \""
-					+ from + "\",\"" + type + "\",\"" + title + "\",\"" + content + "\",\"0\")");
+			stmt.executeUpdate("INSERT INTO " + msg.to + "_inbox" + " VALUES (\""+ hashValue + "\",\"" 
+					+ currentTime + "\", \"" + msg.from + "\",\"" + msg.type + "\",\"" + msg.title + "\",\"" 
+					+ msg.content + "\",\"0\")");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 		close();
+		return true;
 	}
 
-	/** @return the content of the message
+	/** @return the information of the message without reading it.
 	 * **/
-	public static void markReadMsg(String userId, Message msg){
+	public static Message getMsg(String userId, String box, String msgCode){
+		String boxTable = userId + "_" + box;
+		Message msg = null;
 		setDriver();
 		try {
-			stmt.executeUpdate("UPDATE " + userId + "_inbox SET ifRead='1' " +
-						"WHERE Time='" + msg.time + "' AND fromUser='" + msg.from + "'");
-			msg.ifRead = true;
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + boxTable + " WHERE code='" + msgCode + "'");
+			if(rs.next()){
+				if(box.equals("inbox")){
+					msg = new Message(rs.getString("fromUser"), userId, rs.getString("type"), 
+							rs.getString("title"), rs.getString("content"));
+					msg.setRead(rs.getString("ifRead") == "1");
+				} else if(box.equals("sent")){
+					msg = new Message(userId, rs.getString("toUser"), rs.getString("type"), 
+							rs.getString("title"), rs.getString("content"));
+				}
+				msg.setTime(rs.getString("Time"));
+			} else {
+				System.out.println("Message does not exist.");
+			}
+			if(rs.next()){
+				System.out.println("Message Hashcode duplicates.");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		close();
+		return msg;
+	}
+
+	/** @return the information of the message by reading it.
+	 * **/
+	public static Message readMsg(String userId, String box, String msgCode){
+		String boxTable = userId + "_" + box;
+		Message msg = null;
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + boxTable + " WHERE code='" + msgCode + "'");
+			if(rs.next()){
+				if(box.equals("inbox")){
+					msg = new Message(rs.getString("fromUser"), userId, rs.getString("type"), 
+							rs.getString("title"), rs.getString("content"));
+					msg.setRead(true);
+				} else if(box.equals("sent")){
+					msg = new Message(userId, rs.getString("toUser"), rs.getString("type"), 
+							rs.getString("title"), rs.getString("content"));
+				}
+				msg.setTime(rs.getString("Time"));
+			} else {
+				System.out.println("Message does not exist.");
+			}
+			if(rs.next()){
+				System.out.println("Message Hashcode duplicates.");
+			}
+			if(box.equals("inbox")){
+				stmt.executeUpdate("UPDATE " + userId + "_inbox SET ifRead='1' " + "WHERE code='" 
+					+ msgCode + "'");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return msg;
 	}
 	
-	public static void deleteMsg(String userId, String box, Message msg){
+	public static void deleteMsg(String userId, String box, String msgCode){
 		setDriver();
 		String boxTable = userId + "_" + box;
-		String otherType = box.equals("inbox")? "fromUser" : "toUser";
-		String other = box.equals("inbox")? msg.from : msg.to;
 		try {
-			stmt.executeUpdate("DELETE FROM " + boxTable + "WHERE Time='" + msg.time 
-					+ "' AND " + otherType + "='" + other + "'");
+			stmt.executeUpdate("DELETE FROM " + boxTable + "WHERE code='" + msgCode + "'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -411,16 +507,13 @@ public class UserManager{
 		close();
 	}
 	
-	public static List<Message> getMessagesInbox(String userId){
-		List<Message> msgs = new LinkedList<Message>(); 
+	public static List<String> getMessagesInbox(String userId){
+		List<String> msgs = new LinkedList<String>(); 
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_inbox ORDER BY Time DESC");
 			while(rs.next()){
-				Message msg = new Message(rs.getString("Time"), rs.getString("fromUser"), userId, 
-						rs.getString("Type"), rs.getString("title"), rs.getString("content"));
-				msg.ifRead = rs.getString("ifRead").equals("1");
-				msgs.add(msg);
+				msgs.add(rs.getString("code"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -430,15 +523,30 @@ public class UserManager{
 		return msgs;
 	}
 	
-	public static List<Message> getMessagesSent(String userId){
-		List<Message> msgs = new LinkedList<Message>(); 
+	public static List<String> getUnreadMessages(String userId){
+		List<String> msgs = new LinkedList<String>(); 
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_inbox WHERE " +
+					"ifRead='0' ORDER BY Time DESC");
+			while(rs.next()){
+				msgs.add(rs.getString("code"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return msgs;
+	}
+	
+	public static List<String> getMessagesSent(String userId){
+		List<String> msgs = new LinkedList<String>(); 
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_sent ORDER BY Time DESC");
 			while(rs.next()){
-				Message msg = new Message(rs.getString("Time"), rs.getString("toUser"), userId, 
-						rs.getString("Type"), rs.getString("title"), rs.getString("content"));
-				msgs.add(msg);
+				msgs.add(rs.getString("code"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -495,7 +603,7 @@ public class UserManager{
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
-					+ "_history WHERE Type=a ORDER BY Time DESC");
+					+ "_history WHERE Type='a' ORDER BY Time DESC");
 			while(rs.next()){
 				achieves.add(rs.getString("content"));
 			}
@@ -512,7 +620,7 @@ public class UserManager{
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
-					+ "_history WHERE Type=t ORDER BY Time DESC");
+					+ "_history WHERE Type='t' ORDER BY Time DESC");
 			while(rs.next()){
 				taken.add(rs.getString("content"));
 			}
@@ -529,7 +637,7 @@ public class UserManager{
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
-					+ "_history WHERE Type=c ORDER BY Time DESC");
+					+ "_history WHERE Type='c' ORDER BY Time DESC");
 			while(rs.next()){
 				created.add(rs.getString("content"));
 			}
@@ -549,7 +657,7 @@ public class UserManager{
 					+ "_history ORDER BY Time DESC");
 			int i = 0;
 			while(rs.next()){
-				Activity act = new Activity(rs.getString("time"), 
+				Activity act = new Activity(rs.getString("Time"), 
 						rs.getString("type"), rs.getString("content"));
 				recent.add(act);
 				i++;
