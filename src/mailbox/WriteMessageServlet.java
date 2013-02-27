@@ -60,12 +60,12 @@ public class WriteMessageServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println(new Date());
-		out.println("<form action=\"MsgSent\" method=\"post\">");
-		out.println("<p>To <input type=\"text\" name=\"toUser\"></p>");
-		out.println("<p><input type=\"textarea\" name=\"title\" placeholder=\"Subject\"></p>");
-		out.println("<textarea rows=\"10\" cols=\"50\" " + "name=\"content\" " +
-				"form=\"MsgSent\" placeholder=\"Composing message here\"></textarea>");
-		out.println("<p><input type=\"submit\" value=\"Send\"></form>");
-		out.println("<a href=\"" + mailBoxUrl + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
+		out.println("<form action=\"MsgSent\" id=\"Compose\" method=\"post\"></form>");
+		out.println("<p>To <input type=\"text\" name=\"toUser\" form=\"Compose\"></p>");
+		out.println("<p><input type=\"text\" name=\"title\" placeholder=\"Subject\" form=\"Compose\"></p>");
+		out.println("<textarea rows=\"10\" cols=\"50\" name=\"content\" form=\"Compose\" " +
+				"placeholder=\"Composing message here\"></textarea>");
+		out.println("<p><input type=\"submit\" value=\"Send\" form=\"Compose\">" +
+				"<a href=\"" + mailBoxUrl + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
 	}
 }
