@@ -368,8 +368,7 @@ public class MyQuiz implements Quiz {
 
 	@Override
 	public String getSummaryPage() {
-		String url = "/QuizSummaryServlet?quizName=" + quizName;
-		return url;
+		return "QuizSummaryServlet?quizName=" + quizName;
 	}
 
 	/**
@@ -377,7 +376,7 @@ public class MyQuiz implements Quiz {
 	 * @return String of the hyper link to start a quiz
 	 */
 	public String getQuizStartPage() {
-		return null;
+		return "QuestionProcessServlet?quizName=" + quizName;
 	}
 
 	/**
@@ -402,6 +401,10 @@ public class MyQuiz implements Quiz {
 	@Override
 	public String getQuizName() {
 		return quizName;
+	}
+
+	public List<QuestionBase> getQuestionList() {
+		return questionList;
 	}
 
 	@Override
