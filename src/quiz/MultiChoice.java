@@ -108,13 +108,13 @@ public class MultiChoice extends QuestionBase {
 		html.append(questionDescription + "</p>");
 
 		// create choice options
-		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"A. "
+		html.append("<p><input type=\"radio\" name=\"answer\" value=\"A. "
 				+ choices.get(0) + "\">" + choices.get(0) + "</input></p>");
-		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"B. "
+		html.append("<p><input type=\"radio\" name=\"answer\" value=\"B. "
 				+ choices.get(1) + "\">" + choices.get(1) + "</input></p>");
-		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"C. "
+		html.append("<p><input type=\"radio\" name=\"answer\" value=\"C. "
 				+ choices.get(2) + "\">" + choices.get(2) + "</input></p>");
-		html.append("<p><input type=\"radio\" name=\"userAnswer\" value=\"D. "
+		html.append("<p><input type=\"radio\" name=\"answer\" value=\"D. "
 				+ choices.get(3) + "\">" + choices.get(3) + "</input></p>");
 
 		// Hidden information - questionType and questionId information
