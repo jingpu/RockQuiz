@@ -49,8 +49,6 @@ INSERT INTO Question_Response_Pool VALUES
 	 "Who is the first president of USA?", "George Washington", "5", 
 	 "#his#Cul#", "2/3");
 							   
-
-	 
 	 
 
 	 
@@ -96,9 +94,9 @@ CREATE TABLE Multi_Choice_Pool (
 
 INSERT INTO Multi_Choice_Pool VALUES
 	("0001","Patrick", "Same introduction of Multi-Choice questions",
-	 "Who is the first president of USA?", 
-	 "George Washington", "George Washington", "George Washington", "George Washington", "5",
-	  "A","#his#Cul#", "2/3");
+	 "Who is the first president of USA?", "5",
+	  "A","#his#Cul#", "2/3", 
+	 "George Washington", "George Washington", "George Washington", "George Washington");
 
 
 DROP TABLE IF EXISTS Picture_Response_Pool;
@@ -118,6 +116,6 @@ CREATE TABLE Picture_Response_Pool (
 
 INSERT INTO Picture_Response_Pool VALUES
 	("0001","Patrick", "Same introduction of Picture-Response questions",
-	 "Who is in the following picture?", "http://dev.mysql.com/doc/refman/5.1/en/comments.html",
-	 "George Washington", "5", "#his#Cul#", "2/3")
+	 "Who is in the following picture?",
+	 "George Washington", "5", "#his#Cul#", "2/3", "http://dev.mysql.com/doc/refman/5.1/en/comments.html")
 							   

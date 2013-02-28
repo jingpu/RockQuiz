@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class QuizSummaryPage
  */
-@WebServlet(description = "Servlet for Quiz Summary page using 'quizName' attribute to display certain quiz summary", urlPatterns = { "/QuizSummaryPage" })
+@WebServlet(description = "Servlet for Quiz Summary page using 'quizName' attribute to display certain quiz summary", urlPatterns = { "/QuizSummaryServlet" })
 public class QuizSummaryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,6 +33,8 @@ public class QuizSummaryServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("userName");
+		if (userName == null)
+			userName = "tester";
 		String quizName = request.getParameter("quizName");
 		MyQuiz quiz = new MyQuiz(quizName);
 		// write html
@@ -48,7 +50,7 @@ public class QuizSummaryServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
