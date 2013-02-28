@@ -13,6 +13,7 @@ import quiz.MultiChoice;
 import quiz.PResponse;
 import quiz.QResponse;
 import quiz.QuestionBase;
+import quiz.QuestionFactory;
 
 //JUnit test is multi
 
@@ -23,7 +24,7 @@ import quiz.QuestionBase;
 public class QuestionTest {
 	@Test
 	public void testCreateQuestion() {
-		String[] questionTypes = QuestionBase.getQuestionTypes();
+		String[] questionTypes = QuestionFactory.getQuestionTypes();
 		List<String> choices = new ArrayList<String>();
 		choices.add("aaaaa");
 		choices.add("bbbbb");
