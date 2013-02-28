@@ -81,6 +81,9 @@ public class QuestionCreationServlet extends HttpServlet {
 				// TODO if there is no questionList created, it should redirect
 				// to quiz creation page and display some message
 			} else {
+				// TODO check if quizName already exists. If so, it should
+				// redirect to quiz creation page and display some message
+
 				// construct the quiz class and store it to database
 				Timestamp createTime = new Timestamp(
 						new java.util.Date().getTime());
@@ -103,9 +106,9 @@ public class QuestionCreationServlet extends HttpServlet {
 				session.removeAttribute("isOnePage");
 				session.removeAttribute("isImmCorrection");
 
-				// TODO redirect to homepage or the quiz summary page
-				RequestDispatcher dispatch = request
-						.getRequestDispatcher("/QuizSummaryServlet?quizName=quizExample0");
+				// redirect to the quiz summary page
+				RequestDispatcher dispatch = request.getRequestDispatcher(quiz
+						.getSummaryPage());
 				dispatch.forward(request, response);
 			}
 		} else {

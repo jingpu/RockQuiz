@@ -19,6 +19,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected final String tagString;
 	protected final String correctRatio;
 
+	// Jing: why we need these object variables?
 	protected Connection con;
 	protected Statement stmt;
 	protected ResultSet rs;
@@ -141,7 +142,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return types;
 	}
 
-	// MyQuiz get a question using questionType and questionId
 	// This method is deprecated because it is moved to QuestionFactory class
 	@Deprecated
 	public static QuestionBase getQuestion(String questionType,
@@ -162,8 +162,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	// when clicking submit
 	public abstract void saveToDatabase();
 
-	// called by quiz to print html for every question
-	// essentially, it is a html-string
 	// This method is deprecated because it is moved to QuestionFactory class
 	@Deprecated
 	public static String printCreateHtml(String questionType) {
@@ -244,12 +242,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 
 	public String getAnswer() {
 		return answer;
-	}
-
-	public static void main(String[] args) {
-		String questionTypes[] = getQuestionTypes();
-		// test printSummaryPageHTML method
-		System.out.print(QuestionBase.printCreateHtml(questionTypes[0]));
 	}
 
 }

@@ -72,4 +72,9 @@ public class QuestionFactory {
 			return "error";
 	}
 
+	public static void main(String[] args) {
+		String questionTypes[] = getQuestionTypes();
+		// test printSummaryPageHTML method
+		System.out.print(printCreateHtml(questionTypes[0]));
+	}
 }
