@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -245,7 +247,29 @@ public class UserManager{
 		}
 		close();
 	}
-
+	
+	public static List<String> getUserList(String query){
+		List<String> userList = new LinkedList<String>();
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * from " 
+					+ userTable + " WHERE userId LIKE '%" + query + "%'");
+			while(rs.next()){
+				userList.add(rs.getString("userId"));		
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		Collections.sort(userList, new Comparator<String>() {
+			public int compare(String a, String b) {
+				return (b.length() - a.length());
+			}
+		});
+		return userList;
+	}
+	
 	/** Method getFriendsList is to return all friends of the user.
 	 * @param userId - the unique ID of one user
 	 * @return List<String> consisting the user's friends
@@ -286,6 +310,27 @@ public class UserManager{
 		}
 		close();
 		return friends;
+	}
+	
+	public static String seeFriendStatus(String me, String other){
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + me + "_network" +
+					" WHERE userId LIKE '" + other + "'");
+			if(!rs.next()){
+				close();
+				return "x";
+			} else {
+				close();
+				return rs.getString("status");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Message failed.");
+		}
+		close();
+		return "x";
 	}
 	
 	/** Method requestFriend is to update database according to one friend request.
@@ -556,11 +601,11 @@ public class UserManager{
 		return msgs;
 	}
 	
-	public static boolean addQuizTaken(String userId, String quizId){
+	public static boolean addQuizTaken(String userId, String quizName, String quizId){
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), \"t\", \"" + quizId + "\")");
+					+ " VALUES (now(), \"t" + quizId + "\", \"" + quizName + "\")");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -615,14 +660,16 @@ public class UserManager{
 		return achieves;
 	}
 	
-	public static List<String> getQuizTaken(String userId){
-		List<String> taken = new LinkedList<String>();
+	public static List<String[]> getQuizTaken(String userId){
+		List<String[]> taken = new LinkedList<String[]>();
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
-					+ "_history WHERE Type='t' ORDER BY Time DESC");
+					+ "_history WHERE Type='t%' ORDER BY Time DESC");
 			while(rs.next()){
-				taken.add(rs.getString("content"));
+				String quizId = rs.getString("Type").substring(1);
+				String[] quizTaken = {quizId, rs.getString("content")};
+				taken.add(quizTaken);
 			}
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block

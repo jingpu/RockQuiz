@@ -31,7 +31,7 @@
 <body>
 	<h1>Mailbox</h1>
 	
-	<form action="WriteMessageServlet" method="post">
+	<form action="WriteMessage" method="post">
 		<input name="username" type="hidden" value=<%=userId%>> <input
 			type="submit" value="Compose">
 	</form>
@@ -85,5 +85,8 @@
 			}
 		%>
 	</table>
+	
+	<%--return to homepage --%>
+	<p><a href="home.jsp">Home</a></p>
 </body>
 </html>

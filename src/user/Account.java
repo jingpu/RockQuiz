@@ -28,9 +28,9 @@ public class Account implements User{
 	}
 	
 	@Override
-	public void addQuizTaken(String quizId) {
+	public void addQuizTaken(String quizName, String quizId) {
 		// TODO Auto-generated method stub
-		UserManager.addQuizTaken(userId, quizId);
+		UserManager.addQuizTaken(userId, quizName, quizId);
 		
 	}
 	@Override
@@ -49,7 +49,7 @@ public class Account implements User{
 		return UserManager.getAchievements(userId);
 	}
 	
-	public List<String> getQuizTaken(){
+	public List<String[]> getQuizTaken(){
 		return UserManager.getQuizTaken(userId);
 	}
 	
@@ -106,5 +106,9 @@ public class Account implements User{
 			}
 		});
 		return friendsActivity;
+	}
+	
+	public String seeFriendStatus(String other){
+		return UserManager.seeFriendStatus(this.userId, other);
 	}
 }

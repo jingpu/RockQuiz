@@ -26,7 +26,6 @@ public class LoginInit implements HttpSessionListener {
         // TODO Auto-generated method stub
         HttpSession session = arg0.getSession();
         session.setAttribute("guest", "guest");
-        session.setAttribute("announce", "[Anncouncement] Let's Rock Quiz!!");
     }
 
 	/**

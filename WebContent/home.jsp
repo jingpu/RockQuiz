@@ -14,23 +14,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <%
-	String url = request.getRequestURL().toString();
 	String userId = request.getParameter("id");
+
 	String guest = (String) session.getAttribute("guest");
-	if (userId == null || guest.equals("guest")) {
+	if (guest == null || guest.equals("guest")) {
 		response.sendRedirect("index.html");
 		return;
 	} else if (!guest.equals(userId)) {
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	}
+
 	Account user = new Account(userId);
 	String status = UserManager.getAccountInfo(userId, "status");
 
 	// generate achievements history
 	List<String> achieves = user.getAchievements();
 	// generate quizzes taken history
-	List<String> taken = user.getQuizTaken();
+	List<String[]> taken = user.getQuizTaken();
 	// generate quizzes created history
 	List<String> created = user.getQuizCreated();
 	// mail messages
@@ -41,19 +42,24 @@
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity();
 	System.out.println("mark1");
-	String announce = (String) session.getAttribute("announce");
 	String mailBoxUrl = "Mailbox.jsp?id=" + userId;
+	String userpageUrl  = "userpage.jsp?id=" + userId;
 %>
 <title>RockQuiz - <%=userId%></title>
 </head>
 <body>
 	<%--announce --%>
-	<p><%=announce%></p>
+
 	<p><%=new Date()%></p>
 	<h2>
 		<%=userId%>
 	</h2>
 
+	<%--my user page --%>
+	<h3>
+		<a href=<%=userpageUrl%>>My Page</a>
+	</h3>
+	
 	<%--new message --%>
 	<h3>
 		<a href=<%=mailBoxUrl%>>Message(<%=unreadCount%>)
@@ -73,14 +79,14 @@
 				Date time = sdf.parse(msg.getTime());
 				Date now = new Date();
 				String timeDscr = TimeTrsf.dscr(time, now);
-				out.println("<li>" + description + " " + timeDscr + "/li>");
+				out.println("<li>" + description + " " + timeDscr + "</li>");
 			}
 		%>
 	</ul>
-	
-	<%--my friends list--%>
-	<h3>Friends List</h3>
-	
+
+	<%--my friends list link--%>
+	<h3>Friends</h3>
+
 	<%--achievements list --%>
 	<h3>Achievements</h3>
 	<ul>
@@ -91,23 +97,30 @@
 		%>
 	</ul>
 
-	<%--quizzes search box--%>
-	<form action="QuizSearchServelet">
-		<p><input type="text" name="quizSearch" placeholder="Search quizzes here">
-		<input type="submit" value="Search"></p>
+	<%--my friends activity --%>
+	<h3>Friends Activities</h3>
+	<ul>
+		<%
+			for (Activity act : friendsAct) {
+				out.println("<li>" + act.toString() + "</li>");
+			}
+		%>
+	</ul>
+
+	<%--quizzes/users search box--%>
+	<form action="SearchServlet" method="post">
+		<p>
+			<input type="text" name="query" size="30"
+				placeholder="Search quizzes OR users here" /> 
+			<input type="submit" value="Click" />
+		</p>
 	</form>
-	
-	<%--users search box--%>
-	<form action="UserSearchServelet">
-		<p><input type="text" name="userSearch" placeholder="Search user here">
-		<input type="submit" value="Search"></p>
-	</form>
-	
+
 	<%--popular quizzes --%>
 	<h3>Popular Quizzes</h3>
-	
+
 	<%--recent created quizzes --%>
-	<h3>Recent Created Quizzes</h3>
+	<h3>Recent Quizzes</h3>
 
 	<%--my quizzes taken history--%>
 	<h3>I Took</h3>
@@ -116,21 +129,11 @@
 			for (int i = 0; i < 5; i++) {
 				if (i == taken.size())
 					break;
-				out.println("<li>" + taken.get(i) + "</li>");
+				out.println("<li>" + taken.get(i)[1] + "</li>");
 			}
 		%>
 	</ul>
-	
-	<%--my friends activity --%>
-	<h3>Friends Activities</h3>
-	<ul>
-		<%
-			for(Activity act : friendsAct){
-				out.println("<li>" + act.toString() + "</li>");
-			}
-		%>
-	</ul>
-	
+
 	<%--my quizzes created history--%>
 	<h3>I Create</h3>
 	<ul>
@@ -141,6 +144,11 @@
 				out.println("<li>" + created.get(i) + "</li>");
 			}
 		%>
-	<ul>
+	</ul>
+
+	<%--log out--%>
+	<form action="LogoutServlet" method="post">
+		<input type="submit" value="Log Out">
+	</form>
 </body>
 </html>

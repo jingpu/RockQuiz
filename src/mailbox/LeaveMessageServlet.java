@@ -12,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class WriteMessageServlet
+ * Servlet implementation class LeaveMessageServlet
  */
-@WebServlet("/WriteMessage")
-public class WriteMessageServlet extends HttpServlet {
+@WebServlet("/LeaveMessage")
+public class LeaveMessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WriteMessageServlet() {
+    public LeaveMessageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -68,4 +68,5 @@ public class WriteMessageServlet extends HttpServlet {
 		out.println("<p><input type=\"submit\" value=\"Send\" form=\"Compose\">" +
 				"<a href=\"" + mailBoxUrl + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
 	}
+
 }
