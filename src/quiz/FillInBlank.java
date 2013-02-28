@@ -101,7 +101,7 @@ public class FillInBlank extends QuestionBase {
 		html.append(super.printReadHtml());
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 
 		// create prefix, blank, suffix
