@@ -59,7 +59,6 @@ public class PResponse extends QuestionBase {
 		}
 	}
 
-
 	
 	public static String printCreateHtml() {
 		// TODO Auto-generated method stub
@@ -75,8 +74,9 @@ public class PResponse extends QuestionBase {
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 		
 		//Hidden information - question Type and tag information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"tag\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ QuestionBase.PR + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
 		return html.toString();
 		
@@ -97,8 +97,10 @@ public class PResponse extends QuestionBase {
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
 		
 		//Hidden information - questionType and  questionId information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ getQuestionType() + "\"></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
+				+ getQuestionId() + "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();
