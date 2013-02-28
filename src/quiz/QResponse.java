@@ -33,7 +33,7 @@ public class QResponse extends QuestionBase {
 	@Override
 	public void saveToDatabase() {
 		// TODO Auto-generated method stub
-		queryStmt = "INSERT INTO " + QR_Table + "VALUES (\"" + questionId
+		queryStmt = "INSERT INTO " + QR_Table + " VALUES (\"" + questionId
 				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
 				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
 				+ "\", \"" + tagString + "\", \"" + correctRatio + "\")";

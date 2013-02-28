@@ -222,6 +222,8 @@ public class MyQuiz implements Quiz {
 					+ quizRow + ")");
 
 			// create quizName_Content_Table
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + quizName
+					+ "_Content_Table");
 			stmt.executeUpdate("CREATE TABLE " + quizName + "_Content_Table ( "
 					+ CREATECONTENTTABLEPARAMS + ")");
 			// populate quizName_Content_Table
@@ -234,6 +236,8 @@ public class MyQuiz implements Quiz {
 			}
 
 			// create quizName_Event_Table
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + quizName
+					+ "_Event_Table");
 			stmt.executeUpdate("CREATE TABLE " + quizName + "_Event_Table ( "
 					+ CREATEEVENTTABLEPARAMS + ")");
 		} catch (SQLException e) {
