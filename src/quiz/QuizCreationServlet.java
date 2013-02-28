@@ -2,6 +2,8 @@ package quiz;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,7 +41,35 @@ public class QuizCreationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String questionType = request.getParameter("questionType");
 
+		if (questionType != null && !questionType.equals("finish")) {
+			/*
+			 * construct the question and store it into the database if the
+			 * request is coming from QuestionCreationServlet
+			 */
+
+			// TODO construct the question and store it into the database
+			// get the questionList from session or create one
+			@SuppressWarnings("unchecked")
+			List<QuestionBase> questionList = (List<QuestionBase>) session
+					.getAttribute("questionList");
+			if (questionList == null) {
+				questionList = new ArrayList<QuestionBase>();
+				session.setAttribute("questionList", questionList);
+			}
+
+			// create the question and store it into the database
+			QuestionBase question = QuestionFactory.createQuestion(
+					questionType, request);
+			question.saveToDatabase();
+			questionList.add(question);
+		}
+
+		/*
+		 * prepare the page for creating quiz
+		 */
 		// set default values for form inputs
 		String quizName = "";
 		String tagString = "";
@@ -51,7 +81,6 @@ public class QuizCreationServlet extends HttpServlet {
 
 		// get form input values from session
 		String tmp;
-		HttpSession session = request.getSession();
 		tmp = (String) session.getAttribute("quizName");
 		if (tmp != null)
 			quizName = tmp;
@@ -112,7 +141,7 @@ public class QuizCreationServlet extends HttpServlet {
 		out.println("<p>TODO: display the number of questions already created.</p>");
 		out.println("<h4>List of supported question types:</h4>");
 
-		String[] questionTypes = QuestionBase.getQuestionTypes();
+		String[] questionTypes = QuestionFactory.getQuestionTypes();
 		for (int i = 0; i < questionTypes.length; i++) {
 			String typeName = questionTypes[i];
 			out.println("<input type=\"radio\" name=\"questionType\" value=\""

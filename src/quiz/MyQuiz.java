@@ -124,14 +124,13 @@ public class MyQuiz implements Quiz {
 			+ "userName CHAR(32), " + "submitTime TIMESTAMP, "
 			+ "timeElapsed BIGINT, " + "score INT ";
 
-	public MyQuiz(String quizName, String creatorId, int totalScore,
-			String quizDescription, List<String> tags, boolean canPractice,
-			boolean isRandom, boolean isOnePage, boolean isImmCorrection,
+	public MyQuiz(String quizName, String creatorId, String quizDescription,
+			List<String> tags, boolean canPractice, boolean isRandom,
+			boolean isOnePage, boolean isImmCorrection,
 			List<QuestionBase> questionList, Timestamp createTime) {
 		super();
 		this.quizName = quizName;
 		this.creatorId = creatorId;
-		this.totalScore = totalScore;
 		this.quizDescription = quizDescription;
 		this.tags = tags;
 		this.canPractice = canPractice;
@@ -140,6 +139,11 @@ public class MyQuiz implements Quiz {
 		this.isImmCorrection = isImmCorrection;
 		this.questionList = questionList;
 		this.createTime = createTime;
+		int totalScore = 0;
+		for (QuestionBase q : questionList) {
+			totalScore += Integer.parseInt(q.getMaxScore());
+		}
+		this.totalScore = totalScore;
 	}
 
 	public MyQuiz(String quizName) {
@@ -181,8 +185,8 @@ public class MyQuiz implements Quiz {
 			while (rs.next()) {
 				String questionType = rs.getString("questionType");
 				String questionId = rs.getString("questionId");
-				QuestionBase question = QuestionBase.getQuestion(questionType,
-						questionId);
+				QuestionBase question = QuestionFactory.getQuestion(
+						questionType, questionId);
 				if (question != null)
 					score += Integer.parseInt(question.getMaxScore());
 				questionList.add(question);
