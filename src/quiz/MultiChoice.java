@@ -3,12 +3,9 @@
  */
 package quiz;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import database.MyDB;
 
 /**
  * @author yang
@@ -87,8 +84,9 @@ public class MultiChoice extends QuestionBase {
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 		
 		//Hidden information - question Type and tag information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"tag\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ QuestionBase.MC + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
 		
 		return html.toString();
@@ -116,8 +114,10 @@ public class MultiChoice extends QuestionBase {
 		
 		
 		//Hidden information - questionType and  questionId information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ getQuestionType() + "\"></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
+				+ getQuestionId() + "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();

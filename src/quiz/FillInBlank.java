@@ -86,8 +86,9 @@ public class FillInBlank extends QuestionBase {
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 		
 		//Hidden information - question Type and tag information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"tag\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ QuestionBase.FIB + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
 		html.append("");
 
@@ -110,8 +111,10 @@ public class FillInBlank extends QuestionBase {
 		html.append("<p>" + parsePrefix() + "<input type=\"text\" name=\"answer\" >" + parseSuffix() + "</input></p>");
 		
 		//Hidden information - questionType and questionId information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ getQuestionType() + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
+				+ getQuestionId() + "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();
