@@ -20,11 +20,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected final String correctRatio;
 
 	// Jing: why we need these object variables?
-	protected Connection con;
-	protected Statement stmt;
-	protected ResultSet rs;
 	protected String queryStmt;
-
 	public static final String QR = "Question_Response";
 	public static final String FIB = "Fill_In_Blank";
 	public static final String MC = "Multi_Choice";
@@ -54,9 +50,9 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 				+ questionId;
 		Connection con = MyDB.getConnection();
 		try {
-			stmt = con.createStatement();
+			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE c_cs108_yzhao3");
-			rs = stmt.executeQuery(queryStmt);
+			ResultSet rs = stmt.executeQuery(queryStmt);
 			rs.next();
 
 			tmpCreatorId = rs.getString(2);
@@ -103,9 +99,9 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 				+ " ORDER BY question_id DESC LIMIT 1";
 		Connection con = MyDB.getConnection();
 		try {
-			stmt = con.createStatement();
+			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE c_cs108_yzhao3");
-			rs = stmt.executeQuery(queryStmt);
+			ResultSet rs = stmt.executeQuery(queryStmt);
 			rs.next();
 
 			id = Integer.parseInt(rs.getString(1)) + 1;

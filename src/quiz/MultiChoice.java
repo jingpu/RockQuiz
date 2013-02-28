@@ -3,9 +3,14 @@
  */
 package quiz;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import database.MyDB;
 
 /**
  * @author yang
@@ -27,13 +32,14 @@ public class MultiChoice extends QuestionBase {
 	public MultiChoice(String questionType, String questionId) {
 		super(questionType, questionId);
 		try {
-			stmt = con.createStatement();
+			Connection con = MyDB.getConnection();
+			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE c_cs108_yzhao3");
-			rs = stmt.executeQuery(queryStmt);
+			ResultSet rs = stmt.executeQuery(queryStmt);
 			rs.next();
 
 			choices = new ArrayList<String>();
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 4; i++) {
 				choices.add(rs.getString(i + 9));
 			}
 		} catch (SQLException e) {
@@ -45,13 +51,16 @@ public class MultiChoice extends QuestionBase {
 	@Override
 	public void saveToDatabase() {
 		// TODO Auto-generated method stub
-		queryStmt = "INSERT INTO " + PR_Table + " VALUES (\"" + questionId
+		queryStmt = "INSERT INTO " + MC_Table + " VALUES (\"" + questionId
 				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
 				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
 				+ "\", \"" + tagString + "\", \"" + correctRatio + "\", \""
-				+ choices.toString() + "\")";
+				+ choices.get(0) + "\", \"" + choices.get(1) + "\", \""
+				+ choices.get(2) + "\", \"" + choices.get(3) + "\")";
 
 		try {
+			Connection con = MyDB.getConnection();
+			Statement stmt = con.createStatement();
 			stmt.executeUpdate(queryStmt);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

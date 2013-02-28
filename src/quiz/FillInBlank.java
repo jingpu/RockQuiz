@@ -3,7 +3,11 @@
  */
 package quiz;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import database.MyDB;
 
 /**
  * @author yang
@@ -30,12 +34,15 @@ public class FillInBlank extends QuestionBase {
 	@Override
 	public void saveToDatabase() {
 		// TODO Auto-generated method stub
-		queryStmt = "INSERT INTO " + FIB_Table + " VALUES (\"" + questionId
-				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
-				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", \"" + correctRatio + "\")";
+		String queryStmt = "INSERT INTO " + FIB_Table + " VALUES (\""
+				+ questionId + "\", \"" + creatorId + "\", \"" + typeIntro
+				+ "\", \"" + questionDescription + "\", \"" + answer + "\", \""
+				+ maxScore + "\", \"" + tagString + "\", \"" + correctRatio
+				+ "\")";
 
 		try {
+			Connection con = MyDB.getConnection();
+			Statement stmt = con.createStatement();
 			stmt.executeUpdate(queryStmt);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

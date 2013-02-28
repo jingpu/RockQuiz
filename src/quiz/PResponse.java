@@ -3,7 +3,12 @@
  */
 package quiz;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import database.MyDB;
 
 /**
  * @author yang
@@ -25,9 +30,10 @@ public class PResponse extends QuestionBase {
 	public PResponse(String questionType, String questionId) {
 		super(questionType, questionId);
 		try {
-			stmt = con.createStatement();
+			Connection con = MyDB.getConnection();
+			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE c_cs108_yzhao3");
-			rs = stmt.executeQuery(queryStmt);
+			ResultSet rs = stmt.executeQuery(queryStmt);
 			rs.next();
 			url = rs.getString(9);
 		} catch (SQLException e) {
@@ -46,6 +52,8 @@ public class PResponse extends QuestionBase {
 				+ url + "\")";
 
 		try {
+			Connection con = MyDB.getConnection();
+			Statement stmt = con.createStatement();
 			stmt.executeUpdate(queryStmt);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

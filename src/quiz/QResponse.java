@@ -3,7 +3,11 @@
  */
 package quiz;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import database.MyDB;
 
 /**
  * @author yang
@@ -38,6 +42,8 @@ public class QResponse extends QuestionBase {
 				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
 				+ "\", \"" + tagString + "\", \"" + correctRatio + "\")";
 		try {
+			Connection con = MyDB.getConnection();
+			Statement stmt = con.createStatement();
 			stmt.executeUpdate(queryStmt);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

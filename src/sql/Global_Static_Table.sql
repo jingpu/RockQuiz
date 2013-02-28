@@ -94,9 +94,10 @@ CREATE TABLE Multi_Choice_Pool (
 
 INSERT INTO Multi_Choice_Pool VALUES
 	("0001","Patrick", "Same introduction of Multi-Choice questions",
-	 "Who is the first president of USA?", "5",
-	  "A","#his#Cul#", "2/3", 
+	 "Who is the first president of USA?", "A","5",
+	  "#his#Cul#", "2/3", 
 	 "George Washington", "George Washington", "George Washington", "George Washington");
+	 
 
 
 DROP TABLE IF EXISTS Picture_Response_Pool;
