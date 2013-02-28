@@ -36,8 +36,8 @@ public class UserManagerTest {
 		UserManager.requestFriend("a2", "a3");
 		UserManager.requestFriend("a2", "a1");
 		UserManager.requestFriend("a4", "a1");
-		UserManager.processUnconfirmedFriend("a1", "a4", "f");
-		UserManager.processUnconfirmedFriend("a3", "a2", "i");
+		UserManager.confirmFriend("a1", "a4");
+		UserManager.confirmFriend("a3", "a2");
 		UserManager.removeFriend("a1", "a2");
 		System.out.println(UserManager.getFriendsList("a1")); //a4
 		System.out.println(UserManager.getFriendsList("a2"));

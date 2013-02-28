@@ -14,16 +14,16 @@ import user.Account;
 import user.Message;
 
 /**
- * Servlet implementation class MsgSent
+ * Servlet implementation class FriendMsgSent
  */
-@WebServlet("/SendMessage")
-public class MsgSent extends HttpServlet {
+@WebServlet("/SendMessage0")
+public class FriendMsgSent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MsgSent() {
+    public FriendMsgSent() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,13 +50,10 @@ public class MsgSent extends HttpServlet {
 		title = content == null? "" : content;
 		Message msg = new Message(fromUser, toUser, "n", title, content);
 		Account user = new Account(fromUser);
-		if(user.sendMessage(msg)) {
-			RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox.jsp?id="+ fromUser);
-			dispatch.forward(request, response);
-			return;
-		}
-		RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox.jsp?id="+ fromUser);
+		user.sendMessage(msg);
+		RequestDispatcher dispatch = request.getRequestDispatcher("userpage.jsp?id="+ toUser);
 		dispatch.forward(request, response);
 		return;
 	}
+
 }

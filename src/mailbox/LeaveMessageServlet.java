@@ -38,17 +38,14 @@ public class LeaveMessageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userId = request.getParameter("username");
+		String toUser = request.getParameter("to");
 		HttpSession session = request.getSession();
 		String guest = (String) session.getAttribute("guest");
-		if (userId == null || guest.equals("guest")) {
-			response.sendRedirect("index.html");
+		String toUsersPage = "userpage.jsp?id=" + toUser;
+		if (toUser == null || guest.equals("guest")) {
+			response.sendRedirect(toUsersPage);
 			return;
-		} else if (!guest.equals(userId)) {
-			response.sendRedirect("home.jsp?id=" + guest);
-			return;
-		}
-		String mailBoxUrl = "Mailbox.jsp?id="+ userId;
+		} 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		out.println("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>");
@@ -60,13 +57,13 @@ public class LeaveMessageServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println(new Date());
-		out.println("<form action=\"SendMessage\" id=\"Compose\" method=\"post\"></form>");
-		out.println("<p>To <input type=\"text\" name=\"toUser\" form=\"Compose\"></p>");
+		out.println("<form action=\"SendMessage0\" id=\"Compose\" method=\"post\"></form>");
+		out.println("<p>To <input type=\"text\" name=\"toUser\" form=\"Compose\" value=\""+ toUser +"\"></p>");
 		out.println("<p><input type=\"text\" name=\"title\" placeholder=\"Subject\" form=\"Compose\"></p>");
 		out.println("<textarea rows=\"10\" cols=\"50\" name=\"content\" form=\"Compose\" " +
 				"placeholder=\"Composing message here\"></textarea>");
 		out.println("<p><input type=\"submit\" value=\"Send\" form=\"Compose\">" +
-				"<a href=\"" + mailBoxUrl + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
+				"<a href=\"" + toUsersPage + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
 	}
 
 }

@@ -13,6 +13,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+
 <%
 	String guest = (String) session.getAttribute("guest");
 	if (guest == null || guest.equals("guest")) {
@@ -34,6 +35,17 @@
 	// generate quizzes created history
 	List<String> created = pageOwner.getQuizCreated();
 %>
+
+<script language="javascript" type="text/javascript">
+	function friendQuery(text) {
+		var r = confirm(text);
+		if (r) {
+			return true;
+		}
+		return false;
+	}
+</script>
+
 <title><%=title%></title>
 </head>
 <body>
@@ -49,52 +61,61 @@
 		<%=id%>
 	</h2>
 
-	<%--see friendship and leave message--%>
 	<%
-		if (pageOwner.seeFriendStatus(guest).equals("x")) {
-			StringBuilder sb1 = new StringBuilder();
-			sb1.append("<form action=\"RequestFriend\" method=\"post\">");
-			sb1.append("<input name=\"to\" type=\"hidden\" value=\"" + id
-					+ "\">");
-			sb1.append("<input type=\"submit\" value=\"Add Friend\">");
-			sb1.append("</form>");
-			out.println(sb1.toString());
-
-		} else if (pageOwner.seeFriendStatus(guest).equals("r")) {
-			StringBuilder sb2 = new StringBuilder();
-			sb2.append("<form action=\"RespondFriend\" method=\"post\">");
-			sb2.append("<input name=\"to\" type=\"hidden\" value=\"" + id
-					+ "\">");
-			sb2.append("<input type=\"submit\" value=\"Respond to Friend Request\">");
-			sb2.append("</form>");
-			out.println(sb2.toString());
-
-		} else if (pageOwner.seeFriendStatus(guest).equals("u")
-				|| pageOwner.seeFriendStatus(guest).equals("i")) {
-			StringBuilder sb3 = new StringBuilder();
-			sb3.append("<form action=\"CancelRequest\" method=\"post\">");
-			sb3.append("<input name=\"to\" type=\"hidden\" value=\"" + id
-					+ "\">");
-			sb3.append("<input type=\"submit\" value=\"Cancel Friend Request\">");
-			sb3.append("</form>");
-			out.println(sb3.toString());
-
-		} else if (pageOwner.seeFriendStatus(guest).equals("c")) {
-			StringBuilder sb4 = new StringBuilder();
-			sb4.append("<form action=\"RemoveFriend\" method=\"post\">");
-			sb4.append("<input name=\"to\" type=\"hidden\" value=\"" + id
-					+ "\">");
-			sb4.append("<input type=\"submit\" value=\"Unfriend\">");
-			sb4.append("</form>");
-			out.println(sb4.toString());
-		}
+		if(!guest.equals(id)) {
 	%>
 	
+	<%--if guest!=id, show friend related operation --%>
+	<%
+		if (pageOwner.seeFriendStatus(guest).equals("x")) {
+	%>
+	<form action="RequestFriend" method="post">
+		<input name="to" type="hidden" value=<%=id%>> <input
+			type="submit" value="Add Friend">
+	</form>
+
+	<%
+		} else if (pageOwner.seeFriendStatus(guest).equals("r")) {
+			String text = "Do you want to add " + id + " as friend?";
+	%>
+	<form action="RespondFriend" method="post">
+		<input type="hidden" name="to" value=<%=id%>> <input
+			type="submit" value="Respond to Friend Request"
+			onclick="friendQuery('<%=text%>')">
+	</form>
+	<%
+		} else if (pageOwner.seeFriendStatus(guest).equals("u")) {
+			String text = "Do you want to cancel your friend request to "
+					+ id + "?";
+	%>
+	<form action="RemoveFriend" method="post">
+		<input name="to" type="hidden" value=<%=id%>> <input
+			type="submit" value="Cancel Friend Request"
+			onclick="friendQuery('<%=text%>')">
+	</form>
+
+	<%
+		} else if (pageOwner.seeFriendStatus(guest).equals("f")) {
+			String text = "Are you sure to unfriend " + id + "?";
+	%>
+	<form action="RemoveFriend" method="post">
+		<input name="to" type="hidden" value=<%=id%>> <input
+			type="submit" value="Unfriend" onclick="friendQuery('<%=text%>')">
+	</form>
+	<%
+		}
+	%>
+
+	<%--if guest!=id, show message --%>
 	<form action="LeaveMessage" method="post">
 		<input name="to" type="hidden" value=<%=id%>> <input
 			type="submit" value="Message">
 	</form>
 
+	<% 
+		}
+	%>
+	
 	<%--achievements list --%>
 	<h3>Achievements</h3>
 	<ul>

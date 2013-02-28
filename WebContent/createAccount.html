@@ -71,45 +71,53 @@ return true;
 </SCRIPT>
 </HEAD>
 <BODY style="BACKGROUND-IMAGE: url(4.gif)">
-<CENTER>
-Welcome to Rock Quiz!<BR>
-Please fill in the following information.<BR>
-<FORM METHOD=POST ACTION="CreationServlet" OnSubmit="return judge()">
-<TABLE><TR>
-<TD>Username</TD>
-<TD><INPUT TYPE="text" NAME="name"></TD>
-</TR><TR>
-<TD>Password</TD>
-<TD><INPUT TYPE="password" NAME="pwd"></TD>
-</TR><TR>
-<TD>Confirm Password</TD>
-<TD><INPUT TYPE="password" NAME="confirm"></TD>
-</TR><TR>
-<TD>Gender</TD>
-<TD>
-<INPUT TYPE="radio" NAME="gender" VALUE="male" CHECKED>Male
-<INPUT TYPE="radio" NAME="gender" VALUE="female">Female
-</TD>
-</TR><TR>
-<TD>Age</TD>
-<TD><INPUT TYPE="text" NAME="age"></TD>
-</TR><TR>
-<TD>Email</TD>
-<TD><INPUT TYPE="text" NAME="email"></TD>
-</TR></TABLE>
-<TABLE><TR>
-What type of quizzes are you interested in?</TR>
-<TR>
-<TD><INPUT TYPE="checkbox" NAME="favour">Language</TD>
-<TD><INPUT TYPE="checkbox" NAME="favour">Science</TD>
-<TD><INPUT TYPE="checkbox" NAME="favour">Engineering</TD>
-<TD><INPUT TYPE="checkbox" NAME="favour">Arts</TD>
-<TD><INPUT TYPE="checkbox" NAME="favour">Brain Storm</TD>
-</TR></TABLE>
-<TABLE>
-<TD><INPUT TYPE="reset"></TD>
-<TD><INPUT TYPE="submit"></TD>
-</TR></TABLE>
-</FORM>
+	<CENTER>
+		Welcome to Rock Quiz!<BR> Please fill in the following
+		information.<BR>
+		<FORM METHOD=POST ACTION="CreationServlet" OnSubmit="return judge()">
+			<TABLE>
+				<TR>
+					<TD>Username</TD>
+					<TD><INPUT TYPE="text" NAME="name"></TD>
+				</TR>
+				<TR>
+					<TD>Password</TD>
+					<TD><INPUT TYPE="password" NAME="pwd"></TD>
+				</TR>
+				<TR>
+					<TD>Confirm Password</TD>
+					<TD><INPUT TYPE="password" NAME="confirm"></TD>
+				</TR>
+				<TR>
+					<TD>Gender</TD>
+					<TD><INPUT TYPE="radio" NAME="gender" VALUE="male" CHECKED>Male
+						<INPUT TYPE="radio" NAME="gender" VALUE="female">Female</TD>
+				</TR>
+				<TR>
+					<TD>Age</TD>
+					<TD><INPUT TYPE="text" NAME="age"></TD>
+				</TR>
+				<TR>
+					<TD>Email</TD>
+					<TD><INPUT TYPE="text" NAME="email"></TD>
+				</TR>
+			</TABLE>
+			<TABLE>
+				<TR>What type of quizzes are you interested in?
+				</TR>
+				<TR>
+					<TD><INPUT TYPE="checkbox" NAME="favour">Language</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour">Science</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour">Engineering</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour">Arts</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour">Brain Storm</TD>
+				</TR>
+			</TABLE>
+			<TABLE>
+				<TD><INPUT TYPE="reset"></TD>
+				<TD><INPUT TYPE="submit"></TD>
+				</TR>
+			</TABLE>
+		</FORM>
 </BODY>
 </HTML>

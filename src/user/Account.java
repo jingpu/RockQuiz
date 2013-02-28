@@ -111,4 +111,16 @@ public class Account implements User{
 	public String seeFriendStatus(String other){
 		return UserManager.seeFriendStatus(this.userId, other);
 	}
+	
+	public void requestFriend(String other){
+		UserManager.requestFriend(this.userId, other);
+	}
+	
+	public void confirmFriend(String other){
+		UserManager.confirmFriend(this.userId, other);
+	}
+	
+	public void removeFriend(String other){
+		UserManager.removeFriend(this.userId, other);
+	}
 }

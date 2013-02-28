@@ -63,7 +63,7 @@ public class UserManager{
 	}
 
 	// account management
-	
+
 	/** Method addNewAccount is to add a new user tuple into userstats.sql and create 
 	 * all second floor tables of this user.
 	 * @param userId - the unique ID of one user
@@ -122,7 +122,7 @@ public class UserManager{
 		close();
 		return true;
 	}
-	
+
 	public static boolean alreadyExist(String userId){
 		setDriver();
 		try {
@@ -139,7 +139,7 @@ public class UserManager{
 		close();
 		return false;
 	}
-	
+
 	public static boolean matchAccount(String userId, String password) {
 		setDriver();
 		try {
@@ -156,7 +156,7 @@ public class UserManager{
 		close();
 		return true;
 	}
-	
+
 	/** Method deleteAccount is to delete a tuple in userstats.sql and delete all related 
 	 * second floor tables of this user.
 	 * @param userId - the unique ID of one user
@@ -214,7 +214,7 @@ public class UserManager{
 			return false;
 		}
 	}
-	
+
 	public static String getAccountInfo(String userId, String column){
 		String str = "";
 		setDriver();
@@ -231,7 +231,7 @@ public class UserManager{
 		close();
 		return str;
 	}
-	
+
 	public static void setAccountInfo(String userId, String column, String content){
 		if(column.equals("userId") || column.equals("registrationTime")) {
 			System.out.println(column + " is not allowed to be modified.");
@@ -247,7 +247,7 @@ public class UserManager{
 		}
 		close();
 	}
-	
+
 	public static List<String> getUserList(String query){
 		List<String> userList = new LinkedList<String>();
 		setDriver();
@@ -269,7 +269,7 @@ public class UserManager{
 		});
 		return userList;
 	}
-	
+
 	/** Method getFriendsList is to return all friends of the user.
 	 * @param userId - the unique ID of one user
 	 * @return List<String> consisting the user's friends
@@ -290,7 +290,7 @@ public class UserManager{
 		close();
 		return friends;
 	}
-	
+
 	/** Method getUnconfirmedFriendsList is to return unprocessed friend requests
 	 * @param userId - the unique ID of one user
 	 * @return List<String> consisting the user's unconfirmed friends
@@ -311,7 +311,7 @@ public class UserManager{
 		close();
 		return friends;
 	}
-	
+
 	public static String seeFriendStatus(String me, String other){
 		setDriver();
 		try {
@@ -321,8 +321,9 @@ public class UserManager{
 				close();
 				return "x";
 			} else {
+				String status = rs.getString("status");
 				close();
-				return rs.getString("status");
+				return status;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -332,7 +333,7 @@ public class UserManager{
 		close();
 		return "x";
 	}
-	
+
 	/** Method requestFriend is to update database according to one friend request.
 	 * @param from - the user who makes the request
 	 * @param to - the user who receives the request
@@ -374,28 +375,22 @@ public class UserManager{
 	 * @param me - the user who process this requests
 	 * @param other - the user whose request is to be processed
 	 * **/
-	public static void processUnconfirmedFriend(String me, String other, String decision){
+	public static void confirmFriend(String me, String other){
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + me + "_network" +
 					" WHERE userId LIKE '" + other + "'");
-			if(rs.next()) {
-				String status = rs.getString("status");
-				if(status.equals("u") || status.equals("i")){
-					if(decision.equals("f")) {
-						stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='f' " +
-								"WHERE userId='" + me + "'");
-						Message msg1 = new Message(me, other, "f", "", "");
-						sendMsg(msg1);
-						Message msg2 = new Message(other, me, "r", "", "");
-						sendMsg(msg2);
-					} 
-					setDriver();
-					stmt.executeUpdate("UPDATE " + me + "_network" + " SET status='" + decision 
-							+ "' WHERE userId='" + other + "'");
-				}
+			if(rs.next() && rs.getString("status").equals("u")) {
+				stmt.executeUpdate("UPDATE " + me + "_network" + " SET status='f' " +
+						"WHERE userId='" + other + "'");
+				stmt.executeUpdate("UPDATE " + other + "_network" + " SET status='f' " +
+						"WHERE userId='" + me + "'");
+				Message msg1 = new Message(me, other, "f", "", "");
+				sendMsg(msg1);
+				Message msg2 = new Message(other, me, "f", "", "");
+				sendMsg(msg2);
 			}
-		} catch (SQLException e) {
+		}catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -423,7 +418,7 @@ public class UserManager{
 		Date now = new Date();
 		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String currentTime = sdf.format(now);
-		
+
 		String hashValue = "";
 		String str = currentTime + msg.from + msg.to + msg.type + msg.title;
 		try {
@@ -442,18 +437,18 @@ public class UserManager{
 				hashValue = buff.toString();
 				md.reset();
 			} catch (CloneNotSupportedException cnse) {
-			     try {
+				try {
 					throw new DigestException("couldn't make digest of partial content");
 				} catch (DigestException e) {
 					e.printStackTrace();
 				}
-			    return false;
+				return false;
 			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		try {
 			stmt.executeUpdate("INSERT INTO " + msg.from + "_sent" + " VALUES (\"" + hashValue + "\",\"" 
 					+ currentTime + "\", \"" + msg.to + "\",\"" + msg.type + "\",\"" + msg.title + "\",\"" 
@@ -530,7 +525,7 @@ public class UserManager{
 			}
 			if(box.equals("inbox")){
 				stmt.executeUpdate("UPDATE " + userId + "_inbox SET ifRead='1' " + "WHERE code='" 
-					+ msgCode + "'");
+						+ msgCode + "'");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -539,7 +534,7 @@ public class UserManager{
 		close();
 		return msg;
 	}
-	
+
 	public static void deleteMsg(String userId, String box, String msgCode){
 		setDriver();
 		String boxTable = userId + "_" + box;
@@ -551,7 +546,7 @@ public class UserManager{
 		}
 		close();
 	}
-	
+
 	public static List<String> getMessagesInbox(String userId){
 		List<String> msgs = new LinkedList<String>(); 
 		setDriver();
@@ -567,7 +562,7 @@ public class UserManager{
 		close();
 		return msgs;
 	}
-	
+
 	public static List<String> getUnreadMessages(String userId){
 		List<String> msgs = new LinkedList<String>(); 
 		setDriver();
@@ -584,7 +579,7 @@ public class UserManager{
 		close();
 		return msgs;
 	}
-	
+
 	public static List<String> getMessagesSent(String userId){
 		List<String> msgs = new LinkedList<String>(); 
 		setDriver();
@@ -600,7 +595,7 @@ public class UserManager{
 		close();
 		return msgs;
 	}
-	
+
 	public static boolean addQuizTaken(String userId, String quizName, String quizId){
 		setDriver();
 		try{
@@ -628,7 +623,7 @@ public class UserManager{
 		close();
 		return true;
 	}
-	
+
 	public static boolean addAchievement(String userId, String name){
 		setDriver();
 		try{
@@ -642,7 +637,7 @@ public class UserManager{
 		close();
 		return true;
 	}
-	
+
 	public static List<String> getAchievements(String userId){
 		List<String> achieves = new LinkedList<String>();
 		setDriver();
@@ -659,7 +654,7 @@ public class UserManager{
 		close();
 		return achieves;
 	}
-	
+
 	public static List<String[]> getQuizTaken(String userId){
 		List<String[]> taken = new LinkedList<String[]>();
 		setDriver();
@@ -678,7 +673,7 @@ public class UserManager{
 		close();
 		return taken;
 	}
-	
+
 	public static List<String> getQuizCreated(String userId){
 		List<String> created = new LinkedList<String>();
 		setDriver();
@@ -695,7 +690,7 @@ public class UserManager{
 		close();
 		return created;
 	}
-	
+
 	public static List<Activity> getRecentActivity(String userId){
 		List<Activity> recent = new LinkedList<Activity>();
 		setDriver();

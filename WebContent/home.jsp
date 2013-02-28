@@ -87,6 +87,7 @@
 	<%--my friends list link--%>
 	<h3>Friends</h3>
 
+
 	<%--achievements list --%>
 	<h3>Achievements</h3>
 	<ul>

@@ -23,7 +23,7 @@ time --|----- type ------|---- content
 
 CREATE TABLE userId_network (
 	userId varchar(20),
-	status char(1) -- r(request)/u(unconfirmed)/f(confirmed)/i(ignore)
+	status char(1) -- r(request)/u(unconfirmed)/f(confirmed)
 )
 
 CREATE TABLE userId_inbox (
