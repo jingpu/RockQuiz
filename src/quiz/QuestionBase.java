@@ -93,6 +93,10 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	}
 
 	private String generateId(String questionType) {
+		// TODO: this code is buggy. It breaks since "10" will be less than "2".
+		// Suggested fix will be change id field in database to INT, or generate
+		// the id using hash function rather than sequential order (please refer
+		// to the implementation of MyQuiz.generateId())
 		Integer id = 0;
 		String questionTable = getQuestionTable(questionType);
 		queryStmt = "SELECT * FROM " + questionTable
@@ -107,7 +111,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 			id = Integer.parseInt(rs.getString(1)) + 1;
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return id.toString();

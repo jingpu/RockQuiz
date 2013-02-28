@@ -44,7 +44,13 @@ public class QuestionCreationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String creatorId = (String) session.getAttribute("userName");
+		String userName = (String) session.getAttribute("userName");
+		if (userName == null) {
+			// TODO remove it and do error checking instead
+			userName = "guest";
+			session.setAttribute("userName", userName);
+		}
+		String creatorId = userName;
 
 		// get parameters from HTTP request
 		String questionType = request.getParameter("questionType");

@@ -42,7 +42,7 @@ public class MyQuiz implements Quiz {
 			Connection con = MyDB.getConnection();
 			try {
 				Statement stmt = con.createStatement();
-				// query quizExample0_Event_Table
+				// query quizName_Event_Table
 				ResultSet rs = stmt.executeQuery("SELECT * FROM " + quizName
 						+ "_Event_Table WHERE quizId = \"" + quizId + "\"");
 				rs.next();
@@ -70,14 +70,14 @@ public class MyQuiz implements Quiz {
 				ResultSet rs = stmt.executeQuery("SELECT * FROM " + quizName
 						+ "_Event_Table WHERE quizId = \"" + quizId + "\"");
 				assert rs.isBeforeFirst() : "ERROR: quizId = " + quizId
-						+ " is already in " + quizName + "_Content_Table";
+						+ " is already in " + quizName + "_Event_Table";
 
 				// update quizName_Event_Table -- insert a row
 				String contentRow = "\"" + getQuizId() + "\",\""
 						+ getUserName() + "\",\"" + getSubmitTime() + "\", "
 						+ getTimeElapsed() + ", " + getScore();
 				stmt.executeUpdate("INSERT INTO " + quizName
-						+ "_Content_Table VALUES(" + contentRow + ")");
+						+ "_Event_Table VALUES (" + contentRow + ")");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -118,7 +118,7 @@ public class MyQuiz implements Quiz {
 	private final List<QuestionBase> questionList;
 
 	private static final String CREATECONTENTTABLEPARAMS = "questionNum CHAR(32), "
-			+ "questionType CHAR(32), " + "questionId CHAR(32 )";
+			+ "questionType CHAR(32), " + "questionId CHAR(32)";
 
 	private static final String CREATEEVENTTABLEPARAMS = "quizId CHAR(32), "
 			+ "userName CHAR(32), " + "submitTime TIMESTAMP, "
@@ -543,6 +543,52 @@ public class MyQuiz implements Quiz {
 			e.printStackTrace();
 		}
 		return num;
+	}
+
+	private String generateId() {
+		// get the first hash
+		String quizId = Helper.getMD5ForTime();
+
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query quizName_Event_Table
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + quizName
+					+ "_Event_Table WHERE quizId = \"" + quizId + "\"");
+			// try another hash until it is not used already
+			while (rs.isBeforeFirst()) {
+				quizId = Helper.getMD5ForTime();
+				rs = stmt.executeQuery("SELECT * FROM " + quizName
+						+ "_Event_Table WHERE quizId = \"" + quizId + "\"");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return quizId;
+	}
+
+	/**
+	 * Constructs a QuizEvent from the input and save it to database, and
+	 * returns QuizId String
+	 * 
+	 * @param userName
+	 *            name string of the user who takes the quiz
+	 * @param timeElapsed
+	 *            the time elapsed for the user to take the quiz
+	 * @param score
+	 *            the score get it by the user
+	 * 
+	 * @return QuizId String
+	 * 
+	 */
+	public String saveQuizEvent(String userName, long timeElapsed, int score) {
+		Timestamp submitTime = new Timestamp(new java.util.Date().getTime());
+		String quizId = generateId();
+		QuizEvent event = new QuizEvent(quizId, userName, submitTime,
+				timeElapsed, score);
+		event.saveToDatabase();
+		return quizId;
 	}
 
 	public static void main(String[] args) {

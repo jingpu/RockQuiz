@@ -33,8 +33,11 @@ public class QuizSummaryServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("userName");
-		if (userName == null)
-			userName = "tester";
+		if (userName == null) {
+			// TODO remove it and do error checking instead
+			userName = "guest";
+			session.setAttribute("userName", userName);
+		}
 		String quizName = request.getParameter("quizName");
 		MyQuiz quiz = new MyQuiz(quizName);
 		// write html
