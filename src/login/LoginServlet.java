@@ -84,7 +84,7 @@ public class LoginServlet extends HttpServlet {
 			//String usrpage = "userpage.jsp?id=" + usrname;
 			HttpSession session = request.getSession();
 	        session.setAttribute("guest", usrname);
-			String homepage = "home.jsp?id=" + usrname;
+			String homepage = "homelayout.jsp?id=" + usrname;
 			RequestDispatcher dispatch = request.getRequestDispatcher(homepage);
 			dispatch.forward(request, response);
 			return;
