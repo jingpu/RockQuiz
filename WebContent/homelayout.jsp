@@ -44,7 +44,8 @@
 	List<Activity> friendsAct = user.getFriendsRecentActivity();
 	System.out.println("mark1");
 	String mailBoxUrl = "Mailbox.jsp?id=" + userId;
-	String userpageUrl  = "userpage.jsp?id=" + userId;
+	//String userpageUrl  = "userpage.jsp?id=" + userId;
+	String userpageUrl  = "userpage_layout.jsp?id=" + userId;
 %>
 <title>RockQuiz - <%=userId%></title>
 </head>
@@ -83,7 +84,7 @@
 				}
 				%>
 				<dd class="readmore"><a href=<%=mailBoxUrl%>><b>MORE</b></a></dd>
-				<dt>Common Link</dt>
+				<dt>Quick Link</dt>
 				<dd><a href="">111</a></dd>
 				<dd><a href="">222</a></dd>
 				<dd><a href="">333</a></dd>
@@ -117,11 +118,29 @@
 					
 					<div class="leftbox">
 						<h3>Quizzes I Took</h3>
+						<ul>
+						<%
+							for (int i = 0; i < 5; i++) {
+								if (i == taken.size())
+								break;
+								out.println("<li>" + taken.get(i)[1] + "</li>");
+							}
+						%>
+						</ul>
 						<p class="readmore"><a href=""><b>MORE</b></a></p>
 						<div class="clear"></div>
 					</div>
 					<div class="rightbox">
 						<h3>Quizzes I Create</h3>
+						<ul>
+						<%
+							for (int i = 0; i < 5; i++) {
+								if (i == taken.size())
+								break;
+								out.println("<li>" + created.get(i) + "</li>");
+							}
+						%>
+						</ul>
 						<p class="readmore"><a href=""><b>MORE</b></a></p>
 						<div class="clear"></div>
 					</div>
