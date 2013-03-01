@@ -103,7 +103,7 @@ public class UserManager{
 					+ userId + "\",\"" + password + "\",now(),\"" + status + "\",\"" 
 					+ gender + "\",\"" + email + "\")");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_history( Time datetime, " +
-					"Type char(1), content varchar(50));");
+					"Type char(33), content varchar(50));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_network( userId varchar(20), " +
 					"status char(1));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( code char(40), Time text, " +
@@ -414,7 +414,10 @@ public class UserManager{
 	}
 
 	public static boolean sendMsg(Message msg){
-		setDriver();
+		if(!alreadyExist(msg.from) || !alreadyExist(msg.to)){
+			return false;
+		}
+
 		Date now = new Date();
 		SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 		String currentTime = sdf.format(now);
@@ -448,7 +451,8 @@ public class UserManager{
 			e.printStackTrace();
 			return false;
 		}
-
+		
+		setDriver();
 		try {
 			stmt.executeUpdate("INSERT INTO " + msg.from + "_sent" + " VALUES (\"" + hashValue + "\",\"" 
 					+ currentTime + "\", \"" + msg.to + "\",\"" + msg.type + "\",\"" + msg.title + "\",\"" 
@@ -604,6 +608,7 @@ public class UserManager{
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			close();
 			return false;
 		}
 		close();
@@ -636,6 +641,24 @@ public class UserManager{
 		}
 		close();
 		return true;
+	}
+
+	public static int countHistory(String userId, String type){
+		setDriver();
+		try{
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM "+ userId 
+					+ "_history WHERE TYPE LIKE '" + type + "%'");
+			if(rs.next()){
+				String count = rs.getString("COUNT(*)");
+				close();
+				return Integer.parseInt(count);
+			}
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return 0;
 	}
 
 	public static List<String> getAchievements(String userId){

@@ -17,7 +17,7 @@ public class UserManagerTest {
 	}
 	
 	@Test
-	public void del(){
+	public void delAcc(){
 		assertEquals(UserManager.addNewAccount("yy", "dkkdkdkkd", "a","f","asf@asdf.edu"), false);
 		assertEquals(UserManager.addNewAccount("yy1", "dkkdkdkkd1", "f","asf@asdf.edu", "u"), false);
 		assertEquals(UserManager.deleteAccount("yy"), true);
@@ -61,5 +61,19 @@ public class UserManagerTest {
 		}
 	}
 	
-	
+	@Test
+	public void quiz() {
+		UserManager.addAchievement("a1", "level1");
+		UserManager.addAchievement("a1", "level2");
+		UserManager.addAchievement("a1", "level3");
+		UserManager.addQuizCreated("a1", "eva");
+		UserManager.addQuizCreated("a1", "gis");
+		UserManager.addQuizTaken("a1", "fa", "123");
+		UserManager.addQuizTaken("a1", "souleater", "123");
+		UserManager.addQuizTaken("a1", "akira", "1232");
+		UserManager.addQuizTaken("a1", "clannad", "123");
+		assertEquals(3, UserManager.countHistory("a1", "a"));
+		assertEquals(2, UserManager.countHistory("a1", "c"));
+		assertEquals(4, UserManager.countHistory("a1", "t"));
+	}
 }

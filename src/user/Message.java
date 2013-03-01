@@ -23,7 +23,7 @@ public class Message {
 		this.ifRead = false;
 		if(type.equals("c")){
 			this.title = from + challengeTitle;
-			this.content = challengeContent;
+			this.content = challengeContent + content;
 		} else if(type.equals("r")){
 			this.title = from + friendRequestTitle;
 			this.content = friendRequestContent;
@@ -42,6 +42,10 @@ public class Message {
 	
 	public Message(String from, String to, String type){
 		this(from, to, type, "", "");
+	}
+	
+	public Message(String from, String to, String type, String content){
+		this(from, to, type, "", content);
 	}
 	
 	public void setTime(String time){
