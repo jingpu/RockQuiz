@@ -20,6 +20,10 @@ import database.MyDB;
  */
 public final class MyQuizManager implements QuizManager {
 
+	public MyQuizManager() {
+
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
