@@ -27,18 +27,20 @@ CREATE TABLE userId_network (
 )
 
 CREATE TABLE userId_inbox (
+	code char(40),
 	Time datetime,
 	fromUser varchar(20),
 	Type char(1), -- c(challenge)/r(friend request)/f(friend confirm)/n(normal text)
-	title varchar(50),
+	title text,
 	content text,
 	ifRead char(1) -- 1(read)/0(unread)
 )
 
 CREATE TABLE userId_sent (
+	code char(40)
 	Time datetime,
 	toUser varchar(20),
 	Type char(1), -- c(challenge)/r(friend request)/f(friend confirm)/n(normal text)
-	title varchar(50),
+	title text,
 	content text,
 )
