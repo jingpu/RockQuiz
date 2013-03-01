@@ -64,6 +64,9 @@
 				<dd class="readmore"><a href=""><b>MORE</b></a></dd>
 				<dt>New Message</dt>
 				<%
+				if (unread.isEmpty()) {
+					out.println("<dd>No New Message</dd>");
+				} else {
 				for (String msgCode : unread) {
 					Message msg = user.getMessage("inbox", msgCode);
 					String description = msg.title;
@@ -76,6 +79,7 @@
 					Date now = new Date();
 					String timeDscr = TimeTrsf.dscr(time, now);
 					out.println("<dd>" + description + " " + timeDscr + "</dd>");
+				}
 				}
 				%>
 				<dd class="readmore"><a href=<%=mailBoxUrl%>><b>MORE</b></a></dd>
