@@ -1,47 +1,53 @@
-<?xml version="1.0" encoding="UTF-8" ?><!-- <?xml version="1.0" encoding="ISO-8859-1" ?> -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><!-- <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> -->
-        <title>Welcome</title>
-    </head>
-    <body>
-        
-        <table align="center" border="0" cellpadding="0" width="100%" height="100">
-			<tr>
-			<td>
-			<p align="center">
-			<img border="0" src="12.gif" width="800" height="300"></td>
-			</tr>
-		</table>
-    	<form method="post" action="LoginServlet">
-    	<table border="1" align="center">
-    		<tr>
-      			<th>User Name</th>
-      			<td> <input type="text" name="name"> </td>
-    		</tr>
-    		<tr>
-     			 <th>Password</th>
-      			<td> <input type="password" name="pwd"> </td>
-   			</tr>
-    		<tr>
-      			<td colspan="2" align="center">
-        			<input type="submit" value="Login">
-        			<input type="reset" value="Reset">
-      			</td>
-    		</tr>
-    		<tr>
-      			<td colspan="2" align="center"> 
-         		<a href="createAccount.html">Register Now</a>
-      			</td>
-    		</tr>
-    	</table>
-    	</form>
-        
-		<p>
-		<MARQUEE behavior=alternate width="100%" bgColor=silver
-		height=50><font size="20" color="blue"> Welcome!</MARQUEE>
-		</P>
-		
-    </body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="index_style.css" rel="stylesheet" type="text/css" />
+<title>Wecome To RockQuiz</title>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Wecome To RockQuiz</h1>
+			</div>
+			
+			<dl id="browse">
+				<dt>Login</dt>
+				<dd>
+					<form method="post" action="LoginServlet">
+    				<table border="1" align="center">
+    				<tr>
+      					<th>User Name</th>
+      					<td> <input type="text" name="name"> </td>
+    				</tr>
+    				<tr>
+     					 <th>Password</th>
+      					 <td> <input type="password" name="pwd"> </td>
+   					</tr>
+    				<tr>
+      					 <td colspan="2" align="center">
+        				 <input type="submit" value="Login">
+        				 <input type="reset" value="Reset">
+      					 </td>
+    				</tr>
+    				<tr>
+      					<td colspan="2" align="center"> 
+         				<a href="createAccount.html">Register Now</a>
+      					</td>
+    				</tr>
+    			    </table>
+    				</form>
+				</dd>
+				<dt>Quick Link</dt>
+				<dd><a href="shttp://www.stanford.edu/">Stanford University</a></dd>
+				<dd><a href="http://www.stanford.edu/class/cs108/">CS108 Course Website</a></dd>
+			</dl>
+			
+			<div id="body">											
+					<img src="images/green.jpg" width=560px  height=225px>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
