@@ -4,14 +4,22 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 import util.Helper;
 import database.MyDB;
 
+/**
+ * QuestionBase class Served as the base class of all question types Several
+ * Common attributes of all question types are initialized inside the base class
+ * (i.e. questionType, questionId, creatorId, ...) Static final string for
+ * questionType name and questionTable name are also defined in base class
+ * 
+ * @author yang
+ * 
+ */
 public abstract class QuestionBase { // abstract class cannot be instantiated,
 										// but only its subclass
-	protected final String questionType; // how to use final here?
+	protected final String questionType;
 	protected final String questionId;
 	protected final String creatorId;
 	protected final String questionDescription;
@@ -20,7 +28,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected final String tagString;
 	protected final String correctRatio;
 
-	protected String queryStmt;
 	public static final String QR = "Question_Response";
 	public static final String FIB = "Fill_In_Blank";
 	public static final String MC = "Multi_Choice";
@@ -31,12 +38,22 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected static final String MC_Table = "Multi_Choice_Pool";
 	protected static final String PR_Table = "Picture_Response_Pool";
 
+	protected String queryStmt;
+
+	/**
+	 * Constructor used in mode1: construct a question from database
+	 * 
+	 * @param questionType
+	 * @param questionId
+	 */
 	public QuestionBase(String questionType, String questionId) {
 		this.questionType = questionType;
 		this.questionId = questionId;
 
 		String questionTable = getQuestionTable(questionType);
 
+		// if not successfully get the attribute for the question, "error" is
+		// presented in that field
 		String tmpCreatorId = "error";
 		String tmpQuestionDescription = "error";
 		String tmpAnswer = "error";
@@ -44,10 +61,11 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		String tmpTagString = "error";
 		String tmpCorrectRatio = "error";
 
-		queryStmt = "SELECT * FROM " + questionTable + " WHERE question_id = "
-				+ questionId;
-		Connection con = MyDB.getConnection();
+		queryStmt = "SELECT * FROM " + questionTable
+				+ " WHERE question_id = \"" + questionId + "\"";
+
 		try {
+			Connection con = MyDB.getConnection();
 			Statement stmt = con.createStatement();
 			stmt.executeQuery("USE c_cs108_yzhao3");
 			ResultSet rs = stmt.executeQuery(queryStmt);
@@ -73,8 +91,17 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		correctRatio = tmpCorrectRatio;
 	};
 
-	// Create a question from webpage -- cannot be used like: QuestionBase base
-	// = new QuestionBase();
+	/**
+	 * Constructor used in mode 2: construct a question from webpage
+	 * 
+	 * @param questionType
+	 * @param creatorId
+	 * @param questionDescription
+	 * @param answer
+	 * @param maxScore
+	 * @param tagString
+	 * @param correctRatio
+	 */
 	public QuestionBase(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
 			String tagString, String correctRatio) {
@@ -91,10 +118,10 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	}
 
 	/**
-	 * Generate questionId for each question
+	 * Generate a new questionId for a question
 	 * 
 	 * @param questionType
-	 * @return
+	 * @return questionId
 	 */
 	private String generateId(String questionType) {
 		// Jing's advice taken, has changed to use MD5 hash to get the question
@@ -108,7 +135,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 			Statement stmt = con.createStatement();
 			// query questionTable
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + questionTable
-					+ " WHERE question_d = \"" + id + "\"");
+					+ " WHERE question_id = \"" + id + "\"");
 			// try another hash until it is not used already
 			while (rs.isBeforeFirst()) {
 				id = Helper.getMD5ForTime();
@@ -142,16 +169,12 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	public String printReadHtml() {
 		StringBuilder html = new StringBuilder();
 
-		// The type introduction of the question //TODO: may be integrated into
-		// jsp
+		// TODO: may be integrated into jsp
 		html.append("<h2>Question Type Introduction</h2>\n");
 		// html.append("<p>" + typeIntro + "</p>\n");
 
 		// The creator of the question TODO: link to User's profile page
-		html.append("<p>Question Creator: " + creatorId + "</p>\n"); // TODO:
-																		// should
-																		// be a
-																		// hyper
+		html.append("<p>Question Creator: " + creatorId + "</p>\n");
 
 		return html.toString();
 	}
@@ -160,27 +183,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		if (userInput.equals(answer))
 			return maxScore;
 		return "0";
-	}
-
-	// get prompt for JSP to show on the webpage
-	// TODO more types...
-	public String getPrompt() {
-		if (questionType.equals(QR))
-			return "Your Answer:";
-		return null;
-	}
-
-	// TODO control string: "text", "hidden", "radio"
-	public String getCtrlType() {
-		if (questionType.equals(MC))
-			return "radio";
-		else
-			return "text";
-	}
-
-	// Will be overridden by MultiChoice
-	public List<String> getRadioIds() {
-		return null;
 	}
 
 	public String getMaxScore() {
@@ -195,9 +197,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return questionId;
 	}
 
-	// public String getTypeIntro() {
-	// return typeIntro;
-	// }
 	public String getQuestionDescription() {
 		return questionDescription;
 	}

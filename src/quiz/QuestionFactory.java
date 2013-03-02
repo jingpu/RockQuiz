@@ -56,39 +56,42 @@ public class QuestionFactory {
 			String tagString = request.getParameter("tag");
 			return new QResponse(questionType, creatorId, questionDescription,
 					answer, maxScore, tagString, "not_implemeted");
-			
+
 		} else if (questionType.equals(QuestionBase.FIB)) {
 			String questionDescription = request
-			.getParameter("questionDescription");
+					.getParameter("questionDescription");
 			String answer = request.getParameter("answer");
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
-			return new FillInBlank(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, "not_implemeted");
-			
+			return new FillInBlank(questionType, creatorId,
+					questionDescription, answer, maxScore, tagString,
+					"not_implemeted");
+
 		} else if (questionType.equals(QuestionBase.MC)) {
 			String questionDescription = request
-			.getParameter("questionDescription");
+					.getParameter("questionDescription");
 			String answer = request.getParameter("answer");
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
-			
-			String choiceA = request.getParameter("choiceA");  //TODO: better way to handle this
+
+			// TODO: better way to handle this
+			String choiceA = request.getParameter("choiceA");
 			String choiceB = request.getParameter("choiceB");
 			String choiceC = request.getParameter("choiceC");
 			String choiceD = request.getParameter("choiceD");
-			
+
 			List<String> choices = new ArrayList<String>();
 			choices.add(choiceA);
 			choices.add(choiceB);
 			choices.add(choiceC);
 			choices.add(choiceD);
-			return new MultiChoice(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, "not_implemeted", choices);
-			
+			return new MultiChoice(questionType, creatorId,
+					questionDescription, answer, maxScore, tagString,
+					"not_implemeted", choices);
+
 		} else if (questionType.equals(QuestionBase.PR)) {
 			String questionDescription = request
-			.getParameter("questionDescription");
+					.getParameter("questionDescription");
 			String answer = request.getParameter("answer");
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
@@ -96,8 +99,8 @@ public class QuestionFactory {
 			return new PResponse(questionType, creatorId, questionDescription,
 					answer, maxScore, tagString, "not_implemeted", url);
 		}
-		
-			return null;
+
+		return null;
 	}
 
 	// called by quiz to print html for every question

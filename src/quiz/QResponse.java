@@ -15,7 +15,10 @@ import database.MyDB;
  */
 public class QResponse extends QuestionBase {
 
-	private static final String typeIntro = "In this type of question, given a question, user need to answer the question";
+	// TODO: add partial score feature here -> be handed by human grader
+	private static final String typeIntro = "In this type of question, given a question, "
+			+ "user need to answer the question in the answer area. Correct answer will get full score, "
+			+ "while the wrong answer will get zero";
 
 	public QResponse(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
@@ -54,9 +57,9 @@ public class QResponse extends QuestionBase {
 	public static String printCreateHtml() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a question-response question</h1>");
+		html.append("<h1>This page will guide you to create a question-response question</h1>\n");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
-		html.append("<p> Please enter proposed question description and answer </p>");
+		html.append("<p> Please enter proposed question description and answer </p>\n");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
@@ -76,6 +79,7 @@ public class QResponse extends QuestionBase {
 		html.append(super.printReadHtml());
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
