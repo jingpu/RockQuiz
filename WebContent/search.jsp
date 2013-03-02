@@ -40,7 +40,7 @@
 	<%
 		if (UserManager.alreadyExist(query)) {
 			StringBuilder str = new StringBuilder();
-			str.append("<p><a href=\"userpage.jsp?id=" + query + "\">"
+			str.append("<p><a href=\"userpage_layout.jsp?id=" + query + "\">"
 					+ query + "</a></p>");
 			out.println(str.toString());
 		}
