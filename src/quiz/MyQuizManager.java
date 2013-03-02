@@ -72,7 +72,19 @@ public final class MyQuizManager implements QuizManager {
 	 */
 	@Override
 	public Quiz getQuiz(String name) {
-		return new MyQuiz(name);
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query Global_Quiz_Info_Table
+			ResultSet rs = stmt
+					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
+							+ " WHERE quizName = \"" + name + "\"");
+			if(rs.isBeforeFirst())
+				return new MyQuiz(name);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	private List<MyQuiz> getAllQuizzes() {

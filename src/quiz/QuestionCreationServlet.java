@@ -83,13 +83,44 @@ public class QuestionCreationServlet extends HttpServlet {
 			@SuppressWarnings("unchecked")
 			List<QuestionBase> questionList = (List<QuestionBase>) session
 					.getAttribute("questionList");
+			// get a QuizManager
+			QuizManager quizManager = new MyQuizManager();
 			if (questionList == null) {
-				// TODO if there is no questionList created, it should redirect
+				// if there is no questionList created, it should redirect
 				// to quiz creation page and display some message
-			} else {
-				// TODO check if quizName already exists. If so, it should
+
+				// we are not finishing quiz creation, so save all params to
+				// session
+				saveToSession(session, quizName, tagString, quizDescription,
+						canPractice, isRandom, isOnePage, isImmCorrection);
+
+				// write html
+				response.setContentType("text/html");
+				PrintWriter out = response.getWriter();
+				String message = "No question has been created in the new quiz. "
+				+ "Please go back and add a new question.";
+				out.print(printCreationFailPage(message));
+
+			} else if (quizManager.getQuiz(quizName) != null) {
+				// quizName already exists. It should
 				// redirect to quiz creation page and display some message
 
+				// write html
+				response.setContentType("text/html");
+				PrintWriter out = response.getWriter();
+				String message = "Quiz name \"" + quizName
+						+ "\" already exists. "
+						+ "Please go back and use a valid quiz name.";
+				out.print(printCreationFailPage(message));
+
+				// reset quizName
+				quizName = "";
+				// we are not finishing quiz creation, so save all params to
+				// session
+				saveToSession(session, quizName, tagString, quizDescription,
+						canPractice, isRandom, isOnePage, isImmCorrection);
+
+			} else {
 				// construct the quiz class and store it to database
 				Timestamp createTime = new Timestamp(
 						new java.util.Date().getTime());
@@ -149,5 +180,37 @@ public class QuestionCreationServlet extends HttpServlet {
 			out.println("</html>");
 		}
 
+	}
+
+	private void saveToSession(HttpSession session, String quizName,
+			String tagString, String quizDescription, String canPractice,
+			String isRandom, String isOnePage, String isImmCorrection) {
+		session.setAttribute("quizName", quizName);
+		session.setAttribute("tagString", tagString);
+		session.setAttribute("quizDescription", quizDescription);
+		session.setAttribute("canPractice", canPractice);
+		session.setAttribute("isRandom", isRandom);
+		session.setAttribute("isOnePage", isOnePage);
+		session.setAttribute("isImmCorrection", isImmCorrection);
+	}
+
+	private String printCreationFailPage(String message) {
+		StringBuilder html = new StringBuilder();
+		html.append("<!DOCTYPE html>");
+		html.append("<html>");
+		html.append("<head>");
+		html.append("<meta charset=\"UTF-8\">");
+		html.append("<title>Quiz Creation Fails</title>");
+		html.append("</head>");
+		html.append("<body>");
+		html.append("<h1>Quiz Creation Fails</h1>");
+		html.append("<p>" + message + "</p>");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\">\n");
+		html.append("<input type=\"submit\" value=\"Back\" >\n");
+		html.append("</form>\n");
+		html.append("</body>");
+		html.append("</html>");
+
+		return html.toString();
 	}
 }
