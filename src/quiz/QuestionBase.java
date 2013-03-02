@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import util.Helper;
 import database.MyDB;
 
 public abstract class QuestionBase { // abstract class cannot be instantiated,
@@ -19,7 +20,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected final String tagString;
 	protected final String correctRatio;
 
-	// Jing: why we need these object variables?
 	protected String queryStmt;
 	public static final String QR = "Question_Response";
 	public static final String FIB = "Fill_In_Blank";
@@ -31,8 +31,6 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected static final String MC_Table = "Multi_Choice_Pool";
 	protected static final String PR_Table = "Picture_Response_Pool";
 
-	// have to have this, otherwise subclass (i.e. QResponse(String questionId))
-	// will cause error
 	public QuestionBase(String questionType, String questionId) {
 		this.questionType = questionType;
 		this.questionId = questionId;
@@ -92,28 +90,36 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		this.questionId = generateId(questionType);
 	}
 
+	/**
+	 * Generate questionId for each question
+	 * 
+	 * @param questionType
+	 * @return
+	 */
 	private String generateId(String questionType) {
-		// TODO: this code is buggy. It breaks since "10" will be less than "2".
-		// Suggested fix will be change id field in database to INT, or generate
-		// the id using hash function rather than sequential order (please refer
-		// to the implementation of MyQuiz.generateId())
-		Integer id = 0;
+		// Jing's advice taken, has changed to use MD5 hash to get the question
+		// Id
+
+		String id = Helper.getMD5ForTime();
 		String questionTable = getQuestionTable(questionType);
-		queryStmt = "SELECT * FROM " + questionTable
-				+ " ORDER BY question_id DESC LIMIT 1";
+
 		Connection con = MyDB.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			stmt.executeQuery("USE c_cs108_yzhao3");
-			ResultSet rs = stmt.executeQuery(queryStmt);
-			rs.next();
-
-			id = Integer.parseInt(rs.getString(1)) + 1;
+			// query questionTable
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + questionTable
+					+ " WHERE question_d = \"" + id + "\"");
+			// try another hash until it is not used already
+			while (rs.isBeforeFirst()) {
+				id = Helper.getMD5ForTime();
+				rs = stmt.executeQuery("SELECT * FROM " + questionTable
+						+ " WHERE question_d = \"" + id + "\"");
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return id.toString();
+		return id;
 	}
 
 	private String getQuestionTable(String questionType) {
@@ -130,51 +136,8 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return questionTable;
 	}
 
-	// This method is deprecated because it is moved to QuestionFactory class
-	@Deprecated
-	public static String[] getQuestionTypes() {
-		String types[] = new String[4];
-		types[0] = QR;
-		types[1] = FIB;
-		types[2] = MC;
-		types[3] = PR;
-		return types;
-	}
-
-	// This method is deprecated because it is moved to QuestionFactory class
-	@Deprecated
-	public static QuestionBase getQuestion(String questionType,
-			String questionId) {
-		// switch questionType -- factory?
-
-		if (questionType.equals(QR))
-			return new QResponse(questionType, questionId);
-		if (questionType.equals(FIB))
-			return new FillInBlank(questionType, questionId);
-		if (questionType.equals(MC))
-			return new MultiChoice(questionType, questionId);
-		if (questionType.equals(PR))
-			return new PResponse(questionType, questionId);
-		return null;
-	}
-
 	// when clicking submit
 	public abstract void saveToDatabase();
-
-	// This method is deprecated because it is moved to QuestionFactory class
-	@Deprecated
-	public static String printCreateHtml(String questionType) {
-		if (questionType.equals(QR))
-			return QResponse.printCreateHtml();
-		else if (questionType.equals(FIB))
-			return FillInBlank.printCreateHtml();
-		else if (questionType.equals(MC))
-			return MultiChoice.printCreateHtml();
-		else if (questionType.equals(PR))
-			return PResponse.printCreateHtml();
-		else
-			return "error";
-	}
 
 	public String printReadHtml() {
 		StringBuilder html = new StringBuilder();

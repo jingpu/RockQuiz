@@ -57,14 +57,14 @@ public class QResponse extends QuestionBase {
 		html.append("<h1>This page will guide you to create a question-response question</h1>");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p> Please enter proposed question description and answer </p>");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 
 		// Hidden information - questionType and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
 				+ QuestionBase.QR + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
 		return html.toString();
 	}
