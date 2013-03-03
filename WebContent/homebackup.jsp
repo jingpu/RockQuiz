@@ -7,6 +7,9 @@
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
 <%@ page import="user.TimeTrsf"%>
+<%@ page import="quiz.QuizManager"%>
+<%@ page import="quiz.myQuizManager"%>
+<%@ page import="quiz.Quiz"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -119,6 +122,16 @@
 
 	<%--popular quizzes --%>
 	<h3>Popular Quizzes</h3>
+	<%
+		QuizManager man = new myQuizManager();
+		List<String> popQuizzes = man.getPopularQuiz();
+		for(String name : popQuizzes){
+			Quiz quiz = man.getQuiz(name);
+			String quizUrl = quiz.getSummaryPage();  %>
+			<a ahref=<%=quizUrl%>><%=name%></a>
+	<%	}
+	
+	%>
 
 	<%--recent created quizzes --%>
 	<h3>Recent Quizzes</h3>
