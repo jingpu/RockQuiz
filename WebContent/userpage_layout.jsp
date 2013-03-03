@@ -56,7 +56,42 @@
 				<h1><%=id%></h1>
 				<h3><%=new Date()%></h3>
 				<div id="nav">
-				<h2><a href="home.jsp">Home</a> | <a href="">Log Out</a></h2>
+				<h2><a href="home.jsp">Home</a> | 
+				<%
+					if(!guest.equals(id)) {
+				%>
+				
+				<%--if guest!=id, show friend related operation --%>
+				<%
+					if (pageOwner.seeFriendStatus(guest).equals("x")) {
+				%>
+				<a href="RequestFriend?to=<%=id%>">Add Friend</a> |
+				<%
+					} else if (pageOwner.seeFriendStatus(guest).equals("r")) {
+						String text = "Do you want to add " + id + " as friend?";
+				%>
+				<a href="RespondFriend?to=<%=id%>" onclick="friendQuery('<%=text%>')">Respond to Friend Request</a> |
+				<%
+				} else if (pageOwner.seeFriendStatus(guest).equals("u")) {
+					String text = "Do you want to cancel your friend request to "
+					+ id + "?";
+				%>
+				<a href="RemoveFriend?to=<%=id%>" onclick="friendQuery('<%=text%>')">Cancel Friend Request</a> |
+				<%
+				} else if (pageOwner.seeFriendStatus(guest).equals("f")) {
+					String text = "Are you sure to unfriend " + id + "?";
+				%>
+				<a href="RemoveFriend?to=<%=id%>" onclick="friendQuery('<%=text%>')">Unfriend</a> |
+				<%
+				}
+				%>
+
+				<%--if guest!=id, show message --%>
+				<a href="LeaveMessage?to=<%=id%>">Message</a> |
+				<% 
+				}
+				%>			
+				<a href="LogoutServlet">Log Out</a></h2>
 				</div>
 			</div>
 			
@@ -71,79 +106,35 @@
 					}
 				}				
 				%>
-				
-				<%
-				if(!guest.equals(id)) {
-				%>
-				
-				<%--if guest!=id, show friend related operation --%>
-				<%
-				if (pageOwner.seeFriendStatus(guest).equals("x")) {
-				%>
-					<dt>
-					<form action="RequestFriend" method="post">
-						<input name="to" type="hidden" value=<%=id%>> <input
-						type="submit" value="Add Friend">
-					</form>
-					</dt>
-				<%
-					} else if (pageOwner.seeFriendStatus(guest).equals("r")) {
-						String text = "Do you want to add " + id + " as friend?";
-				%>
-				<dt>
-				<form action="RespondFriend" method="post">
-					<input type="hidden" name="to" value=<%=id%>> <input
-					type="submit" value="Respond to Friend Request"
-					onclick="friendQuery('<%=text%>')">
-				</form>
-				</dt>
-				<%
-				} else if (pageOwner.seeFriendStatus(guest).equals("u")) {
-					String text = "Do you want to cancel your friend request to "
-					+ id + "?";
-				%>
-				<dt>
-				<form action="RemoveFriend" method="post">
-					<input name="to" type="hidden" value=<%=id%>> <input
-					type="submit" value="Cancel Friend Request"
-					onclick="friendQuery('<%=text%>')">
-				</form>
-				</dt>
-				<%
-				} else if (pageOwner.seeFriendStatus(guest).equals("f")) {
-					String text = "Are you sure to unfriend " + id + "?";
-				%>
-				<dt>
-				<form action="RemoveFriend" method="post">
-					<input name="to" type="hidden" value=<%=id%>> <input
-					type="submit" value="Unfriend" onclick="friendQuery('<%=text%>')">
-				</form>
-				</dt>
-				<%
-				}
-				%>
-
-				<%--if guest!=id, show message --%>
-				<dt>
-				<form action="LeaveMessage" method="post">
-					<input name="to" type="hidden" value=<%=id%>> <input
-					type="submit" value="Message">
-				</form>
-				</dt>
-				<% 
-				}
-				%>			
 			</dl>
 			
 			<div id="body">
 				<div class="inner">									
 					<div class="leftbox">
 						<h3>Quizzes Taken</h3>
+						<ul>
+						<%
+							for (int i = 0; i < 5; i++) {
+								if (i == taken.size())
+									break;
+							out.println("<li>" + taken.get(i)[1] + "</li>");
+							}
+						%>
+						</ul>
 						<p class="readmore"><a href=""><b>MORE</b></a></p>
 						<div class="clear"></div>
 					</div>
 					<div class="rightbox">
 						<h3>Quizzes Created</h3>
+						<ul>
+						<%
+							for (int i = 0; i < 5; i++) {
+								if (i == taken.size())
+								break;
+								out.println("<li>" + created.get(i) + "</li>");
+							}
+						%>
+						</ul>
 						<p class="readmore"><a href=""><b>MORE</b></a></p>
 						<div class="clear"></div>
 					</div>
