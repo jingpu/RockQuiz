@@ -8,7 +8,7 @@
 <%@ page import="user.Activity"%>
 <%@ page import="user.TimeTrsf"%>
 <%@ page import="quiz.QuizManager"%>
-<%@ page import="quiz.myQuizManager"%>
+<%@ page import="quiz.MyQuizManager"%>
 <%@ page import="quiz.Quiz"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 
@@ -123,7 +123,7 @@
 	<%--popular quizzes --%>
 	<h3>Popular Quizzes</h3>
 	<%
-		QuizManager man = new myQuizManager();
+		QuizManager man = new MyQuizManager();
 		List<String> popQuizzes = man.getPopularQuiz();
 		for(String name : popQuizzes){
 			Quiz quiz = man.getQuiz(name);
