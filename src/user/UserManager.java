@@ -543,7 +543,7 @@ public class UserManager{
 		setDriver();
 		String boxTable = userId + "_" + box;
 		try {
-			stmt.executeUpdate("DELETE FROM " + boxTable + "WHERE code='" + msgCode + "'");
+			stmt.executeUpdate("DELETE FROM " + boxTable + " WHERE code='" + msgCode + "'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

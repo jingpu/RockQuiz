@@ -31,6 +31,7 @@
 	String msgCode = request.getParameter("msg");
 	Account user = new Account(userId);
 	Message msg = user.readMessage(box, msgCode);
+	String to = msg.to == userId? msg.from : msg.to;
 	SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy-MM-dd HH:mm:ss.S");
 	Date time = sdf.parse(msg.getTime());
@@ -51,6 +52,17 @@
 		<tr><td><%=msg.content%></td></tr>
 	</table>
 	</div>
+	
+	<form action="ReplyMessage" method="post">
+	<input name="to" type="hidden" value="<%=to%>">
+	<input type="submit" value="Reply">
+	</form>
+	
+	<form action="DeleteMessage" method="post">
+	<input name="code" type="hidden" value="<%=msgCode%>">
+	<input name="box" type="hidden" value="<%=box%>">
+	<input type="submit" value="Delete">
+	</form>
 </body>
 </html>
 

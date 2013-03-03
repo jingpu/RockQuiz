@@ -14,14 +14,14 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class LeaveMessageServlet
  */
-@WebServlet("/LeaveMessage")
-public class LeaveMessageServlet extends HttpServlet {
+@WebServlet("/ReplyMessage")
+public class ReplyMessageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LeaveMessageServlet() {
+    public ReplyMessageServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,9 +41,9 @@ public class LeaveMessageServlet extends HttpServlet {
 		String toUser = request.getParameter("to");
 		HttpSession session = request.getSession();
 		String guest = (String) session.getAttribute("guest");
-		String toUsersPage = "userpage.jsp?id=" + toUser;
+		String mailBoxSentUrl = "Mailbox_sent.jsp?id="+ guest;
 		if (toUser == null || guest.equals("guest")) {
-			response.sendRedirect(toUsersPage);
+			response.sendRedirect(mailBoxSentUrl);
 			return;
 		} 
 		response.setContentType("text/html");
@@ -57,13 +57,13 @@ public class LeaveMessageServlet extends HttpServlet {
 		out.println("</head>");
 		out.println("<body>");
 		out.println(new Date());
-		out.println("<form action=\"SendMessage0\" id=\"Compose\" method=\"post\"></form>");
+		out.println("<form action=\"SendMessage\" id=\"Compose\" method=\"post\"></form>");
 		out.println("<p>To <input type=\"text\" name=\"toUser\" form=\"Compose\" value=\""+ toUser +"\"></p>");
 		out.println("<p><input type=\"text\" name=\"title\" placeholder=\"Subject\" form=\"Compose\"></p>");
 		out.println("<textarea rows=\"10\" cols=\"50\" name=\"content\" form=\"Compose\" " +
 				"placeholder=\"Composing message here\"></textarea>");
 		out.println("<p><input type=\"submit\" value=\"Send\" form=\"Compose\">" +
-				"<a href=\"" + toUsersPage + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
+				"<a href=\"" + mailBoxSentUrl + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
 		out.println("</body>");
 		out.println("</html>");
 	}

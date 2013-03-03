@@ -14,16 +14,16 @@ import user.Account;
 import user.Message;
 
 /**
- * Servlet implementation class MsgSent
+ * Servlet implementation class DeleteMessage
  */
-@WebServlet("/SendMessage")
-public class MsgSent extends HttpServlet {
+@WebServlet("/DeleteMessage")
+public class DeleteMessage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MsgSent() {
+    public DeleteMessage() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,21 +41,16 @@ public class MsgSent extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		String fromUser = (String) session.getAttribute("guest");
-		String toUser = request.getParameter("toUser");
-		String title = request.getParameter("title");
-		title = title == null? "" : title;
-		String content = request.getParameter("content");
-		title = content == null? "" : content;
-		Message msg = new Message(fromUser, toUser, "n", title, content);
-		Account user = new Account(fromUser);
-		if(user.sendMessage(msg)) {
-			RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_sent.jsp?id="+ fromUser);
-			dispatch.forward(request, response);
-			return;
-		}
-		RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_inbox.jsp?id="+ fromUser);
+		String me = (String) session.getAttribute("guest");
+		System.out.println(me);
+		String msgCode = request.getParameter("code");
+		System.out.println(msgCode);
+		String box = request.getParameter("box");
+		Account user = new Account(me);
+		user.deleteMessage(box, msgCode);
+		RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_" + box + ".jsp?id="+ me);
 		dispatch.forward(request, response);
 		return;
 	}
+
 }
