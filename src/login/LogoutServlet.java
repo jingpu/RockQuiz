@@ -31,6 +31,11 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		HttpSession session = request.getSession();
+		session.setAttribute("guest", "guest");
+		RequestDispatcher dispatch = request.getRequestDispatcher("index.html");
+		dispatch.forward(request, response);
 	}
 
 	/**
