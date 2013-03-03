@@ -13,6 +13,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="Mailbox_style.css" rel="stylesheet" type="text/css" />
 <title>Reading Message</title>
 </head>
 <%
@@ -36,13 +37,20 @@
 	String timeDscr = TimeTrsf.dscr(time, new Date());
 %>
 <body>
-	<p>Message</p>
-	<table border="1" width="300" rules="rows">
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Message</h1>	
+			</div>
+		</div>
+
+	<table border="2" width="300" rules="rows">
 		<tr><th><%=msg.title%>	<%=timeDscr %></th></tr>
 		<tr><td><%=msg.from%></td></tr>
 		<tr><td><%=msg.to%></td></tr>
 		<tr><td><%=msg.content%></td></tr>
 	</table>
+	</div>
 </body>
 </html>
 
