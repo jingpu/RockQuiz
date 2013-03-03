@@ -18,5 +18,7 @@ public interface QuizManager {
 	 *         pointer if nothing matched in database.
 	 */
 	public Quiz getQuiz(String name);
+	
+	public List<Quiz> searchQuiz(String query);
 
 }
