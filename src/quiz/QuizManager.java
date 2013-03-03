@@ -5,18 +5,20 @@ import java.util.List;
 import user.Account;
 
 public interface QuizManager {
-	
-	//Summary page
-	public  List<String> getPopularQuiz();
-	public  List<String> getRecentCreateQuiz();
-	
-	//interface needed by both administrator and users 
+
+	// Summary page
+	public List<String> getPopularQuiz();
+
+	public List<String> getRecentCreateQuiz();
+
+	/**
+	 * interface needed by both administrator and users
+	 * 
+	 * @param name
+	 *            String of the quizName
+	 * @return Quiz which has the quizName=name in the database. returns null
+	 *         pointer if nothing matched in database.
+	 */
 	public Quiz getQuiz(String name);
-	public List<Quiz> getQuizList(String filter);
-	
-	//interface needed by admistrator
-	public List<QuizLog> getHistory(String quizName); 
-	public Account getAccount(String userId);
-	
-	
+
 }

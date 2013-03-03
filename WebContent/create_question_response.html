@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Create A Question-Response Question </title>
+</head>
+<body>
+	<h1>This page will guide you to create a question-response question</h1>
+	<form action="QuestionCreationServlet" method="post">
+	<p> Please enter proposed question description and answer </p>
+	<p>Question Description: <textarea name="questionDescription" rows="10" cols="50"></textarea></p>
+	<p>Answer:   <input type="text" name="answer" ></input></p>
+	<p>Score:   <input type="text" name="maxScore" ></input></p>
+	<p><input type="hidden" name="questionType" ></input></p>
+	<p><input type="hidden" name="questionId" ></input></p>
+	<input type="submit" value = "Save"/>
+	</form>
+</body>
+</html>
