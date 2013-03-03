@@ -49,7 +49,7 @@
 	System.out.println("mark1");
 	String mailBoxUrl = "Mailbox_frame.jsp?id=" + userId;
 	//String userpageUrl  = "userpage.jsp?id=" + userId;
-	String userpageUrl = "userpage_layout.jsp?id=" + userId;
+	String userpageUrl = "userpage.jsp?id=" + userId;
 %>
 <title>RockQuiz - <%=userId%></title>
 </head>

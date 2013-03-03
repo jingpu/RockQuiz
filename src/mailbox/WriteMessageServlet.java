@@ -31,6 +31,7 @@ public class WriteMessageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("writemsgmark1");
 		String userId = request.getParameter("username");
 		HttpSession session = request.getSession();
 		String guest = (String) session.getAttribute("guest");
@@ -41,6 +42,7 @@ public class WriteMessageServlet extends HttpServlet {
 			response.sendRedirect("home.jsp?id=" + guest);
 			return;
 		}
+		System.out.println("writemsgmark1");
 		String mailBoxInboxUrl = "Mailbox_inbox.jsp?id="+ userId;
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -52,7 +54,7 @@ public class WriteMessageServlet extends HttpServlet {
 		out.println("<title>Composing Message</title>");
 		out.println("</head>");
 		//out.println("<link href=\"Mailbox_style.css\" rel=\"stylesheet\" type=\"text/css\" />");
-		out.println("<body");
+		out.println("<body>");
 		out.println(new Date());
 		out.println("<form action=\"SendMessage\" id=\"Compose\" method=\"post\"></form>");
 		out.println("<p>To <input type=\"text\" name=\"toUser\" form=\"Compose\"></p>");
@@ -61,7 +63,9 @@ public class WriteMessageServlet extends HttpServlet {
 				"placeholder=\"Composing message here\"></textarea>");
 		out.println("<p><input type=\"submit\" value=\"Send\" form=\"Compose\">" +
 				"<a href=\"" + mailBoxInboxUrl + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
-		
+		out.println("</body>");
+		out.println("</html>");
+		System.out.println("writemsgmark2");
 	}
 
 	/**
@@ -69,6 +73,7 @@ public class WriteMessageServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("writemsgmark1");
 		String userId = request.getParameter("username");
 		HttpSession session = request.getSession();
 		String guest = (String) session.getAttribute("guest");
@@ -79,6 +84,7 @@ public class WriteMessageServlet extends HttpServlet {
 			response.sendRedirect("home.jsp?id=" + guest);
 			return;
 		}
+		System.out.println("writemsgmark1");
 		String mailBoxInboxUrl = "Mailbox_inbox.jsp?id="+ userId;
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
@@ -89,6 +95,7 @@ public class WriteMessageServlet extends HttpServlet {
 		out.println("<head>");
 		out.println("<title>Composing Message</title>");
 		out.println("</head>");
+		//out.println("<link href=\"Mailbox_style.css\" rel=\"stylesheet\" type=\"text/css\" />");
 		out.println("<body>");
 		out.println(new Date());
 		out.println("<form action=\"SendMessage\" id=\"Compose\" method=\"post\"></form>");
@@ -98,5 +105,8 @@ public class WriteMessageServlet extends HttpServlet {
 				"placeholder=\"Composing message here\"></textarea>");
 		out.println("<p><input type=\"submit\" value=\"Send\" form=\"Compose\">" +
 				"<a href=\"" + mailBoxInboxUrl + "\"><input type=\"submit\" value=\"Cancel\"></a></p>");
+		out.println("</body>");
+		out.println("</html>");
+		System.out.println("writemsgmark2");
 	}
 }

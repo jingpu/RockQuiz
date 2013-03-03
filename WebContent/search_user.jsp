@@ -43,7 +43,7 @@
 		for(String str : userResult){
 			System.out.println(str);
 			StringBuilder strb = new StringBuilder();
-			strb.append("<p><a href=\"userpage_layout.jsp?id=" + str + "\">"
+			strb.append("<p><a href=\"userpage.jsp?id=" + str + "\">"
 					+ str + "</a></p>");
 			out.println(strb.toString());
 		}

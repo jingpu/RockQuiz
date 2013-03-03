@@ -33,14 +33,7 @@ public class MsgSent extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.setContentType("text/html");
+		System.out.println("writemsgmark33");
 		HttpSession session = request.getSession();
 		String fromUser = (String) session.getAttribute("guest");
 		String toUser = request.getParameter("toUser");
@@ -50,12 +43,41 @@ public class MsgSent extends HttpServlet {
 		title = content == null? "" : content;
 		Message msg = new Message(fromUser, toUser, "n", title, content);
 		Account user = new Account(fromUser);
+		System.out.println("writemsgmark3");
 		if(user.sendMessage(msg)) {
-			RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox.jsp?id="+ fromUser);
+			RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_inbox.jsp?id="+ fromUser);
 			dispatch.forward(request, response);
+			System.out.println("writemsgmark4");
 			return;
 		}
-		RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox.jsp?id="+ fromUser);
+		RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_inbox.jsp?id="+ fromUser);
+		dispatch.forward(request, response);
+		return;
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		System.out.println("writemsgmark33");
+		HttpSession session = request.getSession();
+		String fromUser = (String) session.getAttribute("guest");
+		String toUser = request.getParameter("toUser");
+		String title = request.getParameter("title");
+		title = title == null? "" : title;
+		String content = request.getParameter("content");
+		title = content == null? "" : content;
+		Message msg = new Message(fromUser, toUser, "n", title, content);
+		Account user = new Account(fromUser);
+		System.out.println("writemsgmark3");
+		if(user.sendMessage(msg)) {
+			RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_inbox.jsp?id="+ fromUser);
+			dispatch.forward(request, response);
+			System.out.println("writemsgmark4");
+			return;
+		}
+		RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_inbox.jsp?id="+ fromUser);
 		dispatch.forward(request, response);
 		return;
 	}
