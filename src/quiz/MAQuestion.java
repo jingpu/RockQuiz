@@ -7,23 +7,40 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import database.MyDB;
 
 /**
  * @author yang
  * 
  */
-public class QResponse extends QuestionBase {
+public class MAQuestion extends QuestionBase {
 
-	// TODO: add partial score feature here -> be handed by human grader
 	private static final String typeIntro = "In this type of question, given a question, "
-			+ "user need to answer the question in the answer area. Correct answer will get full score, "
-			+ "while the wrong answer will get zero";
+			+ "users need to answer all the answer fields. Every answer field is just part of the answer."
+			+ "Only correctly answering all the question fields could a user get full score"
+			+ "Correctly answering an answer field will get a positive 3 points"
+			+ "Otherwise, user would get a negative 1 point."
+			+ "The final grade is the sum of postive and negative points. Lowest score is 0";
 
-	public QResponse(String questionType, String creatorId,
+	/**
+	 * @param questionType
+	 * @param questionId
+	 */
+	public MAQuestion(String questionType, String questionId) {
+		super(questionType, questionId);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param questionType
+	 * @param creatorId
+	 * @param questionDescription
+	 * @param answer
+	 * @param maxScore
+	 * @param tagString
+	 * @param correctRatio
+	 */
+	public MAQuestion(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
 			String tagString, String correctRatio) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
@@ -31,18 +48,14 @@ public class QResponse extends QuestionBase {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * Constructor for connecting database
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param questionId
+	 * @see quiz.QuestionBase#saveToDatabase()
 	 */
-	public QResponse(String questionType, String questionId) {
-		super(questionType, questionId);
-	}
-
 	@Override
 	public void saveToDatabase() {
-		queryStmt = "INSERT INTO " + QR_Table + " VALUES (\"" + questionId
+		queryStmt = "INSERT INTO " + MA_Table + " VALUES (\"" + questionId
 				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
 				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
 				+ "\", \"" + tagString + "\", \"" + correctRatio + "\")";
@@ -63,7 +76,11 @@ public class QResponse extends QuestionBase {
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+
+		// TODO: javascript to dynamically expand the number of answers
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer1\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer2\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer3\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 
 		// Hidden information - questionType and tag information
@@ -95,16 +112,5 @@ public class QResponse extends QuestionBase {
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();
-
-	}
-
-	/**
-	 * @return
-	 */
-	public static String getAnswerString(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		String answer = (String) session.getAttribute("answer");
-		return answer;
 	}
 }

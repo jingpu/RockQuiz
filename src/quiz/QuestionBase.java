@@ -32,11 +32,13 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	public static final String FIB = "Fill_In_Blank";
 	public static final String MC = "Multi_Choice";
 	public static final String PR = "Picture_Response";
+	public static final String MA = "Multi_Answer";
 
 	protected static final String QR_Table = "Question_Response_Pool";
 	protected static final String FIB_Table = "Fill_In_Blank_Pool";
 	protected static final String MC_Table = "Multi_Choice_Pool";
 	protected static final String PR_Table = "Picture_Response_Pool";
+	protected static final String MA_Table = "Multi_Answer_Pool";
 
 	protected String queryStmt;
 
@@ -109,11 +111,11 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		this.questionType = questionType;
 		this.creatorId = creatorId;
 		this.questionDescription = questionDescription;
-		this.answer = answer;
 		this.maxScore = maxScore;
 		this.tagString = tagString;
 		this.correctRatio = correctRatio;
 
+		this.answer = answer;
 		this.questionId = generateId(questionType);
 	}
 
@@ -165,6 +167,8 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 
 	// when clicking submit
 	public abstract void saveToDatabase();
+
+	// protected abstract String getAnswerString(HttpServletRequest request);
 
 	public String printReadHtml() {
 		StringBuilder html = new StringBuilder();

@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import database.MyDB;
 
 /**
@@ -119,6 +122,16 @@ public class FillInBlank extends QuestionBase {
 		if (userInput.equals(answer))
 			return maxScore;
 		return "0";
+	}
+
+	/**
+	 * @return
+	 */
+	public static String getAnswerString(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String answer = (String) session.getAttribute("answer");
+		return answer;
 	}
 
 }

@@ -44,6 +44,7 @@ public class QuestionFactory {
 	}
 
 	// MyQuiz create a question from a HTTP request
+	// questionType is not stored in the session??
 	public static QuestionBase createQuestion(String questionType,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -51,7 +52,7 @@ public class QuestionFactory {
 		if (questionType.equals(QuestionBase.QR)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = request.getParameter("answer");
+			String answer = getAnswerString(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			return new QResponse(questionType, creatorId, questionDescription,
@@ -60,7 +61,7 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.FIB)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = request.getParameter("answer");
+			String answer = getAnswerString(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			return new FillInBlank(questionType, creatorId,
@@ -70,7 +71,7 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.MC)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = request.getParameter("answer");
+			String answer = getAnswerString(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 
@@ -92,14 +93,13 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.PR)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = request.getParameter("answer");
+			String answer = getAnswerString(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String url = request.getParameter("url");
 			return new PResponse(questionType, creatorId, questionDescription,
 					answer, maxScore, tagString, "not_implemeted", url);
 		}
-
 		return null;
 	}
 
@@ -114,6 +114,28 @@ public class QuestionFactory {
 			return MultiChoice.printCreateHtml();
 		else if (questionType.equals(QuestionBase.PR))
 			return PResponse.printCreateHtml();
+		else
+			return "error";
+	}
+
+	/**
+	 * Used by quiz servlet,get an answer string and pass to QuestionBase
+	 * constructor
+	 * 
+	 * @param questionType
+	 * @param request
+	 * @return
+	 */
+	public static String getAnswerString(String questionType,
+			HttpServletRequest request) {
+		if (questionType.equals(QuestionBase.QR))
+			return QResponse.getAnswerString(request);
+		else if (questionType.equals(QuestionBase.FIB))
+			return FillInBlank.getAnswerString(request);
+		else if (questionType.equals(QuestionBase.MC))
+			return MultiChoice.getAnswerString(request);
+		else if (questionType.equals(QuestionBase.PR))
+			return PResponse.getAnswerString(request);
 		else
 			return "error";
 	}

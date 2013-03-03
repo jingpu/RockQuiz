@@ -10,6 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import database.MyDB;
 
 /**
@@ -141,6 +144,19 @@ public class MultiChoice extends QuestionBase {
 		if (userInput.equals(answer))
 			return maxScore;
 		return "0";
+	}
+
+	/**
+	 * Check answer is to check the answer body rather than just an option
+	 * index(i.e. A,B,C)
+	 * 
+	 * @return
+	 */
+	public static String getAnswerString(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String answer = (String) session.getAttribute("answer");
+		return answer;
 	}
 
 }
