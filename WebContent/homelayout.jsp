@@ -56,7 +56,7 @@
 				<h1><%=userId%></h1>
 				<h3><%=new Date()%></h3>
 				<div id="nav">
-				<h2><a href=<%=userpageUrl%>>My Page</a> | <a href=<%=mailBoxUrl%>>Message(<%=unreadCount%>)</a> | <a href="">Log out</a></h2>
+				<h2><a href=<%=userpageUrl%>>My Page</a> | <a href=<%=mailBoxUrl%>>Message(<%=unreadCount%>)</a> | <a href="LogoutServlet">Log out</a></h2>
 				</div>
 			</div>
 			

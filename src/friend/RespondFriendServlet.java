@@ -30,6 +30,17 @@ public class RespondFriendServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String toUser = request.getParameter("to");
+		HttpSession session = request.getSession();
+		String guest = (String) session.getAttribute("guest");
+		String toUsersPage = "userpage.jsp?id=" + toUser;
+		if (toUser == null || guest.equals("guest")) {
+			response.sendRedirect(toUsersPage);
+			return;
+		} 
+		Account fromUser = new Account(guest);
+		fromUser.confirmFriend(toUser);
+		response.sendRedirect(toUsersPage);
 	}
 
 	/**
