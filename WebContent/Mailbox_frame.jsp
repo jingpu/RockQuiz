@@ -2,7 +2,6 @@
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
 <%@ page import="user.Account"%>
-<%@ page import="user.User"%>
 <%@ page import="user.Administrator"%>
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
@@ -24,7 +23,7 @@
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	}
-	User user = new Account(userId);
+	Account user = new Account(userId);
 %>
 <title>Mailbox - <%=userId%></title>
 </head>

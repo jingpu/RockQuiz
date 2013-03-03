@@ -25,7 +25,7 @@
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	}
-	User user = new Account(userId);
+	Account user = new Account(userId);
 %>
 <title>Inbox - <%=userId%></title>
 </head>
@@ -33,34 +33,38 @@
 	<div id="wrapper">
 		<div id="inner">
 			<div id="header">
-				<h1>Inbox</h1>	
+				<h1>Inbox</h1>
 			</div>
 		</div>
 
-	<table width="400" border="2" rules="rows">
-		<tr>
-			<th>From</th>
-			<th>Title</th>
-			<th>Date</th>
-		</tr>
-		<%
-			List<String> msgsInbox = user.getMessageInbox();
-			for (String msgCode : msgsInbox) {
-				Message msg = user.getMessage("inbox", msgCode);
-				SimpleDateFormat sdf = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss.S");
-				Date time = sdf.parse(msg.getTime());
-				String timeDscr = TimeTrsf.dscr(time, new Date());
-				
-				if (!msg.getRead())  out.println("<b>");
-				out.println("<tr><td>" + msg.from + "</td><td>" + "<a href=\"Mail.jsp?id=" 
-					+ userId + "&box=inbox&msg=" + msgCode + "\">" + msg.title + "</a></td><td>"
-					+ timeDscr + "</td></tr>");
-				if (!msg.getRead())  out.println("</b>");
-			}
-		%>
-	</table>
-	</div>	
+		<table width="400" border="2" rules="rows">
+			<tr>
+				<th>From</th>
+				<th>Title</th>
+				<th>Date</th>
+			</tr>
+			<%
+				List<String> msgsInbox = user.getMessageInbox();
+				for (String msgCode : msgsInbox) {
+					Message msg = user.getMessage("inbox", msgCode);
+					SimpleDateFormat sdf = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss.S");
+					Date time = sdf.parse(msg.getTime());
+					String timeDscr = TimeTrsf.dscr(time, new Date());
+
+					if (!msg.getRead())
+						out.println("<b>");
+					out.println("<tr><td><a href=\"userpage.jsp?id=" + msg.from
+							+ "\">" + msg.from + "</a></td><td>"
+							+ "<a href=\"Mail.jsp?id=" + userId + "&box=inbox&msg="
+							+ msgCode + "\">" + msg.title + "</a></td><td>"
+							+ timeDscr + "</td></tr>");
+					if (!msg.getRead())
+						out.println("</b>");
+				}
+			%>
+		</table>
+	</div>
 
 </body>
 </html>

@@ -2,9 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
-<%@ page import="user.User"%>
 <%@ page import="user.Account"%>
-<%@ page import="user.Administrator"%>
+<%@ page import="user.UserManager"%>
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
 <%@ page import="user.TimeTrsf"%>
@@ -30,9 +29,8 @@
 		return;
 	}
 
-	User user = new Account(userId);
-	String status = user.getInfo("status");
-
+	String status = UserManager.getAccountInfo(userId, "status");
+	Account user = new Account(userId);
 	// generate achievements history
 	List<String> achieves = user.getAchievements();
 	// generate quizzes taken history

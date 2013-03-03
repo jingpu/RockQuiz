@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
-<%@ page import="user.User"%>
 <%@ page import="user.Account"%>
 <%@ page import="user.Administrator"%>
 <%@ page import="user.Message"%>
@@ -25,43 +24,44 @@
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	}
-	User user = new Account(userId);
+	Account user = new Account(userId);
 %>
 <title>Sent - <%=userId%></title>
 </head>
 <body>
-<div id="wrapper">
+	<div id="wrapper">
 		<div id="inner">
 			<div id="header">
-				<h1>Sent</h1>	
+				<h1>Sent</h1>
 			</div>
 		</div>
 
-	<table width="400" border="2" rules="rows">
-		<tr>
-			<th>To</th>
-			<th>Title</th>
-			
-			<th>Date</th>
-		</tr>
+		<table width="400" border="2" rules="rows">
+			<tr>
+				<th>To</th>
+				<th>Title</th>
 
-		<%
-			List<String> msgsSent = user.getMessageSent();
-			for (String msgCode : msgsSent) {
-				//System.out.println(msgCode);
-				Message msg = user.getMessage("sent", msgCode);
-				SimpleDateFormat sdf = new SimpleDateFormat(
-						"yyyy-MM-dd HH:mm:ss.S");
-				Date time = sdf.parse(msg.getTime());
-				String timeDscr = TimeTrsf.dscr(time, new Date());
-				
-				out.println("<tr><td>" + msg.to + "</td><td>"
-						+ "<a href=\"Mail.jsp?id=" + userId + "&box=sent&msg="
-						+ msgCode + "\">" + msg.title + "</a></td><td>" + timeDscr
-						+ "</td></tr>");
-			}
-		%>
-	</table>
-	</div>	
+				<th>Date</th>
+			</tr>
+
+			<%
+				List<String> msgsSent = user.getMessageSent();
+				for (String msgCode : msgsSent) {
+					//System.out.println(msgCode);
+					Message msg = user.getMessage("sent", msgCode);
+					SimpleDateFormat sdf = new SimpleDateFormat(
+							"yyyy-MM-dd HH:mm:ss.S");
+					Date time = sdf.parse(msg.getTime());
+					String timeDscr = TimeTrsf.dscr(time, new Date());
+
+					out.println("<tr><td><a href=\"userpage.jsp?id=" + msg.to
+							+ "\">" + msg.to
+							+ "</a></td><td><a href=\"Mail.jsp?id=" + userId
+							+ "&box=sent&msg=" + msgCode + "\">" + msg.title
+							+ "</a></td><td>" + timeDscr + "</td></tr>");
+				}
+			%>
+		</table>
+	</div>
 </body>
 </html>
