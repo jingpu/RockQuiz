@@ -47,7 +47,7 @@
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity();
 	System.out.println("mark1");
-	String mailBoxUrl = "Mailbox.jsp?id=" + userId;
+	String mailBoxUrl = "Mailbox_frame.jsp?id=" + userId;
 	//String userpageUrl  = "userpage.jsp?id=" + userId;
 	String userpageUrl = "userpage_layout.jsp?id=" + userId;
 %>
