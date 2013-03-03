@@ -113,7 +113,7 @@ public final class MyQuizManager implements QuizManager {
 			// query Global_Quiz_Info_Table
 			ResultSet rs = stmt
 					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
-							+ "ORDER BY createTime DESC" + "LIMIT 0," + num);
+							+ " ORDER BY createTime DESC " + "LIMIT 0," + num);
 			while (rs.next()) {
 				String quizName = rs.getString("quizName");
 				list.add(new MyQuiz(quizName));
