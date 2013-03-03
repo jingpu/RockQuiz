@@ -4,6 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * @author youyuan
+ * **/
 public class Activity {
 	public final String time;
 	public final String type;
@@ -17,7 +20,7 @@ public class Activity {
 	
 	public String toString(){
 		StringBuilder dscr = new StringBuilder();
-		if(type == "t") {
+		if(type.charAt(0) == 't') {
 			dscr.append(" took quiz ");
 		} else if(type == "c"){
 			dscr.append(" created quiz ");

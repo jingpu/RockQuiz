@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class WriteMessageServlet
+ * @author youyuan
  */
 @WebServlet("/WriteMessage")
 public class WriteMessageServlet extends HttpServlet {

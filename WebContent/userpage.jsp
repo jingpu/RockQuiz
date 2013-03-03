@@ -2,6 +2,7 @@
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
 <%@ page import="user.Account"%>
+<%@ page import="user.User"%>
 <%@ page import="user.Administrator"%>
 <%@ page import="user.UserManager"%>
 <%@ page import="user.Message"%>
@@ -28,7 +29,7 @@
 	}
 	String title = id + "'s Page";
 
-	Account pageOwner = new Account(id);
+	User pageOwner = new Account(id);
 	// generate achievements history
 	List<String> achieves = pageOwner.getAchievements();
 	// generate quizzes taken history

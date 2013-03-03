@@ -13,8 +13,9 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LogoutServlet
+ * @author youyuan
  */
-@WebServlet("/LogoutServlet")
+@WebServlet("/Logout")
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,7 +32,6 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
 		HttpSession session = request.getSession();
 		session.setAttribute("guest", "guest");
 		RequestDispatcher dispatch = request.getRequestDispatcher("index.html");
@@ -43,11 +43,6 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
-		HttpSession session = request.getSession();
-		session.setAttribute("guest", "guest");
-		RequestDispatcher dispatch = request.getRequestDispatcher("index.html");
-		dispatch.forward(request, response);
 	}
 
 }

@@ -2,6 +2,7 @@
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
 <%@ page import="user.Account"%>
+<%@ page import="user.User"%>
 <%@ page import="user.Administrator"%>
 <%@ page import="user.UserManager"%>
 <%@ page import="user.Message"%>
@@ -29,7 +30,7 @@
 	}
 	String box = request.getParameter("box");
 	String msgCode = request.getParameter("msg");
-	Account user = new Account(userId);
+	User user = new Account(userId);
 	Message msg = user.readMessage(box, msgCode);
 	String to = msg.to == userId? msg.from : msg.to;
 	SimpleDateFormat sdf = new SimpleDateFormat(

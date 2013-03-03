@@ -1,5 +1,9 @@
 package user;
 
+/**
+ * @author youyuan
+ * **/
+
 public class Message {
 
 	public final String from;

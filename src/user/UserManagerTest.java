@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+/**@author youyuan
+ * **/
 public class UserManagerTest {
 
 	@Test

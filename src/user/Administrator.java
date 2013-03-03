@@ -4,10 +4,10 @@
 package user;
 
 /**
- * @author yang
+ * @author youyuan
  *
  */
-public class Administrator extends Account{
+public class Administrator extends Account implements User{
 	public Administrator(String userId){
 		super(userId);
 		// TODO Auto-generated constructor stub

@@ -15,6 +15,7 @@ import user.Message;
 
 /**
  * Servlet implementation class FriendMsgSent
+ * @author youyuan
  */
 @WebServlet("/SendMessage0")
 public class FriendMsgSent extends HttpServlet {
@@ -40,7 +41,6 @@ public class FriendMsgSent extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html");
 		HttpSession session = request.getSession();
 		String fromUser = (String) session.getAttribute("guest");
 		String toUser = request.getParameter("toUser");

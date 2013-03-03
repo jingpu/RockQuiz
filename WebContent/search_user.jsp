@@ -29,7 +29,7 @@
 		Users Search
 	</p>
 	<%--quizzes/users search box--%>
-	<form action="UserSearchServlet" method="post">
+	<form action="UserSearch" method="post">
 		<p>
 			<input type="text" name="query" size="50" value=<%=query%>> 
 			<input type="submit" value="Click">

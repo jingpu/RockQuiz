@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSessionListener;
 
 /**
  * Application Lifecycle Listener implementation class LoginInit
- *
+ * @author youyuan
  */
 @WebListener
 public class LoginInit implements HttpSessionListener {

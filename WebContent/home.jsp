@@ -2,9 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
+<%@ page import="user.User"%>
 <%@ page import="user.Account"%>
 <%@ page import="user.Administrator"%>
-<%@ page import="user.UserManager"%>
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
 <%@ page import="user.TimeTrsf"%>
@@ -30,8 +30,8 @@
 		return;
 	}
 
-	Account user = new Account(userId);
-	String status = UserManager.getAccountInfo(userId, "status");
+	User user = new Account(userId);
+	String status = user.getInfo("status");
 
 	// generate achievements history
 	List<String> achieves = user.getAchievements();
@@ -62,7 +62,7 @@
 				<div id="nav">
 					<h2>
 						<a href=<%=userpageUrl%>>My Page</a> | <a href=<%=mailBoxUrl%>>Message(<%=unreadCount%>)
-						</a> | <a href="LogoutServlet">Log out</a>
+						</a> | <a href="Logout">Log out</a>
 					</h2>
 				</div>
 			</div>
@@ -116,7 +116,7 @@
 				</dd>
 				<dt>Search Quizzers Or Users</dt>
 				<dd class="searchform">
-					<form action="SearchServlet" method="post">
+					<form action="Search" method="post">
 						<div>
 							<input type="text" name="query" class="text"
 								placeholder="Search quizzes OR users here" />
@@ -133,22 +133,22 @@
 					<div class="leftbox">
 						<h3>Popular Quizzes</h3>
 
-<%--
+
 						<%
-							QuizManager man = new MyQuizManager();
-							List<String> popQuizzes = man.getPopularQuiz();
+							QuizManager man1 = new MyQuizManager();
+							List<String> popQuizzes = man1.getPopularQuiz();
 							System.out.println(popQuizzes);
+							int i = 0;
 							for (String name : popQuizzes) {
-								Quiz quiz = man.getQuiz(name);
+								i++;
+								Quiz quiz = man1.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
-								System.out.println(quizUrl);
-								System.out.println(name);
 						%>
-							<a href=<%=quizUrl%>><%=name%></a>
+							<p><a href=<%=quizUrl%>><%=i%>. <%=name%></a></p>
 						<%
 							}
 						%>
- --%>
+ 
 
 						<p class="readmore">
 							<a href=""><b>MORE</b></a>
@@ -159,16 +159,15 @@
 						<h3>Recent Quizzes</h3>
 
 						<%
-							QuizManager man = new MyQuizManager();
-							List<String> popQuizzes = man.getRecentCreateQuiz();
-							System.out.println(popQuizzes);
-							for (String name : popQuizzes) {
-								Quiz quiz = man.getQuiz(name);
+							QuizManager man2 = new MyQuizManager();
+							List<String> recentQuizzes = man2.getRecentCreateQuiz();
+							int j = 0;
+							for (String name : recentQuizzes) {
+								j++;
+								Quiz quiz = man2.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
-								System.out.println(quizUrl);
-								System.out.println(name);
 						%>
-							<a href=<%=quizUrl%>><%=name%></a>
+							<p><a href=<%=quizUrl%>><%=j%>. <%=name%></a></p>
 						<%
 							}
 						%>
@@ -185,10 +184,10 @@
 						<h3>Quizzes I Took</h3>
 						<ul>
 							<%
-								for (int i = 0; i < 5; i++) {
-									if (i == taken.size())
+								for (int k = 0; k < 5; i++) {
+									if (k == taken.size())
 										break;
-									out.println("<li>" + taken.get(i)[1] + "</li>");
+									out.println("<li>" + taken.get(k)[1] + "</li>");
 								}
 							%>
 						</ul>
@@ -201,10 +200,10 @@
 						<h3>Quizzes I Create</h3>
 						<ul>
 							<%
-								for (int i = 0; i < 5; i++) {
-									if (i == taken.size())
+								for (int k = 0; k < 5; i++) {
+									if (k == taken.size())
 										break;
-									out.println("<li>" + created.get(i) + "</li>");
+									out.println("<li>" + created.get(k) + "</li>");
 								}
 							%>
 						</ul>

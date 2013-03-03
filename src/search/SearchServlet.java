@@ -14,8 +14,9 @@ import user.UserManager;
 
 /**
  * Servlet implementation class QuizSearchServelet
+ * @author youyuan
  */
-@WebServlet("/SearchServlet")
+@WebServlet("/Search")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

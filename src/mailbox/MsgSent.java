@@ -15,6 +15,7 @@ import user.Message;
 
 /**
  * Servlet implementation class MsgSent
+ * @author youyuan
  */
 @WebServlet("/SendMessage")
 public class MsgSent extends HttpServlet {

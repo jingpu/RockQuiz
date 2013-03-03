@@ -15,6 +15,7 @@ import user.Message;
 
 /**
  * Servlet implementation class DeleteMessage
+ * @author youyuan
  */
 @WebServlet("/DeleteMessage")
 public class DeleteMessage extends HttpServlet {
@@ -42,9 +43,7 @@ public class DeleteMessage extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		String me = (String) session.getAttribute("guest");
-		System.out.println(me);
 		String msgCode = request.getParameter("code");
-		System.out.println(msgCode);
 		String box = request.getParameter("box");
 		Account user = new Account(me);
 		user.deleteMessage(box, msgCode);

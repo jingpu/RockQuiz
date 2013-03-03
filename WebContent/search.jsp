@@ -29,7 +29,7 @@
 		<a href=<%=searchUser%>>Users Search</a>
 	</p>
 	<%--quizzes/users search box--%>
-	<form action="SearchServlet" method="post">
+	<form action="Search" method="post">
 		<p>
 			<input type="text" name="query" size="50" value=<%=query%>> 
 			<input type="submit" value="Click">
