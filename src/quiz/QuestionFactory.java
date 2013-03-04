@@ -121,8 +121,9 @@ public class QuestionFactory {
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String choices = getChoicesString(questionType, request);
-			return new MAQuestion(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, -1, choices);
+			return new MCMAQuestion(questionType, creatorId,
+					questionDescription, answer, maxScore, tagString, -1,
+					choices);
 		}
 		return null;
 	}
@@ -140,6 +141,8 @@ public class QuestionFactory {
 			return PResponse.printCreateHtml();
 		else if (questionType.equals(QuestionBase.MA))
 			return MAQuestion.printCreateHtml();
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.printCreateHtml();
 		else
 			return "error";
 	}
@@ -166,6 +169,8 @@ public class QuestionFactory {
 			return PResponse.getAnswerString(request);
 		else if (questionType.equals(QuestionBase.MA))
 			return MAQuestion.getAnswerString(request);
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.getAnswerString(request);
 		return "error";
 	}
 

@@ -163,6 +163,10 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 			questionTable = MC_Table;
 		else if (questionType.equals(PR))
 			questionTable = PR_Table;
+		else if (questionType.equals(MA))
+			questionTable = MA_Table;
+		else if (questionType.equals(MCMA))
+			questionTable = MCMA_Table;
 
 		return questionTable;
 	}
