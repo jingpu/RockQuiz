@@ -17,7 +17,7 @@ CREATE TABLE Global_Quiz_Info_Table (
 INSERT INTO Global_Quiz_Info_Table VALUES
 	("quizExample0","Patrick","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#Geo#His#", false, true, false, false,"2012-01-19 03:14:07"),
+							   "#Geo#His#", false, true, true, false,"2012-01-19 03:14:07"),
     ("quizExample1","Molly","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
 							   "#Geo", false, true, false, false,"2013-01-01 03:14:07"),						   
