@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Account Name In Use</title>
 </head>
-<body>
+<body style="BACKGROUND-IMAGE: url(4.gif)">
     <h1>The Name <%=request.getParameter("name") %> is Already In Use</h1>
     <h3>Please enter another name and password.</h3>
     <p><a href="createAccount.html">Try again.</a></p>

@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <title>Friends</title>
 </head>
 <%
@@ -32,8 +33,20 @@
 	}
 </script>
 <body>
-	<h1><%=userId%></h1>
-	<h3><%=new Date()%></h3>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1><%=userId%></h1>
+				<h3><%=new Date()%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+	<div id="body">
+	<div class="inner">
+	<div class="leftbox">
 	<h3>My Friends</h3>
 	<%
 		if (friends.isEmpty()) {
@@ -52,7 +65,8 @@
 		}
 		}
 	%>
-
+	</div>
+	<div class="rightbox">
 	<h3>Friend Requests</h3>
 	<%
 		if (unconfirmed.isEmpty()) {
@@ -73,6 +87,10 @@
 		}
 		}
 	%>
-
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>
