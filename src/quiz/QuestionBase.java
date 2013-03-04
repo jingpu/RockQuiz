@@ -66,7 +66,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		float tmpCorrectRatio = -1; // error flag
 
 		queryStmt = "SELECT * FROM " + questionTable
-				+ " WHERE question_id = \"" + questionId + "\"";
+				+ " WHERE question_id = '" + questionId + "'";
 
 		try {
 			Connection con = MyDB.getConnection();
