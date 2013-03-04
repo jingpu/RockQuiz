@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.http.HttpServletRequest;
+
 import util.Helper;
 import database.MyDB;
 
@@ -189,7 +191,13 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return html.toString();
 	}
 
-	// public abstract String printReadHtmlForSingle();
+	public String printReadHtmlForSingle() {
+		return null;
+	}
+
+	public String getUserAnswer(HttpServletRequest request) {
+		return null;
+	}
 
 	public String getScore(String userInput) {
 		if (userInput.equals(answer))
