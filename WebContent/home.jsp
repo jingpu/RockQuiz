@@ -68,16 +68,19 @@
 				<dt>Announcements</dt>
 				<%
 					Announce ann = user.getLatestAnnounce();
-					if(ann != null){
-						SimpleDateFormat sdf2 = new SimpleDateFormat(
-								"yyyy-MM-dd HH:mm");
+					if (ann != null) {
+						SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 						Date time = sdf2.parse(ann.getTime());
 				%>
 				<p><%=ann.getContent()%></p>
-				<p>- <%=ann.getAdmin()%> <%=sdf2.format(time)%></p>
+				<p>
+					-
+					<%=ann.getAdmin()%>
+					<%=sdf2.format(time)%></p>
 				<%
-					} else {	%>
-					<p>There is No Announcement Now.</p>
+					} else {
+				%>
+				<p>There is No Announcement Now.</p>
 				<%
 					}
 				%>
@@ -104,13 +107,13 @@
 				<dd class="readmore">
 					<a href=<%=mailBoxUrl%>><b>MORE</b></a>
 				</dd>
+				<dt>
+					<form action="QuizCreationServlet" method="post">
+						<input type="submit" value="Create Quiz">
+					</form>
+
+				</dt>
 				<dt>Quick Link</dt>
-				<dd>
-					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
-				</dd>
-				<dd>
-					<a href="profile.jsp?id=<%=userId%>">Edit Profile</a>
-				</dd>
 				<%
 					if (user.getInfo("status").equals("s")) {
 				%>
@@ -120,6 +123,12 @@
 				<%
 					}
 				%>
+				<dd>
+					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
+				</dd>
+				<dd>
+					<a href="profile.jsp?id=<%=userId%>">Edit Profile</a>
+				</dd>
 				<dd>
 					<a href="">444</a>
 				</dd>
