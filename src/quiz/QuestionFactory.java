@@ -53,7 +53,7 @@ public class QuestionFactory {
 	public static QuestionBase createQuestion(String questionType,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String creatorId = (String) session.getAttribute("userName");
+		String creatorId = (String) session.getAttribute("guest");
 		if (questionType.equals(QuestionBase.QR)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
