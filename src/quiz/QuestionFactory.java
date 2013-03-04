@@ -6,6 +6,14 @@ package quiz;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import quiz.TimedQuestion.TimedFillInBlank;
+import quiz.TimedQuestion.TimedMAQuestion;
+import quiz.TimedQuestion.TimedMCMAQuestion;
+import quiz.TimedQuestion.TimedMultiChoice;
+import quiz.TimedQuestion.TimedPResponse;
+import quiz.TimedQuestion.TimedQResponse;
+//why here need import???
+
 /**
  * QuestionFactory class is for handling the creation of question object,
  * including printing question creation page
@@ -137,6 +145,24 @@ public class QuestionFactory {
 			return MAQuestion.printCreateHtml();
 		else if (questionType.equals(QuestionBase.MCMA))
 			return MCMAQuestion.printCreateHtml();
+		else
+			return "error";
+	}
+
+	// overload printCreatHtml
+	public static String printCreateHtml(String questionType, String timedType) {
+		if (questionType.equals(TimedQuestion.TQR))
+			return TimedQResponse.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TFIB))
+			return TimedFillInBlank.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TMC))
+			return TimedMultiChoice.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TPR))
+			return TimedPResponse.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TMA))
+			return TimedMAQuestion.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TMCMA))
+			return TimedMCMAQuestion.printCreateHtml();
 		else
 			return "error";
 	}

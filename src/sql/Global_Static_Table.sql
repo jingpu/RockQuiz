@@ -198,4 +198,21 @@ CREATE TABLE Multi_Choice_Multi_Answer_Pool (
 INSERT INTO Multi_Choice_Multi_Answer_Pool VALUES
 	("0001","Patrick", "Same introduction of Multi-Choice-Multi-Answer questions",
 	 "Which ones of the following are correct", "#choiceB##choiceC#", "4" ,
-	  "#his##Cul#", 0.8,"#choiceA##choiceB##choiceC##choiceD")
+	  "#his##Cul#", 0.8,"#choiceA##choiceB##choiceC##choiceD");
+	  
+	  
+	  
+DROP TABLE IF EXISTS Timed_Question_Pool;
+ -- remove table if it already exists and start from scratch
+ -- question body is stored in the corresponding question table
+ -- this table serves as an indexing table with additional time_limit information
+ -- unit of time_limit is second(s)
+CREATE TABLE Timed_Question_Pool (  
+	question_id CHAR(32),
+	question_type CHAR(32),
+	time_limit FLOAT
+);
+
+INSERT INTO Timed_Question_Pool VALUES
+	("0001","Question_Response", 15)
+
