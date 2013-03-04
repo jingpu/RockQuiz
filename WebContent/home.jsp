@@ -133,7 +133,7 @@
 					<div class="leftbox">
 						<h3>Popular Quizzes</h3>
 
-<%--
+
 						<%
 							QuizManager man = new MyQuizManager();
 							List<String> popQuizzes = man.getPopularQuiz();
@@ -148,7 +148,7 @@
 						<%
 							}
 						%>
- --%>
+
 
 						<p class="readmore">
 							<a href=""><b>MORE</b></a>
@@ -159,10 +159,10 @@
 						<h3>Recent Quizzes</h3>
 
 						<%
-							QuizManager man = new MyQuizManager();
-							List<String> popQuizzes = man.getRecentCreateQuiz();
-							System.out.println(popQuizzes);
-							for (String name : popQuizzes) {
+							//QuizManager man = new MyQuizManager();
+							List<String> recentQuizzes = man.getRecentCreateQuiz();
+							System.out.println(recentQuizzes);
+							for (String name : recentQuizzes) {
 								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
 								System.out.println(quizUrl);
