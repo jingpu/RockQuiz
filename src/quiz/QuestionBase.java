@@ -189,6 +189,8 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return html.toString();
 	}
 
+	// public abstract String printReadHtmlForSingle();
+
 	public String getScore(String userInput) {
 		if (userInput.equals(answer))
 			return maxScore;

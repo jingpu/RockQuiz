@@ -3,9 +3,6 @@
  */
 package quiz;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -49,7 +46,13 @@ public class QuestionFactory {
 	}
 
 	// MyQuiz create a question from a HTTP request
-	// questionType is not stored in the session??
+	/**
+	 * create a question from webpage
+	 * 
+	 * @param questionType
+	 * @param request
+	 * @return
+	 */
 	public static QuestionBase createQuestion(String questionType,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -75,21 +78,10 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.MC)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = getAnswerString(questionType, request);
+			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
-
-			// TODO: better way to handle this
-			String choiceA = request.getParameter("choiceA");
-			String choiceB = request.getParameter("choiceB");
-			String choiceC = request.getParameter("choiceC");
-			String choiceD = request.getParameter("choiceD");
-
-			List<String> choices = new ArrayList<String>();
-			choices.add(choiceA);
-			choices.add(choiceB);
-			choices.add(choiceC);
-			choices.add(choiceD);
+			String choices = getChoicesString(questionType, request);
 			return new MultiChoice(questionType, creatorId,
 					questionDescription, answer, maxScore, tagString, -1,
 					choices);
@@ -119,7 +111,7 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.MCMA)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = getAnswerString(questionType, request);
+			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String choices = getChoicesString(questionType, request);
@@ -156,13 +148,13 @@ public class QuestionFactory {
 	 * @param request
 	 * @return
 	 */
-	public static String getCreatedAnswers(String questionType,
+	public static String getCreatedAnswer(String questionType,
 			HttpServletRequest request) {
 		if (questionType.equals(QuestionBase.MC))
 			// TODO: to change to real getCreatedAnswers
-			return MultiChoice.getChoicesString(request);
+			return MultiChoice.getCreatedAnswer(request);
 		if (questionType.equals(QuestionBase.MCMA))
-			return MCMAQuestion.getCreatedAnswers(request);
+			return MCMAQuestion.getCreatedAnswer(request);
 		return "error";
 	}
 

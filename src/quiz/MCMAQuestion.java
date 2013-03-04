@@ -90,7 +90,7 @@ public class MCMAQuestion extends QuestionBase {
 	 * @param request
 	 * @return
 	 */
-	public static String getCreatedAnswers(HttpServletRequest request) {
+	public static String getCreatedAnswer(HttpServletRequest request) {
 		String answerList[] = request.getParameterValues("answer");
 		StringBuilder answer = new StringBuilder();
 		for (String str : answerList) {
@@ -194,6 +194,7 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 
 		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"numChoices\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MCMA + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
@@ -225,6 +226,7 @@ public class MCMAQuestion extends QuestionBase {
 		}
 
 		// Hidden information - questionType and questionId information
+		html.append("<p><input type=\"hidden\" name=\"numChoices\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ getQuestionType() + "\"></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
