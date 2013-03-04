@@ -74,7 +74,6 @@ public class MCMAQuestion extends QuestionBase {
 				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
 				+ "\", \"" + tagString + "\", " + correctRatio + ", \""
 				+ choices + "\")";
-		System.out.println(queryStmt);
 		try {
 			Connection con = MyDB.getConnection();
 			Statement stmt = con.createStatement();
@@ -86,12 +85,12 @@ public class MCMAQuestion extends QuestionBase {
 	}
 
 	/**
-	 * Generate from the answer field "answer=answer0&answer=answer1" to Answer
-	 * format: #answer0#answer1#answer2#...#
+	 * Create answer in the format: #answer0##answer1##answer2#..#
 	 * 
+	 * @param request
 	 * @return
 	 */
-	public static String getAnswerString(HttpServletRequest request) {
+	public static String getCreatedAnswers(HttpServletRequest request) {
 		String answerList[] = request.getParameterValues("answer");
 		StringBuilder answer = new StringBuilder();
 		for (String str : answerList) {
@@ -100,6 +99,22 @@ public class MCMAQuestion extends QuestionBase {
 			// then use request.getParameter(choice0) to get answerBody
 			String answerBody = request.getParameter(str);
 			answer.append(answerBody);
+			answer.append("#");
+		}
+		return answer.toString();
+	}
+
+	/**
+	 * get user answers from input
+	 * 
+	 * @return
+	 */
+	public static String getAnswerString(HttpServletRequest request) {
+		String answerList[] = request.getParameterValues("answer");
+		StringBuilder answer = new StringBuilder();
+		for (String str : answerList) {
+			answer.append("#");
+			answer.append(str);
 			answer.append("#");
 		}
 		return answer.toString();
@@ -115,8 +130,7 @@ public class MCMAQuestion extends QuestionBase {
 	 */
 	public static String getChoicesString(HttpServletRequest request) {
 		// TODO: changeable numChoices
-		// int numChoices = Integer.parseInt((String) session
-		// .getAttribute("numChoices"));
+		// int numChoices = request.getParameter("numChoices"));
 		int numChoices = 4;
 		StringBuilder choices = new StringBuilder();
 		for (int i = 0; i < numChoices; i++) {

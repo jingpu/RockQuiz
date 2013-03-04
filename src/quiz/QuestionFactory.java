@@ -111,6 +111,8 @@ public class QuestionFactory {
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String isOrder = request.getParameter("isOrder");
+			if (isOrder == null)
+				isOrder = "false";
 			return new MAQuestion(questionType, creatorId, questionDescription,
 					answer, maxScore, tagString, -1, isOrder);
 
@@ -148,10 +150,26 @@ public class QuestionFactory {
 	}
 
 	/**
-	 * Used by quiz servlet when creating multi-answer for a question OR when
-	 * user inputs multi-answer for a question: get a formated answer string
-	 * from multi-answer fields, and pass to QuestionBase constructor or
-	 * getScore function
+	 * Used by quiz servlet when creating multi-answer for a question
+	 * 
+	 * @param questionType
+	 * @param request
+	 * @return
+	 */
+	public static String getCreatedAnswers(String questionType,
+			HttpServletRequest request) {
+		if (questionType.equals(QuestionBase.MC))
+			// TODO: to change to real getCreatedAnswers
+			return MultiChoice.getChoicesString(request);
+		if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.getCreatedAnswers(request);
+		return "error";
+	}
+
+	/**
+	 * Used by quiz servlet when getting user input for a question: get a
+	 * formated answer string from multi-answer fields, and pass to QuestionBase
+	 * constructor or getScore function
 	 * 
 	 * @param questionType
 	 * @param request
