@@ -61,7 +61,7 @@ public class QuestionFactory {
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			return new QResponse(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, "not_implemeted");
+					answer, maxScore, tagString, -1);
 
 		} else if (questionType.equals(QuestionBase.FIB)) {
 			String questionDescription = request
@@ -70,8 +70,7 @@ public class QuestionFactory {
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			return new FillInBlank(questionType, creatorId,
-					questionDescription, answer, maxScore, tagString,
-					"not_implemeted");
+					questionDescription, answer, maxScore, tagString, -1);
 
 		} else if (questionType.equals(QuestionBase.MC)) {
 			String questionDescription = request
@@ -92,8 +91,8 @@ public class QuestionFactory {
 			choices.add(choiceC);
 			choices.add(choiceD);
 			return new MultiChoice(questionType, creatorId,
-					questionDescription, answer, maxScore, tagString,
-					"not_implemeted", choices);
+					questionDescription, answer, maxScore, tagString, -1,
+					choices);
 
 		} else if (questionType.equals(QuestionBase.PR)) {
 			String questionDescription = request
@@ -103,7 +102,7 @@ public class QuestionFactory {
 			String tagString = request.getParameter("tag");
 			String url = request.getParameter("url");
 			return new PResponse(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, "not_implemeted", url);
+					answer, maxScore, tagString, -1, url);
 
 		} else if (questionType.equals(QuestionBase.MA)) {
 			String questionDescription = request
@@ -113,7 +112,7 @@ public class QuestionFactory {
 			String tagString = request.getParameter("tag");
 			String isOrder = request.getParameter("isOrder");
 			return new MAQuestion(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, "not_implemeted", isOrder);
+					answer, maxScore, tagString, -1, isOrder);
 
 		} else if (questionType.equals(QuestionBase.MCMA)) {
 			String questionDescription = request
@@ -123,7 +122,7 @@ public class QuestionFactory {
 			String tagString = request.getParameter("tag");
 			String choices = getChoicesString(questionType, request);
 			return new MAQuestion(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, "not_implemeted", choices);
+					answer, maxScore, tagString, -1, choices);
 		}
 		return null;
 	}

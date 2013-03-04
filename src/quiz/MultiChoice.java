@@ -28,7 +28,7 @@ public class MultiChoice extends QuestionBase {
 
 	public MultiChoice(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRation, List<String> choices) {
+			String tagString, float correctRation, List<String> choices) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
 				tagString, correctRation);
 		// TODO Auto-generated constructor stub

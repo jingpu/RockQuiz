@@ -25,7 +25,7 @@ public class PResponse extends QuestionBase {
 
 	public PResponse(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRation, String url) {
+			String tagString, float correctRation, String url) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
 				tagString, correctRation);
 		// TODO Auto-generated constructor stub
