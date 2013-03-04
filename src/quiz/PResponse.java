@@ -136,4 +136,50 @@ public class PResponse extends QuestionBase {
 		return answer;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#printReadHtmlForSingle()
+	 */
+	@Override
+	public String printReadHtmlForSingle() {
+		StringBuilder html = new StringBuilder();
+		html.append(super.printReadHtml());
+
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
+
+		// form action should be here
+		html.append("<p>Question Description: ");
+		html.append(questionDescription + "</p>");
+
+		// every form field will be renamed as xx_questionId
+		html.append("<img border=\"0\" src=\"" + url
+				+ "\" width=\"304\" height=\"228\">");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
+				+ getQuestionId() + "\" ></input></p>");
+
+		// Hidden information - questionType and questionId information
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
+
+		return html.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -191,13 +191,9 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return html.toString();
 	}
 
-	public String printReadHtmlForSingle() {
-		return null;
-	}
+	public abstract String printReadHtmlForSingle();
 
-	public String getUserAnswer(HttpServletRequest request) {
-		return null;
-	}
+	public abstract String getUserAnswer(HttpServletRequest request);
 
 	public String getScore(String userInput) {
 		if (userInput.equals(answer))

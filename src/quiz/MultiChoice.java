@@ -176,4 +176,55 @@ public class MultiChoice extends QuestionBase {
 		}
 		return choices.toString();
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#printReadHtmlForSingle()
+	 */
+	@Override
+	public String printReadHtmlForSingle() {
+		StringBuilder html = new StringBuilder();
+		html.append(super.printReadHtml());
+
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
+
+		// form action should be here
+		html.append("<p>Question Description: ");
+		html.append(questionDescription + "</p>");
+
+		String choicesList[] = choices.split("#");
+		for (int i = 0; i < choicesList.length; i++) {
+			if (choicesList[i].isEmpty()) // remove empty string at head/end
+				++i;
+			html.append("<p><input type=\"radio\" name=\"answer_"
+					+ getQuestionId() + "\" value= \"" + choicesList[i] + "\">"
+					+ choicesList[i] + "</input></p>");
+		}
+
+		// Hidden information - questionType and questionId information
+		html.append("<p><input type=\"hidden\" name=\"numChoices_"
+				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
+
+		return html.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

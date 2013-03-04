@@ -218,4 +218,55 @@ public class MAQuestion extends QuestionBase {
 		String[] answerArray = new String[answerList.size()];
 		return answerList.toArray(answerArray);
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#printReadHtmlForSingle()
+	 */
+	@Override
+	public String printReadHtmlForSingle() {
+		StringBuilder html = new StringBuilder();
+		html.append(super.printReadHtml());
+
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
+
+		// form action should be here
+		html.append("<p>Question Description: ");
+		html.append(questionDescription + "</p>");
+
+		// TODO: use javascript to dynamically generate multi-answer field
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer0_"
+				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer1_"
+				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer2_"
+				+ getQuestionId() + "\" ></input></p>");
+
+		// Hidden information - questionType and questionId information
+		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
+				+ getQuestionId() + "\" value=\"3\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
+
+		return html.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
