@@ -341,7 +341,8 @@ public class MyQuiz implements Quiz {
 
 		// A way to initiate taking the quiz.
 		// A way to start the quiz in practice mode, if available.
-		html.append("<form action=\"" + getQuizStartPage() + "\">\n");
+		html.append("<form action=\"" + getQuizStartPage()
+				+ "\" method=\"POST\">\n");
 		html.append("<input type=\"hidden\" name=\"quizName\" value=\""
 				+ quizName + "\">\n");
 		String disabledAttr = "";
