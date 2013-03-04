@@ -37,7 +37,7 @@ public class UserSearchServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String query = request.getParameter("query");
-		response.sendRedirect("search_user.jsp?q="+ query);
+		response.sendRedirect("search_user_layout.jsp?q="+ query);
 	}
 
 }

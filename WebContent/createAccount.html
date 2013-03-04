@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="createAccount_style.css" rel="stylesheet" type="text/css" />
 <title>Create An Account</title>
 <SCRIPT LANGUAGE="javascript">
 <!--
@@ -71,9 +72,16 @@ return true;
 </SCRIPT>
 </HEAD>
 <BODY style="BACKGROUND-IMAGE: url(4.gif)">
-	<CENTER>
-		Welcome to Rock Quiz!<BR> Please fill in the following
-		information.<BR>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Welcome to Rock Quiz!</h1>
+				<h2>Please fill in the following information.</h2>
+			</div>
+		</div>
+	</div>
+	
+	<center>
 		<FORM METHOD=POST ACTION="CreationServlet" OnSubmit="return judge()">
 			<TABLE>
 				<TR>
@@ -103,14 +111,12 @@ return true;
 				</TR>
 			</TABLE>
 			<TABLE>
-				<TR>What type of quizzes are you interested in?
-				</TR>
-				<TR>
-					<TD><INPUT TYPE="checkbox" NAME="favour">Language</TD>
+				<TR>What type of quizzes are you interested in?</TR>
+				<TR>				
 					<TD><INPUT TYPE="checkbox" NAME="favour">Science</TD>
 					<TD><INPUT TYPE="checkbox" NAME="favour">Engineering</TD>
 					<TD><INPUT TYPE="checkbox" NAME="favour">Arts</TD>
-					<TD><INPUT TYPE="checkbox" NAME="favour">Brain Storm</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour">Language</TD>
 				</TR>
 			</TABLE>
 			<TABLE>
@@ -119,5 +125,7 @@ return true;
 				</TR>
 			</TABLE>
 		</FORM>
+	</center>
+
 </BODY>
 </HTML>
