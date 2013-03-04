@@ -211,4 +211,12 @@ public class Account implements User{
 	public void removeFriend(String other){
 		UserManager.removeFriend(this.userId, other);
 	}
+	
+	public Announce getLatestAnnounce(){
+		return UserManager.getLatestAnnounce();
+	}
+	
+	public List<Announce> getAllAnnounce(){
+		return UserManager.getAllAnnounce();
+	}
 }

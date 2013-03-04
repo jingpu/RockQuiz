@@ -81,7 +81,7 @@ public class UserManager{
 			}
 		}
 		try {
-			stmt.executeUpdate("INSERT INTO " + annouceTable + " VALUES (\"now()\",\""
+			stmt.executeUpdate("INSERT INTO " + annouceTable + " VALUES (now(),\""
 					+ annouce + "\",\"" + admin + "\")");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -90,6 +90,49 @@ public class UserManager{
 		close();
 	}
 
+	public static Announce getLatestAnnounce(){
+		setDriver();
+		Announce ann;
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " 
+					+ annouceTable + " ORDER BY Time DESC");
+			if(rs.next()){
+				
+				System.out.println(rs.getString("content"));
+				System.out.println(rs.getString("admin"));
+				System.out.println(rs.getString("Time"));
+				ann = new Announce(rs.getString("Time"), rs.getString("content"), 
+						rs.getString("admin"));
+				close();
+				return ann;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("exception");
+		}
+		close();
+		return null;
+	}
+	
+	public static List<Announce> getAllAnnounce(){
+		setDriver();
+		List<Announce> annList = new LinkedList<Announce>();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " 
+					+ annouceTable + " ORDER BY Time DESC");
+			while(rs.next()){
+				Announce ann = new Announce(rs.getString("Time"), rs.getString("content"), 
+						rs.getString("admin"));
+				annList.add(ann);
+			}
+			close();
+			return annList;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+		}
+		close();
+		return null;
+	}
 	// account management
 
 	/** Method addNewAccount is to add a new user tuple into userstats.sql and create 
@@ -117,6 +160,7 @@ public class UserManager{
 				stmt.executeUpdate("CREATE TABLE " + userTable + " ( " +
 						"userId varchar(20), password varchar(40), " +
 						"registrationTime datetime, status char(1), gender char(1), email char(50));");
+				stmt.executeUpdate("INSERT INTO " + userTable + " VALUES (\"guest\",\"n\",now(),\"n\",\"n\",\"n\")");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				System.out.println("Adding new table fails.");
@@ -126,8 +170,8 @@ public class UserManager{
 		}
 
 		// userId available
-		
-		
+
+
 		String hashValue = "";
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA");
@@ -145,7 +189,7 @@ public class UserManager{
 				hashValue = buff.toString();
 				md.reset();
 			} catch (CloneNotSupportedException cnse) {
-			     try {
+				try {
 					throw new DigestException("couldn't make digest of partial content");
 				} catch (DigestException e) {
 					e.printStackTrace();
@@ -154,8 +198,8 @@ public class UserManager{
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		
-		
+
+
 		try {
 			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES (\""
 					+ userId + "\",\"" + hashValue + "\",now(),\"" + status + "\",\"" 
@@ -268,6 +312,15 @@ public class UserManager{
 		}
 
 		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_network");
+			List<String> friends = new LinkedList<String>();
+			while(rs.next()){
+				friends.add(rs.getString("userId"));
+			}
+			for(String friend : friends){
+				removeFriend(friend, userId);
+			}
+			setDriver();
 			for(String attr : attributes) {
 				stmt.executeUpdate("DROP TABLE IF EXISTS " + userId + "_" + attr);
 			}

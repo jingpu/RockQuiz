@@ -85,5 +85,6 @@ public class UserManagerTest {
 		UserManager.addNewAccount("y1", "123", "s", "f", "asf@asdf.edu");
 		UserManager.addNewAccount("y2", "123", "u", "m", "asf@asdf.edu");
 		UserManager.addNewAccount("y3", "123", "u", "f", "asf@asdf.edu");
+		UserManager.addNewAccount("y4", "123", "u", "f", "asf@asdf.edu");
 	}
 }

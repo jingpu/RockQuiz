@@ -5,6 +5,7 @@
 <%@ page import="user.Account"%>
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
+<%@ page import="user.Announce"%>
 <%@ page import="user.TimeTrsf"%>
 <%@ page import="quiz.Quiz"%>
 <%@ page import="quiz.QuizManager"%>
@@ -66,8 +67,23 @@
 
 			<dl id="browse">
 				<dt>Announcements</dt>
+				<%
+					Announce ann = user.getLatestAnnounce();
+					if(ann != null){
+						SimpleDateFormat sdf2 = new SimpleDateFormat(
+								"yyyy-MM-dd HH:mm");
+						Date time = sdf2.parse(ann.getTime());
+				%>
+				<p><%=ann.getContent()%></p>
+				<p>- <%=ann.getAdmin()%> <%=sdf2.format(time)%></p>
+				<%
+					} else {	%>
+					<p>There is No Announcement Now.</p>
+				<%
+					}
+				%>
 				<dd class="readmore">
-					<a href=""><b>MORE</b></a>
+					<a href="announce.jsp"><b>MORE</b></a>
 				</dd>
 				<dt>New Message</dt>
 				<%
