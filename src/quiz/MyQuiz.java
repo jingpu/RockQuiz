@@ -394,6 +394,11 @@ public class MyQuiz implements Quiz {
 	}
 
 	@Override
+	public String getCreatorId() {
+		return creatorId;
+	}
+
+	@Override
 	public String getMaxScore() {
 		return "" + totalScore;
 	}

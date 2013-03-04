@@ -2,8 +2,6 @@ package quiz;
 
 import java.util.List;
 
-import user.Account;
-
 public interface QuizManager {
 
 	// Summary page
@@ -21,6 +19,6 @@ public interface QuizManager {
 	 */
 	public Quiz getQuiz(String name);
 	
-	public List<Quiz> searchQuiz(String query);
+
 
 }
