@@ -96,7 +96,7 @@
 						<%
 							}
 						%>
-						<a href="LogoutServlet">Log Out</a>
+						<a href="Logout">Log Out</a>
 					</h2>
 				</div>
 			</div>

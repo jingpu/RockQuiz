@@ -96,9 +96,15 @@
 				<dd>
 					<a href="profile.jsp?id=<%=userId%>">Edit Profile</a>
 				</dd>
+				<%
+					if (user.getInfo("status").equals("s")) {
+				%>
 				<dd>
-					<a href="">333</a>
+					<a href="admin.jsp?id=<%=userId%>">Administration</a>
 				</dd>
+				<%
+					}
+				%>
 				<dd>
 					<a href="">444</a>
 				</dd>
@@ -255,7 +261,8 @@
 							} else {
 								int p = 0;
 								for (Activity act : friendsAct) {
-									if(p == 5) break;
+									if (p == 5)
+										break;
 									out.println("<p>" + act.toString() + "</p>");
 									p++;
 								}

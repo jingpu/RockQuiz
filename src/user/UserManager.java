@@ -28,6 +28,7 @@ public class UserManager{
 	private static final String MYSQL_DATABASE_NAME = "c_cs108_youyuan";
 
 	private static final String userTable = "userstats";
+	private static final String annouceTable = "annoucements";
 	private static Connection con;
 	private static Statement stmt;
 
@@ -60,6 +61,33 @@ public class UserManager{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void setAnnouncement(String annouce, String admin){
+		setDriver();
+		try {
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + annouceTable);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("create new annouce table");
+			try {
+				stmt.executeUpdate("CREATE TABLE " + annouceTable +
+						"(Time datetime, content text, admin varchar(20));");
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+				close();
+				return;
+			}
+		}
+		try {
+			stmt.executeUpdate("INSERT INTO " + annouceTable + " VALUES (\"now()\",\""
+					+ annouce + "\",\"" + admin + "\")");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
 	}
 
 	// account management
@@ -98,9 +126,39 @@ public class UserManager{
 		}
 
 		// userId available
+		
+		
+		String hashValue = "";
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA");
+			try {
+				md.update(password.getBytes());
+				MessageDigest tc = (MessageDigest)md.clone();
+				byte[] bytes = tc.digest();
+				StringBuffer buff = new StringBuffer();
+				for (int i=0; i<bytes.length; i++) {
+					int val = bytes[i];
+					val = val & 0xff;  // remove higher bits, sign
+					if (val<16) buff.append('0'); // leading 0
+					buff.append(Integer.toString(val, 16));
+				}			
+				hashValue = buff.toString();
+				md.reset();
+			} catch (CloneNotSupportedException cnse) {
+			     try {
+					throw new DigestException("couldn't make digest of partial content");
+				} catch (DigestException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		
+		
 		try {
 			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES (\""
-					+ userId + "\",\"" + password + "\",now(),\"" + status + "\",\"" 
+					+ userId + "\",\"" + hashValue + "\",now(),\"" + status + "\",\"" 
 					+ gender + "\",\"" + email + "\")");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_history( Time datetime, " +
 					"Type char(33), content varchar(50));");
@@ -158,7 +216,7 @@ public class UserManager{
 				hashValue = buff.toString();
 				md.reset();
 			} catch (CloneNotSupportedException cnse) {
-			     try {
+				try {
 					throw new DigestException("couldn't make digest of partial content");
 				} catch (DigestException e) {
 					e.printStackTrace();
@@ -283,7 +341,7 @@ public class UserManager{
 					hashValue = buff.toString();
 					md.reset();
 				} catch (CloneNotSupportedException cnse) {
-				     try {
+					try {
 						throw new DigestException("couldn't make digest of partial content");
 					} catch (DigestException e) {
 						e.printStackTrace();
@@ -294,7 +352,7 @@ public class UserManager{
 			}
 			content = hashValue;
 		}
-		
+
 		setDriver();
 		try {
 			stmt.executeUpdate("UPDATE " + userTable + " SET " + column +"=" + "'" + content 
@@ -509,7 +567,7 @@ public class UserManager{
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		setDriver();
 		try {
 			stmt.executeUpdate("INSERT INTO " + msg.from + "_sent" + " VALUES (\"" + hashValue + "\",\"" 

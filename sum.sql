@@ -42,5 +42,11 @@ CREATE TABLE userId_sent (
 	toUser varchar(20),
 	Type char(1), -- c(challenge)/r(friend request)/f(friend confirm)/n(normal text)
 	title text,
+	content text
+)
+
+CREATE TABLE annouce (
+	Time datetime,
 	content text,
+	admin varchar(20)
 )

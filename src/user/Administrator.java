@@ -22,7 +22,11 @@ public class Administrator extends Account implements User{
 		
 	}
 	
-	public String announce(String accouncement){
-		return accouncement;
+	public void setAnnouncement(String annoucement){
+		UserManager.setAnnouncement(annoucement, this.userId);
+	}
+	
+	public void setStatus(String userId, String status){
+		UserManager.setAccountInfo(userId, "status", status);
 	}
 }
