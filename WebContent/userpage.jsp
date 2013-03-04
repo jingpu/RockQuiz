@@ -30,11 +30,11 @@
 
 	Account pageOwner = new Account(id);
 	// generate achievements history
-	List<String> achieves = pageOwner.getAchievements();
+	List<Activity> achieves = pageOwner.getAchievements();
 	// generate quizzes taken history
-	List<String[]> taken = pageOwner.getQuizTaken();
+	List<Activity> taken = pageOwner.getQuizTaken();
 	// generate quizzes created history
-	List<String> created = pageOwner.getQuizCreated();
+	List<Activity> created = pageOwner.getQuizCreated();
 %>
 
 <script language="javascript" type="text/javascript">
@@ -56,92 +56,113 @@
 				<h1><%=id%></h1>
 				<h3><%=new Date()%></h3>
 				<div id="nav">
-				<h2><a href="home.jsp">Home</a> | 
-				<%
-					if(!guest.equals(id)) {
-				%>
-				
-				<%--if guest!=id, show friend related operation --%>
-				<%
-					if (pageOwner.seeFriendStatus(guest).equals("x")) {
-				%>
-				<a href="RequestFriend?to=<%=id%>">Add Friend</a> |
-				<%
-					} else if (pageOwner.seeFriendStatus(guest).equals("r")) {
-						String text = "Do you want to add " + id + " as friend?";
-				%>
-				<a href="RespondFriend?to=<%=id%>" onclick="friendQuery('<%=text%>')">Respond to Friend Request</a> |
-				<%
-				} else if (pageOwner.seeFriendStatus(guest).equals("u")) {
-					String text = "Do you want to cancel your friend request to "
-					+ id + "?";
-				%>
-				<a href="RemoveFriend?to=<%=id%>" onclick="friendQuery('<%=text%>')">Cancel Friend Request</a> |
-				<%
-				} else if (pageOwner.seeFriendStatus(guest).equals("f")) {
-					String text = "Are you sure to unfriend " + id + "?";
-				%>
-				<a href="RemoveFriend?to=<%=id%>" onclick="friendQuery('<%=text%>')">Unfriend</a> |
-				<%
-				}
-				%>
+					<h2>
+						<a href="home.jsp">Home</a> |
+						<%
+							if (!guest.equals(id)) {
+						%>
 
-				<%--if guest!=id, show message --%>
-				<a href="LeaveMessage?to=<%=id%>">Message</a> |
-				<% 
-				}
-				%>			
-				<a href="LogoutServlet">Log Out</a></h2>
+						<%--if guest!=id, show friend related operation --%>
+						<%
+							if (pageOwner.seeFriendStatus(guest).equals("x")) {
+						%>
+						<a href="RequestFriend?to=<%=id%>">Add Friend</a> |
+						<%
+							} else if (pageOwner.seeFriendStatus(guest).equals("r")) {
+									String text = "Do you want to add " + id + " as friend?";
+						%>
+						<a href="RespondFriend?to=<%=id%>"
+							onclick="friendQuery('<%=text%>')">Respond to Friend Request</a>
+						|
+						<%
+							} else if (pageOwner.seeFriendStatus(guest).equals("u")) {
+									String text = "Do you want to cancel your friend request to "
+											+ id + "?";
+						%>
+						<a href="RemoveFriend?to=<%=id%>"
+							onclick="friendQuery('<%=text%>')">Cancel Friend Request</a> |
+						<%
+							} else if (pageOwner.seeFriendStatus(guest).equals("f")) {
+									String text = "Are you sure to unfriend " + id + "?";
+						%>
+						<a href="RemoveFriend?to=<%=id%>"
+							onclick="friendQuery('<%=text%>')">Unfriend</a> |
+						<%
+							}
+						%>
+
+						<%--if guest!=id, show message --%>
+						<a href="LeaveMessage?to=<%=id%>">Message</a> |
+						<%
+							}
+						%>
+						<a href="LogoutServlet">Log Out</a>
+					</h2>
 				</div>
 			</div>
-			
+
 			<dl id="browse">
 				<dt>Achievements</dt>
 				<%
-				if (achieves.isEmpty()) {
-					out.println("<dd>No Achievements</dd>");
-				} else {
-					for (String str : achieves) {
-						out.println("<dd>" + str + "</dd>");
+					if (achieves.isEmpty()) {
+				%>
+				<p>You don't have any achievements yet.</p>
+				<%
+					} else {
+						for (int k = 0; k < 5; k++) {
+							if (k == achieves.size())
+								break;
+							out.println("<p>" + achieves.get(k).content + "</p>");
+						}
 					}
-				}				
 				%>
 			</dl>
-			
+
 			<div id="body">
-				<div class="inner">									
+				<div class="inner">
 					<div class="leftbox">
 						<h3>Quizzes Taken</h3>
-						<ul>
 						<%
-							for (int i = 0; i < 5; i++) {
-								if (i == taken.size())
-									break;
-							out.println("<li>" + taken.get(i)[1] + "</li>");
+							if (taken.isEmpty()) {
+						%>
+						<p>You did't take any quiz yet.</p>
+						<%
+							} else {
+								for (int k = 0; k < 5; k++) {
+									if (k == taken.size())
+										break;
+									out.println("<p>" + taken.get(k).toStringMe() + "</p>");
+								}
 							}
 						%>
-						</ul>
-						<p class="readmore"><a href=""><b>MORE</b></a></p>
+						<p class="readmore">
+							<a href=""><b>MORE</b></a>
+						</p>
 						<div class="clear"></div>
 					</div>
 					<div class="rightbox">
 						<h3>Quizzes Created</h3>
-						<ul>
 						<%
-							for (int i = 0; i < 5; i++) {
-								if (i == taken.size())
-								break;
-								out.println("<li>" + created.get(i) + "</li>");
+							if (created.isEmpty()) {
+						%>
+						<p>You did't create any quiz yet.</p>
+						<%
+							} else {
+								for (int k = 0; k < 5; k++) {
+									if (k == created.size())
+										break;
+									out.println("<p>" + created.get(k).toStringMe() + "</p>");
+								}
 							}
 						%>
-						</ul>
-						<p class="readmore"><a href=""><b>MORE</b></a></p>
+						<p class="readmore">
+							<a href=""><b>MORE</b></a>
+						</p>
 						<div class="clear"></div>
 					</div>
-					
+
 					<div class="clear br"></div>
 				</div>
 			</div>
-
 </body>
 </html>

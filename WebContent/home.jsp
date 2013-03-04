@@ -127,7 +127,6 @@
 					<div class="leftbox">
 						<h3>Popular Quizzes</h3>
 
-
 						<%
 							QuizManager man = new MyQuizManager();
 							List<String> popQuizzes = man.getPopularQuiz();
@@ -137,11 +136,11 @@
 								i++;
 								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
-								String creator = "";
+								String creator = quiz.getCreatorId();
 						%>
 						<p>
 							<a href=<%=quizUrl%>><%=i%>. <%=name%></a> (by:<a
-								href="userpage.jsp?id=<%=creator%>"></a>)
+								href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)
 						</p>
 						<%
 							}
@@ -163,11 +162,11 @@
 								j++;
 								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
-								String creator = "";
+								String creator = quiz.getCreatorId();
 						%>
 						<p>
 							<a href=<%=quizUrl%>><%=j%>. <%=name%></a>(by:<a
-								href="userpage.jsp?id=<%=creator%>"></a>)
+								href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)
 						</p>
 						<%
 							}
@@ -190,10 +189,10 @@
 						<p>You did't take any quiz yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; i++) {
+								for (int k = 0; k < 5; k++) {
 									if (k == taken.size())
 										break;
-									out.println(taken.get(k).toStringMe());
+									out.println("<p>" + taken.get(k).toStringMe() + "</p>");
 								}
 							}
 						%>
@@ -211,10 +210,10 @@
 						<p>You did't create any quiz yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; i++) {
+								for (int k = 0; k < 5; k++) {
 									if (k == created.size())
 										break;
-									out.println(created.get(k).toStringMe());
+									out.println("<p>" + created.get(k).toStringMe() + "</p>");
 								}
 							}
 						%>
@@ -234,10 +233,10 @@
 						<p>You don't have any achievements yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; i++) {
+								for (int k = 0; k < 5; k++) {
 									if (k == achieves.size())
 										break;
-									out.println(achieves.get(k).toStringMe());
+									out.println("<p>" + achieves.get(k).content + "</p>");
 								}
 							}
 						%>
