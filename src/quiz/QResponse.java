@@ -83,13 +83,16 @@ public class QResponse extends QuestionBase {
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
+				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ getQuestionType() + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
-				+ getQuestionId() + "\"  ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();
@@ -145,8 +148,8 @@ public class QResponse extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		String answer = request.getParameter("answer");
+		return answer;
 	}
 
 }

@@ -101,13 +101,16 @@ public class PResponse extends QuestionBase {
 
 		html.append("<img border=\"0\" src=\"" + url
 				+ "\" width=\"304\" height=\"228\">");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
+				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ getQuestionType() + "\"></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
-				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\"></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();

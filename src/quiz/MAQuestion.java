@@ -132,17 +132,23 @@ public class MAQuestion extends QuestionBase {
 		html.append(questionDescription + "</p>");
 
 		// TODO: use javascript to dynamically generate multi-answer field
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\" ></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer1\" ></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer2\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer0_"
+				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer1_"
+				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer2_"
+				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
 		// TODO: dynamically change numAnswers
-		html.append("<p><input type=\"hidden\" name=\"numAnswers\" value=\"3\"></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ getQuestionType() + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
-				+ getQuestionId() + "\"  ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
+				+ getQuestionId() + "\" value=\"3\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();

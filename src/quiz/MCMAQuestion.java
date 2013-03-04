@@ -221,16 +221,20 @@ public class MCMAQuestion extends QuestionBase {
 		for (int i = 0; i < choicesList.length; i++) {
 			if (choicesList[i].isEmpty()) // remove empty string at head/end
 				++i;
-			html.append("<p><input type=\"checkbox\" name=\"answer\" value= \""
-					+ choicesList[i] + "\">" + choicesList[i] + "</input></p>");
+			html.append("<p><input type=\"checkbox\" name=\"answer_"
+					+ getQuestionId() + "\" value= \"" + choicesList[i] + "\">"
+					+ choicesList[i] + "</input></p>");
 		}
 
 		// Hidden information - questionType and questionId information
-		html.append("<p><input type=\"hidden\" name=\"numChoices\" value=\"4\"></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ getQuestionType() + "\"></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
-				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"numChoices_"
+				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\"></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();

@@ -95,14 +95,16 @@ public class FillInBlank extends QuestionBase {
 
 		// create prefix, blank, suffix
 		html.append("<p>" + parsePrefix()
-				+ "<input type=\"text\" name=\"answer\" >" + parseSuffix()
-				+ "</input></p>");
+				+ "<input type=\"text\" name=\"answer_" + getQuestionId()
+				+ "\" >" + parseSuffix() + "</input></p>");
 
 		// Hidden information - questionType and questionId information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ getQuestionType() + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
-				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();
