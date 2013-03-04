@@ -8,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import database.MyDB;
 
 /**
@@ -16,11 +19,13 @@ import database.MyDB;
  */
 public class PResponse extends QuestionBase {
 	private String url;
-	private static final String typeIntro = "In this type of question, given a picture, user need to answer the related question";
+	private static final String typeIntro = "In this type of question, given a picture,"
+			+ "user need to answer the related question in the answer area. Correct answer will get full score, "
+			+ "while the wrong answer will get zero";
 
 	public PResponse(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRation, String url) {
+			String tagString, float correctRation, String url) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
 				tagString, correctRation);
 		// TODO Auto-generated constructor stub
@@ -90,6 +95,7 @@ public class PResponse extends QuestionBase {
 		html.append(super.printReadHtml());
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
@@ -120,6 +126,16 @@ public class PResponse extends QuestionBase {
 		if (userInput.equals(answer))
 			return maxScore;
 		return "0";
+	}
+
+	/**
+	 * @return
+	 */
+	public static String getAnswerString(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String answer = (String) session.getAttribute("answer");
+		return answer;
 	}
 
 }

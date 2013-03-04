@@ -2,8 +2,6 @@ package quiz;
 
 import java.util.List;
 
-import user.Account;
-
 public interface QuizManager {
 
 	// Summary page
@@ -20,5 +18,7 @@ public interface QuizManager {
 	 *         pointer if nothing matched in database.
 	 */
 	public Quiz getQuiz(String name);
+	
+
 
 }
