@@ -124,15 +124,6 @@ public class FillInBlank extends QuestionBase {
 		return "0";
 	}
 
-	/**
-	 * @return
-	 */
-	public static String getAnswerString(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		String answer = request.getParameter("answer");
-		return answer;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

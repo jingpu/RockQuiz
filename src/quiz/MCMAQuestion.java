@@ -105,22 +105,6 @@ public class MCMAQuestion extends QuestionBase {
 	}
 
 	/**
-	 * get user answers from input
-	 * 
-	 * @return
-	 */
-	public static String getAnswerString(HttpServletRequest request) {
-		String answerList[] = request.getParameterValues("answer");
-		StringBuilder answer = new StringBuilder();
-		for (String str : answerList) {
-			answer.append("#");
-			answer.append(str);
-			answer.append("#");
-		}
-		return answer.toString();
-	}
-
-	/**
 	 * Get Choices string from several distinct choice(input) fields Since input
 	 * fields are different from checkbox field, here we have to use multiple
 	 * fields(parameters) rather than a single parameter

@@ -154,24 +154,6 @@ public class MAQuestion extends QuestionBase {
 		return html.toString();
 	}
 
-	/**
-	 * Can be used both in creation and getting user input Answer format:
-	 * Generated from several answer fields to #answer0##answer1##answer2#...#
-	 * 
-	 * @return
-	 */
-	public static String getAnswerString(HttpServletRequest request) {
-		int numAnswers = Integer.parseInt(request.getParameter("numAnswers"));
-		StringBuilder answer = new StringBuilder();
-		for (int i = 0; i < numAnswers; i++) {
-			answer.append("#");
-			// if there is no input in answer field, it should be null
-			answer.append(request.getParameter("answer" + i));
-			answer.append("#");
-		}
-		return answer.toString();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 

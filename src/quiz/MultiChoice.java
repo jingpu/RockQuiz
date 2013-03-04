@@ -146,28 +146,6 @@ public class MultiChoice extends QuestionBase {
 		return "0";
 	}
 
-	/**
-	 * Create answer in the format: #answer0##answer1##answer2#..#
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static String getCreatedAnswer(HttpServletRequest request) {
-		// str is a string, i.e. "choice0"
-		String str = request.getParameter("answer");
-		return request.getParameter(str);
-	}
-
-	/**
-	 * Check answer is to check the answer body rather than just an option
-	 * index(i.e. A,B,C). This will enable future shuffle of choices ABCD
-	 * 
-	 * @return
-	 */
-	public static String getAnswerString(HttpServletRequest request) {
-		return request.getParameter("answer");
-	}
-
 	// TODO: change the multi-choice table structure, and merge different choice
 	// options into one field
 	public static String getCreatedChoices(HttpServletRequest request) {
@@ -218,6 +196,18 @@ public class MultiChoice extends QuestionBase {
 				+ "\"  ></input></p>");
 
 		return html.toString();
+	}
+
+	/**
+	 * Create answer in the format: #answer0##answer1##answer2#..#
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getCreatedAnswer(HttpServletRequest request) {
+		// str is a string, i.e. "choice0"
+		String str = request.getParameter("answer");
+		return request.getParameter(str);
 	}
 
 	/*

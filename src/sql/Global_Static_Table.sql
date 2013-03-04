@@ -126,7 +126,7 @@ CREATE TABLE Multi_Choice_Pool (
 
 INSERT INTO Multi_Choice_Pool VALUES
 	("0001","Patrick", "Same introduction of Multi-Choice questions",
-	 "Who is the first president of USA?", "A", "5",
+	 "Who is the first president of USA?", "George Washington", "5",
 	  "#his##Cul#", 0.8, 
 	 "#George Washington##George Washington##George Washington##George Washington#");
 	 
@@ -197,5 +197,5 @@ CREATE TABLE Multi_Choice_Multi_Answer_Pool (
 
 INSERT INTO Multi_Choice_Multi_Answer_Pool VALUES
 	("0001","Patrick", "Same introduction of Multi-Choice-Multi-Answer questions",
-	 "Which ones of the following are correct", "#choiceB#3choiceC#", "4" ,
+	 "Which ones of the following are correct", "#choiceB##choiceC#", "4" ,
 	  "#his##Cul#", 0.8,"#choiceA##choiceB##choiceC##choiceD")
