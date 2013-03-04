@@ -14,7 +14,7 @@ import database.MyDB;
 
 public class MyQuiz implements Quiz {
 
-	private final class QuizEvent {
+	public final class QuizEvent {
 		private final String quizId;
 		private final String userName;
 		private final Timestamp submitTime;
@@ -83,23 +83,23 @@ public class MyQuiz implements Quiz {
 			}
 		}
 
-		private final String getQuizId() {
+		public final String getQuizId() {
 			return quizId;
 		}
 
-		private final String getUserName() {
+		public final String getUserName() {
 			return userName;
 		}
 
-		private final Timestamp getSubmitTime() {
+		public final Timestamp getSubmitTime() {
 			return submitTime;
 		}
 
-		private final long getTimeElapsed() {
+		public final long getTimeElapsed() {
 			return timeElapsed;
 		}
 
-		private final int getScore() {
+		public final int getScore() {
 			return score;
 		}
 
@@ -245,130 +245,9 @@ public class MyQuiz implements Quiz {
 		}
 	}
 
-	/**
-	 * Print HTML for Quiz Summary Page Each quiz should have a summary page
-	 * which includes:
-	 * 
-	 * The text description of the quiz.
-	 * 
-	 * The creator of the quiz(hot linked to the creator’s user page).
-	 * 
-	 * A list of the user’s past performance on this specific quiz. Consider
-	 * allowing the user to order this by date, by percent correct, and by
-	 * amount of time the quiz took.
-	 * 
-	 * A list of the highest performers of all time.
-	 * 
-	 * A list of top performers in the last day.
-	 * 
-	 * A list showing the performance of recent test takers (both good and bad).
-	 * 
-	 * Summary statistics on how well all users have performed on the quiz.
-	 * 
-	 * A way to initiate taking the quiz.
-	 * 
-	 * A way to start the quiz in practice mode, if available.
-	 * 
-	 * A way to start editing the quiz, if the user is the quiz owner.
-	 * 
-	 * @param userName
-	 *            the name of the user who are accessing this page
-	 * 
-	 * @return String of page in HTML
-	 */
-	public String printSummaryPageHTML(String userName) {
-		StringBuilder html = new StringBuilder();
-		html.append("<!DOCTYPE html>\n");
-		html.append("<html>\n");
-		html.append("<head>\n");
-		html.append("<meta charset=\"UTF-8\">\n");
-		html.append("<title>Quiz Summary - " + quizName + "</title>\n");
-		html.append("</head>\n");
-		html.append("<body>\n");
-		html.append("<h1>Quiz Summary - " + quizName + "</h1>\n");
-
-		// The text description of the quiz.
-		html.append("<h2>Quiz Description</h2>\n");
-		html.append("<p>" + quizDescription + "</p>\n");
-
-		// The time created
-		html.append("<h2>Date Created</h2>\n");
-		html.append("<p>" + createTime + "</p>\n");
-
-		// The creator of the quiz(hot linked to the creator’s user page).
-		html.append("<h2>Quiz Creator</h2>\n");
-		html.append("<p>" + creatorId + "</p>\n"); // TODO: should be a hyper
-													// link here
-
-		html.append("<h2>Tags</h2>\n");
-		html.append("<p>\n");
-		for (String tag : tags) {
-			html.append("#" + tag + ", \n");
-		}
-		html.append("</p>\n");
-
-		// TODO A list of the user’s past performance on this specific quiz.
-
-		// A list of the highest performers of all time.
-		List<QuizEvent> highScores = highScoreEvents(5);
-		html.append("<h2>High Scores</h2>\n");
-		html.append("<ol>\n");
-		for (QuizEvent e : highScores) {
-			html.append("<li>" + e.getUserName() + ": " + e.score + "</li>\n");
-		}
-		html.append("</ol>\n");
-
-		// A list of top performers in the last day.
-		List<QuizEvent> highScoresLastday = highScoreLastDayEvents(5);
-		html.append("<h2>High Scores in the Last Day</h2>\n");
-		html.append("<ol>\n");
-		for (QuizEvent e : highScoresLastday) {
-			html.append("<li>" + e.getUserName() + ": " + e.score + "</li>\n");
-		}
-		html.append("</ol>\n");
-
-		// A list showing the performance of recent test takers
-		List<QuizEvent> recentEvents = recentTakenEvents(5);
-		html.append("<h2>Recent Taken Log</h2>\n");
-		html.append("<ol>\n");
-		for (QuizEvent e : recentEvents) {
-			html.append("<li>" + e.getUserName() + ": " + e.score + "</li>\n");
-		}
-		html.append("</ol>\n");
-
-		// TODO Summary statistics on how well all users have performed on the
-		// quiz.
-
-		// A way to initiate taking the quiz.
-		// A way to start the quiz in practice mode, if available.
-		html.append("<form action=\"" + getQuizStartPage() + "\">\n");
-		html.append("<input type=\"hidden\" name=\"quizName\" value=\""
-				+ quizName + "\">\n");
-		String disabledAttr = "";
-		if (!canPractice) // if cannot practice, set disabled attribute
-			disabledAttr = "disabled";
-		html.append("<input type=\"checkbox\" name=\"practiceMode\" value=\"true\" "
-				+ disabledAttr + ">Start in practice mode<br>\n");
-		html.append("<input type=\"submit\" value=\"Start Quiz\" >\n");
-		html.append("</form>\n");
-
-		// A way to start editing the quiz, if the user is the quiz owner.
-		if (userName.equals(creatorId)) {
-			html.append("<form action=\"" + getQuizEditPage() + "\">\n");
-			html.append("<input type=\"hidden\" name=\"quizName\" value=\""
-					+ quizName + "\">\n");
-			html.append("<input type=\"submit\" value=\"Edit Quiz\" >\n");
-			html.append("</form>\n");
-		}
-
-		html.append("</body>\n");
-		html.append("</html>\n");
-		return html.toString();
-	}
-
 	@Override
 	public String getSummaryPage() {
-		return "QuizSummaryServlet?quizName=" + quizName;
+		return "quiz_summary.jsp?quizName=" + quizName;
 	}
 
 	/**
@@ -385,6 +264,38 @@ public class MyQuiz implements Quiz {
 	 */
 	public String getQuizEditPage() {
 		return null;
+	}
+
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+
+	public int getTotalScore() {
+		return totalScore;
+	}
+
+	public String getQuizDescription() {
+		return quizDescription;
+	}
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+	public boolean isCanPractice() {
+		return canPractice;
+	}
+
+	public boolean isRandom() {
+		return isRandom;
+	}
+
+	public boolean isOnePage() {
+		return isOnePage;
+	}
+
+	public boolean isImmCorrection() {
+		return isImmCorrection;
 	}
 
 	@Override
@@ -538,7 +449,7 @@ public class MyQuiz implements Quiz {
 		Connection con = MyDB.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			// query quizExample0_Event_Table
+			// query quizName_Event_Table
 			ResultSet rs = stmt.executeQuery("SELECT quizId FROM " + quizName
 					+ "_Event_Table");
 			// get the number of rows
@@ -596,9 +507,5 @@ public class MyQuiz implements Quiz {
 		return quizId;
 	}
 
-	public static void main(String[] args) {
-		MyQuiz quiz = new MyQuiz("quizExample0");
-		// test printSummaryPageHTML method
-		System.out.print(quiz.printSummaryPageHTML("Patrick"));
-	}
+
 }

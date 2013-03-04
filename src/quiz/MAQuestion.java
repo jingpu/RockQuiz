@@ -7,10 +7,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import database.MyDB;
 
@@ -79,7 +80,7 @@ public class MAQuestion extends QuestionBase {
 		queryStmt = "INSERT INTO " + MA_Table + " VALUES (\"" + questionId
 				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
 				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", \"" + correctRatio + "\", \""
+				+ "\", \"" + tagString + "\", " + correctRatio + ", \""
 				+ isOrder + "\")";
 		try {
 			Connection con = MyDB.getConnection();
@@ -94,7 +95,7 @@ public class MAQuestion extends QuestionBase {
 	public static String printCreateHtml() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a question-response question</h1>\n");
+		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
@@ -105,11 +106,14 @@ public class MAQuestion extends QuestionBase {
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer2\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 
+		// checkbox: tick means true, otherwise null means false
+		html.append("<p><input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input></p>");
+
 		// Hidden information - questionType,tag and number of answers
 		// TODO: numAnswer will be automatically generated in javascript??
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
-				+ QuestionBase.QR + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"numAnswer\" value=\"3\"></input></p>\n");
+				+ QuestionBase.MA + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"numAnswers\" value=\"3\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
 		return html.toString();
@@ -126,39 +130,28 @@ public class MAQuestion extends QuestionBase {
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
+
 		// TODO: use javascript to dynamically generate multi-answer field
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\" ></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer1\" ></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer2\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer0_"
+				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer1_"
+				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer2_"
+				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
-		html.append("<p><input type=\"hidden\" name=\"numAnswer\" value=\"3\"></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ getQuestionType() + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
-				+ getQuestionId() + "\"  ></input></p>");
+		// TODO: dynamically change numAnswers
+		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
+				+ getQuestionId() + "\" value=\"3\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();
-	}
-
-	/**
-	 * Answer format: #answer0#answer1#answer2#...#
-	 * 
-	 * @return
-	 */
-	public static String getAnswerString(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		int numAnswer = Integer.parseInt((String) session
-				.getAttribute("numAnswer"));
-		StringBuilder answer = new StringBuilder();
-		for (int i = 0; i < numAnswer; i++) {
-			answer.append("#");
-			answer.append((String) session.getAttribute("answer" + i));
-			answer.append("#");
-		}
-		return answer.toString();
 	}
 
 	/*
@@ -204,8 +197,90 @@ public class MAQuestion extends QuestionBase {
 	}
 
 	private String[] parseAnswer(String answerString) {
-		String[] answerList = answerString.split("#");
-		return answerList;
+		String[] splits = answerString.split("#");
+		List<String> answerList = new ArrayList<String>(splits.length);
+		for (int i = 0; i < splits.length; i++) {
+			if (!splits[i].equals(""))
+				answerList.add(splits[i]);
+		}
+		String[] answerArray = new String[answerList.size()];
+		return answerList.toArray(answerArray);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#printReadHtmlForSingle()
+	 */
+	@Override
+	public String printReadHtmlForSingle() {
+		StringBuilder html = new StringBuilder();
+		html.append(super.printReadHtml());
+
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
+
+		// form action should be here
+		html.append("<p>Question Description: ");
+		html.append(questionDescription + "</p>");
+
+		// TODO: use javascript to dynamically generate multi-answer field
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer0_"
+				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer1_"
+				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer2_"
+				+ getQuestionId() + "\" ></input></p>");
+
+		// Hidden information - questionType and questionId information
+		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
+				+ getQuestionId() + "\" value=\"3\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
+
+		return html.toString();
+	}
+
+	/**
+	 * GetCreatedAnswer, static, for QuestionFactory
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getCreatedAnswer(HttpServletRequest request) {
+		int numAnswers = Integer.parseInt(request.getParameter("numAnswers"));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+			answer.append(request.getParameter("answer" + i));
+			answer.append("#");
+		}
+		return answer.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		int numAnswers = Integer.parseInt(request.getParameter("numAnswers_"
+				+ getQuestionId()));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+			answer.append(request.getParameter("answer" + i + "_"
+					+ getQuestionId()));
+			answer.append("#");
+		}
+		return answer.toString();
+	}
 }

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,11 +45,11 @@ public class QuestionProcessServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String userName = (String) session.getAttribute("userName");
+		String userName = (String) session.getAttribute("guest");
 		if (userName == null) {
 			// TODO remove it and do error checking instead
 			userName = "guest";
-			session.setAttribute("userName", userName);
+			session.setAttribute("guest", userName);
 		}
 
 		// get quizName questionIndex currentScore from session
@@ -56,10 +57,20 @@ public class QuestionProcessServlet extends HttpServlet {
 		Integer questionIndex = (Integer) session.getAttribute("questionIndex");
 		Integer currentScore = (Integer) session.getAttribute("currentScore");
 		boolean comingFromLastQuestionPage = false;
+		MyQuiz quiz;
 		if (quizName == null) {
 			// if there is no such attribute, we are just coming into this
 			// QuizDisplay page and there should be quizName in HTTP request
 			quizName = request.getParameter("quizName");
+			quiz = new MyQuiz(quizName);
+			if (quiz.isOnePage()) {
+				// redirect to quizDisplayOnePage.jsp and never return to this
+				// page
+				RequestDispatcher dispatch = request
+						.getRequestDispatcher("quizDisplayOnePage.jsp");
+				dispatch.forward(request, response);
+				return;
+			}
 			session.setAttribute("quizName", quizName);
 			// set questionIndex to be zero (first question)
 			questionIndex = 0;
@@ -72,10 +83,10 @@ public class QuestionProcessServlet extends HttpServlet {
 		} else {
 			// otherwise we are coming from last question
 			comingFromLastQuestionPage = true;
+			quiz = new MyQuiz(quizName);
 		}
 
-		// then get the quiz object and the question list
-		MyQuiz quiz = new MyQuiz(quizName);
+		// then get the question list
 		List<QuestionBase> questionList = quiz.getQuestionList();
 
 		if (comingFromLastQuestionPage) {
@@ -84,10 +95,8 @@ public class QuestionProcessServlet extends HttpServlet {
 			 */
 
 			// Need to use factory to preprocess answer string
-			String questionType = request.getParameter("questionType");
-			String answer = QuestionFactory.getAnswerString(questionType,
-					request);
 			QuestionBase lastQuestion = questionList.get(questionIndex - 1);
+			String answer = lastQuestion.getUserAnswer(request);
 			currentScore += Integer.parseInt(lastQuestion.getScore(answer));
 			session.setAttribute("currentScore", currentScore);
 		}
@@ -146,7 +155,9 @@ public class QuestionProcessServlet extends HttpServlet {
 			session.removeAttribute("quizName");
 			session.removeAttribute("questionIndex");
 			session.removeAttribute("currentScore");
+			session.removeAttribute("quizStartTime");
 		}
 
 	}
+
 }

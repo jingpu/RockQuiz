@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import database.MyDB;
 
@@ -45,7 +44,7 @@ public class QResponse extends QuestionBase {
 		queryStmt = "INSERT INTO " + QR_Table + " VALUES (\"" + questionId
 				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
 				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", \"" + correctRatio + "\")";
+				+ "\", \"" + tagString + "\", " + correctRatio + ")";
 		try {
 			Connection con = MyDB.getConnection();
 			Statement stmt = con.createStatement();
@@ -76,7 +75,6 @@ public class QResponse extends QuestionBase {
 
 	@Override
 	public String printReadHtml() {
-		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
@@ -85,26 +83,68 @@ public class QResponse extends QuestionBase {
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
+				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ getQuestionType() + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
-				+ getQuestionId() + "\"  ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();
 
 	}
 
-	/**
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#printReadHtmlForSingle()
 	 */
-	public static String getAnswerString(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		String answer = (String) session.getAttribute("answer");
-		return answer;
+	@Override
+	public String printReadHtmlForSingle() {
+		StringBuilder html = new StringBuilder();
+		html.append(super.printReadHtml());
+
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
+
+		// form action should be here
+		html.append("<p>Question Description: ");
+		html.append(questionDescription + "</p>");
+
+		// every form field will be renamed as xx_questionId
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
+				+ getQuestionId() + "\" ></input></p>");
+
+		// Hidden information - questionType and questionId information
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
+
+		return html.toString();
 	}
+
+	public static String getCreatedAnswer(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return request.getParameter("answer");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		return request.getParameter("answer_" + getQuestionId());
+	}
+
 }

@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import database.MyDB;
 
@@ -41,7 +40,6 @@ public class MCMAQuestion extends QuestionBase {
 			rs.next();
 			tmpChoices = rs.getString(9);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		choices = tmpChoices;
@@ -73,9 +71,9 @@ public class MCMAQuestion extends QuestionBase {
 	public void saveToDatabase() {
 		queryStmt = "INSERT INTO " + MCMA_Table + " VALUES (\"" + questionId
 				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
-				+ questionDescription + "\", \"" + choices + "\", \""
-				+ maxScore + "\", \"" + tagString + "\", \"" + correctRatio
-				+ "\", \"" + choices + "\")";
+				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
+				+ "\", \"" + tagString + "\", " + correctRatio + ", \""
+				+ choices + "\")";
 		try {
 			Connection con = MyDB.getConnection();
 			Statement stmt = con.createStatement();
@@ -87,21 +85,44 @@ public class MCMAQuestion extends QuestionBase {
 	}
 
 	/**
-	 * Answer format: #answer0#answer1#answer2#...#
+	 * Create answer in the format: #answer0##answer1##answer2#..#
 	 * 
+	 * @param request
 	 * @return
 	 */
-	public static String getAnswerString(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int numAnswers = Integer.parseInt((String) session
-				.getAttribute("numAnswers"));
+	public static String getCreatedAnswer(HttpServletRequest request) {
+		String answerList[] = request.getParameterValues("answer");
 		StringBuilder answer = new StringBuilder();
-		for (int i = 0; i < numAnswers; i++) {
+		for (String str : answerList) {
 			answer.append("#");
-			answer.append((String) session.getAttribute("answer" + i));
+			// delete "answer=" will get choice index i.e. choice0
+			// then use request.getParameter(choice0) to get answerBody
+			String answerBody = request.getParameter(str);
+			answer.append(answerBody);
 			answer.append("#");
 		}
 		return answer.toString();
+	}
+
+	/**
+	 * Get Choices string from several distinct choice(input) fields Since input
+	 * fields are different from checkbox field, here we have to use multiple
+	 * fields(parameters) rather than a single parameter
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getCreatedChoices(HttpServletRequest request) {
+		// TODO: changeable numChoices
+		// int numChoices = request.getParameter("numChoices"));
+		int numChoices = 4;
+		StringBuilder choices = new StringBuilder();
+		for (int i = 0; i < numChoices; i++) {
+			choices.append("#");
+			choices.append(request.getParameter("choice" + i));
+			choices.append("#");
+		}
+		return choices.toString();
 	}
 
 	/*
@@ -139,41 +160,27 @@ public class MCMAQuestion extends QuestionBase {
 		return answerList;
 	}
 
-	public static String getChoicesString(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int numChoices = Integer.parseInt((String) session
-				.getAttribute("numChoices"));
-		StringBuilder choices = new StringBuilder();
-		for (int i = 0; i < numChoices; i++) {
-			choices.append("#");
-			choices.append((String) session.getAttribute("choice" + i));
-			choices.append("#");
-		}
-		return choices.toString();
-	}
-
-	// TODO: change the control type in two printHTML functions
 	public static String printCreateHtml() {
-		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a multiChoice-MultiAnswer question</h1>");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
-		html.append("<p> Please enter proposed question description and answer </p>");
+		html.append("<p> Please enter proposed question description here: </p>");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>");
 
-		// Choice options
-		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input></p>");
-		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choice1\" ></input></p>");
-		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input></p>");
-		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input></p>");
+		// Choice options and answers
+		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input>  <input type=\"checkbox\" name=\"answer\" value=\"choice0\"></input></p>");
+		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choice1\" ></input>  <input type=\"checkbox\" name=\"answer\" value=\"choice1\"></input></p>");
+		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input>  <input type=\"checkbox\" name=\"answer\" value=\"choice2\"></input></p>");
+		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input>  <input type=\"checkbox\" name=\"answer\" value=\"choice3\"></input></p>");
 
-		// Answer and Full Score
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+		// Full Score
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 
 		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"numChoices\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ QuestionBase.MC + "\" ></input></p>");
+				+ QuestionBase.MCMA + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
 
@@ -196,20 +203,86 @@ public class MCMAQuestion extends QuestionBase {
 		// create choice options
 		String choicesList[] = choices.split("#");
 		for (int i = 0; i < choicesList.length; i++) {
-			html.append("<p><input type=\"radio\" name=\"answer\" + i"
-					+ "value= \"" + choicesList[i] + "\">" + choicesList[i]
-					+ "</input></p>");
+			if (choicesList[i].isEmpty()) // remove empty string at head/end
+				++i;
+			html.append("<p><input type=\"checkbox\" name=\"answer_"
+					+ getQuestionId() + "\" value= \"" + choicesList[i] + "\">"
+					+ choicesList[i] + "</input></p>");
 		}
 
 		// Hidden information - questionType and questionId information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ getQuestionType() + "\"></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId\" value=\""
-				+ getQuestionId() + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"numChoices_"
+				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\"></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		return html.toString();
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#printReadHtmlForSingle()
+	 */
+	@Override
+	public String printReadHtmlForSingle() {
+		StringBuilder html = new StringBuilder();
+		html.append(super.printReadHtml());
+
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
+
+		// form action should be here
+		html.append("<p>Question Description: ");
+		html.append(questionDescription + "</p>");
+
+		// every form field will be renamed as xx_questionId
+		// create choice options
+		String choicesList[] = choices.split("#");
+		for (int i = 0; i < choicesList.length; i++) {
+			if (choicesList[i].isEmpty()) // remove empty string at head/end
+				++i;
+			html.append("<p><input type=\"checkbox\" name=\"answer_"
+					+ getQuestionId() + "\" value= \"" + choicesList[i] + "\">"
+					+ choicesList[i] + "</input></p>");
+		}
+
+		// Hidden information - questionType and questionId information
+		html.append("<p><input type=\"hidden\" name=\"numChoices_"
+				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType_"
+				+ getQuestionId() + "\" value=\"" + getQuestionType()
+				+ "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ getQuestionId() + "\" value=\"" + getQuestionId()
+				+ "\"  ></input></p>");
+
+		return html.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		String answerList[] = request.getParameterValues("answer_"
+				+ getQuestionId());
+		StringBuilder answer = new StringBuilder();
+		for (String str : answerList) {
+			answer.append("#");
+			answer.append(str);
+			answer.append("#");
+		}
+		return answer.toString();
 	}
 
 }

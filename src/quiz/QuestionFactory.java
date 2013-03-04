@@ -3,11 +3,16 @@
  */
 package quiz;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import quiz.TimedQuestion.TimedFillInBlank;
+import quiz.TimedQuestion.TimedMAQuestion;
+import quiz.TimedQuestion.TimedMCMAQuestion;
+import quiz.TimedQuestion.TimedMultiChoice;
+import quiz.TimedQuestion.TimedPResponse;
+import quiz.TimedQuestion.TimedQResponse;
+//why here need import???
 
 /**
  * QuestionFactory class is for handling the creation of question object,
@@ -49,15 +54,21 @@ public class QuestionFactory {
 	}
 
 	// MyQuiz create a question from a HTTP request
-	// questionType is not stored in the session??
+	/**
+	 * create a question from webpage
+	 * 
+	 * @param questionType
+	 * @param request
+	 * @return
+	 */
 	public static QuestionBase createQuestion(String questionType,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String creatorId = (String) session.getAttribute("userName");
+		String creatorId = (String) session.getAttribute("guest");
 		if (questionType.equals(QuestionBase.QR)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = getAnswerString(questionType, request);
+			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			return new QResponse(questionType, creatorId, questionDescription,
@@ -66,7 +77,7 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.FIB)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = getAnswerString(questionType, request);
+			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			return new FillInBlank(questionType, creatorId,
@@ -75,21 +86,10 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.MC)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = getAnswerString(questionType, request);
+			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
-
-			// TODO: better way to handle this
-			String choiceA = request.getParameter("choiceA");
-			String choiceB = request.getParameter("choiceB");
-			String choiceC = request.getParameter("choiceC");
-			String choiceD = request.getParameter("choiceD");
-
-			List<String> choices = new ArrayList<String>();
-			choices.add(choiceA);
-			choices.add(choiceB);
-			choices.add(choiceC);
-			choices.add(choiceD);
+			String choices = getCreatedChoices(questionType, request);
 			return new MultiChoice(questionType, creatorId,
 					questionDescription, answer, maxScore, tagString, -1,
 					choices);
@@ -97,7 +97,7 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.PR)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = getAnswerString(questionType, request);
+			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String url = request.getParameter("url");
@@ -107,22 +107,25 @@ public class QuestionFactory {
 		} else if (questionType.equals(QuestionBase.MA)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = getAnswerString(questionType, request);
+			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String isOrder = request.getParameter("isOrder");
+			if (isOrder == null)
+				isOrder = "false";
 			return new MAQuestion(questionType, creatorId, questionDescription,
 					answer, maxScore, tagString, -1, isOrder);
 
 		} else if (questionType.equals(QuestionBase.MCMA)) {
 			String questionDescription = request
 					.getParameter("questionDescription");
-			String answer = getAnswerString(questionType, request);
+			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
-			String choices = getChoicesString(questionType, request);
-			return new MAQuestion(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, -1, choices);
+			String choices = getCreatedChoices(questionType, request);
+			return new MCMAQuestion(questionType, creatorId,
+					questionDescription, answer, maxScore, tagString, -1,
+					choices);
 		}
 		return null;
 	}
@@ -140,49 +143,67 @@ public class QuestionFactory {
 			return PResponse.printCreateHtml();
 		else if (questionType.equals(QuestionBase.MA))
 			return MAQuestion.printCreateHtml();
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.printCreateHtml();
+		else
+			return "error";
+	}
+
+	// overload printCreatHtml
+	public static String printCreateHtml(String questionType, String timedType) {
+		if (questionType.equals(TimedQuestion.TQR))
+			return TimedQResponse.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TFIB))
+			return TimedFillInBlank.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TMC))
+			return TimedMultiChoice.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TPR))
+			return TimedPResponse.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TMA))
+			return TimedMAQuestion.printCreateHtml();
+		else if (questionType.equals(TimedQuestion.TMCMA))
+			return TimedMCMAQuestion.printCreateHtml();
 		else
 			return "error";
 	}
 
 	/**
-	 * Used by quiz servlet when creating multi-answer for a question OR when
-	 * user inputs multi-answer for a question: get a formated answer string
-	 * from multi-answer fields, and pass to QuestionBase constructor or
-	 * getScore function
+	 * Used by quiz servlet when creating multi-answer for a question
 	 * 
 	 * @param questionType
 	 * @param request
 	 * @return
 	 */
-	public static String getAnswerString(String questionType,
+	public static String getCreatedAnswer(String questionType,
 			HttpServletRequest request) {
 		if (questionType.equals(QuestionBase.QR))
-			return QResponse.getAnswerString(request);
+			return QResponse.getCreatedAnswer(request);
 		else if (questionType.equals(QuestionBase.FIB))
-			return FillInBlank.getAnswerString(request);
+			return FillInBlank.getCreatedAnswer(request);
 		else if (questionType.equals(QuestionBase.MC))
-			return MultiChoice.getAnswerString(request);
+			return MultiChoice.getCreatedAnswer(request);
 		else if (questionType.equals(QuestionBase.PR))
-			return PResponse.getAnswerString(request);
+			return PResponse.getCreatedAnswer(request);
 		else if (questionType.equals(QuestionBase.MA))
-			return MAQuestion.getAnswerString(request);
+			return MAQuestion.getCreatedAnswer(request);
+		if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.getCreatedAnswer(request);
 		return "error";
 	}
 
 	/**
-	 * Used by quiz servlet to wrap answers for MCMA and MultiChoice TODO:
-	 * MultiChoice's table needs modification
+	 * Used by quiz servlet to wrap answers for MCMA and MultiChoice
 	 * 
 	 * @param questionType
 	 * @param request
 	 * @return
 	 */
-	public static String getChoicesString(String questionType,
+	public static String getCreatedChoices(String questionType,
 			HttpServletRequest request) {
 		if (questionType.equals(QuestionBase.MC))
-			return MultiChoice.getChoicesString(request);
+			return MultiChoice.getCreatedChoices(request);
 		if (questionType.equals(QuestionBase.MCMA))
-			return MCMAQuestion.getChoicesString(request);
+			return MCMAQuestion.getCreatedChoices(request);
 		return "error";
 	}
 
