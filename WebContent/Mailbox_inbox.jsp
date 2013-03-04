@@ -55,7 +55,7 @@
 					if (!msg.getRead())
 						out.println("<b>");
 					out.println("<tr><td><a href=\"userpage.jsp?id=" + msg.from
-							+ "\">" + msg.from + "</a></td><td>"
+							+ "\" target=\"_top\">" + msg.from + "</a></td><td>"
 							+ "<a href=\"Mail.jsp?id=" + userId + "&box=inbox&msg="
 							+ msgCode + "\">" + msg.title + "</a></td><td>"
 							+ timeDscr + "</td></tr>");

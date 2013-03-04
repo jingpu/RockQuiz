@@ -140,13 +140,41 @@ public class UserManager{
 		return false;
 	}
 
-	public static boolean matchAccount(String userId, String password) {
+	public static boolean matchAccount(String userId, String password) {		
+		String hashValue = "";
+		try {
+			MessageDigest md = MessageDigest.getInstance("SHA");
+			try {
+				md.update(password.getBytes());
+				MessageDigest tc = (MessageDigest)md.clone();
+				byte[] bytes = tc.digest();
+				StringBuffer buff = new StringBuffer();
+				for (int i=0; i<bytes.length; i++) {
+					int val = bytes[i];
+					val = val & 0xff;  // remove higher bits, sign
+					if (val<16) buff.append('0'); // leading 0
+					buff.append(Integer.toString(val, 16));
+				}			
+				hashValue = buff.toString();
+				md.reset();
+			} catch (CloneNotSupportedException cnse) {
+			     try {
+					throw new DigestException("couldn't make digest of partial content");
+				} catch (DigestException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		System.out.println("translate pwd");
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
-					"WHERE userId = \"" + userId + "\"" + " AND " + "password = \"" + password + "\"");
+					"WHERE userId = \"" + userId + "\"" + " AND " + "password = \"" + hashValue + "\"");
 			if(!rs.next()) {
 				close();
+				System.out.println("not found");
 				return false;
 			}
 			rs.close();
@@ -237,6 +265,36 @@ public class UserManager{
 			System.out.println(column + " is not allowed to be modified.");
 			return;
 		}
+		if(column.equals("password")) {
+			String hashValue = "";
+			try {
+				MessageDigest md = MessageDigest.getInstance("SHA");
+				try {
+					md.update(content.getBytes());
+					MessageDigest tc = (MessageDigest)md.clone();
+					byte[] bytes = tc.digest();
+					StringBuffer buff = new StringBuffer();
+					for (int i=0; i<bytes.length; i++) {
+						int val = bytes[i];
+						val = val & 0xff;  // remove higher bits, sign
+						if (val<16) buff.append('0'); // leading 0
+						buff.append(Integer.toString(val, 16));
+					}			
+					hashValue = buff.toString();
+					md.reset();
+				} catch (CloneNotSupportedException cnse) {
+				     try {
+						throw new DigestException("couldn't make digest of partial content");
+					} catch (DigestException e) {
+						e.printStackTrace();
+					}
+				}
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+			content = hashValue;
+		}
+		
 		setDriver();
 		try {
 			stmt.executeUpdate("UPDATE " + userTable + " SET " + column +"=" + "'" + content 
@@ -661,14 +719,16 @@ public class UserManager{
 		return 0;
 	}
 
-	public static List<String> getAchievements(String userId){
-		List<String> achieves = new LinkedList<String>();
+	public static List<Activity> getAchievements(String userId){
+		List<Activity> achieves = new LinkedList<Activity>();
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
 					+ "_history WHERE Type='a' ORDER BY Time DESC");
 			while(rs.next()){
-				achieves.add(rs.getString("content"));
+				Activity act = new Activity(userId, rs.getString("Time"), 
+						rs.getString("type"), rs.getString("content"));
+				achieves.add(act);
 			}
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
@@ -678,16 +738,16 @@ public class UserManager{
 		return achieves;
 	}
 
-	public static List<String[]> getQuizTaken(String userId){
-		List<String[]> taken = new LinkedList<String[]>();
+	public static List<Activity> getQuizTaken(String userId){
+		List<Activity> taken = new LinkedList<Activity>();
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
 					+ "_history WHERE Type='t%' ORDER BY Time DESC");
 			while(rs.next()){
-				String quizId = rs.getString("Type").substring(1);
-				String[] quizTaken = {quizId, rs.getString("content")};
-				taken.add(quizTaken);
+				Activity act = new Activity(userId, rs.getString("Time"), 
+						rs.getString("type"), rs.getString("content"));
+				taken.add(act);
 			}
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
@@ -697,14 +757,16 @@ public class UserManager{
 		return taken;
 	}
 
-	public static List<String> getQuizCreated(String userId){
-		List<String> created = new LinkedList<String>();
+	public static List<Activity> getQuizCreated(String userId){
+		List<Activity> created = new LinkedList<Activity>();
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
 					+ "_history WHERE Type='c' ORDER BY Time DESC");
 			while(rs.next()){
-				created.add(rs.getString("content"));
+				Activity act = new Activity(userId, rs.getString("Time"), 
+						rs.getString("type"), rs.getString("content"));
+				created.add(act);
 			}
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
@@ -722,7 +784,7 @@ public class UserManager{
 					+ "_history ORDER BY Time DESC");
 			int i = 0;
 			while(rs.next()){
-				Activity act = new Activity(rs.getString("Time"), 
+				Activity act = new Activity(userId, rs.getString("Time"), 
 						rs.getString("type"), rs.getString("content"));
 				recent.add(act);
 				i++;

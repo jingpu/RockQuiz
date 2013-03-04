@@ -19,6 +19,9 @@ public class Account implements User{
 		this.userId = userId;
 	}
 
+	public boolean matchPwd(String password){
+		return UserManager.matchAccount(userId, password);
+	}
 	/**Get account's basic information from userStats table 
 	 * @param column:{userId, password, registrationTime, status, gender, email}
 	 * see details in sum.sql
@@ -74,21 +77,21 @@ public class Account implements User{
 	/**Get achievements list in desc time order
 	 * @return achievement List<String>
 	 * **/
-	public List<String> getAchievements(){
+	public List<Activity> getAchievements(){
 		return UserManager.getAchievements(userId);
 	}
 	
 	/**Get taken quizzes list in desc time order
 	 * @return taken quizzes List<String>
 	 * **/
-	public List<String[]> getQuizTaken(){
+	public List<Activity> getQuizTaken(){
 		return UserManager.getQuizTaken(userId);
 	}
 	
 	/**Get created quizzes list in desc time order
 	 * @return created quizzes List<String>
 	 * **/
-	public List<String> getQuizCreated(){
+	public List<Activity> getQuizCreated(){
 		return UserManager.getQuizCreated(userId);
 	}
 	
@@ -168,6 +171,10 @@ public class Account implements User{
 	
 	public List<String> getFriendsList(){
 		return UserManager.getFriendsList(userId);
+	}
+	
+	public List<String> getFriendRequests(){
+		return UserManager.getUnconfirmedFriendsList(userId);
 	}
 	
 	public List<Activity> getRecentActivity(){

@@ -3,7 +3,6 @@
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
 <%@ page import="user.Account"%>
-<%@ page import="user.UserManager"%>
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
 <%@ page import="user.TimeTrsf"%>
@@ -29,14 +28,14 @@
 		return;
 	}
 
-	String status = UserManager.getAccountInfo(userId, "status");
 	Account user = new Account(userId);
+	String status = user.getInfo("status");
 	// generate achievements history
-	List<String> achieves = user.getAchievements();
+	List<Activity> achieves = user.getAchievements();
 	// generate quizzes taken history
-	List<String[]> taken = user.getQuizTaken();
+	List<Activity> taken = user.getQuizTaken();
 	// generate quizzes created history
-	List<String> created = user.getQuizCreated();
+	List<Activity> created = user.getQuizCreated();
 	// mail messages
 	List<String> inbox = user.getMessageInbox();
 	List<String> sent = user.getMessageSent();
@@ -44,7 +43,7 @@
 	int unreadCount = unread.size();
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity();
-	System.out.println("mark1");
+	//System.out.println("mark1");
 	String mailBoxUrl = "Mailbox_frame.jsp?id=" + userId;
 	//String userpageUrl  = "userpage.jsp?id=" + userId;
 	String userpageUrl = "userpage.jsp?id=" + userId;
@@ -77,10 +76,7 @@
 					} else {
 						for (String msgCode : unread) {
 							Message msg = user.getMessage("inbox", msgCode);
-							String description = msg.title;
-							if (msg.type == "n") {
-								description = "msg.from" + " sends you a message";
-							}
+							String description = msg.from + ": \"" + msg.title + "\"";
 							SimpleDateFormat sdf = new SimpleDateFormat(
 									"yyyy-MM-dd HH:mm:ss.S");
 							Date time = sdf.parse(msg.getTime());
@@ -95,10 +91,10 @@
 				</dd>
 				<dt>Quick Link</dt>
 				<dd>
-					<a href="">111</a>
+					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
 				</dd>
 				<dd>
-					<a href="">222</a>
+					<a href="profile.jsp?id=<%=userId%>">Edit Profile</a>
 				</dd>
 				<dd>
 					<a href="">333</a>
@@ -133,20 +129,24 @@
 
 
 						<%
-							QuizManager man1 = new MyQuizManager();
-							List<String> popQuizzes = man1.getPopularQuiz();
+							QuizManager man = new MyQuizManager();
+							List<String> popQuizzes = man.getPopularQuiz();
 							System.out.println(popQuizzes);
 							int i = 0;
 							for (String name : popQuizzes) {
 								i++;
-								Quiz quiz = man1.getQuiz(name);
+								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
+								String creator = "";
 						%>
-							<p><a href=<%=quizUrl%>><%=i%>. <%=name%></a></p>
+						<p>
+							<a href=<%=quizUrl%>><%=i%>. <%=name%></a> (by:<a
+								href="userpage.jsp?id=<%=creator%>"></a>)
+						</p>
 						<%
 							}
 						%>
- 
+
 
 						<p class="readmore">
 							<a href=""><b>MORE</b></a>
@@ -157,19 +157,22 @@
 						<h3>Recent Quizzes</h3>
 
 						<%
-							QuizManager man2 = new MyQuizManager();
-							List<String> recentQuizzes = man2.getRecentCreateQuiz();
+							List<String> recentQuizzes = man.getRecentCreateQuiz();
 							int j = 0;
 							for (String name : recentQuizzes) {
 								j++;
-								Quiz quiz = man2.getQuiz(name);
+								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
+								String creator = "";
 						%>
-							<p><a href=<%=quizUrl%>><%=j%>. <%=name%></a></p>
+						<p>
+							<a href=<%=quizUrl%>><%=j%>. <%=name%></a>(by:<a
+								href="userpage.jsp?id=<%=creator%>"></a>)
+						</p>
 						<%
 							}
 						%>
- 
+
 						<p class="readmore">
 							<a href=""><b>MORE</b></a>
 						</p>
@@ -180,15 +183,21 @@
 
 					<div class="leftbox">
 						<h3>Quizzes I Took</h3>
-						<ul>
-							<%
+
+						<%
+							if (taken.isEmpty()) {
+						%>
+						<p>You did't take any quiz yet.</p>
+						<%
+							} else {
 								for (int k = 0; k < 5; i++) {
 									if (k == taken.size())
 										break;
-									out.println("<li>" + taken.get(k)[1] + "</li>");
+									out.println(taken.get(k).toStringMe());
 								}
-							%>
-						</ul>
+							}
+						%>
+
 						<p class="readmore">
 							<a href=""><b>MORE</b></a>
 						</p>
@@ -196,15 +205,19 @@
 					</div>
 					<div class="rightbox">
 						<h3>Quizzes I Create</h3>
-						<ul>
-							<%
+						<%
+							if (created.isEmpty()) {
+						%>
+						<p>You did't create any quiz yet.</p>
+						<%
+							} else {
 								for (int k = 0; k < 5; i++) {
-									if (k == taken.size())
+									if (k == created.size())
 										break;
-									out.println("<li>" + created.get(k) + "</li>");
+									out.println(created.get(k).toStringMe());
 								}
-							%>
-						</ul>
+							}
+						%>
 						<p class="readmore">
 							<a href=""><b>MORE</b></a>
 						</p>
@@ -215,13 +228,19 @@
 
 					<div class="leftbox">
 						<h3>My Achievements</h3>
-						<ul>
-							<%
-								for (String str : achieves) {
-									out.println("<li>" + str + "</li>");
+						<%
+							if (achieves.isEmpty()) {
+						%>
+						<p>You don't have any achievements yet.</p>
+						<%
+							} else {
+								for (int k = 0; k < 5; i++) {
+									if (k == achieves.size())
+										break;
+									out.println(achieves.get(k).toStringMe());
 								}
-							%>
-						</ul>
+							}
+						%>
 						<p class="readmore">
 							<a href=""><b>MORE</b></a>
 						</p>
@@ -229,13 +248,17 @@
 					</div>
 					<div class="rightbox">
 						<h3>Friends Activities</h3>
-						<ul>
-							<%
+						<%
+							if (friendsAct.isEmpty()) {
+						%>
+						<p>There is no news yet.</p>
+						<%
+							} else {
 								for (Activity act : friendsAct) {
-									out.println("<li>" + act.toString() + "</li>");
+									out.println("<p>" + act.toString() + "</p>");
 								}
-							%>
-						</ul>
+							}
+						%>
 						<p class="readmore">
 							<a href=""><b>MORE</b></a>
 						</p>
