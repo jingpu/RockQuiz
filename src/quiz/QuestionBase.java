@@ -28,17 +28,19 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected final String tagString;
 	protected final String correctRatio;
 
-	public static final String QR = "Question_Response";
-	public static final String FIB = "Fill_In_Blank";
-	public static final String MC = "Multi_Choice";
-	public static final String PR = "Picture_Response";
-	public static final String MA = "Multi_Answer";
+	protected static final String QR = "Question_Response";
+	protected static final String FIB = "Fill_In_Blank";
+	protected static final String MC = "Multi_Choice";
+	protected static final String PR = "Picture_Response";
+	protected static final String MA = "Multi_Answer";
+	protected static final String MCMA = "Multi_Choice_Multi_Answer";
 
 	protected static final String QR_Table = "Question_Response_Pool";
 	protected static final String FIB_Table = "Fill_In_Blank_Pool";
 	protected static final String MC_Table = "Multi_Choice_Pool";
 	protected static final String PR_Table = "Picture_Response_Pool";
 	protected static final String MA_Table = "Multi_Answer_Pool";
+	protected static final String MCMA_Table = "Multi_Choice_Multi_Answer_Pool";
 
 	protected String queryStmt;
 

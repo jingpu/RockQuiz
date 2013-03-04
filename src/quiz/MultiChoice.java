@@ -20,6 +20,8 @@ import database.MyDB;
  * 
  */
 public class MultiChoice extends QuestionBase {
+	// TODO: merge all choices into one field -> enable user add more than 4
+	// choices
 	private List<String> choices;
 	private static final String typeIntro = "MultiChoice question: user should choose one correct answer from choice options"
 			+ "Correct answer will get full score, while the wrong answer will get zero";
@@ -148,7 +150,7 @@ public class MultiChoice extends QuestionBase {
 
 	/**
 	 * Check answer is to check the answer body rather than just an option
-	 * index(i.e. A,B,C)
+	 * index(i.e. A,B,C) TODO: This will enable future shuffle of choices ABCD
 	 * 
 	 * @return
 	 */
@@ -157,6 +159,21 @@ public class MultiChoice extends QuestionBase {
 		HttpSession session = request.getSession();
 		String answer = (String) session.getAttribute("answer");
 		return answer;
+	}
+
+	// TODO: change the multi-choice table structure, and merge different choice
+	// options into one field
+	public static String getChoicesString(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int numChoices = Integer.parseInt((String) session
+				.getAttribute("numChoices"));
+		StringBuilder choices = new StringBuilder();
+		for (int i = 0; i < numChoices; i++) {
+			choices.append("#");
+			choices.append((String) session.getAttribute("choice" + i));
+			choices.append("#");
+		}
+		return choices.toString();
 	}
 
 }
