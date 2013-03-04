@@ -60,7 +60,7 @@ public class MultiChoice extends QuestionBase {
 		queryStmt = "INSERT INTO " + MC_Table + " VALUES (\"" + questionId
 				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
 				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", \"" + correctRatio + "\", \""
+				+ "\", \"" + tagString + "\", " + correctRatio + ", \""
 				+ choices.get(0) + "\", \"" + choices.get(1) + "\", \""
 				+ choices.get(2) + "\", \"" + choices.get(3) + "\")";
 
@@ -156,8 +156,7 @@ public class MultiChoice extends QuestionBase {
 	 */
 	public static String getAnswerString(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		String answer = (String) session.getAttribute("answer");
+		String answer = request.getParameter("answer");
 		return answer;
 	}
 

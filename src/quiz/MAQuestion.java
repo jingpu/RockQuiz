@@ -94,7 +94,7 @@ public class MAQuestion extends QuestionBase {
 	public static String printCreateHtml() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a question-response question</h1>\n");
+		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
@@ -108,7 +108,7 @@ public class MAQuestion extends QuestionBase {
 		// Hidden information - questionType,tag and number of answers
 		// TODO: numAnswer will be automatically generated in javascript??
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
-				+ QuestionBase.QR + "\" ></input></p>");
+				+ QuestionBase.MA + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numAnswer\" value=\"3\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");

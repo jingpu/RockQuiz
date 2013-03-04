@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import database.MyDB;
 
@@ -40,8 +39,7 @@ public class FillInBlank extends QuestionBase {
 		String queryStmt = "INSERT INTO " + FIB_Table + " VALUES (\""
 				+ questionId + "\", \"" + creatorId + "\", \"" + typeIntro
 				+ "\", \"" + questionDescription + "\", \"" + answer + "\", \""
-				+ maxScore + "\", \"" + tagString + "\", \"" + correctRatio
-				+ "\")";
+				+ maxScore + "\", \"" + tagString + "\", " + correctRatio + ")";
 
 		try {
 			Connection con = MyDB.getConnection();
@@ -129,8 +127,7 @@ public class FillInBlank extends QuestionBase {
 	 */
 	public static String getAnswerString(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		String answer = (String) session.getAttribute("answer");
+		String answer = request.getParameter("answer");
 		return answer;
 	}
 
