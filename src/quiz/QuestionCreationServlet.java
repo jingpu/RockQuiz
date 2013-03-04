@@ -44,11 +44,11 @@ public class QuestionCreationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String userName = (String) session.getAttribute("userName");
+		String userName = (String) session.getAttribute("guest");
 		if (userName == null) {
 			// TODO remove it and do error checking instead
 			userName = "guest";
-			session.setAttribute("userName", userName);
+			session.setAttribute("guest", userName);
 		}
 		String creatorId = userName;
 

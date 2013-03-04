@@ -20,9 +20,11 @@ INSERT INTO Global_Quiz_Info_Table VALUES
 							   "#Geo#His#", false, true, false, false,"2012-01-19 03:14:07"),
     ("quizExample1","Molly","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#Geo", false, true, false, false,"2013-01-01 03:14:07"),
-							   
+							   "#Geo", false, true, false, false,"2013-01-01 03:14:07"),						   
     ("quizExample2","More","This is an exmaple quiz description. 
+							   User should follow the instruction to complete the quiz",
+							   "#His", false, true, false, false,"2012-01-19 05:14:07"),
+    ("NoOneTaken","More","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
 							   "#His", false, true, false, false,"2012-01-19 05:14:07");
 
@@ -120,3 +122,27 @@ INSERT INTO quizExample2_Event_Table VALUES
     ("3","Kate","2013-03-19 05:14:07", 30000, 7),
     ("5","Molly","2013-03-19 05:14:07", 3000, 8),
     ("6","Patrick","2013-02-19 03:14:07", 20000, 7);	
+    
+    
+DROP TABLE IF EXISTS NoOneTaken_Content_Table;
+
+CREATE TABLE NoOneTaken_Content_Table (  
+	questionNum CHAR(32),
+    questionType CHAR(32),
+    questionId CHAR(32)
+);
+
+INSERT INTO NoOneTaken_Content_Table VALUES
+	("0","Fill_In_Blank","0001"),
+    ("1","Fill_In_Blank","0001"),
+    ("2","Multi_Choice","0001");	
+							   
+DROP TABLE IF EXISTS NoOneTaken_Event_Table;
+
+CREATE TABLE NoOneTaken_Event_Table (  
+	quizId CHAR(32),
+    userName CHAR(32),
+    submitTime TIMESTAMP,
+    timeElapsed BIGINT,
+    score INT
+);
