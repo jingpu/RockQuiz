@@ -173,6 +173,11 @@ public class PResponse extends QuestionBase {
 		return html.toString();
 	}
 
+	public static String getCreatedAnswer(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return request.getParameter("answer");
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -181,8 +186,7 @@ public class PResponse extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return request.getParameter("answer_" + getQuestionId());
 	}
 
 }

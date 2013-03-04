@@ -170,7 +170,7 @@ public class MultiChoice extends QuestionBase {
 
 	// TODO: change the multi-choice table structure, and merge different choice
 	// options into one field
-	public static String getChoicesString(HttpServletRequest request) {
+	public static String getCreatedChoices(HttpServletRequest request) {
 		int numChoices = Integer.parseInt(request.getParameter("numChoices"));
 		StringBuilder choices = new StringBuilder();
 		for (int i = 0; i < numChoices; i++) {
@@ -228,7 +228,6 @@ public class MultiChoice extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		return request.getParameter("answer_" + getQuestionId());
 	}
 }

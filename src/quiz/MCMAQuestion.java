@@ -128,7 +128,7 @@ public class MCMAQuestion extends QuestionBase {
 	 * @param request
 	 * @return
 	 */
-	public static String getChoicesString(HttpServletRequest request) {
+	public static String getCreatedChoices(HttpServletRequest request) {
 		// TODO: changeable numChoices
 		// int numChoices = request.getParameter("numChoices"));
 		int numChoices = 4;
@@ -290,8 +290,15 @@ public class MCMAQuestion extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		String answerList[] = request.getParameterValues("answer_"
+				+ getQuestionId());
+		StringBuilder answer = new StringBuilder();
+		for (String str : answerList) {
+			answer.append("#");
+			answer.append(str);
+			answer.append("#");
+		}
+		return answer.toString();
 	}
 
 }

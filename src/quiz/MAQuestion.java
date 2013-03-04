@@ -263,6 +263,24 @@ public class MAQuestion extends QuestionBase {
 		return html.toString();
 	}
 
+	/**
+	 * GetCreatedAnswer, static, for QuestionFactory
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getCreatedAnswer(HttpServletRequest request) {
+		int numAnswers = Integer.parseInt(request.getParameter("numAnswers"));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+			answer.append(request.getParameter("answer" + i));
+			answer.append("#");
+		}
+		return answer.toString();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -271,8 +289,16 @@ public class MAQuestion extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		return null;
+		int numAnswers = Integer.parseInt(request.getParameter("numAnswers_"
+				+ getQuestionId()));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+			answer.append(request.getParameter("answer" + i + "_"
+					+ getQuestionId()));
+			answer.append("#");
+		}
+		return answer.toString();
 	}
-
 }

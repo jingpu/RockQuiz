@@ -84,10 +84,8 @@ public class QuestionProcessServlet extends HttpServlet {
 			 */
 
 			// Need to use factory to preprocess answer string
-			String questionType = request.getParameter("questionType");
-			String answer = QuestionFactory.getAnswerString(questionType,
-					request);
 			QuestionBase lastQuestion = questionList.get(questionIndex - 1);
+			String answer = lastQuestion.getUserAnswer(request);
 			currentScore += Integer.parseInt(lastQuestion.getScore(answer));
 			session.setAttribute("currentScore", currentScore);
 		}
