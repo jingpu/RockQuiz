@@ -106,7 +106,7 @@
 				<%
 					if (achieves.isEmpty()) {
 				%>
-				<p>You don't have any achievements yet.</p>
+				<p><%=id%> don't have any achievements yet.</p>
 				<%
 					} else {
 						for (int k = 0; k < 5; k++) {
@@ -125,7 +125,7 @@
 						<%
 							if (taken.isEmpty()) {
 						%>
-						<p>You did't take any quiz yet.</p>
+						<p><%=id%> did't take any quiz yet.</p>
 						<%
 							} else {
 								for (int k = 0; k < 5; k++) {
@@ -136,7 +136,7 @@
 							}
 						%>
 						<p class="readmore">
-							<a href=""><b>MORE</b></a>
+							<a href="quizTakan.jsp?id=<%=id%>"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>
@@ -145,7 +145,7 @@
 						<%
 							if (created.isEmpty()) {
 						%>
-						<p>You did't create any quiz yet.</p>
+						<p><%=id%> did't create any quiz yet.</p>
 						<%
 							} else {
 								for (int k = 0; k < 5; k++) {
@@ -156,7 +156,7 @@
 							}
 						%>
 						<p class="readmore">
-							<a href=""><b>MORE</b></a>
+							<a href="quizCreated.jsp?id=<%=id%>"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>

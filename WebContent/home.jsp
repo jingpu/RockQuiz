@@ -148,7 +148,7 @@
 
 
 						<p class="readmore">
-							<a href=""><b>MORE</b></a>
+							<a href="popQuiz.jsp"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>
@@ -173,7 +173,7 @@
 						%>
 
 						<p class="readmore">
-							<a href=""><b>MORE</b></a>
+							<a href="recentQuiz.jsp"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>
@@ -198,7 +198,7 @@
 						%>
 
 						<p class="readmore">
-							<a href=""><b>MORE</b></a>
+							<a href="quizTaken.jsp?id=<%=userId%>"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>
@@ -218,7 +218,7 @@
 							}
 						%>
 						<p class="readmore">
-							<a href=""><b>MORE</b></a>
+							<a href="quizCreated.jsp?id=<%=userId%>"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>
@@ -241,7 +241,7 @@
 							}
 						%>
 						<p class="readmore">
-							<a href=""><b>MORE</b></a>
+							<a href="achieves.jsp?id=<%=userId%>"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>
@@ -253,13 +253,16 @@
 						<p>There is no news yet.</p>
 						<%
 							} else {
+								int p = 0;
 								for (Activity act : friendsAct) {
+									if(p == 5) break;
 									out.println("<p>" + act.toString() + "</p>");
+									p++;
 								}
 							}
 						%>
 						<p class="readmore">
-							<a href=""><b>MORE</b></a>
+							<a href="friendsActivity.jsp?id=<%=userId%>"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>

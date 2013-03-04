@@ -42,9 +42,9 @@
 		} else {
 			for (Activity act : taken) {
 				if (guest.equals(userId)) {
-					out.println("<p>" + act.toString() + "</p>");
-				} else {
 					out.println("<p>" + act.toStringMe() + "</p>");
+				} else {
+					out.println("<p>" + act.toString() + "</p>");
 				}
 			}
 		}

@@ -15,13 +15,13 @@
 <%
 	String userId = request.getParameter("id");
 %>
-<title>Quizzes Created - <%=userId%></title>
+<title>Achievements - <%=userId%></title>
 </head>
 <body>
 	<h2>
 		<a href="home.jsp">Home</a>
 	</h2>
-	<h1>Quizzes Created</h1>
+	<h1>Achievements</h1>
 	<%
 		String guest = (String) session.getAttribute("guest");
 		if (guest == null || guest.equals("guest")) {
@@ -33,18 +33,18 @@
 			return;
 		}
 		Account user = new Account(userId);
-		List<Activity> created = user.getQuizCreated();
-		if (created.isEmpty()) {
+		List<Activity> achieves = user.getAchievements();
+		if (achieves.isEmpty()) {
 			String prefix = guest.equals(userId)? "You" : userId;
 	%>
-	<p><%=prefix%> did't create any quiz yet.</p>
+	<p><%=prefix%> don't have any achievements now.</p>
 	<%
 		} else {
-			for (Activity act : created) {
+			for (Activity act : achieves) {
 				if (guest.equals(userId)) {
 					out.println("<p>" + act.toStringMe() + "</p>");
 				} else {
-					out.println("<p>" + act.toString() + "</p>");
+					out.println("<p>" + act.content + "</p>");
 				}
 			}
 		}
