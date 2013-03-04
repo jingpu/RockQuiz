@@ -62,7 +62,7 @@ public class MAQuestion extends QuestionBase {
 	 */
 	public MAQuestion(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRatio, String isOrder) {
+			String tagString, float correctRatio, String isOrder) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
 				tagString, correctRatio);
 		this.isOrder = isOrder;

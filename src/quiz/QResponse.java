@@ -25,7 +25,7 @@ public class QResponse extends QuestionBase {
 
 	public QResponse(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRatio) {
+			String tagString, float correctRatio) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
 				tagString, correctRatio);
 		// TODO Auto-generated constructor stub

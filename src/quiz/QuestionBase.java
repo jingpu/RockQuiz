@@ -26,7 +26,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected final String answer;
 	protected final String maxScore;
 	protected final String tagString;
-	protected final String correctRatio;
+	protected final float correctRatio;
 
 	protected static final String QR = "Question_Response";
 	protected static final String FIB = "Fill_In_Blank";
@@ -63,7 +63,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		String tmpAnswer = "error";
 		String tmpMaxScore = "error";
 		String tmpTagString = "error";
-		String tmpCorrectRatio = "error";
+		float tmpCorrectRatio = -1; // error flag
 
 		queryStmt = "SELECT * FROM " + questionTable
 				+ " WHERE question_id = \"" + questionId + "\"";
@@ -80,7 +80,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 			tmpAnswer = rs.getString(5);
 			tmpMaxScore = rs.getString(6);
 			tmpTagString = rs.getString(7);
-			tmpCorrectRatio = rs.getString(8);
+			tmpCorrectRatio = rs.getInt(8);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -108,7 +108,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	 */
 	public QuestionBase(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRatio) {
+			String tagString, float correctRatio) {
 		super();
 		this.questionType = questionType;
 		this.creatorId = creatorId;

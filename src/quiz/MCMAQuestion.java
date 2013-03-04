@@ -58,7 +58,7 @@ public class MCMAQuestion extends QuestionBase {
 	 */
 	public MCMAQuestion(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRatio, String choices) {
+			String tagString, float correctRatio, String choices) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
 				tagString, correctRatio);
 		this.choices = choices;
