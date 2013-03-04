@@ -9,20 +9,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Popular Quizzes</title>
+<title>Recent Quizzes</title>
 </head>
-
 <body>
 	<h2>
 		<a href="home.jsp">Home</a>
 	</h2>
-	<h1>Popular Quizzes</h1>
+	<h1>Recent Quizzes</h1>
 	<%
 		QuizManager man = new MyQuizManager();
-		List<String> popQuizzes = man.getPopularQuiz();
-		System.out.println(popQuizzes);
+		List<String> recentQuizzes = man.getRecentCreateQuiz();
+		System.out.println(recentQuizzes);
 		int i = 0;
-		for (String name : popQuizzes) {
+		for (String name : recentQuizzes) {
 			i++;
 			Quiz quiz = man.getQuiz(name);
 			String quizUrl = quiz.getSummaryPage();
