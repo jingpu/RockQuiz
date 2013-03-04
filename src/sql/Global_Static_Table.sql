@@ -150,5 +150,52 @@ CREATE TABLE Picture_Response_Pool (
 INSERT INTO Picture_Response_Pool VALUES
 	("0001","Patrick", "Same introduction of Picture-Response questions",
 	 "Who is in the following picture?",
-	 "George Washington", "5", "#his#Cul#", "2/3", "http://dev.mysql.com/doc/refman/5.1/en/comments.html")
-							   
+	 "George Washington", "5", "#his#Cul#", "2/3", "http://dev.mysql.com/doc/refman/5.1/en/comments.html");
+	 
+	 
+	 
+	 
+	 
+ DROP TABLE IF EXISTS Multi_Answer_Pool;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE Multi_Answer_Pool (   
+	question_id CHAR(32),
+	creator_id CHAR(32),
+    type_introduction BLOB,
+    question_description BLOB,
+    answer BLOB,
+    max_score CHAR(4),
+    tag_string CHAR(32),  
+    correct_ratio CHAR(32),
+    is_order CHAR(8)
+);
+
+INSERT INTO Multi_Answer_Pool VALUES
+	("0001", "Patrick", "Same introduction of Multi-Anwser questions",
+	 "Please name the top 3 populous contries in the world", "#China#India#xxx#", "9", 
+	 "#his#Cul#", "2/3", "true");
+	 
+	 
+
+
+	 
+DROP TABLE IF EXISTS Multi_Choice_Multi_Answer_Pool;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE Multi_Choice_Multi_Answer_Pool (  
+	question_id CHAR(32),
+	creator_id CHAR(32),
+    type_introduction BLOB,
+    question_description BLOB,
+    answer BLOB,
+    max_score CHAR(4),
+    tag_string CHAR(32),
+    correct_ratio CHAR(32),
+    choices BLOB
+);
+
+INSERT INTO Multi_Choice_Multi_Answer_Pool VALUES
+	("0001","Patrick", "Same introduction of Multi-Choice-Multi-Answer questions",
+	 "Which ones of the following are correct", "#choiceB#choiceC#",4 ,
+	  "#his#Cul#", "2/3","#choiceA#choiceB#choiceC#choiceD")
