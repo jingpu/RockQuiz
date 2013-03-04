@@ -34,7 +34,7 @@ public class RequestFriendServlet extends HttpServlet {
 		String toUser = request.getParameter("to");
 		HttpSession session = request.getSession();
 		String guest = (String) session.getAttribute("guest");
-		String toUsersPage = "userpage_layout.jsp?id=" + toUser;
+		String toUsersPage = "userpage.jsp?id=" + toUser;
 		if (toUser == null || guest.equals("guest")) {
 			response.sendRedirect(toUsersPage);
 			return;

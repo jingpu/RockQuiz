@@ -30,37 +30,50 @@
 	String msgCode = request.getParameter("msg");
 	Account user = new Account(userId);
 	Message msg = user.readMessage(box, msgCode);
-	String to = msg.to == userId? msg.from : msg.to;
-	SimpleDateFormat sdf = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss.S");
+	String to = msg.to == userId ? msg.from : msg.to;
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 	Date time = sdf.parse(msg.getTime());
 	String timeDscr = TimeTrsf.dscr(time, new Date());
+	String fromDisplay = msg.to == userId ? ("<a href=\"userpage.jsp?id="
+			+ msg.from + "\" target=\"_top\">" + msg.from + "</a>")
+			: msg.from;
+	String toDisplay = msg.to == userId ? msg.to
+			: ("<a href=\"userpage.jsp?id=" + msg.to
+					+ "\" target=\"_top\">" + msg.to + "</a>");
 %>
 <body>
 	<div id="wrapper">
 		<div id="inner">
 			<div id="header">
-				<h1>Message</h1>	
+				<h1>Message</h1>
 			</div>
 		</div>
 
-	<table border="2" width="300" rules="rows">
-		<tr><th><%=msg.title%>	<%=timeDscr %></th></tr>
-		<tr><td><%=msg.from%></td></tr>
-		<tr><td><%=msg.to%></td></tr>
-		<tr><td><%=msg.content%></td></tr>
-	</table>
+		<table border="2" width="300" rules="rows">
+			<tr>
+				<th><%=msg.title%> | <%=timeDscr%></th>
+			</tr>
+			<tr>
+				<td>From: <%=fromDisplay%></td>
+			</tr>
+			<tr>
+				<td>To:<%=toDisplay%></td>
+			</tr>
+			<tr>
+				<td><%=msg.content%></td>
+			</tr>
+		</table>
 	</div>
-	
+
 	<form action="ReplyMessage" method="post">
-	<input name="to" type="hidden" value="<%=to%>">
-	<input type="submit" value="Reply">
+		<input name="to" type="hidden" value="<%=to%>"> <input
+			type="submit" value="Reply">
 	</form>
-	
+
 	<form action="DeleteMessage" method="post">
-	<input name="code" type="hidden" value="<%=msgCode%>">
-	<input name="box" type="hidden" value="<%=box%>">
-	<input type="submit" value="Delete">
+		<input name="code" type="hidden" value="<%=msgCode%>"> <input
+			name="box" type="hidden" value="<%=box%>"> <input
+			type="submit" value="Delete">
 	</form>
 </body>
 </html>

@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import database.MyDB;
 
 /**
@@ -14,11 +17,12 @@ import database.MyDB;
  * 
  */
 public class FillInBlank extends QuestionBase {
-	private static final String typeIntro = "In this type of question, given a question with a blank, user need to fill in the blank";
+	private static final String typeIntro = "In this type of question, given a question with a blank, user need to fill in the blank"
+			+ " Correct answer will get full score, while the wrong answer will get zero";
 
 	public FillInBlank(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRatio) {
+			String tagString, float correctRatio) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
 				tagString, correctRatio);
 
@@ -28,7 +32,6 @@ public class FillInBlank extends QuestionBase {
 	public FillInBlank(String questionType, String questionId) {
 		// TODO Auto-generated constructor stub
 		super(questionType, questionId);
-
 	}
 
 	@Override
@@ -48,19 +51,6 @@ public class FillInBlank extends QuestionBase {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see quiz.QuestionBase#getScore(java.lang.String)
-	 */
-	@Override
-	public String getScore(String userInput) {
-		// TODO Auto-generated method stub
-		if (userInput.equals(answer))
-			return maxScore;
-		return "0";
 	}
 
 	private String parsePrefix() {
@@ -101,6 +91,7 @@ public class FillInBlank extends QuestionBase {
 		html.append(super.printReadHtml());
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 
@@ -118,6 +109,29 @@ public class FillInBlank extends QuestionBase {
 
 		return html.toString();
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#getScore(java.lang.String)
+	 */
+	@Override
+	public String getScore(String userInput) {
+		// TODO Auto-generated method stub
+		if (userInput.equals(answer))
+			return maxScore;
+		return "0";
+	}
+
+	/**
+	 * @return
+	 */
+	public static String getAnswerString(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String answer = (String) session.getAttribute("answer");
+		return answer;
 	}
 
 }

@@ -55,7 +55,7 @@
 					String timeDscr = TimeTrsf.dscr(time, new Date());
 
 					out.println("<tr><td><a href=\"userpage.jsp?id=" + msg.to
-							+ "\">" + msg.to
+							+ "\" target=\"_top\">" + msg.to
 							+ "</a></td><td><a href=\"Mail.jsp?id=" + userId
 							+ "&box=sent&msg=" + msgCode + "\">" + msg.title
 							+ "</a></td><td>" + timeDscr + "</td></tr>");

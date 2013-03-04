@@ -10,6 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import database.MyDB;
 
 /**
@@ -17,12 +20,15 @@ import database.MyDB;
  * 
  */
 public class MultiChoice extends QuestionBase {
+	// TODO: merge all choices into one field -> enable user add more than 4
+	// choices
 	private List<String> choices;
-	private static final String typeIntro = "MultiChoice question: user should choose one correct answer from choice options";
+	private static final String typeIntro = "MultiChoice question: user should choose one correct answer from choice options"
+			+ "Correct answer will get full score, while the wrong answer will get zero";
 
 	public MultiChoice(String questionType, String creatorId,
 			String questionDescription, String answer, String maxScore,
-			String tagString, String correctRation, List<String> choices) {
+			String tagString, float correctRation, List<String> choices) {
 		super(questionType, creatorId, questionDescription, answer, maxScore,
 				tagString, correctRation);
 		// TODO Auto-generated constructor stub
@@ -103,6 +109,7 @@ public class MultiChoice extends QuestionBase {
 		html.append(super.printReadHtml());
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
@@ -128,12 +135,6 @@ public class MultiChoice extends QuestionBase {
 
 	}
 
-	@Override
-	public List<String> getRadioIds() {
-		// TODO Auto-generated method stub
-		return choices;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -145,6 +146,34 @@ public class MultiChoice extends QuestionBase {
 		if (userInput.equals(answer))
 			return maxScore;
 		return "0";
+	}
+
+	/**
+	 * Check answer is to check the answer body rather than just an option
+	 * index(i.e. A,B,C) TODO: This will enable future shuffle of choices ABCD
+	 * 
+	 * @return
+	 */
+	public static String getAnswerString(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String answer = (String) session.getAttribute("answer");
+		return answer;
+	}
+
+	// TODO: change the multi-choice table structure, and merge different choice
+	// options into one field
+	public static String getChoicesString(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int numChoices = Integer.parseInt((String) session
+				.getAttribute("numChoices"));
+		StringBuilder choices = new StringBuilder();
+		for (int i = 0; i < numChoices; i++) {
+			choices.append("#");
+			choices.append((String) session.getAttribute("choice" + i));
+			choices.append("#");
+		}
+		return choices.toString();
 	}
 
 }

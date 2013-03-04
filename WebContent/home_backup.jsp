@@ -32,11 +32,11 @@
 	String status = UserManager.getAccountInfo(userId, "status");
 
 	// generate achievements history
-	List<String> achieves = user.getAchievements();
+	//List<String> achieves = user.getAchievements();
 	// generate quizzes taken history
-	List<String[]> taken = user.getQuizTaken();
+	//List<String[]> taken = user.getQuizTaken();
 	// generate quizzes created history
-	List<String> created = user.getQuizCreated();
+	//List<String> created = user.getQuizCreated();
 	// mail messages
 	List<String> inbox = user.getMessageInbox();
 	List<String> sent = user.getMessageSent();
@@ -94,11 +94,11 @@
 	<%--achievements list --%>
 	<h3>Achievements</h3>
 	<ul>
-		<%
+		<%--
 			for (String str : achieves) {
 				out.println("<li>" + str + "</li>");
 			}
-		%>
+		--%>
 	</ul>
 
 	<%--my friends activity --%>
@@ -139,25 +139,25 @@
 	<%--my quizzes taken history--%>
 	<h3>I Took</h3>
 	<ul>
-		<%
+		<%--
 			for (int i = 0; i < 5; i++) {
 				if (i == taken.size())
 					break;
 				out.println("<li>" + taken.get(i)[1] + "</li>");
 			}
-		%>
+		--%>
 	</ul>
 
 	<%--my quizzes created history--%>
 	<h3>I Create</h3>
 	<ul>
-		<%
+		<%--
 			for (int i = 0; i < 5; i++) {
 				if (i == taken.size())
 					break;
 				out.println("<li>" + created.get(i) + "</li>");
 			}
-		%>
+		--%>
 	</ul>
 
 	<%--log out--%>
