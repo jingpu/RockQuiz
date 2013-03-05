@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import user.Account;
+
 /**
  * Servlet implementation class QuizDisplayServlet
  */
@@ -134,6 +136,9 @@ public class QuestionProcessServlet extends HttpServlet {
 			long timeElapsed = new Date().getTime() - startTime;
 			String quizId = quiz.saveQuizEvent(userName, timeElapsed,
 					currentScore);
+			// save quiz event to user database
+			Account user = new Account(userName);
+			user.addQuizTaken(quizName, quizId);
 
 			// print to result page
 			out.println("<!DOCTYPE html>");
