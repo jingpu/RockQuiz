@@ -6,12 +6,6 @@ package quiz;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import quiz.TimedQuestion.TimedFillInBlank;
-import quiz.TimedQuestion.TimedMAQuestion;
-import quiz.TimedQuestion.TimedMCMAQuestion;
-import quiz.TimedQuestion.TimedMultiChoice;
-import quiz.TimedQuestion.TimedPResponse;
-import quiz.TimedQuestion.TimedQResponse;
 //why here need import???
 
 /**
@@ -66,45 +60,50 @@ public class QuestionFactory {
 		HttpSession session = request.getSession();
 		String creatorId = (String) session.getAttribute("guest");
 		if (questionType.equals(QuestionBase.QR)) {
+			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
-			return new QResponse(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, -1);
+			return new QResponse(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1);
 
 		} else if (questionType.equals(QuestionBase.FIB)) {
+			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
-			return new FillInBlank(questionType, creatorId,
+			return new FillInBlank(questionType, creatorId, timeLimit,
 					questionDescription, answer, maxScore, tagString, -1);
 
 		} else if (questionType.equals(QuestionBase.MC)) {
+			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String choices = getCreatedChoices(questionType, request);
-			return new MultiChoice(questionType, creatorId,
+			return new MultiChoice(questionType, creatorId, timeLimit,
 					questionDescription, answer, maxScore, tagString, -1,
 					choices);
 
 		} else if (questionType.equals(QuestionBase.PR)) {
+			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String url = request.getParameter("url");
-			return new PResponse(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, -1, url);
+			return new PResponse(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1, url);
 
 		} else if (questionType.equals(QuestionBase.MA)) {
+			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
@@ -113,17 +112,19 @@ public class QuestionFactory {
 			String isOrder = request.getParameter("isOrder");
 			if (isOrder == null)
 				isOrder = "false";
-			return new MAQuestion(questionType, creatorId, questionDescription,
-					answer, maxScore, tagString, -1, isOrder);
+			return new MAQuestion(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1,
+					isOrder);
 
 		} else if (questionType.equals(QuestionBase.MCMA)) {
+			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
 			String maxScore = request.getParameter("maxScore");
 			String tagString = request.getParameter("tag");
 			String choices = getCreatedChoices(questionType, request);
-			return new MCMAQuestion(questionType, creatorId,
+			return new MCMAQuestion(questionType, creatorId, timeLimit,
 					questionDescription, answer, maxScore, tagString, -1,
 					choices);
 		}
@@ -145,24 +146,6 @@ public class QuestionFactory {
 			return MAQuestion.printCreateHtml();
 		else if (questionType.equals(QuestionBase.MCMA))
 			return MCMAQuestion.printCreateHtml();
-		else
-			return "error";
-	}
-
-	// overload printCreatHtml
-	public static String printCreateHtml(String questionType, String timedType) {
-		if (questionType.equals(TimedQuestion.TQR))
-			return TimedQResponse.printCreateHtml();
-		else if (questionType.equals(TimedQuestion.TFIB))
-			return TimedFillInBlank.printCreateHtml();
-		else if (questionType.equals(TimedQuestion.TMC))
-			return TimedMultiChoice.printCreateHtml();
-		else if (questionType.equals(TimedQuestion.TPR))
-			return TimedPResponse.printCreateHtml();
-		else if (questionType.equals(TimedQuestion.TMA))
-			return TimedMAQuestion.printCreateHtml();
-		else if (questionType.equals(TimedQuestion.TMCMA))
-			return TimedMCMAQuestion.printCreateHtml();
 		else
 			return "error";
 	}
