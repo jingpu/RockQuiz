@@ -3,6 +3,8 @@
  */
 package quiz;
 
+import java.sql.Timestamp;
+
 /**
  * @author Jing Pu
  * 
@@ -27,5 +29,9 @@ public interface Quiz {
 	public String getQuizName();
 
 	public String getCreatorId();
+
+	public int getTakenTimes();
+
+	public Timestamp getCreateTime();
 
 }

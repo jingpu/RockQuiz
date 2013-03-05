@@ -27,47 +27,6 @@ public final class MyQuizManager implements QuizManager {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see quiz.QuizManager#getPopularQuiz()
-	 */
-	@Override
-	public List<String> getPopularQuiz() {
-		int numEntries = 5;
-		// below implements a naive sorting way
-		// first get all quizzes
-		List<MyQuiz> quizzes = getAllQuizzes();
-		// sort quizzes by takenTimes
-		Collections.sort(quizzes, new Comparator<MyQuiz>() {
-			@Override
-			public int compare(MyQuiz o1, MyQuiz o2) {
-				return o2.getTakenTimes() - o1.getTakenTimes();
-			}
-		});
-		// get the first numEntries of quiz name after sorting
-		List<String> names = new ArrayList<String>(numEntries);
-		for (int i = 0; i < numEntries && i < quizzes.size(); i++)
-			names.add(quizzes.get(i).getQuizName());
-		return names;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see quiz.QuizManager#getRecentCreateQuiz()
-	 */
-	@Override
-	public List<String> getRecentCreateQuiz() {
-		int numEntries = 5;
-		List<MyQuiz> quizzes = getRecentCreateQuiz(numEntries);
-		List<String> names = new ArrayList<String>(quizzes.size());
-		for (MyQuiz q : quizzes) {
-			names.add(q.getQuizName());
-		}
-		return names;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see quiz.QuizManager#getQuiz(java.lang.String)
 	 */
 	@Override
@@ -87,8 +46,8 @@ public final class MyQuizManager implements QuizManager {
 		return null;
 	}
 
-	private List<MyQuiz> getAllQuizzes() {
-		List<MyQuiz> list = new ArrayList<MyQuiz>();
+	private List<Quiz> getAllQuizzes() {
+		List<Quiz> list = new ArrayList<Quiz>();
 		Connection con = MyDB.getConnection();
 		try {
 			Statement stmt = con.createStatement();
@@ -105,15 +64,38 @@ public final class MyQuizManager implements QuizManager {
 		return list;
 	}
 
-	private List<MyQuiz> getRecentCreateQuiz(int num) {
-		List<MyQuiz> list = new ArrayList<MyQuiz>();
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#getPopularQuiz(int)
+	 */
+	@Override
+	public List<Quiz> getPopularQuiz(int numEntries) {
+		// below implements a naive sorting way
+		// first get all quizzes
+		List<Quiz> quizzes = getAllQuizzes();
+		// sort quizzes by takenTimes
+		sortQuizList(quizzes, QuizManager.SORT_BY_TAKEN_TIMES);
+		// return sublist of the first numEntries elements
+		return quizzes.subList(0, numEntries);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#getRecentCreateQuiz(int)
+	 */
+	@Override
+	public List<Quiz> getRecentCreateQuiz(int numEntries) {
+		List<Quiz> list = new ArrayList<Quiz>();
 		Connection con = MyDB.getConnection();
 		try {
 			Statement stmt = con.createStatement();
 			// query Global_Quiz_Info_Table
 			ResultSet rs = stmt
 					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
-							+ " ORDER BY createTime DESC " + "LIMIT 0," + num);
+							+ " ORDER BY createTime DESC " + "LIMIT 0,"
+							+ numEntries);
 			while (rs.next()) {
 				String quizName = rs.getString("quizName");
 				list.add(new MyQuiz(quizName));
@@ -122,6 +104,136 @@ public final class MyQuizManager implements QuizManager {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#searchForQuizCreator(java.lang.String, int)
+	 */
+	@Override
+	public List<Quiz> searchForQuizCreator(String pattern, int numEntries,
+			int sortMethod) {
+		List<Quiz> list = new ArrayList<Quiz>();
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query Global_Quiz_Info_Table
+			ResultSet rs = stmt
+					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
+							+ " WHERE creatorId LIKE \"%" + pattern + "%\"");
+			while (rs.next()) {
+				String quizName = rs.getString("quizName");
+				list.add(new MyQuiz(quizName));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// sort list
+		sortQuizList(list, sortMethod);
+		// return sublist of the first numEntries elements
+		return list.subList(0, numEntries);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#searchForQuizName(java.lang.String, int)
+	 */
+	@Override
+	public List<Quiz> searchForQuizName(String pattern, int numEntries,
+			int sortMethod) {
+		List<Quiz> list = new ArrayList<Quiz>();
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query Global_Quiz_Info_Table
+			ResultSet rs = stmt
+					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
+							+ " WHERE quizName LIKE \"%" + pattern + "%\"");
+			while (rs.next()) {
+				String quizName = rs.getString("quizName");
+				list.add(new MyQuiz(quizName));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// sort list
+		sortQuizList(list, sortMethod);
+		// return sublist of the first numEntries elements
+		return list.subList(0, numEntries);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#searchForQuizDescription(java.lang.String, int)
+	 */
+	@Override
+	public List<Quiz> searchForQuizDescription(String pattern, int numEntries,
+			int sortMethod) {
+		List<Quiz> list = new ArrayList<Quiz>();
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query Global_Quiz_Info_Table
+			ResultSet rs = stmt
+					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
+							+ " WHERE quizDescription LIKE \"%" + pattern
+							+ "%\"");
+			while (rs.next()) {
+				String quizName = rs.getString("quizName");
+				list.add(new MyQuiz(quizName));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// sort list
+		sortQuizList(list, sortMethod);
+		// return sublist of the first numEntries elements
+		return list.subList(0, numEntries);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#searchForQuiz(java.lang.String, int)
+	 */
+	@Override
+	public List<Quiz> searchForQuiz(String pattern, int numEntries,
+			int sortMethod) {
+		List<Quiz> list = searchForQuizCreator(pattern, numEntries, sortMethod);
+		List<Quiz> list1 = searchForQuizDescription(pattern, numEntries,
+				sortMethod);
+		List<Quiz> list2 = searchForQuizName(pattern, numEntries, sortMethod);
+		// merge list1 and list2 to list
+		list.addAll(list1);
+		list.addAll(list2);
+		// sort list
+		sortQuizList(list, sortMethod);
+		// return sublist of the first numEntries elements
+		return list.subList(0, numEntries);
+	}
+
+	private void sortQuizList(List<Quiz> list, int sortMethod) {
+		switch (sortMethod) {
+		case QuizManager.SORT_BY_CREATION_TIME:
+			Collections.sort(list, new Comparator<Quiz>() {
+				@Override
+				public int compare(Quiz o1, Quiz o2) {
+					return o2.getCreateTime().compareTo(o1.getCreateTime());
+				}
+			});
+			break;
+		case QuizManager.SORT_BY_TAKEN_TIMES:
+			Collections.sort(list, new Comparator<Quiz>() {
+				@Override
+				public int compare(Quiz o1, Quiz o2) {
+					return o2.getTakenTimes() - o1.getTakenTimes();
+				}
+			});
+			break;
+		}
 	}
 
 }
