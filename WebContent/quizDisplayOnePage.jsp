@@ -14,6 +14,8 @@
 	}
 	//get the question list
 	List<QuestionBase> questionList = quiz.getQuestionList();
+	if(quiz.isRandom())
+		Collections.shuffle(questionList);
 	// set start time
 	session.setAttribute("quizStartTime", new Date().getTime());
 %>
