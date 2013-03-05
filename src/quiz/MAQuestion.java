@@ -225,6 +225,7 @@ public class MAQuestion extends QuestionBase {
 		html.append(questionDescription + "</p>");
 
 		// TODO: use javascript to dynamically generate multi-answer field
+		// TODO: use javascript to dinamically check repeated same answers
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer0_"
 				+ getQuestionId() + "\" ></input></p>");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer1_"
