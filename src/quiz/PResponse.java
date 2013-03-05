@@ -22,11 +22,11 @@ public class PResponse extends QuestionBase {
 			+ "user need to answer the related question in the answer area. Correct answer will get full score, "
 			+ "while the wrong answer will get zero";
 
-	public PResponse(String questionType, String creatorId,
+	public PResponse(String questionType, String creatorId, int timeLimit,
 			String questionDescription, String answer, String maxScore,
 			String tagString, float correctRation, String url) {
-		super(questionType, creatorId, questionDescription, answer, maxScore,
-				tagString, correctRation);
+		super(questionType, creatorId, timeLimit, questionDescription, answer,
+				maxScore, tagString, correctRation);
 		// TODO Auto-generated constructor stub
 		this.url = url;
 	}
@@ -46,23 +46,15 @@ public class PResponse extends QuestionBase {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#getQuerySaveString()
+	 */
 	@Override
-	public void saveToDatabase() {
-		// TODO Auto-generated method stub
-		queryStmt = "INSERT INTO " + PR_Table + " VALUES (\"" + questionId
-				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
-				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", " + correctRatio + ", \"" + url
-				+ "\")";
-
-		try {
-			Connection con = MyDB.getConnection();
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(queryStmt);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getQuerySaveString() {
+		return "INSERT INTO " + PR_Table + " VALUES (\""
+				+ super.getBaseQuerySaveString() + ", \"" + url + "\")";
 	}
 
 	public static String printCreateHtml() {
@@ -77,6 +69,7 @@ public class PResponse extends QuestionBase {
 		html.append("<p>Picture URL: <input type=\"text\" name=\"url\" ></input></p>\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
@@ -105,6 +98,8 @@ public class PResponse extends QuestionBase {
 				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
 				+ "\"></input></p>");

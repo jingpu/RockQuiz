@@ -61,11 +61,11 @@ public class MAQuestion extends QuestionBase {
 	 * @param tagString
 	 * @param correctRatio
 	 */
-	public MAQuestion(String questionType, String creatorId,
+	public MAQuestion(String questionType, String creatorId, int timeLimit,
 			String questionDescription, String answer, String maxScore,
 			String tagString, float correctRatio, String isOrder) {
-		super(questionType, creatorId, questionDescription, answer, maxScore,
-				tagString, correctRatio);
+		super(questionType, creatorId, timeLimit, questionDescription, answer,
+				maxScore, tagString, correctRatio);
 		this.isOrder = isOrder;
 		// TODO Auto-generated constructor stub
 	}
@@ -73,23 +73,12 @@ public class MAQuestion extends QuestionBase {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see quiz.QuestionBase#saveToDatabase()
+	 * @see quiz.QuestionBase#getQuerySaveString()
 	 */
 	@Override
-	public void saveToDatabase() {
-		queryStmt = "INSERT INTO " + MA_Table + " VALUES (\"" + questionId
-				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
-				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", " + correctRatio + ", \""
-				+ isOrder + "\")";
-		try {
-			Connection con = MyDB.getConnection();
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(queryStmt);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getQuerySaveString() {
+		return "INSERT INTO " + MA_Table + " VALUES (\""
+				+ super.getBaseQuerySaveString() + ", \"" + isOrder + "\")";
 	}
 
 	public static String printCreateHtml() {
@@ -105,6 +94,7 @@ public class MAQuestion extends QuestionBase {
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer1\" ></input></p>");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer2\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// checkbox: tick means true, otherwise null means false
 		html.append("<p><input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input></p>");
@@ -141,6 +131,8 @@ public class MAQuestion extends QuestionBase {
 
 		// Hidden information - questionType and questionId information
 		// TODO: dynamically change numAnswers
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
 				+ getQuestionId() + "\" value=\"3\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"

@@ -24,6 +24,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected final String questionType;
 	protected final String questionId;
 	protected final String creatorId;
+	protected final int timeLimit;
 	protected final String questionDescription;
 	protected final String answer;
 	protected final String maxScore;
@@ -61,14 +62,15 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		// if not successfully get the attribute for the question, "error" is
 		// presented in that field
 		String tmpCreatorId = "error";
+		int tmpTimeLimited = -1;
 		String tmpQuestionDescription = "error";
 		String tmpAnswer = "error";
 		String tmpMaxScore = "error";
 		String tmpTagString = "error";
 		float tmpCorrectRatio = -1; // error flag
 
-		queryStmt = "SELECT * FROM " + questionTable
-				+ " WHERE question_id = '" + questionId + "'";
+		queryStmt = "SELECT * FROM " + questionTable + " WHERE question_id = '"
+				+ questionId + "'";
 
 		try {
 			Connection con = MyDB.getConnection();
@@ -78,6 +80,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 			rs.next();
 
 			tmpCreatorId = rs.getString(2);
+			tmpTimeLimited = rs.getInt(3);
 			tmpQuestionDescription = rs.getString(4);
 			tmpAnswer = rs.getString(5);
 			tmpMaxScore = rs.getString(6);
@@ -90,6 +93,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		}
 
 		creatorId = tmpCreatorId;
+		timeLimit = tmpTimeLimited;
 		questionDescription = tmpQuestionDescription;
 		answer = tmpAnswer;
 		maxScore = tmpMaxScore;
@@ -102,18 +106,19 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	 * 
 	 * @param questionType
 	 * @param creatorId
-	 * @param questionDescription
+	 * @param timeLimited
 	 * @param answer
 	 * @param maxScore
 	 * @param tagString
 	 * @param correctRatio
 	 */
-	public QuestionBase(String questionType, String creatorId,
+	public QuestionBase(String questionType, String creatorId, int timeLimit,
 			String questionDescription, String answer, String maxScore,
 			String tagString, float correctRatio) {
 		super();
 		this.questionType = questionType;
 		this.creatorId = creatorId;
+		this.timeLimit = timeLimit;
 		this.questionDescription = questionDescription;
 		this.maxScore = maxScore;
 		this.tagString = tagString;
@@ -173,10 +178,27 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return questionTable;
 	}
 
-	// when clicking submit
-	public abstract void saveToDatabase();
+	public abstract String getQuerySaveString();
 
-	// protected abstract String getAnswerString(HttpServletRequest request);
+	// generate the common part of the query string
+	protected String getBaseQuerySaveString() {
+		return questionId + "\", \"" + creatorId + "\", " + timeLimit + ", \""
+				+ questionDescription + "\", \"" + answer + "\", " + maxScore
+				+ ", \"" + tagString + "\", " + correctRatio;
+	}
+
+	// when clicking submit
+	public void saveToDatabase() {
+		String queryString = getQuerySaveString();
+		try {
+			Connection con = MyDB.getConnection();
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate(queryString);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public String printReadHtml() {
 		StringBuilder html = new StringBuilder();

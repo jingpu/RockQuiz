@@ -23,11 +23,11 @@ public class MultiChoice extends QuestionBase {
 	private static final String typeIntro = "MultiChoice question: user should choose one correct answer from choice options"
 			+ "Correct answer will get full score, while the wrong answer will get zero";
 
-	public MultiChoice(String questionType, String creatorId,
+	public MultiChoice(String questionType, String creatorId, int timeLimit,
 			String questionDescription, String answer, String maxScore,
 			String tagString, float correctRation, String choices) {
-		super(questionType, creatorId, questionDescription, answer, maxScore,
-				tagString, correctRation);
+		super(questionType, creatorId, timeLimit, questionDescription, answer,
+				maxScore, tagString, correctRation);
 		// TODO Auto-generated constructor stub
 		this.choices = choices;
 	}
@@ -49,23 +49,15 @@ public class MultiChoice extends QuestionBase {
 		choices = tmpChoices;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#getQuerySaveString()
+	 */
 	@Override
-	public void saveToDatabase() {
-		// TODO Auto-generated method stub
-		queryStmt = "INSERT INTO " + MC_Table + " VALUES (\"" + questionId
-				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
-				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", " + correctRatio + ", \""
-				+ choices + "\")";
-
-		try {
-			Connection con = MyDB.getConnection();
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(queryStmt);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getQuerySaveString() {
+		return "INSERT INTO " + MC_Table + " VALUES (\""
+				+ super.getBaseQuerySaveString() + ", \"" + choices + "\")";
 	}
 
 	public static String printCreateHtml() {
@@ -84,6 +76,7 @@ public class MultiChoice extends QuestionBase {
 
 		// Answer and Full Score
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
@@ -119,6 +112,8 @@ public class MultiChoice extends QuestionBase {
 		}
 
 		// Hidden information - questionType and questionId information
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"

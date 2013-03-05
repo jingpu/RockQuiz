@@ -3,13 +3,7 @@
  */
 package quiz;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.servlet.http.HttpServletRequest;
-
-import database.MyDB;
 
 /**
  * @author yang
@@ -22,12 +16,11 @@ public class QResponse extends QuestionBase {
 			+ "user need to answer the question in the answer area. Correct answer will get full score, "
 			+ "while the wrong answer will get zero";
 
-	public QResponse(String questionType, String creatorId,
+	public QResponse(String questionType, String creatorId, int timeLimit,
 			String questionDescription, String answer, String maxScore,
 			String tagString, float correctRatio) {
-		super(questionType, creatorId, questionDescription, answer, maxScore,
-				tagString, correctRatio);
-		// TODO Auto-generated constructor stub
+		super(questionType, creatorId, timeLimit, questionDescription, answer,
+				maxScore, tagString, correctRatio);
 	}
 
 	/**
@@ -39,20 +32,15 @@ public class QResponse extends QuestionBase {
 		super(questionType, questionId);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#getQuerySaveString()
+	 */
 	@Override
-	public void saveToDatabase() {
-		queryStmt = "INSERT INTO " + QR_Table + " VALUES (\"" + questionId
-				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
-				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", " + correctRatio + ")";
-		try {
-			Connection con = MyDB.getConnection();
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(queryStmt);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getQuerySaveString() {
+		return "INSERT INTO " + QR_Table + " VALUES (\""
+				+ super.getBaseQuerySaveString() + ")";
 	}
 
 	public static String printCreateHtml() {
@@ -64,6 +52,7 @@ public class QResponse extends QuestionBase {
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// Hidden information - questionType and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
@@ -87,6 +76,9 @@ public class QResponse extends QuestionBase {
 				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
+		// TODO: timeLimit pass to javascript
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
 				+ "\" ></input></p>");

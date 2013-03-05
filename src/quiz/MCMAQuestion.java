@@ -54,34 +54,23 @@ public class MCMAQuestion extends QuestionBase {
 	 * @param tagString
 	 * @param correctRatio
 	 */
-	public MCMAQuestion(String questionType, String creatorId,
+	public MCMAQuestion(String questionType, String creatorId, int timeLimit,
 			String questionDescription, String answer, String maxScore,
 			String tagString, float correctRatio, String choices) {
-		super(questionType, creatorId, questionDescription, answer, maxScore,
-				tagString, correctRatio);
+		super(questionType, creatorId, timeLimit, questionDescription, answer,
+				maxScore, tagString, correctRatio);
 		this.choices = choices;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see quiz.QuestionBase#saveToDatabase()
+	 * @see quiz.QuestionBase#getQuerySaveString()
 	 */
 	@Override
-	public void saveToDatabase() {
-		queryStmt = "INSERT INTO " + MCMA_Table + " VALUES (\"" + questionId
-				+ "\", \"" + creatorId + "\", \"" + typeIntro + "\", \""
-				+ questionDescription + "\", \"" + answer + "\", \"" + maxScore
-				+ "\", \"" + tagString + "\", " + correctRatio + ", \""
-				+ choices + "\")";
-		try {
-			Connection con = MyDB.getConnection();
-			Statement stmt = con.createStatement();
-			stmt.executeUpdate(queryStmt);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getQuerySaveString() {
+		return "INSERT INTO " + MCMA_Table + " VALUES (\""
+				+ super.getBaseQuerySaveString() + ", \"" + choices + "\")";
 	}
 
 	/**
@@ -176,6 +165,7 @@ public class MCMAQuestion extends QuestionBase {
 
 		// Full Score
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"numChoices\" value=\"4\"></input></p>\n");
@@ -211,6 +201,8 @@ public class MCMAQuestion extends QuestionBase {
 		}
 
 		// Hidden information - questionType and questionId information
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
