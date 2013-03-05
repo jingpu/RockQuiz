@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import user.Account;
+
 /**
  * Servlet implementation class QuizResultSinglePageServlet
  */
@@ -74,6 +76,9 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 		long startTime = (Long) session.getAttribute("quizStartTime");
 		long timeElapsed = new Date().getTime() - startTime;
 		String quizId = quiz.saveQuizEvent(userName, timeElapsed, currentScore);
+		// save quiz event to user database
+		Account user = new Account(userName);
+		user.addQuizTaken(quizName, quizId);
 
 		/*
 		 * write html

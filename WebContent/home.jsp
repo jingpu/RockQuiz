@@ -34,6 +34,7 @@
 	List<Activity> achieves = user.getAchievements();
 	// generate quizzes taken history
 	List<Activity> taken = user.getQuizTaken();
+	System.out.println(taken.toString());
 	// generate quizzes created history
 	List<Activity> created = user.getQuizCreated();
 	// mail messages
@@ -163,6 +164,7 @@
 							System.out.println(popQuizzes);
 							int i = 0;
 							for (String name : popQuizzes) {
+								if(i == 3) break;
 								i++;
 								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
@@ -190,6 +192,7 @@
 							int j = 0;
 							for (String name : recentQuizzes) {
 								j++;
+								if(j == 3) break;
 								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
 								String creator = quiz.getCreatorId();
@@ -219,7 +222,7 @@
 						<p>You did't take any quiz yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; k++) {
+								for (int k = 0; k < 3; k++) {
 									if (k == taken.size())
 										break;
 									out.println("<p>" + taken.get(k).toStringMe() + "</p>");
@@ -233,14 +236,14 @@
 						<div class="clear"></div>
 					</div>
 					<div class="rightbox">
-						<h3>Quizzes I Create</h3>
+						<h3>Quizzes I Created</h3>
 						<%
 							if (created.isEmpty()) {
 						%>
 						<p>You did't create any quiz yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; k++) {
+								for (int k = 0; k < 3; k++) {
 									if (k == created.size())
 										break;
 									out.println("<p>" + created.get(k).toStringMe() + "</p>");

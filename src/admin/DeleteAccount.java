@@ -40,7 +40,7 @@ public class DeleteAccount extends HttpServlet {
 		String userId = request.getParameter("id");
 		String user = (String)request.getSession().getAttribute("guest");
 		Administrator admin = new Administrator(user);
-		if(admin.getInfo("status") != "s"){
+		if(!admin.getInfo("status").equals("s")){
 			response.sendRedirect("home.jsp");
 			return;
 		}
