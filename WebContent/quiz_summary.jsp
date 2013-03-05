@@ -34,7 +34,8 @@
 	<!--  The time created -->
 	<h3>Date Created</h3>
 	<p>
-		<%=quiz.getCreateTime()%></p>
+		<a href="userpage.jsp?id=<%=quiz.getCreateTime()%>"><%=quiz.getCreateTime()%></a>
+	</p>
 
 	<!-- The creator of the quiz(hot linked to the creator’s user page -->
 	<h3>Quiz Creator</h3>
@@ -66,7 +67,7 @@
 			for (QuizEvent e : highScores) {
 		%>
 		<tr>
-			<td><%=e.getUserName()%></td>
+			<td><a href="userpage.jsp?id=<%=e.getUserName()%>"><%=e.getUserName()%></a></td>
 			<td><%=e.getScore()%></td>
 			<td><%=e.getTimeElapsed() / 1000.0%>s</td>
 			<td><%=e.getSubmitTime()%></td>
@@ -90,7 +91,7 @@
 			for (QuizEvent e : highScoresLastday) {
 		%>
 		<tr>
-			<td><%=e.getUserName()%></td>
+			<td><a href="userpage.jsp?id=<%=e.getUserName()%>"><%=e.getUserName()%></a></td>
 			<td><%=e.getScore()%></td>
 			<td><%=e.getTimeElapsed() / 1000.0%>s</td>
 			<td><%=e.getSubmitTime()%></td>
@@ -115,7 +116,7 @@
 			for (QuizEvent e : recentEvents) {
 		%>
 		<tr>
-			<td><%=e.getUserName()%></td>
+			<td><a href="userpage.jsp?id=<%=e.getUserName()%>"><%=e.getUserName()%></a></td>
 			<td><%=e.getScore()%></td>
 			<td><%=e.getTimeElapsed() / 1000.0%>s</td>
 			<td><%=e.getSubmitTime()%></td>
@@ -149,10 +150,13 @@
 	%>
 	<form action="<%=quiz.getQuizEditPage()%>" method="POST">
 		<input type="hidden" name="quizName" value="<%=quiz.getQuizName()%>">
-		<input type="submit" value="EditQuiz">
+		<input type="submit" value="Edit Quiz">
 	</form>
 	<%
 		}
 	%>
+	<form action="home.jsp">
+		<input type="submit" value="Back to Homepage">
+	</form>
 </body>
 </html>
