@@ -73,6 +73,8 @@ public class QuestionProcessServlet extends HttpServlet {
 				dispatch.forward(request, response);
 				return;
 			}
+			if (quiz.isRandom())
+				quiz.shuffleQuestionListAndSave();
 			session.setAttribute("quizName", quizName);
 			// set questionIndex to be zero (first question)
 			questionIndex = 0;

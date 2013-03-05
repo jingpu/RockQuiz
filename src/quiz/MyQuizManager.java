@@ -73,11 +73,11 @@ public final class MyQuizManager implements QuizManager {
 	public List<Quiz> getPopularQuiz(int numEntries) {
 		// below implements a naive sorting way
 		// first get all quizzes
-		List<Quiz> quizzes = getAllQuizzes();
+		List<Quiz> list = getAllQuizzes();
 		// sort quizzes by takenTimes
-		sortQuizList(quizzes, QuizManager.SORT_BY_TAKEN_TIMES);
+		sortQuizList(list, QuizManager.SORT_BY_TAKEN_TIMES);
 		// return sublist of the first numEntries elements
-		return quizzes.subList(0, numEntries);
+		return list.subList(0, Math.min(list.size(), numEntries));
 	}
 
 	/*
@@ -132,7 +132,7 @@ public final class MyQuizManager implements QuizManager {
 		// sort list
 		sortQuizList(list, sortMethod);
 		// return sublist of the first numEntries elements
-		return list.subList(0, numEntries);
+		return list.subList(0, Math.min(list.size(), numEntries));
 	}
 
 	/*
@@ -161,7 +161,7 @@ public final class MyQuizManager implements QuizManager {
 		// sort list
 		sortQuizList(list, sortMethod);
 		// return sublist of the first numEntries elements
-		return list.subList(0, numEntries);
+		return list.subList(0, Math.min(list.size(), numEntries));
 	}
 
 	/*
@@ -191,7 +191,7 @@ public final class MyQuizManager implements QuizManager {
 		// sort list
 		sortQuizList(list, sortMethod);
 		// return sublist of the first numEntries elements
-		return list.subList(0, numEntries);
+		return list.subList(0, Math.min(list.size(), numEntries));
 	}
 
 	/*
@@ -212,7 +212,7 @@ public final class MyQuizManager implements QuizManager {
 		// sort list
 		sortQuizList(list, sortMethod);
 		// return sublist of the first numEntries elements
-		return list.subList(0, numEntries);
+		return list.subList(0, Math.min(list.size(), numEntries));
 	}
 
 	private void sortQuizList(List<Quiz> list, int sortMethod) {
