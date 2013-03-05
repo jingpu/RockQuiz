@@ -159,17 +159,16 @@
 
 						<%
 							QuizManager man = new MyQuizManager();
-							List<String> popQuizzes = man.getPopularQuiz();
+							List<Quiz> popQuizzes = man.getPopularQuiz(5);
 							System.out.println(popQuizzes);
 							int i = 0;
-							for (String name : popQuizzes) {
+							for (Quiz quiz : popQuizzes) {
 								i++;
-								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
 								String creator = quiz.getCreatorId();
 						%>
 						<p>
-							<a href=<%=quizUrl%>><%=i%>. <%=name%></a> (by:<a
+							<a href=<%=quizUrl%>><%=i%>. <%=quiz.getQuizName()%></a> (by:<a
 								href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)
 						</p>
 						<%
@@ -186,16 +185,15 @@
 						<h3>Recent Quizzes</h3>
 
 						<%
-							List<String> recentQuizzes = man.getRecentCreateQuiz();
+							List<Quiz> recentQuizzes = man.getRecentCreateQuiz(5);
 							int j = 0;
-							for (String name : recentQuizzes) {
+							for (Quiz quiz : recentQuizzes) {
 								j++;
-								Quiz quiz = man.getQuiz(name);
 								String quizUrl = quiz.getSummaryPage();
 								String creator = quiz.getCreatorId();
 						%>
 						<p>
-							<a href=<%=quizUrl%>><%=j%>. <%=name%></a>(by:<a
+							<a href=<%=quizUrl%>><%=j%>. <%=quiz.getQuizName()%></a>(by:<a
 								href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)
 						</p>
 						<%
