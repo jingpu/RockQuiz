@@ -116,6 +116,7 @@ public class MyQuiz implements Quiz {
 	private final boolean isOnePage;
 	private final boolean isImmCorrection; // jvm optimization
 	private final List<QuestionBase> questionList;
+	private final String category;
 
 	private static final String CREATECONTENTTABLEPARAMS = "questionNum CHAR(32), "
 			+ "questionType CHAR(32), " + "questionId CHAR(32)";
@@ -127,7 +128,8 @@ public class MyQuiz implements Quiz {
 	public MyQuiz(String quizName, String creatorId, String quizDescription,
 			List<String> tags, boolean canPractice, boolean isRandom,
 			boolean isOnePage, boolean isImmCorrection,
-			List<QuestionBase> questionList, Timestamp createTime) {
+			List<QuestionBase> questionList, Timestamp createTime,
+			String category) {
 		super();
 		this.quizName = quizName;
 		this.creatorId = creatorId;
@@ -141,9 +143,10 @@ public class MyQuiz implements Quiz {
 		this.createTime = createTime;
 		int totalScore = 0;
 		for (QuestionBase q : questionList) {
-			totalScore += Integer.parseInt(q.getMaxScore());
+			totalScore += q.getMaxScore();
 		}
 		this.totalScore = totalScore;
+		this.category = category;
 	}
 
 	public MyQuiz(String quizName) {
@@ -159,6 +162,7 @@ public class MyQuiz implements Quiz {
 		boolean isImmCorrection = false;
 		List<QuestionBase> questionList = new ArrayList<QuestionBase>();
 		Timestamp createTime = new Timestamp(0);
+		String category = "Not_Implemented_Category";
 
 		Connection con = MyDB.getConnection();
 		try {
@@ -188,7 +192,7 @@ public class MyQuiz implements Quiz {
 				QuestionBase question = QuestionFactory.getQuestion(
 						questionType, questionId);
 				if (question != null)
-					score += Integer.parseInt(question.getMaxScore());
+					score += question.getMaxScore();
 				questionList.add(question);
 			}
 			totalScore = score;
@@ -207,6 +211,7 @@ public class MyQuiz implements Quiz {
 		this.isImmCorrection = isImmCorrection;
 		this.questionList = questionList;
 		this.createTime = createTime;
+		this.category = category;
 	}
 
 	public void saveToDatabase() {
@@ -217,13 +222,17 @@ public class MyQuiz implements Quiz {
 			String quizRow = "\"" + quizName + "\",\"" + creatorId + "\",\""
 					+ quizDescription + "\",\"" + Helper.generateTags(tags)
 					+ "\"," + canPractice + ", " + isRandom + ", " + isOnePage
-					+ ", " + isImmCorrection + ", \"" + createTime + "\"";
+					+ ", " + isImmCorrection + ", \"" + createTime + "\",\""
+					+ category + "\"";
+			System.out.println(quizRow);
 			stmt.executeUpdate("INSERT INTO Global_Quiz_Info_Table VALUES("
 					+ quizRow + ")");
 
 			// create quizName_Content_Table
 			stmt.executeUpdate("DROP TABLE IF EXISTS " + quizName
 					+ "_Content_Table");
+			System.out.println("CREATE TABLE " + quizName + "_Content_Table ( "
+					+ CREATECONTENTTABLEPARAMS + ")");
 			stmt.executeUpdate("CREATE TABLE " + quizName + "_Content_Table ( "
 					+ CREATECONTENTTABLEPARAMS + ")");
 			// populate quizName_Content_Table
@@ -506,6 +515,5 @@ public class MyQuiz implements Quiz {
 		event.saveToDatabase();
 		return quizId;
 	}
-
 
 }

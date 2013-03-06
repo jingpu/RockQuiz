@@ -55,7 +55,7 @@ public class MCMAQuestion extends QuestionBase {
 	 * @param correctRatio
 	 */
 	public MCMAQuestion(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRatio, String choices) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRatio);
@@ -120,11 +120,11 @@ public class MCMAQuestion extends QuestionBase {
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */
 	@Override
-	public String getScore(String userInput) {
+	public int getScore(String userInput) {
 		String[] answerList = parseAnswer(choices);
 		String[] inputList = parseAnswer(userInput);
 
-		return Integer.toString(getScore(answerList, inputList));
+		return getScore(answerList, inputList);
 	}
 
 	// overload

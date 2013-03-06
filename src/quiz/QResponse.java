@@ -17,7 +17,7 @@ public class QResponse extends QuestionBase {
 			+ "while the wrong answer will get zero";
 
 	public QResponse(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRatio) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRatio);

@@ -53,4 +53,34 @@ public final class Helper {
 		}
 		return null;
 	}
+
+	public static String replaceSpace(String quizName) {
+		String[] str = quizName.split(" ");
+		String replacedName = "";
+		if (str.length == 1)
+			return quizName;
+		else {
+			for (int i = 0; i < str.length; i++) {
+				replacedName += str[i];
+				if (i != str.length - 1)
+					replacedName += "_";
+			}
+		}
+		return replacedName;
+	}
+
+	public static String replacePound(String quizName) {
+		String[] str = quizName.split("_");
+		String replacedName = "";
+		if (str.length == 1)
+			return quizName;
+		else {
+			for (int i = 0; i < str.length; i++) {
+				replacedName += str[i];
+				if (i != str.length - 1)
+					replacedName += " ";
+			}
+		}
+		return replacedName;
+	}
 }

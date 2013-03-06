@@ -31,7 +31,8 @@ public class QuestionFactory {
 	// MyQuiz get a question from database using questionType and questionId
 	public static QuestionBase getQuestion(String questionType,
 			String questionId) {
-
+		// How can QuestionFactory access QuestionBase's protected
+		// variable??????
 		if (questionType.equals(QuestionBase.QR))
 			return new QResponse(questionType, questionId);
 		else if (questionType.equals(QuestionBase.FIB))
@@ -64,7 +65,7 @@ public class QuestionFactory {
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
-			String maxScore = request.getParameter("maxScore");
+			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
 			String tagString = request.getParameter("tag");
 			return new QResponse(questionType, creatorId, timeLimit,
 					questionDescription, answer, maxScore, tagString, -1);
@@ -74,7 +75,7 @@ public class QuestionFactory {
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
-			String maxScore = request.getParameter("maxScore");
+			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
 			String tagString = request.getParameter("tag");
 			return new FillInBlank(questionType, creatorId, timeLimit,
 					questionDescription, answer, maxScore, tagString, -1);
@@ -84,7 +85,7 @@ public class QuestionFactory {
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
-			String maxScore = request.getParameter("maxScore");
+			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
 			String tagString = request.getParameter("tag");
 			String choices = getCreatedChoices(questionType, request);
 			return new MultiChoice(questionType, creatorId, timeLimit,
@@ -96,7 +97,7 @@ public class QuestionFactory {
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
-			String maxScore = request.getParameter("maxScore");
+			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
 			String tagString = request.getParameter("tag");
 			String url = request.getParameter("url");
 			return new PResponse(questionType, creatorId, timeLimit,
@@ -107,7 +108,7 @@ public class QuestionFactory {
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
-			String maxScore = request.getParameter("maxScore");
+			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
 			String tagString = request.getParameter("tag");
 			String isOrder = request.getParameter("isOrder");
 			if (isOrder == null)
@@ -121,7 +122,7 @@ public class QuestionFactory {
 			String questionDescription = request
 					.getParameter("questionDescription");
 			String answer = getCreatedAnswer(questionType, request);
-			String maxScore = request.getParameter("maxScore");
+			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
 			String tagString = request.getParameter("tag");
 			String choices = getCreatedChoices(questionType, request);
 			return new MCMAQuestion(questionType, creatorId, timeLimit,

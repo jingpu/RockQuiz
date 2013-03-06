@@ -11,23 +11,25 @@ CREATE TABLE Global_Quiz_Info_Table (
     isRandom BOOLEAN,
     isOnePage BOOLEAN,
     isImmediateCorrection BOOLEAN,
-    createTime TIMESTAMP
+    createTime TIMESTAMP,
+    category CHAR(32)
 );
 
 INSERT INTO Global_Quiz_Info_Table VALUES
 	("quizExample0","Patrick","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#Geo#His#", false, true, true, false,"2012-01-19 03:14:07"),
+							   "#Geo#His#", false, true, true, false,"2012-01-19 03:14:07", "Geology"),
     ("quizExample1","Molly","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#Geo", false, true, false, false,"2013-01-01 03:14:07"),						   
+							   "#Geo", false, true, false, false,"2013-01-01 03:14:07", "Geology"),						   
     ("quizExample2","More","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#His", false, true, false, false,"2012-01-19 05:14:07"),
+							   "#His", false, true, false, false,"2012-01-19 05:14:07", "Geology"),
     ("NoOneTaken","More","This is an exmaple quiz description. 
 							   User should follow the instruction to complete the quiz",
-							   "#His", false, true, false, false,"2012-01-19 05:14:07");
+							   "#His", false, true, false, false,"2012-01-19 05:14:07", "Geology");
 
+							   
 DROP TABLE IF EXISTS quizExample0_Content_Table;
 
 CREATE TABLE quizExample0_Content_Table (  

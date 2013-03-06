@@ -23,7 +23,7 @@ public class PResponse extends QuestionBase {
 			+ "while the wrong answer will get zero";
 
 	public PResponse(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRation, String url) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRation);
@@ -118,11 +118,11 @@ public class PResponse extends QuestionBase {
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */
 	@Override
-	public String getScore(String userInput) {
+	public int getScore(String userInput) {
 		// TODO Auto-generated method stub
 		if (userInput.equals(answer))
 			return maxScore;
-		return "0";
+		return 0;
 	}
 
 	/*

@@ -14,7 +14,7 @@ public class FillInBlank extends QuestionBase {
 			+ " Correct answer will get full score, while the wrong answer will get zero";
 
 	public FillInBlank(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRatio) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRatio);
@@ -107,11 +107,11 @@ public class FillInBlank extends QuestionBase {
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */
 	@Override
-	public String getScore(String userInput) {
+	public int getScore(String userInput) {
 		// TODO Auto-generated method stub
 		if (userInput.equals(answer))
 			return maxScore;
-		return "0";
+		return 0;
 	}
 
 	/*

@@ -24,7 +24,7 @@ public class MultiChoice extends QuestionBase {
 			+ "Correct answer will get full score, while the wrong answer will get zero";
 
 	public MultiChoice(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRation, String choices) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRation);
@@ -134,11 +134,11 @@ public class MultiChoice extends QuestionBase {
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */
 	@Override
-	public String getScore(String userInput) {
+	public int getScore(String userInput) {
 		// TODO Auto-generated method stub
 		if (userInput.equals(answer))
 			return maxScore;
-		return "0";
+		return 0;
 	}
 
 	// TODO: change the multi-choice table structure, and merge different choice

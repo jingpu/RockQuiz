@@ -62,7 +62,7 @@ public class MAQuestion extends QuestionBase {
 	 * @param correctRatio
 	 */
 	public MAQuestion(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRatio, String isOrder) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRatio);
@@ -152,14 +152,14 @@ public class MAQuestion extends QuestionBase {
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */
 	@Override
-	public String getScore(String userInput) {
+	public int getScore(String userInput) {
 		String[] answerList = parseAnswer(answer);
 		String[] inputList = parseAnswer(userInput);
 
 		if (isOrder.equals("true"))
-			return Integer.toString(getOrderedScore(answerList, inputList));
+			return getOrderedScore(answerList, inputList);
 		else
-			return Integer.toString(getUnorderedScore(answerList, inputList));
+			return getUnorderedScore(answerList, inputList);
 	}
 
 	private int getOrderedScore(String[] answerList, String[] inputList) {
