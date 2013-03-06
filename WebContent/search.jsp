@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="search_style.css" rel="stylesheet" type="text/css" />
 <%
 	String query = request.getParameter("q");
 	query = query == null? "" : query;
@@ -20,36 +21,52 @@
 <title>Search Results - <%=query%></title>
 </head>
 <body>
-	<%--return to homepage --%>
-	<p><a href="home.jsp">Home</a></p>
-	
-	<%--choose whether to search user--%>
-	<p>
-		Quizzes Search
-		<a href=<%=searchUser%>>Users Search</a>
-	</p>
-	<%--quizzes/users search box--%>
-	<form action="Search" method="post">
-		<p>
-			<input type="text" name="query" size="50" value=<%=query%>> 
-			<input type="submit" value="Click">
-		</p>
-	</form>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Search Page</h1>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> |  <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			
+			<dl id="browse">
+				<%--choose whether to search user--%>
+				<dt>Quizzes Search | <a href=<%=searchUser%>>Users Search</a></dt>
+				<dd class="searchform">
+					<%--quizzes/users search box--%>
+					<form action="Search" method="post">
+						<div>
+							<input type="text" name="query" size="40" value=<%=query%>> 
+						</div>
+						<div class="readmore">
+							<input type="image" src="images/search.gif" />
+						</div>
+					</form>				
+				</dd>
+			</dl>
+			
+			<div id="body">											
+				<%--exactly matched user result--%>
+				<%
+					if (UserManager.alreadyExist(query)) {
+						StringBuilder str = new StringBuilder();
+						str.append("<p><a href=\"userpage.jsp?id=" + query + "\">"
+								+ query + "</a></p>");
+						out.println(str.toString());
+					}
+				%>
 
-	<%--exactly matched user result--%>
-	<%
-		if (UserManager.alreadyExist(query)) {
-			StringBuilder str = new StringBuilder();
-			str.append("<p><a href=\"userpage.jsp?id=" + query + "\">"
-					+ query + "</a></p>");
-			out.println(str.toString());
-		}
-	%>
-
-	<%--related quizzes search results--%>
-	<p>Related quizzes</p>
-	<%
+				<%--related quizzes search results--%>
+				<p>Related quizzes</p>
+				<%
 		
-	%>
+				%>
+			</div>
+		</div>
+	</div>
+
 </body>
 </html>

@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="search_style.css" rel="stylesheet" type="text/css" />
 <%
 	String query = request.getParameter("q");
 	query = query == null? "" : query;
@@ -20,34 +21,49 @@
 <title>Search Results - <%=query%></title>
 </head>
 <body>
-	<%--return to homepage --%>
-	<p><a href="home.jsp">Home</a></p>
-	
-	<%--choose whether to search quizzes--%>
-	<p>
-		<a href=<%=searchQuiz%>>Quizzes Search</a>
-		Users Search
-	</p>
-	<%--quizzes/users search box--%>
-	<form action="UserSearch" method="post">
-		<p>
-			<input type="text" name="query" size="50" value=<%=query%>> 
-			<input type="submit" value="Click">
-		</p>
-	</form>
-
-	<%--partially matched user results--%>
-	<p>Related users</p>
-	<%
-		List<String> userResult = UserManager.getUserList(query);
-		for(String str : userResult){
-			System.out.println(str);
-			StringBuilder strb = new StringBuilder();
-			strb.append("<p><a href=\"userpage.jsp?id=" + str + "\">"
-					+ str + "</a></p>");
-			out.println(strb.toString());
-		}
-	%>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Search Page</h1>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> |  <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			
+			<dl id="browse">
+				<%--choose whether to search user--%>
+				<dt><a href=<%=searchQuiz%>>Quizzes Search</a> | Users Search</dt>
+				<dd class="searchform">
+					<%--quizzes/users search box--%>
+					<form action="UserSearch" method="post">
+						<div>
+							<input type="text" name="query" size="40" value=<%=query%>> 
+						</div>
+						<div class="readmore">
+							<input type="image" src="images/search.gif" />
+						</div>
+					</form>		
+				</dd>
+			</dl>
+			
+			<div id="body">											
+				<%--partially matched user results--%>
+				<p>Related users</p>
+				<%
+					List<String> userResult = UserManager.getUserList(query);
+					for(String str : userResult){
+						System.out.println(str);
+						StringBuilder strb = new StringBuilder();
+						strb.append("<p><a href=\"userpage.jsp?id=" + str + "\">"
+								+ str + "</a></p>");
+						out.println(strb.toString());
+					}
+				%>
+			</div>
+		</div>
+	</div>
 
 </body>
 </html>
