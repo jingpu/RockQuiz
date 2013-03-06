@@ -102,7 +102,7 @@ public class XMLParser {
 
 				// get the Employee object
 				QuestionBase question = createQuestion(el, creatorId);
-
+				question.saveToDatabase();
 				// add it to list
 				questionList.add(question);
 			}
@@ -129,10 +129,12 @@ public class XMLParser {
 		if (type.equals("fill-in-blank")) {
 			String questionType = QuestionBase.FIB;
 			int timeLimit = getIntValue(questionEl, "time-limit");
-			String questionDescription = getTextValue(questionEl, "query");
 			String answer = getTextValue(questionEl, "answer");
 			int maxScore = getIntValue(questionEl, "score");
 			String tagString = getTextValue(questionEl, "tag");
+			// special take care of questionDescription here
+			String questionDescription = parseBlankDescription(questionEl,
+					"blank-query");
 			// at creation time, ratio = 0
 			return new FillInBlank(questionType, creatorId, timeLimit,
 					questionDescription, answer, maxScore, tagString, 0);
@@ -168,6 +170,20 @@ public class XMLParser {
 		}
 
 		return null;
+	}
+
+	// tagname is "blank-query"
+	private static String parseBlankDescription(Element questionEl,
+			String tagname) {
+		String description = "";
+		NodeList nl = questionEl.getElementsByTagName(tagname);
+		if (nl != null && nl.getLength() > 0) {
+			Element el = (Element) nl.item(0);
+			description += getTextValue(el, "pre");
+			description += "#blank#";
+			description += getTextValue(el, "post");
+		}
+		return description;
 	}
 
 	private static String parseAnswer(Element questionEl, String tagName) {
