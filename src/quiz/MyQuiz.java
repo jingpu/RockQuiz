@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -249,6 +250,28 @@ public class MyQuiz implements Quiz {
 					+ "_Event_Table");
 			stmt.executeUpdate("CREATE TABLE " + quizName + "_Event_Table ( "
 					+ CREATEEVENTTABLEPARAMS + ")");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void shuffleQuestionListAndSave() {
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// delete all rows from quizName_Content_Table
+			stmt.executeUpdate("DELETE FROM " + quizName
+					+ "_Content_Table");
+			// shuffle current question list
+			Collections.shuffle(questionList);
+			// populate quizName_Content_Table
+			for (int i = 0; i < questionList.size(); i++) {
+				QuestionBase q = questionList.get(i);
+				String contentRow = "\"" + i + "\",\"" + q.getQuestionType()
+						+ "\",\"" + q.getQuestionId() + "\"";
+				stmt.executeUpdate("INSERT INTO " + quizName
+						+ "_Content_Table VALUES(" + contentRow + ")");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

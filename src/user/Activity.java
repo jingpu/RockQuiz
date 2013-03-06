@@ -71,13 +71,13 @@ public class Activity {
 			dscr.append(" got " + score + "/" + full + " in quiz <a href=\"" 
 			+ url + "\">" + content + "</a> ");
 
-		} else if(type == "c"){
+		} else if(type.equals("c")){
 			QuizManager man = new MyQuizManager();
 			Quiz quiz = man.getQuiz(content);
 			String url = quiz.getSummaryPage();
-			dscr.append(" created a quiz <a href=\"" + url + "\">" + content + "</a> ");
+			dscr.append(" created a quiz <a href=\"" + url + "\">" + content + "</a>");
 
-		} else if(type == "a"){
+		} else if(type.equals("a")){
 			dscr.append(" earned the " + content + " achievement ");
 		} else {
 			System.out.println("activity does not exist");
@@ -88,7 +88,7 @@ public class Activity {
 			Date date;
 			date = sdf.parse(time);
 			Date now = new Date();
-			dscr.append(TimeTrsf.dscr(date, now));
+			dscr.append(" " + TimeTrsf.dscr(date, now));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

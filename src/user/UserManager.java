@@ -853,8 +853,8 @@ public class UserManager{
 		List<Activity> taken = new LinkedList<Activity>();
 		setDriver();
 		try{
-			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
-					+ "_history WHERE Type='t%' ORDER BY Time DESC");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId 
+					+ "_history WHERE Type LIKE 't%' ORDER BY Time DESC");
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
 						rs.getString("type"), rs.getString("content"));

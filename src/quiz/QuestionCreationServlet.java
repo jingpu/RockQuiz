@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import user.Account;
 import util.Helper;
 
 /**
@@ -132,6 +133,9 @@ public class QuestionCreationServlet extends HttpServlet {
 						Boolean.parseBoolean(isImmCorrection), questionList,
 						createTime, "Not_Implemented_Category");
 				quiz.saveToDatabase();
+				// add quiz to user's database
+				Account user = new Account(userName);
+				user.addQuizCreated(quizName);
 
 				// remove all session attributes
 				session.removeAttribute("questionList");
