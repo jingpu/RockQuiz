@@ -225,15 +225,12 @@ public class MyQuiz implements Quiz {
 					+ "\"," + canPractice + ", " + isRandom + ", " + isOnePage
 					+ ", " + isImmCorrection + ", \"" + createTime + "\",\""
 					+ category + "\"";
-			System.out.println(quizRow);
 			stmt.executeUpdate("INSERT INTO Global_Quiz_Info_Table VALUES("
 					+ quizRow + ")");
 
 			// create quizName_Content_Table
 			stmt.executeUpdate("DROP TABLE IF EXISTS " + quizName
 					+ "_Content_Table");
-			System.out.println("CREATE TABLE " + quizName + "_Content_Table ( "
-					+ CREATECONTENTTABLEPARAMS + ")");
 			stmt.executeUpdate("CREATE TABLE " + quizName + "_Content_Table ( "
 					+ CREATECONTENTTABLEPARAMS + ")");
 			// populate quizName_Content_Table
@@ -260,8 +257,7 @@ public class MyQuiz implements Quiz {
 		try {
 			Statement stmt = con.createStatement();
 			// delete all rows from quizName_Content_Table
-			stmt.executeUpdate("DELETE FROM " + quizName
-					+ "_Content_Table");
+			stmt.executeUpdate("DELETE FROM " + quizName + "_Content_Table");
 			// shuffle current question list
 			Collections.shuffle(questionList);
 			// populate quizName_Content_Table
@@ -353,6 +349,13 @@ public class MyQuiz implements Quiz {
 
 	public List<QuestionBase> getQuestionList() {
 		return questionList;
+	}
+
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
 	}
 
 	@Override

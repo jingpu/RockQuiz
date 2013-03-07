@@ -8,9 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import util.Helper;
 import database.MyDB;
 
 /**
@@ -121,20 +128,16 @@ public class MCMAQuestion extends QuestionBase {
 	 */
 	@Override
 	public int getScore(String userInput) {
-		String[] answerList = parseAnswer(choices);
+		Set<String> answerSet = getAnswerSet();
 		String[] inputList = parseAnswer(userInput);
 
-		return getScore(answerList, inputList);
+		return getScore(answerSet, inputList);
 	}
 
 	// overload
 	// TODO: dynamically assign score based on maxScore
-	private int getScore(String[] answerList, String[] inputList) {
+	private int getScore(Set<String> answerSet, String[] inputList) {
 		int score = 0;
-		HashSet<String> answerSet = new HashSet<String>();
-		for (String str : answerList) {
-			answerSet.add(str);
-		}
 		for (String str : inputList) {
 			if (answerSet.contains(str))
 				score += 1; // if correct, score + 1
@@ -275,6 +278,64 @@ public class MCMAQuestion extends QuestionBase {
 			answer.append("#");
 		}
 		return answer.toString();
+	}
+
+	private Set<String> getAnswerSet() {
+		String[] answerList = parseAnswer(answer);
+		HashSet<String> answerSet = new HashSet<String>();
+		for (String str : answerList) {
+			answerSet.add(str);
+		}
+		return answerSet;
+	}
+
+	public Element toElement(Document doc) {
+		Element questionElem = null;
+		questionElem = doc.createElement("question");
+
+		// set question type as attribute to the root
+		Attr typeAttr = doc.createAttribute("type");
+		typeAttr.setValue("multi-choice-multi-answer");
+		questionElem.setAttributeNode(typeAttr);
+
+		// add question descritpion(query)
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(questionDescription));
+		questionElem.appendChild(query);
+
+		// add choices and answers
+		List<String> options = Helper.parseTags(choices);
+		Set<String> answerSet = getAnswerSet();
+		for (int i = 0; i < options.size(); i++) {
+			Element option = doc.createElement("option");
+			option.appendChild(doc.createTextNode(options.get(i)));
+			System.out.println("the answer is:" + answer);
+			System.out.println("option" + i + "is" + options.get(i));
+			if (answerSet.contains(options.get(i))) {
+				Attr answerAttr = doc.createAttribute("answer");
+				answerAttr.setValue("answer");
+				option.setAttributeNode(answerAttr);
+			}
+			questionElem.appendChild(option);
+		}
+
+		// add time-limit
+		Element timeLimit = doc.createElement("time-limit");
+		timeLimit.appendChild(doc.createTextNode(Integer
+				.toString(this.timeLimit)));
+		questionElem.appendChild(timeLimit);
+
+		// add score
+		Element maxScore = doc.createElement("score");
+		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
+		questionElem.appendChild(maxScore);
+
+		// add tag
+		Element tag = doc.createElement("tag");
+		tag.appendChild(doc.createTextNode(this.tagString));
+		questionElem.appendChild(tag);
+
+		return questionElem;
 	}
 
 }

@@ -83,4 +83,17 @@ public final class Helper {
 		}
 		return replacedName;
 	}
+
+	public static String listToString(List<String> tags) {
+		String tagString = "";
+		if (tags.size() > 1) {
+			for (String str : tags) {
+				tagString += "#";
+				tagString += str;
+				tagString += "#";
+			}
+		}
+		return tagString;
+	}
+
 }

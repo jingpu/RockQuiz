@@ -7,6 +7,9 @@ import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import util.Helper;
 import database.MyDB;
 
@@ -216,6 +219,8 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	public abstract String printReadHtmlForSingle();
 
 	public abstract String getUserAnswer(HttpServletRequest request);
+
+	public abstract Element toElement(Document doc);
 
 	public int getScore(String userInput) {
 		if (userInput.equals(answer))

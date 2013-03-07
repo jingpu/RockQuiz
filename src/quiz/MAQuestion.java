@@ -13,6 +13,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import util.Helper;
 import database.MyDB;
 
 /**
@@ -275,5 +280,46 @@ public class MAQuestion extends QuestionBase {
 			answer.append("#");
 		}
 		return answer.toString();
+	}
+
+	public Element toElement(Document doc) {
+		Element questionElem = null;
+		questionElem = doc.createElement("question");
+
+		// set question type as attribute to the root
+		Attr typeAttr = doc.createAttribute("type");
+		typeAttr.setValue("multi-answer");
+		questionElem.setAttributeNode(typeAttr);
+
+		// add question descritpion(query)
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(questionDescription));
+		questionElem.appendChild(query);
+
+		// add answers
+		List<String> answers = Helper.parseTags(answer);
+		for (int i = 0; i < answers.size(); i++) {
+			Element option = doc.createElement("answer");
+			option.appendChild(doc.createTextNode(answers.get(i)));
+			questionElem.appendChild(option);
+		}
+
+		// add time-limit
+		Element timeLimit = doc.createElement("time-limit");
+		timeLimit.appendChild(doc.createTextNode(Integer
+				.toString(this.timeLimit)));
+		questionElem.appendChild(timeLimit);
+
+		// add score
+		Element maxScore = doc.createElement("score");
+		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
+		questionElem.appendChild(maxScore);
+
+		// add tag
+		Element tag = doc.createElement("tag");
+		tag.appendChild(doc.createTextNode(this.tagString));
+		questionElem.appendChild(tag);
+
+		return questionElem;
 	}
 }

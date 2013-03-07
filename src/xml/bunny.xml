@@ -29,4 +29,25 @@
   </answer-list>
 </question>
 
+<question type="multi-answer">
+  <query>Plase name the top 3 most populous countries in the world</query>
+  <answer-list isorder="true">
+    <answer>China</answer>
+    <answer>India</answer>
+    <answer>USA</answer>
+  </answer-list>
+  <score>3</score>
+  <time-limit>10</time-limit>
+  <tag>geo</tag>
+</question>
+
+<question type="multi-choice-multi-answer">
+  <query>Which ones of the following are correct?</query>
+  <option answer="answer">Stanford is one of the most famous universities in the world.</option>
+  <option>Stanford is on the east coast of USA</option>
+  <option answer="answer">Stanford has the best computer science department in the world.</option>
+  <option answer="answer">This xml parser is working now.</option>
+  <score>3</score>
+  <time-limit>10</time-limit>
+</question>  
 </quiz>

@@ -5,6 +5,10 @@ package quiz;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 /**
  * @author yang
  * 
@@ -164,4 +168,55 @@ public class FillInBlank extends QuestionBase {
 		return request.getParameter("answer_" + getQuestionId());
 	}
 
+	public Element toElement(Document doc) {
+		Element questionElem = null;
+
+		questionElem = doc.createElement("question");
+
+		// set question type as attribute to the root
+		Attr typeAttr = doc.createAttribute("type");
+		typeAttr.setValue("fill-in-blank");
+		questionElem.setAttributeNode(typeAttr);
+
+		// add question descritpion(query)
+		Element query = doc.createElement("blank-query");
+
+		Element pre = doc.createElement("pre");
+		pre.appendChild(doc.createTextNode(parsePrefix()));
+		query.appendChild(pre);
+
+		Element blank = doc.createElement("blank");
+		// pre.appendChild(doc.createTextNode(""));
+		query.appendChild(blank);
+
+		Element post = doc.createElement("post");
+		post.appendChild(doc.createTextNode(parseSuffix()));
+		query.appendChild(post);
+
+		questionElem.appendChild(query);
+		// TODO: questionDescription change to <pre><blank><post> format
+
+		// add answer
+		Element answer = doc.createElement("answer");
+		answer.appendChild(doc.createTextNode(this.answer));
+		questionElem.appendChild(answer);
+
+		// add time-limit
+		Element timeLimit = doc.createElement("time-limit");
+		timeLimit.appendChild(doc.createTextNode(Integer
+				.toString(this.timeLimit)));
+		questionElem.appendChild(timeLimit);
+
+		// add score
+		Element maxScore = doc.createElement("score");
+		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
+		questionElem.appendChild(maxScore);
+
+		// add tag
+		Element tag = doc.createElement("tag");
+		tag.appendChild(doc.createTextNode(this.tagString));
+		questionElem.appendChild(tag);
+
+		return questionElem;
+	}
 }
