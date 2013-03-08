@@ -45,7 +45,7 @@ public class FriendMsgSent extends HttpServlet {
 		String fromUser = (String) session.getAttribute("guest");
 		String toUser = request.getParameter("toUser");
 		String title = request.getParameter("title");
-		title = title == null? "" : title;
+		title = (title == null || title.equals(""))? "untitled" : title;
 		String content = request.getParameter("content");
 		content = content == null? "" : content;
 		Message msg = new Message(fromUser, toUser, "n", title, content);

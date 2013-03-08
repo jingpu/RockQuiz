@@ -40,7 +40,7 @@
 			</div>
 			
 			<dl id="browse">
-				<dt><a href="WriteMessage?username=<%=userId%>" target="another">Compose</a></dt>
+				<dt><a href="WriteMessage.jsp?username=<%=userId%>" target="another">Compose</a></dt>
 				<dd></dd>
 				<dd><a href="Mailbox_inbox.jsp?id=<%=userId%>" target="another">Inbox</a></dd>
 				<dd><a href="Mailbox_sent.jsp?id=<%=userId%>" target="another">Sent</a></dd>

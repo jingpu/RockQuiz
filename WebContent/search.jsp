@@ -50,6 +50,7 @@
 			
 			<div id="body">											
 				<%--exactly matched user result--%>
+				<p>Related user</p>
 				<%
 					if (UserManager.alreadyExist(query)) {
 						StringBuilder str = new StringBuilder();
