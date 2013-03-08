@@ -1,4 +1,5 @@
 $(document).ready(function() {
+	//var answer0 = $("#answer0").val();
 	
     $('#match').match({
         radius: 7,
@@ -8,6 +9,7 @@ $(document).ready(function() {
             {id: 1,text: $("#choice1").text()},
             {id: 2,text: $("#choice2").text()},
             {id: 3,text: $("#choice3").text()},],
+        
         options: [
             {id: 0,text: $("#answer0").text()},
             {id: 1,text: $("#answer1").text()},

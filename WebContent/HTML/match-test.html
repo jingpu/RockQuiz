@@ -13,26 +13,29 @@
 <p>Drag the lines from the left item to the right item to join them.
     Hover over the line to make it highlighted.
 Click the line to remove the join.</p>
+  
+   
+  <form action="QuestionProcessServlet" method="post"><p>Question Description: ahewhae</p>
+  
    <span id="match" ></span>
-   
    <div id="results" class='results'></div>
-   <span id='choice0'> patrick haha</span>
-   <span id='choice1'> this is a matching question</span>
-   <span id='choice2'> go stanford</span>
-   <span id='choice3'> Molly is a dog</span>
-   
-   
-   <span id ="answer0">patrick haha</span>
-   <span id='answer1'> Molly is a dog</span>
-   <span id='answer2'> go stanford</span>
-   <span id='answer3'> this is a matching question</span>
-   
+  
+   <span id='choice0'><input type="hidden" name="choice0"  value="patrick haha"></input>patrick haha</span>
+   <span id='choice1'><input type="hidden" name="choice1"  value="this is a matching question"></input> this is a matching question</span>
+   <span id='choice2'><input type="hidden" name="choice2"  value="go stanford"></input> go stanford</span>
+   <span id='choice3'><input type="hidden" name="choice3"  value="Molly is a dog"></input> Molly is a dog</span>
+  
+   <span id ="answer0"><input type="hidden" name="answer0" ></input><span class=hidden>patrick haha</span></span>
+   <span id='answer1'><input type="hidden" name="answer1" ></input><span class=hidden>Molly is a dog</span></span>
+   <span id='answer2'><input type="hidden" name="answer2" ></input><span class=hidden>go stanford</span></span>
+   <span id='answer3'><input type="hidden" name="answer1" ></input><span class=hidden>this is a matching question</span></span>
+   </form>
    
    
    <button id="vals">Results</button>
    <button id="clear">Clear</button>
 <p>
-    Note: The match.js is referenced from <a href="http://software-workshop.eu/content/match-jquery-plugin-documentation">
+    Note: The match.js is referenced from <a href="http://software-workshop.eu/content/match-jquery-plugin-documentation"></a>
 </p>   
     
 

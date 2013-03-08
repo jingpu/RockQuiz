@@ -128,6 +128,7 @@ public class Matching extends MCMAQuestion {
 				+ "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
+		System.out.println(html.toString());
 		return html.toString();
 
 	}
