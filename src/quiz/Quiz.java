@@ -34,4 +34,6 @@ public interface Quiz {
 
 	public Timestamp getCreateTime();
 
+	public void clearQuizEvents();
+
 }
