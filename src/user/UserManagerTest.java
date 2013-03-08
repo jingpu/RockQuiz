@@ -9,7 +9,7 @@ import org.junit.Test;
 /**@author youyuan
  * **/
 public class UserManagerTest {
-
+/*
 	@Test
 	public void addNew() {
 		UserManager.deleteAll();
@@ -82,9 +82,18 @@ public class UserManagerTest {
 	@Test
 	public void admin(){
 		UserManager.deleteAll();
-		UserManager.addNewAccount("y1", "123", "s", "f", "asf@asdf.edu");
-		UserManager.addNewAccount("y2", "123", "u", "m", "asf@asdf.edu");
-		UserManager.addNewAccount("y3", "123", "u", "f", "asf@asdf.edu");
-		UserManager.addNewAccount("y4", "123", "u", "f", "asf@asdf.edu");
+		UserManager.addNewAccount("yy", "123", "s", "f", "asf@asdf.edu");
+		UserManager.addNewAccount("hj", "123", "s", "f", "asf@asdf.edu");
+		UserManager.addNewAccount("zy", "123", "s", "m", "asf@asdf.edu");
+		UserManager.addNewAccount("pj", "123", "s", "m", "asf@asdf.edu");
+	}
+	*/
+	@Test
+	public void charProcess(){
+		String admin="admin";
+		String announce = "\"test\"";
+		UserManager.setAnnouncement(announce, admin);
+		Announce ann = UserManager.getLatestAnnounce();
+		System.out.println(ann.getContent());
 	}
 }

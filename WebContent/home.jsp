@@ -34,7 +34,6 @@
 	List<Activity> achieves = user.getAchievements();
 	// generate quizzes taken history
 	List<Activity> taken = user.getQuizTaken();
-	System.out.println(taken.toString());
 	// generate quizzes created history
 	List<Activity> created = user.getQuizCreated();
 	// mail messages

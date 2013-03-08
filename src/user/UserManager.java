@@ -28,7 +28,7 @@ public class UserManager{
 	private static final String MYSQL_DATABASE_NAME = "c_cs108_youyuan";
 
 	private static final String userTable = "userstats";
-	private static final String annouceTable = "annoucements";
+	private static final String announceTable = "announcements";
 	private static Connection con;
 	private static Statement stmt;
 
@@ -63,26 +63,20 @@ public class UserManager{
 		}
 	}
 
-	public static void setAnnouncement(String annouce, String admin){
+	public static void setAnnouncement(String announce, String admin){
 		setDriver();
 		try {
-			ResultSet rs = stmt.executeQuery("SELECT * FROM " + annouceTable);
+			ResultSet rs = stmt.executeQuery("SHOW TABLES LIKE '" + announceTable + "'");
+			if(!rs.next()){
+				stmt.executeUpdate("CREATE TABLE "+ announceTable +" (Time datetime, content text, admin varchar(20))");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("create new annouce table");
-			try {
-				stmt.executeUpdate("CREATE TABLE " + annouceTable +
-						"(Time datetime, content text, admin varchar(20));");
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-				close();
-				return;
-			}
+			e.printStackTrace();
 		}
 		try {
-			stmt.executeUpdate("INSERT INTO " + annouceTable + " VALUES (now(),\""
-					+ annouce + "\",\"" + admin + "\")");
+			stmt.executeUpdate("INSERT INTO "+announceTable+" VALUES (now(),'"+ announce +"','"+ admin +"')");
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,12 +89,8 @@ public class UserManager{
 		Announce ann;
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " 
-					+ annouceTable + " ORDER BY Time DESC");
+					+ announceTable + " ORDER BY Time DESC");
 			if(rs.next()){
-				
-				System.out.println(rs.getString("content"));
-				System.out.println(rs.getString("admin"));
-				System.out.println(rs.getString("Time"));
 				ann = new Announce(rs.getString("Time"), rs.getString("content"), 
 						rs.getString("admin"));
 				close();
@@ -113,13 +103,13 @@ public class UserManager{
 		close();
 		return null;
 	}
-	
+
 	public static List<Announce> getAllAnnounce(){
 		setDriver();
 		List<Announce> annList = new LinkedList<Announce>();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " 
-					+ annouceTable + " ORDER BY Time DESC");
+					+ announceTable + " ORDER BY Time DESC");
 			while(rs.next()){
 				Announce ann = new Announce(rs.getString("Time"), rs.getString("content"), 
 						rs.getString("admin"));
@@ -133,6 +123,19 @@ public class UserManager{
 		close();
 		return null;
 	}
+
+	public static void deleteAnnouncement(String time, String admin){
+		setDriver();
+		try {
+			stmt.executeUpdate("DELETE FROM " + announceTable 
+					+ " WHERE Time LIKE '" + time + "' AND admin LIKE '" + admin + "'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+	}
+
 	// account management
 
 	/** Method addNewAccount is to add a new user tuple into userstats.sql and create 
@@ -160,7 +163,7 @@ public class UserManager{
 				stmt.executeUpdate("CREATE TABLE " + userTable + " ( " +
 						"userId varchar(20), password varchar(40), " +
 						"registrationTime datetime, status char(1), gender char(1), email char(50));");
-				stmt.executeUpdate("INSERT INTO " + userTable + " VALUES (\"guest\",\"n\",now(),\"n\",\"n\",\"n\")");
+				stmt.executeUpdate("INSERT INTO " + userTable + " VALUES ('guest','n',now(),'n','n','n')");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				System.out.println("Adding new table fails.");
@@ -201,9 +204,9 @@ public class UserManager{
 
 
 		try {
-			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES (\""
-					+ userId + "\",\"" + hashValue + "\",now(),\"" + status + "\",\"" 
-					+ gender + "\",\"" + email + "\")");
+			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES ('"
+					+ userId + "','" + hashValue + "',now(),'" + status + "','" 
+					+ gender + "','" + email + "')");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_history( Time datetime, " +
 					"Type char(33), content varchar(50));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_network( userId varchar(20), " +
@@ -229,7 +232,7 @@ public class UserManager{
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
-					"WHERE userId = \"" + userId + "\"");
+					"WHERE userId = '" + userId + "'");
 			if(rs.next()) {
 				close();
 				return true;
@@ -273,7 +276,7 @@ public class UserManager{
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
-					"WHERE userId = \"" + userId + "\"" + " AND " + "password = \"" + hashValue + "\"");
+					"WHERE userId = '" + userId + "' AND password = '" + hashValue + "'");
 			if(!rs.next()) {
 				close();
 				System.out.println("not found");
@@ -513,10 +516,10 @@ public class UserManager{
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + to + "_network" +
 					" WHERE userId LIKE '" + from + "'");
 			if(!rs.next()){
-				stmt.executeUpdate("INSERT INTO " + from + "_network" + " VALUES (\""
-						+ to + "\",\"r\")");
-				stmt.executeUpdate("INSERT INTO " + to + "_network" + " VALUES (\""
-						+ from + "\",\"u\")");
+				stmt.executeUpdate("INSERT INTO " + from + "_network" + " VALUES ('"
+						+ to + "','r')");
+				stmt.executeUpdate("INSERT INTO " + to + "_network" + " VALUES ('"
+						+ from + "','u')");
 				Message msg = new Message(from, to, "r", "", "");
 				sendMsg(msg);  //r - friend request msg
 				setDriver();
@@ -623,13 +626,13 @@ public class UserManager{
 
 		setDriver();
 		try {
-			stmt.executeUpdate("INSERT INTO " + msg.from + "_sent" + " VALUES (\"" + hashValue + "\",\"" 
-					+ currentTime + "\", \"" + msg.to + "\",\"" + msg.type + "\",\"" + msg.title + "\",\"" 
-					+ msg.content + "\")");
+			stmt.executeUpdate("INSERT INTO " + msg.from + "_sent" + " VALUES ('" + hashValue + "','" 
+					+ currentTime + "', '" + msg.to + "','" + msg.type + "','" + msg.title + "','" 
+					+ msg.content + "')");
 
-			stmt.executeUpdate("INSERT INTO " + msg.to + "_inbox" + " VALUES (\""+ hashValue + "\",\"" 
-					+ currentTime + "\", \"" + msg.from + "\",\"" + msg.type + "\",\"" + msg.title + "\",\"" 
-					+ msg.content + "\",\"0\")");
+			stmt.executeUpdate("INSERT INTO " + msg.to + "_inbox" + " VALUES ('"+ hashValue + "','" 
+					+ currentTime + "', '" + msg.from + "','" + msg.type + "','" + msg.title + "','" 
+					+ msg.content + "','0')");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -773,7 +776,7 @@ public class UserManager{
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), \"t" + quizId + "\", \"" + quizName + "\")");
+					+ " VALUES (now(), 't" + quizId + "', '" + quizName + "')");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -788,7 +791,7 @@ public class UserManager{
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), \"c\", \"" + quizName + "\")");
+					+ " VALUES (now(), 'c', '" + quizName + "')");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -802,7 +805,7 @@ public class UserManager{
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), \"a\", \"" + name + "\")");
+					+ " VALUES (now(), 'a', '" + name + "')");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
