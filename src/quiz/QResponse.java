@@ -5,6 +5,10 @@ package quiz;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 /**
  * @author yang
  * 
@@ -17,7 +21,7 @@ public class QResponse extends QuestionBase {
 			+ "while the wrong answer will get zero";
 
 	public QResponse(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRatio) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRatio);
@@ -139,4 +143,46 @@ public class QResponse extends QuestionBase {
 		return request.getParameter("answer_" + getQuestionId());
 	}
 
+	public Element toElement(Document doc) {
+		Element questionElem = null;
+		questionElem = doc.createElement("question");
+
+		// set question type as attribute to the root
+		Attr typeAttr = doc.createAttribute("type");
+		typeAttr.setValue("question-response");
+		questionElem.setAttributeNode(typeAttr);
+
+		// set question id as attribute to the root
+		// Attr idAttr = doc.createAttribute("id");
+		// idAttr.setValue(questionId);
+		// questionElem.setAttributeNode(idAttr);
+
+		// add question description(query)
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(questionDescription));
+		questionElem.appendChild(query);
+
+		// add answer
+		Element answerElem = doc.createElement("answer");
+		answerElem.appendChild(doc.createTextNode(answer));
+		questionElem.appendChild(answerElem);
+
+		// add time-limit
+		Element timeLimit = doc.createElement("time-limit");
+		timeLimit.appendChild(doc.createTextNode(Integer
+				.toString(this.timeLimit)));
+		questionElem.appendChild(timeLimit);
+
+		// add score
+		Element maxScore = doc.createElement("score");
+		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
+		questionElem.appendChild(maxScore);
+
+		// add tag
+		Element tag = doc.createElement("tag");
+		tag.appendChild(doc.createTextNode(this.tagString));
+		questionElem.appendChild(tag);
+
+		return questionElem;
+	}
 }

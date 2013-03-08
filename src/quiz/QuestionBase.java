@@ -7,6 +7,9 @@ import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import util.Helper;
 import database.MyDB;
 
@@ -27,16 +30,16 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected final int timeLimit;
 	protected final String questionDescription;
 	protected final String answer;
-	protected final String maxScore;
+	protected final int maxScore;
 	protected final String tagString;
 	protected final float correctRatio;
 
-	protected static final String QR = "Question_Response";
-	protected static final String FIB = "Fill_In_Blank";
-	protected static final String MC = "Multi_Choice";
-	protected static final String PR = "Picture_Response";
-	protected static final String MA = "Multi_Answer";
-	protected static final String MCMA = "Multi_Choice_Multi_Answer";
+	public static final String QR = "Question_Response";
+	public static final String FIB = "Fill_In_Blank";
+	public static final String MC = "Multi_Choice";
+	public static final String PR = "Picture_Response";
+	public static final String MA = "Multi_Answer";
+	public static final String MCMA = "Multi_Choice_Multi_Answer";
 
 	protected static final String QR_Table = "Question_Response_Pool";
 	protected static final String FIB_Table = "Fill_In_Blank_Pool";
@@ -65,7 +68,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		int tmpTimeLimited = -1;
 		String tmpQuestionDescription = "error";
 		String tmpAnswer = "error";
-		String tmpMaxScore = "error";
+		int tmpMaxScore = -1;
 		String tmpTagString = "error";
 		float tmpCorrectRatio = -1; // error flag
 
@@ -83,7 +86,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 			tmpTimeLimited = rs.getInt(3);
 			tmpQuestionDescription = rs.getString(4);
 			tmpAnswer = rs.getString(5);
-			tmpMaxScore = rs.getString(6);
+			tmpMaxScore = rs.getInt(6);
 			tmpTagString = rs.getString(7);
 			tmpCorrectRatio = rs.getInt(8);
 
@@ -113,7 +116,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	 * @param correctRatio
 	 */
 	public QuestionBase(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRatio) {
 		super();
 		this.questionType = questionType;
@@ -217,13 +220,15 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 
 	public abstract String getUserAnswer(HttpServletRequest request);
 
-	public String getScore(String userInput) {
+	public abstract Element toElement(Document doc);
+
+	public int getScore(String userInput) {
 		if (userInput.equals(answer))
 			return maxScore;
-		return "0";
+		return 0;
 	}
 
-	public String getMaxScore() {
+	public int getMaxScore() {
 		return maxScore;
 	}
 

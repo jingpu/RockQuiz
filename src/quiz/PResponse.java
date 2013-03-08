@@ -10,6 +10,10 @@ import java.sql.Statement;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import database.MyDB;
 
 /**
@@ -23,7 +27,7 @@ public class PResponse extends QuestionBase {
 			+ "while the wrong answer will get zero";
 
 	public PResponse(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRation, String url) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRation);
@@ -118,11 +122,11 @@ public class PResponse extends QuestionBase {
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */
 	@Override
-	public String getScore(String userInput) {
+	public int getScore(String userInput) {
 		// TODO Auto-generated method stub
 		if (userInput.equals(answer))
 			return maxScore;
-		return "0";
+		return 0;
 	}
 
 	/*
@@ -175,4 +179,52 @@ public class PResponse extends QuestionBase {
 		return request.getParameter("answer_" + getQuestionId());
 	}
 
+	public Element toElement(Document doc) {
+		Element questionElem = null;
+
+		questionElem = doc.createElement("question");
+
+		// set question type as attribute to the root
+		Attr typeAttr = doc.createAttribute("type");
+		typeAttr.setValue("picture-response");
+		questionElem.setAttributeNode(typeAttr);
+
+		// set question id as attribute to the root
+		// Attr idAttr = doc.createAttribute("id");
+		// idAttr.setValue(questionId);
+		// questionElem.setAttributeNode(idAttr);
+
+		// add question descritpion(query)
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(questionDescription));
+		questionElem.appendChild(query);
+
+		// add url
+		Element urlElem = doc.createElement("image-location");
+		urlElem.appendChild(doc.createTextNode(this.url));
+		questionElem.appendChild(urlElem);
+
+		// add answer
+		Element answer = doc.createElement("answer");
+		answer.appendChild(doc.createTextNode(this.answer));
+		questionElem.appendChild(answer);
+
+		// add time-limit
+		Element timeLimit = doc.createElement("time-limit");
+		timeLimit.appendChild(doc.createTextNode(Integer
+				.toString(this.timeLimit)));
+		questionElem.appendChild(timeLimit);
+
+		// add score
+		Element maxScore = doc.createElement("score");
+		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
+		questionElem.appendChild(maxScore);
+
+		// add tag
+		Element tag = doc.createElement("tag");
+		tag.appendChild(doc.createTextNode(this.tagString));
+		questionElem.appendChild(tag);
+
+		return questionElem;
+	}
 }

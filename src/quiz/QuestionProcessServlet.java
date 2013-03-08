@@ -101,7 +101,7 @@ public class QuestionProcessServlet extends HttpServlet {
 			// Need to use factory to preprocess answer string
 			QuestionBase lastQuestion = questionList.get(questionIndex - 1);
 			String answer = lastQuestion.getUserAnswer(request);
-			currentScore += Integer.parseInt(lastQuestion.getScore(answer));
+			currentScore += lastQuestion.getScore(answer);
 			session.setAttribute("currentScore", currentScore);
 		}
 

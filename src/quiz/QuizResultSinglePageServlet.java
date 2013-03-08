@@ -20,25 +20,29 @@ import user.Account;
 @WebServlet("/QuizResultSinglePageServlet")
 public class QuizResultSinglePageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public QuizResultSinglePageServlet() {
-        super();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public QuizResultSinglePageServlet() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// get session attributes
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("guest");
@@ -67,7 +71,7 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 		int currentScore = 0;
 		for (QuestionBase q : questionList) {
 			String answer = q.getUserAnswer(request);
-			currentScore += Integer.parseInt(q.getScore(answer));
+			currentScore += q.getScore(answer);
 		}
 
 		/*

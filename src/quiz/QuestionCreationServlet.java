@@ -99,7 +99,7 @@ public class QuestionCreationServlet extends HttpServlet {
 				response.setContentType("text/html");
 				PrintWriter out = response.getWriter();
 				String message = "No question has been created in the new quiz. "
-				+ "Please go back and add a new question.";
+						+ "Please go back and add a new question.";
 				out.print(printCreationFailPage(message));
 
 			} else if (quizManager.getQuiz(quizName) != null) {
@@ -131,7 +131,7 @@ public class QuestionCreationServlet extends HttpServlet {
 						Boolean.parseBoolean(isRandom),
 						Boolean.parseBoolean(isOnePage),
 						Boolean.parseBoolean(isImmCorrection), questionList,
-						createTime);
+						createTime, "Not_Implemented_Category");
 				quiz.saveToDatabase();
 				// add quiz to user's database
 				Account user = new Account(userName);

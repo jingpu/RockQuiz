@@ -7,9 +7,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import util.Helper;
 import database.MyDB;
 
 /**
@@ -24,7 +30,7 @@ public class MultiChoice extends QuestionBase {
 			+ "Correct answer will get full score, while the wrong answer will get zero";
 
 	public MultiChoice(String questionType, String creatorId, int timeLimit,
-			String questionDescription, String answer, String maxScore,
+			String questionDescription, String answer, int maxScore,
 			String tagString, float correctRation, String choices) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRation);
@@ -134,11 +140,11 @@ public class MultiChoice extends QuestionBase {
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */
 	@Override
-	public String getScore(String userInput) {
+	public int getScore(String userInput) {
 		// TODO Auto-generated method stub
 		if (userInput.equals(answer))
 			return maxScore;
-		return "0";
+		return 0;
 	}
 
 	// TODO: change the multi-choice table structure, and merge different choice
@@ -214,5 +220,53 @@ public class MultiChoice extends QuestionBase {
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
 		return request.getParameter("answer_" + getQuestionId());
+	}
+
+	public Element toElement(Document doc) {
+		Element questionElem = null;
+
+		questionElem = doc.createElement("question");
+
+		// set question type as attribute to the root
+		Attr typeAttr = doc.createAttribute("type");
+		typeAttr.setValue("multiple-choice");
+		questionElem.setAttributeNode(typeAttr);
+
+		// add question description(query)
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(questionDescription));
+		questionElem.appendChild(query);
+
+		// add options (with answer attribute)
+		// TODO: change parseTags() function name
+		List<String> options = Helper.parseTags(choices);
+		for (int i = 0; i < options.size(); i++) {
+			Element option = doc.createElement("option");
+			option.appendChild(doc.createTextNode(options.get(i)));
+			if (options.get(i).equals(answer)) {
+				Attr answerAttr = doc.createAttribute("answer");
+				answerAttr.setValue("answer");
+				option.setAttributeNode(answerAttr);
+			}
+			questionElem.appendChild(option);
+		}
+
+		// add time-limit
+		Element timeLimit = doc.createElement("time-limit");
+		timeLimit.appendChild(doc.createTextNode(Integer
+				.toString(this.timeLimit)));
+		questionElem.appendChild(timeLimit);
+
+		// add score
+		Element maxScore = doc.createElement("score");
+		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
+		questionElem.appendChild(maxScore);
+
+		// add tag
+		Element tag = doc.createElement("tag");
+		tag.appendChild(doc.createTextNode(this.tagString));
+		questionElem.appendChild(tag);
+
+		return questionElem;
 	}
 }
