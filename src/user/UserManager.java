@@ -147,6 +147,7 @@ public class UserManager{
 	 * **/
 	public static boolean addNewAccount(String userId, String password, 
 			String status, String gender, String email){
+		if(userId.equals("guest")) return false;
 		setDriver();
 		// information invalid - too short
 		try {
@@ -163,7 +164,6 @@ public class UserManager{
 				stmt.executeUpdate("CREATE TABLE " + userTable + " ( " +
 						"userId varchar(20), password varchar(40), " +
 						"registrationTime datetime, status char(1), gender char(1), email char(50));");
-				stmt.executeUpdate("INSERT INTO " + userTable + " VALUES ('guest','n',now(),'n','n','n')");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				System.out.println("Adding new table fails.");
@@ -229,6 +229,7 @@ public class UserManager{
 	}
 
 	public static boolean alreadyExist(String userId){
+		if(userId.equals("guest")) return true;
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
