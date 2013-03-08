@@ -26,7 +26,7 @@ import database.MyDB;
  */
 public class MCMAQuestion extends QuestionBase {
 	// choices format: #chioce0#choice1#choice2#...#
-	private final String choices;
+	protected final String choices;
 	private static final String typeIntro = "Multi-Choice-Multi-Answer question: user should choose one or more correct answers from choice options"
 			+ "Choosing all correct answer will get full score, and choosing partial correct answer will get partial score"
 			+ "while choosing any wrong answer will fix zero at your score. So, be careful!";
@@ -45,7 +45,7 @@ public class MCMAQuestion extends QuestionBase {
 			stmt.executeQuery("USE c_cs108_yzhao3");
 			ResultSet rs = stmt.executeQuery(queryStmt);
 			rs.next();
-			tmpChoices = rs.getString(9);
+			tmpChoices = rs.getString("choices");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -215,7 +215,7 @@ public class MCMAQuestion extends QuestionBase {
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
-
+		System.out.println(html.toString());
 		return html.toString();
 
 	}
@@ -309,8 +309,6 @@ public class MCMAQuestion extends QuestionBase {
 		for (int i = 0; i < options.size(); i++) {
 			Element option = doc.createElement("option");
 			option.appendChild(doc.createTextNode(options.get(i)));
-			System.out.println("the answer is:" + answer);
-			System.out.println("option" + i + "is" + options.get(i));
 			if (answerSet.contains(options.get(i))) {
 				Attr answerAttr = doc.createAttribute("answer");
 				answerAttr.setValue("answer");

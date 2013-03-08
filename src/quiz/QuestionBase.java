@@ -40,6 +40,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	public static final String PR = "Picture_Response";
 	public static final String MA = "Multi_Answer";
 	public static final String MCMA = "Multi_Choice_Multi_Answer";
+	public static final String MATCH = "Matching_Question";
 
 	protected static final String QR_Table = "Question_Response_Pool";
 	protected static final String FIB_Table = "Fill_In_Blank_Pool";
@@ -47,6 +48,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	protected static final String PR_Table = "Picture_Response_Pool";
 	protected static final String MA_Table = "Multi_Answer_Pool";
 	protected static final String MCMA_Table = "Multi_Choice_Multi_Answer_Pool";
+	protected static final String MATCH_Table = "Matching_Question_Pool";
 
 	protected String queryStmt;
 
@@ -177,7 +179,8 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 			questionTable = MA_Table;
 		else if (questionType.equals(MCMA))
 			questionTable = MCMA_Table;
-
+		else if (questionType.equals(MATCH))
+			questionTable = MATCH_Table;
 		return questionTable;
 	}
 
