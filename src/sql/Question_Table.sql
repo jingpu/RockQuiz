@@ -130,6 +130,30 @@ CREATE TABLE Multi_Choice_Multi_Answer_Pool (
 
 INSERT INTO Multi_Choice_Multi_Answer_Pool VALUES
 	("0001","Patrick",0, "Which ones of the following are correct", "#choiceB##choiceC#", 4 ,
+	  "#his##Cul#", 0.8,"#choiceA##choiceB##choiceC##choiceD");
+	  
+
+	  
+	  
+	  
+DROP TABLE IF EXISTS Matching_Question_Pool;
+ -- remove table if it already exists and start from scratch
+
+CREATE TABLE Matching_Question_Pool (  
+	question_id CHAR(32),
+	creator_id CHAR(32),
+    time_limit INT,
+    question_description BLOB,
+    answer BLOB,
+    max_score INT,
+    tag_string CHAR(32),
+    correct_ratio FLOAT,
+    choices BLOB
+    
+);
+
+INSERT INTO Matching_Question_Pool VALUES
+	("0001","Patrick",0, "Please match the following choice options and answer options", "#answerA##answerB##answerC##answerD#", 4 ,
 	  "#his##Cul#", 0.8,"#choiceA##choiceB##choiceC##choiceD")
 	  
 	  

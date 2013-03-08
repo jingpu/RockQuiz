@@ -25,7 +25,7 @@ import database.MyDB;
 public class MultiChoice extends QuestionBase {
 	// TODO: merge all choices into one field -> enable user add more than 4
 	// choices
-	private String choices;
+	protected final String choices;
 	private static final String typeIntro = "MultiChoice question: user should choose one correct answer from choice options"
 			+ "Correct answer will get full score, while the wrong answer will get zero";
 
