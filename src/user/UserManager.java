@@ -86,12 +86,12 @@ public class UserManager{
 
 	public static Announce getLatestAnnounce(){
 		setDriver();
-		Announce ann;
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " 
 					+ announceTable + " ORDER BY Time DESC");
 			if(rs.next()){
-				ann = new Announce(rs.getString("Time"), rs.getString("content"), 
+				String time = rs.getString("Time");
+				Announce ann = new Announce(time.substring(0,time.length()-2), rs.getString("content"), 
 						rs.getString("admin"));
 				close();
 				return ann;

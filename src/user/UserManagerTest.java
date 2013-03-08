@@ -95,5 +95,8 @@ public class UserManagerTest {
 		UserManager.setAnnouncement(announce, admin);
 		Announce ann = UserManager.getLatestAnnounce();
 		System.out.println(ann.getContent());
+		System.out.println(ann.getTime());
+		System.out.println(ann.getAdmin());
+		UserManager.deleteAnnouncement(ann.getTime(), ann.getAdmin());
 	}
 }
