@@ -89,37 +89,73 @@ public class MAQuestion extends QuestionBase {
 	public static String printCreateHtml() {
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
 		html.append("<p class= 'description'>Question Description:</p>\n");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
 				+ "\" required></textarea></p>\n");
 
 		// add answers, can be expanded
-		html.append("<div id=\"form_input\">");
+		html.append("<div id=\"form_input\">\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\""
-				+ "\" required></input></p>");
-		html.append("</div>");
+				+ "\" required></input></p>\n");
+		html.append("</div>\n");
 
-		html.append("<div id='option'>");
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" />");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" />");
-		html.append("</div>");
+		html.append("<div id='option'>\n");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" />\n");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" />\n");
+		html.append("</div>\n");
 
 		html.append("<p>Point per correct answer: <input type=\"text\" name=\"maxScore\""
-				+ "\" required></input></p>");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
+				+ "\" required></input></p>\n");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
 
 		// checkbox: tick means true, otherwise null means false
-		html.append("<p><input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input></p>");
+		html.append("<p><input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input></p>\n");
 
 		// Hidden information - questionType,tag and number of answers
 		// TODO: numAnswer will be automatically generated in javascript??
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
-				+ QuestionBase.MA + "\" ></input></p>");
+				+ QuestionBase.MA + "\" ></input></p>\n");
 		html.append("<p><input id=\"numAnswers\" type=\"hidden\" name=\"numAnswers\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+		html.append("<input type=\"submit\" value = \"Save\"/></form>\n");
+
+		return html.toString();
+	}
+
+	public static String printCreateHtmlSinglePage() {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>This page will guide you to create a multi-answer question</h4>\n");
+		html.append("<p> Please enter proposed question description and answer </p>\n");
+		html.append("<p class= 'description'>Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>\n");
+
+		// add answers, can be expanded
+		html.append("<div id=\"form_input\">\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\""
+				+ "\" required></input></p>\n");
+		html.append("</div>\n");
+
+		html.append("<div id='option'>\n");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" />\n");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" />\n");
+		html.append("</div>\n");
+
+		html.append("<p>Point per correct answer: <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+
+		// checkbox: tick means true, otherwise null means false
+		html.append("<p><input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input></p>\n");
+
+		// Hidden information - questionType,tag and number of answers
+		// TODO: numAnswer will be automatically generated in javascript??
+		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
+				+ QuestionBase.MA + "\" ></input></p>\n");
+		html.append("<p><input id=\"numAnswers\" type=\"hidden\" name=\"numAnswers\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 
 		return html.toString();
 	}
@@ -130,31 +166,31 @@ public class MAQuestion extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">\n");
 		html.append("<p>Question Description:\n ");
-		html.append(questionDescription + "</p>");
+		html.append(questionDescription + "</p>\n");
 
 		List<String> answerList = Helper.parseTags(answer);
 		for (int i = 0; i < answerList.size(); i++) {
 			html.append("<p><input type=\"text\" name=\"answer" + i + "_"
-					+ getQuestionId() + "\"></input></p>");
+					+ getQuestionId() + "\"></input></p>\n");
 		}
 
 		// Hidden information - questionType and questionId information
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
-				+ timeLimit + "\" ></input></p>");
+				+ timeLimit + "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
 				+ getQuestionId() + "\" value=\"" + answerList.size()
 				+ "\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
-				+ "\" ></input></p>");
+				+ "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
-				+ "\"  ></input></p>");
-		html.append("<input type=\"submit\" value = \"Next\"/></form>");
+				+ "\"  ></input></p>\n");
+		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
 
 		return html.toString();
 	}
@@ -222,31 +258,31 @@ public class MAQuestion extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 
 		// form action should be here
 		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>");
+		html.append(questionDescription + "</p>\n");
 
 		// TODO: use javascript to dynamically generate multi-answer field
 		// TODO: use javascript to dinamically check repeated same answers
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer0_"
-				+ getQuestionId() + "\" ></input></p>");
+				+ getQuestionId() + "\" ></input></p>\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer1_"
-				+ getQuestionId() + "\" ></input></p>");
+				+ getQuestionId() + "\" ></input></p>\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer2_"
-				+ getQuestionId() + "\" ></input></p>");
+				+ getQuestionId() + "\" ></input></p>\n");
 
 		// Hidden information - questionType and questionId information
 		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
 				+ getQuestionId() + "\" value=\"3\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
-				+ "\" ></input></p>");
+				+ "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
-				+ "\"  ></input></p>");
+				+ "\"  ></input></p>\n");
 
 		return html.toString();
 	}
