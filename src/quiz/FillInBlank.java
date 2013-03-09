@@ -53,15 +53,20 @@ public class FillInBlank extends QuestionBase {
 	public static String printCreateHtml() {
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a Fill-In-Blank question</h1>");
-		html.append("<p> Please enter proposed question description and answer. In order to insert a blank, please follow the format #blank# </p>");
+		html.append("<p> Please enter proposed question description and answer. In order to insert a blank, please follow the format #blank# \n</p>");
 
 		// create the form
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
-		html.append("<p> i.e. In order to express a question: I think _____ is awesome. You should type it as \"I think #blank# is awesome\"</p>");
-		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+		html.append("<form name=\"FIB_form\" action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkBlank()\">");
+		html.append("<p> i.e. In order to express a question: I think _____ is awesome. You should type it as \"I think #blank# is awesome\"\n</p>");
+		html.append("<p class=\"description\">Question Description:</p>");
+		html.append("<p id=\"FIB\"><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
 				+ "\" required></textarea></p>");
+		// add a blank button
+		html.append("<input type=\"button\" value=\"add a blank\" onclick=\"addBlank();\" />");
+
+		// add answer field
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
-				+ "\" required>></input></p>");
+				+ "\" required></input></p>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
 				+ "\" required></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");

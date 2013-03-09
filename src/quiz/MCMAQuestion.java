@@ -157,7 +157,7 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<h1>This page will guide you to create a multiChoice-MultiAnswer question</h1>");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description here: </p>");
-		html.append("<p class=description>Question Description:</p>");
+		html.append("<p class=\"description\">Question Description:</p>");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
 		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>");
 

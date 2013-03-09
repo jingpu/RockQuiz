@@ -1,6 +1,6 @@
 
 function checkScore() {
-	val = document.forms[0].maxScore.value;
+	var val = document.forms[0].maxScore.value;
 	
 	if (isNaN (val-0) || val == null || val =="") {
 		 alert("score should be an integer!");
@@ -9,6 +9,33 @@ function checkScore() {
 	}
 	return true;
 }
+
+function containsBlank() {
+	var str = document.FIB_form.questionDescription.value;
+	if (str == null || str == "" || str.indexOf("#blank#") == -1) {
+		document.FIB_form.questionDescription.focus( );
+		 return false;
+	}
+	return true;
+}
+
+function checkBlank() {
+	if (!checkScore()) return false;
+	if (!containsBlank()) {
+		 alert("The question description must contains a #blank#");
+		return false;
+	}
+	return true;
+}
+
+function addBlank() {
+	if (containsBlank()) {
+		alert("One question can contain only one blank");
+		return;
+	}
+	document.FIB_form.questionDescription.value += "#blank#";
+}
+
 
 var numAnswer = 1;
 function addAnswer() {
