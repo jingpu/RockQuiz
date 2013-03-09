@@ -254,8 +254,8 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	public static String printReference() {
 		StringBuilder refString = new StringBuilder();
 		refString
-				.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS/match_creation_style.css\"/>");
-		refString.append("<script src=\"JavaScript/score_alert.js\"></script>");
+				.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS/question_style.css\"/>");
+		refString.append("<script src=\"JavaScript/change_form.js\"></script>");
 		return refString.toString();
 	}
 

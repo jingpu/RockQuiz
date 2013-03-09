@@ -49,7 +49,7 @@ public class MAQuestion extends QuestionBase {
 			stmt.executeQuery("USE c_cs108_yzhao3");
 			ResultSet rs = stmt.executeQuery(queryStmt);
 			rs.next();
-			tmpIsOrder = rs.getString(9);
+			tmpIsOrder = rs.getString("is_order");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,22 +87,26 @@ public class MAQuestion extends QuestionBase {
 	}
 
 	public static String printCreateHtml() {
-		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+		html.append("<p class= 'description'>Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
 				+ "\" required></textarea></p>\n");
 
-		// TODO: javascript to dynamically expand the number of answers
+		// add answers, can be expanded
+		html.append("<div id=\"form_input\">");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\""
 				+ "\" required></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer1\""
-				+ "\" required></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer2\""
-				+ "\" required></input></p>");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+		html.append("</div>");
+
+		html.append("<div id='option'>");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" />");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" />");
+		html.append("</div>");
+
+		html.append("<p>Point per correct answer: <input type=\"text\" name=\"maxScore\""
 				+ "\" required></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
@@ -113,9 +117,10 @@ public class MAQuestion extends QuestionBase {
 		// TODO: numAnswer will be automatically generated in javascript??
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
 				+ QuestionBase.MA + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"numAnswers\" value=\"3\"></input></p>\n");
+		html.append("<p><input id=\"numAnswers\" type=\"hidden\" name=\"numAnswers\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+
 		return html.toString();
 	}
 
@@ -131,16 +136,13 @@ public class MAQuestion extends QuestionBase {
 		html.append("<p>Question Description:\n ");
 		html.append(questionDescription + "</p>");
 
-		// TODO: use javascript to dynamically generate multi-answer field
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer0_"
-				+ getQuestionId() + "\" ></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer1_"
-				+ getQuestionId() + "\" ></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer2_"
-				+ getQuestionId() + "\" ></input></p>");
+		List<String> answerList = Helper.parseTags(answer);
+		for (int i = 0; i < answerList.size(); i++) {
+			html.append("<p><input type=\"text\" name=\"answer" + i + "_"
+					+ getQuestionId() + "\"></input></p>");
+		}
 
 		// Hidden information - questionType and questionId information
-		// TODO: dynamically change numAnswers
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
@@ -176,7 +178,7 @@ public class MAQuestion extends QuestionBase {
 		int score = 0;
 		for (int i = 0; i < answerList.length; i++) {
 			if (inputList[i].equals(answerList[i]))
-				score += 3;
+				score += maxScore;
 			else
 				score -= 1;
 		}
@@ -191,11 +193,11 @@ public class MAQuestion extends QuestionBase {
 		}
 		for (String str : inputList) {
 			if (answerSet.contains(str))
-				score += 3;
+				score += maxScore;
 			else
 				score -= 1;
 		}
-		return score;
+		return score >= 0 ? score : 0;
 	}
 
 	private String[] parseAnswer(String answerString) {
