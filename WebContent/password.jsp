@@ -10,11 +10,15 @@
 	String error = request.getParameter("err");
 	System.out.println(error);
 	String id = (String) session.getAttribute("guest");
+	if (id == null || id.equals("guest")) {
+		response.sendRedirect("index.html");
+		return;
+	}
 %>
 <body>
 	<h1>Change Password</h1>
 	<%
-		if (error.equals("0")) {
+		if (error != null && error.equals("0")) {
 			System.out.println("valid");
 	%>
 	New Password Saved
@@ -25,7 +29,7 @@
 		<p>
 			Current Password: <input type="password" name="currPwd">
 			<%
-				if (error.equals("1")) {
+				if (error != null && error.equals("1")) {
 					System.out.println("error1");
 			%>
 			Wrong Password
@@ -39,7 +43,7 @@
 		<p>
 			Confirm Password: <input type="password" name="cnfPwd">
 			<%
-				if (error.equals("2")) {
+				if (error != null && error.equals("2")) {
 					System.out.println("error2");
 			%>
 			Unmatched New Password

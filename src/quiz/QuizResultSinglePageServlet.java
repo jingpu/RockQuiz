@@ -104,6 +104,7 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 		out.println("<p>Time: " + quiz.getTimeElapsed(quizId) + "s </p>");
 		out.println("<p><a href=\"" + quiz.getSummaryPage()
 				+ "\">Go back to summary page.</p>");
+		//*** add chanllenge button
 		out.println("</body>");
 		out.println("</html>");
 
