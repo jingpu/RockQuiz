@@ -65,7 +65,12 @@
 			</div>
 
 			<dl id="browse">
+				<dt class="create">
+					<a href="QuizCreationServlet">Create Quiz</a>
+				</dt>
+			
 				<dt>Announcements</dt>
+				<dd>
 				<%
 					Announce ann = user.getLatestAnnounce();
 					if (ann != null) {
@@ -84,6 +89,7 @@
 				<%
 					}
 				%>
+				</dd>
 				<dd class="readmore">
 					<a href="announce.jsp"><b>MORE</b></a>
 				</dd>
@@ -107,12 +113,7 @@
 				<dd class="readmore">
 					<a href=<%=mailBoxUrl%>><b>MORE</b></a>
 				</dd>
-				<dt>
-					<form action="QuizCreationServlet" method="post">
-						<input type="submit" value="Create Quiz">
-					</form>
-
-				</dt>
+				
 				<dt>Quick Link</dt>
 				<%
 					if (user.getInfo("status").equals("s")) {

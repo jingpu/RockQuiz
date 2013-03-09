@@ -103,6 +103,18 @@ h3 {
 	font-weight: bold;
 }
 
+#browse dt a {
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+	padding: 3px 22px;
+}
+
+#browse dt a:hover {
+	background: #f73838;
+}
+
 #browse dd {
 	background: #227293;
 	color: white;
@@ -123,6 +135,11 @@ h3 {
 #browse dd a:hover {
 	background: #74a7b7;
 }
+
+#browse .create {
+	padding: 10px;
+}
+
 
 #browse .searchform {
 	padding: 10px;
@@ -160,7 +177,7 @@ h3 {
 #body .rightbox {
 	margin-top: 5px;
 	color: #464646;
-	height: 100px;
+	height: 200px;
 }
 
 #body .leftbox {

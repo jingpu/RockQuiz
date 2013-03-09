@@ -164,12 +164,11 @@ h3 {
 table {
 	font-size: 12px;
 }
+
 #body p {
 	margin: 1em 0;
 	padding: 0;
 }
-
-
 
 #body .br {
 	border-bottom: 2px solid #659db4;

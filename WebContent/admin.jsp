@@ -14,6 +14,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="admin_style.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
 
@@ -54,9 +55,20 @@
 <title>Admin - <%=userId%></title>
 </head>
 <body>
-	<h2>
-		<a href="home.jsp">Home</a>
-	</h2>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Admin: <%=userId%></h1>
+				<h3><%=new Date()%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			
+	
+		<div id="body">
 	<%
 		String del = request.getParameter("del");
 		if (del != null) {
@@ -91,14 +103,20 @@
 	<%
 		}
 	%>
-	<h1>Write Announcement</h1>
+
+	<div class="inner">
+	<div class="leftbox">
+	<h3>Write Announcement</h3>
 	<form action="WriteAnnounce" method="post" id="announce"></form>
 	<p>
 		<textarea rows="6" cols="50" name="content" form="announce"
 			placeholder="Write new announcement"></textarea>
 	</p>
-	<input type="submit" value="Post" form="announce">
-	<h1>Account Management</h1>
+	<input type="submit" value="Post" form="announce" margin-bottom="35">
+	<br>
+	<br>
+	<br>
+	<h3>Account Management</h3>
 	<form action="DeleteAccount" method="post">
 		<p>
 			<input type="text" name="id" placeholder="User name"> <input
@@ -113,13 +131,23 @@
 
 		</p>
 	</form>
-	<h1>Quiz Management</h1>
+	<br>
+	<br>
+	<h3>Quiz Management</h3>
 	<form action="DeleteQuiz" method="post">
 		<p>
 			<input type="text" name="quiz" placeholder="Quiz name"> <input
 				type="submit" value="Delete Quiz">
 		</p>
 	</form>
-	<h1>RockQuiz Statistics</h1>
+	</div>
+	
+	<div class="rightbox">
+	<h3>RockQuiz Statistics</h3>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>
