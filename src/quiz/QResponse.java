@@ -66,6 +66,24 @@ public class QResponse extends QuestionBase {
 		return html.toString();
 	}
 
+	public static String printCreateOnSamePage() {
+		// TODO Auto-generated method stub
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>Create a question-response question</h4>\n");
+		html.append("<p> Please enter proposed question description and answer </p>\n");
+		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
+
+		// Hidden information - questionType and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
+				+ QuestionBase.QR + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
+
+		return html.toString();
+	}
+
 	@Override
 	public String printReadHtml() {
 		StringBuilder html = new StringBuilder();
