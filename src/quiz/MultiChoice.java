@@ -75,11 +75,16 @@ public class MultiChoice extends QuestionBase {
 		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
 
 		// Choice options
-		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input> <input type=\"radio\" name=\"answer\" value=\"choice0\"></input></p>");
-		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choice1\" ></input> <input type=\"radio\" name=\"answer\" value=\"choice1\"></input></p>");
-		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input> <input type=\"radio\" name=\"answer\" value=\"choice2\"></input></p>");
-		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input> <input type=\"radio\" name=\"answer\" value=\"choice3\"></input></p>");
+		html.append("<div id=\"multi_choice\">");
+		html.append("<p>Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"radio\" name=\"answer\" value=\"choice0\"></input></p>");
+		html.append("<p>Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"radio\" name=\"answer\" value=\"choice1\"></input></p>");
+		html.append("<p>Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"radio\" name=\"answer\" value=\"choice2\"></input></p>");
+		html.append("<p>Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"radio\" name=\"answer\" value=\"choice3\"></input></p>");
+		html.append("</div>");
 
+		// add/delete choices
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice();\" />");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice();\" />");
 		// Answer and Full Score
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
@@ -87,7 +92,7 @@ public class MultiChoice extends QuestionBase {
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MC + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"numChoices\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"numChoices\" id=\"numChoices\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
 
@@ -108,13 +113,11 @@ public class MultiChoice extends QuestionBase {
 		html.append(questionDescription + "</p>");
 
 		// create choice options
-		String choicesList[] = choices.split("#");
-		for (int i = 0; i < choicesList.length; i++) {
-			if (choicesList[i].isEmpty()) // remove empty string at head/end
-				++i;
+		List<String> choiceList = Helper.parseTags(choices);
+		for (int i = 0; i < choiceList.size(); i++) {
 			html.append("<p><input type=\"radio\" name=\"answer_"
-					+ getQuestionId() + "\" value= \"" + choicesList[i] + "\">"
-					+ choicesList[i] + "</input></p>");
+					+ getQuestionId() + "\" value= \"" + choiceList.get(i)
+					+ "\">" + choiceList.get(i) + "</input></p>");
 		}
 
 		// Hidden information - questionType and questionId information

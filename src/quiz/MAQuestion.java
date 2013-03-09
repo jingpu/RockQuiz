@@ -146,7 +146,8 @@ public class MAQuestion extends QuestionBase {
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
-				+ getQuestionId() + "\" value=\"3\"></input></p>\n");
+				+ getQuestionId() + "\" value=\"" + answerList.size()
+				+ "\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
 				+ "\" ></input></p>");
