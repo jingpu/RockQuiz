@@ -1,3 +1,17 @@
+$(document).ready(function() {
+	var timeLimit = $("#time_limit").val();
+	if (timeLimit != "" && timeLimit != null && timeLimit != 0) {
+		setTimeout(function(){
+			alert("Your time is out, please move forward to next question!");
+			submitForm();
+			},timeLimit * 1000);	
+	}
+//	setTimeout(document.write(timeLimit), 5000);
+});
+
+function submitForm() {
+	document.forms[0].submit();
+}
 
 function checkScore() {
 	var val = document.forms[0].maxScore.value;

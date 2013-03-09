@@ -121,7 +121,7 @@ public class MultiChoice extends QuestionBase {
 		}
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
@@ -222,7 +222,10 @@ public class MultiChoice extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		return request.getParameter("answer_" + getQuestionId());
+		String userAnswer = request.getParameter("answer_" + getQuestionId());
+		if (userAnswer == null)
+			userAnswer = "";
+		return userAnswer;
 	}
 
 	public Element toElement(Document doc) {
