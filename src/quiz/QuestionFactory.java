@@ -257,4 +257,8 @@ public class QuestionFactory {
 		return "error";
 	}
 
+	public static String printReference() {
+		return QuestionBase.printReference();
+	}
+
 }

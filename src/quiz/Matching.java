@@ -161,7 +161,7 @@ public class Matching extends MCMAQuestion {
 			// + "\">" + answersList.get(i) + "</input></p>");
 		}
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numOption_"
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");

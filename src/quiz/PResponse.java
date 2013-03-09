@@ -131,8 +131,9 @@ public class PResponse extends QuestionBase {
 				+ getQuestionId() + "\" ></input></p>\n");
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
-				+ timeLimit + "\" ></input></p>\n");
+		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input></p>");
+
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
 				+ "\"></input></p>\n");
@@ -205,7 +206,10 @@ public class PResponse extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		return request.getParameter("answer_" + getQuestionId());
+		String userAnswer = request.getParameter("answer_" + getQuestionId());
+		if (userAnswer == null)
+			userAnswer = "";
+		return userAnswer;
 	}
 
 	public Element toElement(Document doc) {

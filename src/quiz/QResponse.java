@@ -106,9 +106,8 @@ public class QResponse extends QuestionBase {
 				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
-		// TODO: timeLimit pass to javascript
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
-				+ timeLimit + "\" ></input></p>");
+		html.append("<input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input>");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
 				+ "\" ></input></p>");
@@ -166,7 +165,10 @@ public class QResponse extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		return request.getParameter("answer_" + getQuestionId());
+		String userAnswer = request.getParameter("answer_" + getQuestionId());
+		if (userAnswer == null)
+			userAnswer = "";
+		return userAnswer;
 	}
 
 	public Element toElement(Document doc) {

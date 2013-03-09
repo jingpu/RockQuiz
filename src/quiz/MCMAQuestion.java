@@ -218,7 +218,6 @@ public class MCMAQuestion extends QuestionBase {
 				+ QuestionBase.MCMA + "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");
 
-
 		return html.toString();
 
 	}
@@ -246,8 +245,9 @@ public class MCMAQuestion extends QuestionBase {
 		}
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
-				+ timeLimit + "\" ></input></p>\n");
+		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input></p>");
+
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
@@ -313,6 +313,8 @@ public class MCMAQuestion extends QuestionBase {
 	public String getUserAnswer(HttpServletRequest request) {
 		String answerList[] = request.getParameterValues("answer_"
 				+ getQuestionId());
+		if (answerList == null)
+			return "";
 		StringBuilder answer = new StringBuilder();
 		for (String str : answerList) {
 			answer.append("#");

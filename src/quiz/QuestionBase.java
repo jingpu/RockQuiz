@@ -255,8 +255,9 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		StringBuilder refString = new StringBuilder();
 		refString
 				.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS/question_style.css\"/>");
+		refString
+				.append("<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js\"></script>");
 		refString.append("<script src=\"JavaScript/change_form.js\"></script>");
 		return refString.toString();
 	}
-
 }
