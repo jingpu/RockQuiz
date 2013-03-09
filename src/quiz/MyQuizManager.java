@@ -236,4 +236,28 @@ public final class MyQuizManager implements QuizManager {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#deleteQuiz(java.lang.String)
+	 */
+	@Override
+	public void deleteQuiz(String name) {
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// delete from Global_Quiz_Info_Table
+			stmt.executeUpdate("DELETE FROM Global_Quiz_Info_Table"
+							+ " WHERE quizName = \"" + name + "\"");
+			// drop quizName_Content_Table
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + name
+					+ "_Content_Table");
+			// drop quizName_Event_Table
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + name
+					+ "_Event_Table");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
