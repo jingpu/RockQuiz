@@ -155,7 +155,7 @@ public class MCMAQuestion extends QuestionBase {
 	public static String printCreateHtml() {
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a multiChoice-MultiAnswer question</h1>");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description here: </p>");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
 		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>");
@@ -334,6 +334,13 @@ public class MCMAQuestion extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
+	}
+
+	/**
+	 * @return
+	 */
+	public static String printReference() {
+		return QuestionBase.printReference();
 	}
 
 }

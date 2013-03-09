@@ -90,15 +90,20 @@ public class MAQuestion extends QuestionBase {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
+		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>\n");
 
 		// TODO: javascript to dynamically expand the number of answers
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\" ></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer1\" ></input></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer2\" ></input></p>");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\""
+				+ "\" required></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer1\""
+				+ "\" required></input></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer2\""
+				+ "\" required></input></p>");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// checkbox: tick means true, otherwise null means false
@@ -123,7 +128,7 @@ public class MAQuestion extends QuestionBase {
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
-		html.append("<p>Question Description: ");
+		html.append("<p>Question Description:\n ");
 		html.append(questionDescription + "</p>");
 
 		// TODO: use javascript to dynamically generate multi-answer field
@@ -322,4 +327,12 @@ public class MAQuestion extends QuestionBase {
 
 		return questionElem;
 	}
+
+	/**
+	 * @return
+	 */
+	public static String printReference() {
+		return QuestionBase.printReference();
+	}
+
 }

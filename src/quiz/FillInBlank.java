@@ -56,11 +56,14 @@ public class FillInBlank extends QuestionBase {
 		html.append("<p> Please enter proposed question description and answer. In order to insert a blank, please follow the format #blank# </p>");
 
 		// create the form
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> i.e. In order to express a question: I think _____ is awesome. You should type it as \"I think #blank# is awesome\"</p>");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required>></input></p>");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// Hidden information - question Type and tag information
@@ -219,4 +222,12 @@ public class FillInBlank extends QuestionBase {
 
 		return questionElem;
 	}
+
+	/**
+	 * @return
+	 */
+	public static String printReference() {
+		return QuestionBase.printReference();
+	}
+
 }

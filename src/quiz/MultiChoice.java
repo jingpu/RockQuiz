@@ -70,9 +70,9 @@ public class MultiChoice extends QuestionBase {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a multiChoice question</h1>");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description and answer </p>");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
 
 		// Choice options
 		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input> <input type=\"radio\" name=\"answer\" value=\"choice0\"></input></p>");
@@ -268,5 +268,12 @@ public class MultiChoice extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
+	}
+
+	/**
+	 * @return
+	 */
+	public static String printReference() {
+		return QuestionBase.printReference();
 	}
 }

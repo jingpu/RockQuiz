@@ -1,0 +1,25 @@
+@CHARSET "ISO-8859-1";
+
+#options {
+		float: left;
+		width:110px;
+		height:90px;
+		margin-left:20px;
+		text-size: 
+}
+
+
+#answers {
+		float: left;
+		width:110px;
+		height:90px;
+		margin-left:60px;
+}
+
+#option {
+		float: left;
+		width:110px;
+		height:90px;
+		margin-top:60px;
+		margin-left:100px;
+}

@@ -214,4 +214,27 @@ public class QuestionFactory {
 		// test printSummaryPageHTML method
 		System.out.print(printCreateHtml(questionTypes[0]));
 	}
+
+	/**
+	 * @param questionType
+	 * @return
+	 */
+	public static String printReference(String questionType) {
+		if (questionType.equals(QuestionBase.QR))
+			return QResponse.printReference();
+		else if (questionType.equals(QuestionBase.FIB))
+			return FillInBlank.printReference();
+		else if (questionType.equals(QuestionBase.MC))
+			return MultiChoice.printReference();
+		else if (questionType.equals(QuestionBase.PR))
+			return PResponse.printReference();
+		else if (questionType.equals(QuestionBase.MA))
+			return MAQuestion.printReference();
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.printReference();
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.printReference();
+		return "error";
+	}
+
 }

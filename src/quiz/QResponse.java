@@ -51,11 +51,14 @@ public class QResponse extends QuestionBase {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a question-response question</h1>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required></input></p>");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// Hidden information - questionType and tag information
@@ -184,5 +187,9 @@ public class QResponse extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
+	}
+
+	public static String printReference() {
+		return "<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS/QR_creation_style.css\"/>";
 	}
 }

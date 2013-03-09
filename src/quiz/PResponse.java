@@ -65,14 +65,18 @@ public class PResponse extends QuestionBase {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a picture-response question</h1>");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description and answer </p>");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>");
 
 		// url information
-		html.append("<p>Picture URL: <input type=\"text\" name=\"url\" ></input></p>\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Picture URL: <input type=\"text\" name=\"url\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required></input></p>");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
 		// Hidden information - question Type and tag information
@@ -92,7 +96,7 @@ public class PResponse extends QuestionBase {
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" >");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
 
@@ -226,5 +230,12 @@ public class PResponse extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
+	}
+
+	/**
+	 * @return
+	 */
+	public static String printReference() {
+		return QuestionBase.printReference();
 	}
 }
