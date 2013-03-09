@@ -1,0 +1,38 @@
+@CHARSET "ISO-8859-1";
+
+#options {
+		float: left;
+		width:110px;
+		height:90px;
+		margin-left:20px;
+}
+
+
+#answers {
+		float: left;
+		width:110px;
+		height:90px;
+		margin-left:60px;
+}
+
+#option {
+		float: left;
+		width:110px;
+		height:90px;
+		margin-top:60px;
+		margin-left:120px;
+}
+
+#form_input {
+		float: left;
+		width:110px;
+		height:90px;
+		margin-left:20px;
+		text-size: 
+}
+
+.description {
+		font-family: "Times New Roman", Time, serif;
+		font-style: italic;
+		font-size: 50;
+}

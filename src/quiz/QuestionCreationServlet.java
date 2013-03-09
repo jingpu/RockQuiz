@@ -176,6 +176,7 @@ public class QuestionCreationServlet extends HttpServlet {
 			out.println("<head>");
 			out.println("<meta charset=\"UTF-8\">");
 			out.println("<title>Create Question</title>");
+			out.println(QuestionFactory.printReference(questionType));
 			out.println("</head>");
 			out.println("<body>");
 
