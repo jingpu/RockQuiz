@@ -6,10 +6,12 @@
 <head>
 <script>
 function addQuestion() {
+	var questionType = document.getElementById("questionTypeList").value;
     var questions = document.getElementById("questions");
-    var qr = document.getElementById("qr_template");
+    var qr = document.getElementById(questionType+"_template");
     var question = qr.cloneNode(true);
     question.removeAttribute("hidden");
+    question.id = questionType;
     addSuffix(question);
     questions.appendChild(question);
     incMaxNum();
@@ -63,7 +65,7 @@ function deleteQuestion(button) {
 
 		<h2>Questions:</h2>
 		<div id="questions"></div>
-		<select name="questionType">
+		<select name="questionType" id="questionTypeList">
 			<%
 				String[] questionTypes = QuestionFactory.getQuestionTypes();
 				for (int i = 0; i < questionTypes.length; i++) {
@@ -78,11 +80,18 @@ function deleteQuestion(button) {
 		<input type="submit" value="Submit Quiz">
 	</form>
 	<!-- question templates of all supported question -->
-	<div id="qr_template" hidden="hidden">
 	<%
-	out.println(QResponse.printCreateOnSamePage());
+		for (int i = 0; i < questionTypes.length; i++) {
+			String questionType = questionTypes[i];
 	%>
-	<input type="button" value="Delete" onclick="deleteQuestion(this);">
+	<div id="<%=questionType%>_template" hidden="hidden" class="question">
+		<%
+			out.println(QuestionFactory.printCreateHtmlSinglePage(questionType));
+		%>
+		<input type="button" value="Delete" onclick="deleteQuestion(this);">
 	</div>
+	<%
+		}
+	%>
 </body>
 </html>
