@@ -118,8 +118,8 @@ public class Account implements User{
 	 * @param content - the content of the challenge letter
 	 * @return true if sent successfully
 	 * **/
-	public boolean sendChallengeMessage(String to, String content){
-		return UserManager.sendMsg(new Message(userId, to, "c", content));
+	public boolean sendChallengeMessage(String to, String quiz, String content){
+		return UserManager.sendMsg(new Message(userId, to, "c", quiz, content));
 	}
 	
 	/**Get the content of a message without activate "ifRead" flag.

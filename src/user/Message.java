@@ -1,5 +1,9 @@
 package user;
 
+import quiz.MyQuizManager;
+import quiz.Quiz;
+import quiz.QuizManager;
+
 /**
  * @author youyuan
  * **/
@@ -13,43 +17,20 @@ public class Message {
 	public final String content;
 	private String time;
 	private boolean ifRead;
-	private static final String challengeTitle = " wants to challenge you";
-	private static final String friendRequestTitle = " wants to add you";
-	private static final String friendConfirmTitle = " are friends now";
-	private static final String challengeContent = "";
-	private static final String friendRequestContent = "";
-	private static final String friendConfirmContent = "";
+	private static final String challengeTitle = ">>>CHALLENGE Letter<<<";
+	private static final String friendRequestTitle = "**Friend Request**";
+	private static final String friendConfirmTitle = " Are Friends Now";
+	private static final String challengeContent = " wants to challenge you with this quiz ";
+	private static final String friendRequestContent = " want to add you as friend. <br>";
+	private static final String friendConfirmContent = "Say hello to ";
 	
 	public Message(String from, String to, String type, String title, String content){
 		this.from = from;
 		this.to = to;
 		this.type = type;
+		this.title = title;
+		this.content = content;
 		this.ifRead = false;
-		if(type.equals("c")){
-			this.title = from + challengeTitle;
-			this.content = challengeContent + content;
-		} else if(type.equals("r")){
-			this.title = from + friendRequestTitle;
-			this.content = friendRequestContent;
-		} else if(type.equals("f")){
-			this.title = "You and " + from + friendConfirmTitle;
-			this.content = friendConfirmContent;
-		} else if(type.equals("n")){
-			this.title = title;
-			this.content = content;
-		} else {
-			this.title = "";
-			this.content = "";
-			System.out.println("Invalid Type");
-		}
-	}
-	
-	public Message(String from, String to, String type){
-		this(from, to, type, "", "");
-	}
-	
-	public Message(String from, String to, String type, String content){
-		this(from, to, type, "", content);
 	}
 	
 	public void setTime(String time){
@@ -66,5 +47,44 @@ public class Message {
 	
 	public boolean getRead(){
 		return this.ifRead;
+	}
+	
+	public String getTitle(){
+		if(type.equals("c")){
+			return challengeTitle;
+		} else if(type.equals("r")){
+			return friendRequestTitle;
+		} else if(type.equals("f")){
+			return "You and " + from + friendConfirmTitle;
+		} else if(type.equals("n")){
+			if(title.equals("")) return "(no subject)";
+			return title;
+		} else {
+			System.out.println("Invalid Type");
+		}
+		return "(no subject)";
+	}
+	
+	public String getContent(){
+		String fromDisp = "<a href='userpage.jsp?id=" + from + "'>" + from + "</a>";
+		if(type.equals("c")){
+			QuizManager man = new MyQuizManager();
+			Quiz quiz = man.getQuiz(content);
+			String quizUrl = quiz.getSummaryPage();
+			String quizDisp = "<a href='" + quizUrl + "'>" + content + "</a>";
+			return fromDisp + challengeContent + quizDisp;
+		} else if(type.equals("r")){
+			StringBuilder sb = new StringBuilder();
+			sb.append(fromDisp).append(friendRequestContent);
+			sb.append("<a href='RespondFriend?to="+ from +"'>Accept</a>");
+			return sb.toString();
+		} else if(type.equals("f")){
+			return friendConfirmContent + fromDisp;
+		} else if(type.equals("n")){
+			return content;
+		} else {
+			System.out.println("Invalid Type");
+			return "";
+		}
 	}
 }

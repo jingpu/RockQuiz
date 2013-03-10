@@ -84,6 +84,11 @@ public final class Helper {
 		return replacedName;
 	}
 
+	public static String replaceComma(String quizName) {
+		String str = quizName.replaceAll("'","''");
+		return str;
+	}
+	
 	public static String listToString(List<String> tags) {
 		String tagString = "";
 		if (tags.size() > 1) {

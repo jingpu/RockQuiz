@@ -27,28 +27,30 @@
 				<h1>Search Page</h1>
 				<div id="nav">
 					<h2>
-						<a href="home.jsp">Home</a> |  <a href="Logout">Log out</a>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
 					</h2>
 				</div>
 			</div>
-			
+
 			<dl id="browse">
 				<%--choose whether to search user--%>
-				<dt>Quizzes Search | <a href=<%=searchUser%>>Users Search</a></dt>
+				<dt>
+					Quizzes Search | <a href=<%=searchUser%>>Users Search</a>
+				</dt>
 				<dd class="searchform">
 					<%--quizzes/users search box--%>
 					<form action="Search" method="post">
 						<div>
-							<input type="text" name="query" size="40" value=<%=query%>> 
+							<input type="text" name="query" size="40" value=<%=query%>>
 						</div>
 						<div class="readmore">
 							<input type="image" src="images/search.gif" />
 						</div>
-					</form>				
+					</form>
 				</dd>
 			</dl>
-			
-			<div id="body">											
+
+			<div id="body">
 				<%--exactly matched user result--%>
 				<p>Related user</p>
 				<%

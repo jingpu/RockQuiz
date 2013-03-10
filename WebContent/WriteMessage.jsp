@@ -7,7 +7,9 @@
 <title>Composing Message</title>
 </head>
 <%
-	String userId = request.getParameter("username");
+	String userId = request.getParameter("id");
+	String toUser = request.getParameter("to");
+	toUser = toUser == null ? "" : toUser;
 	String guest = (String) session.getAttribute("guest");
 	if (userId == null || guest.equals("guest")) {
 		response.sendRedirect("index.html");
@@ -16,14 +18,15 @@
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	}
-	String mailBoxInboxUrl = "Mailbox_inbox.jsp?id=" + userId;
+	String referer = request.getHeader("referer"); 
+	System.out.println(referer);
 %>
 
 <body>
 	Fri Mar 08 13:36:11 PST 2013
 	<form action="SendMessage" id="Compose" method="post"></form>
 	<p>
-		To <input type="text" name="toUser" form="Compose">
+		To <input type="text" name="toUser" form="Compose" value="<%=toUser%>">
 	</p>
 	<p>
 		<input type="text" name="title" placeholder="Subject" form="Compose">
@@ -31,9 +34,9 @@
 	<textarea rows="10" cols="50" name="content" form="Compose"
 		placeholder="Composing message here"></textarea>
 	<p>
-		<input type="submit" value="Send" form="Compose" onclick="checkTitle()"><a
-			href="Mailbox_inbox.jsp?id=yy"><input type="submit"
-			value="Cancel"></a>
+		<input type="hidden" name="retUrl" value="<%=referer%>" form="Compose">
+		<input type="submit" value="Send" form="Compose"><a
+			href="<%=referer%>"><input type="submit" value="Cancel"></a>
 	</p>
 </body>
 </html>

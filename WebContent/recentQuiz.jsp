@@ -18,17 +18,16 @@
 	<h1>Recent Quizzes</h1>
 	<%
 		QuizManager man = new MyQuizManager();
-		List<String> recentQuizzes = man.getRecentCreateQuiz();
+		List<Quiz> recentQuizzes = man.getRecentCreateQuiz(20);
 		System.out.println(recentQuizzes);
 		int i = 0;
-		for (String name : recentQuizzes) {
+		for (Quiz quiz : recentQuizzes) {
 			i++;
-			Quiz quiz = man.getQuiz(name);
 			String quizUrl = quiz.getSummaryPage();
 			String creator = quiz.getCreatorId();
 	%>
 	<p>
-		<a href=<%=quizUrl%>><%=i%>. <%=name%></a> (by:<a
+		<a href=<%=quizUrl%>><%=i%>. <%=quiz.getQuizName()%></a> (by:<a
 			href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)
 	</p>
 	<%

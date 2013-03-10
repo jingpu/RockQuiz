@@ -1,18 +1,20 @@
 @CHARSET "UTF-8";
 
 body {
-        font-family: tahoma, helvetica, arial, sans-serif;
-        font-size: 10px;
-        text-align: center;
-        background: url(images/home_bg.gif);
-    }
-    
-html, body, #wrapper, h1 {
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 10px;
+	text-align: center;
+	background: url(images/home_bg.gif);
+}
+
+html,body,#wrapper,h1 {
 	margin: 0;
 	padding: 0;
 }
 
-img { border: 0; }
+img {
+	border: 0;
+}
 
 #wrapper {
 	margin: auto;
@@ -20,7 +22,6 @@ img { border: 0; }
 	width: 860px;
 	position: relative;
 }
-
 
 h1 {
 	font-size: 30pt;
@@ -57,7 +58,6 @@ h3 {
 	text-align: right;
 }
 
-
 #inner {
 	border-left: 2px solid white;
 	border-right: 2px solid white;
@@ -73,8 +73,8 @@ h3 {
 	position: relative;
 }
 
-#nav, #nav a {
-	text-align:center;
+#nav,#nav a {
+	text-align: center;
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
@@ -128,7 +128,7 @@ h3 {
 	padding: 10px;
 }
 
-#browse .text, #browse select {
+#browse .text,#browse select {
 	width: 160px;
 }
 
@@ -139,14 +139,13 @@ h3 {
 
 #browse form div {
 	padding-bottom: 8px;
-	width: 160px; 
+	width: 160px;
 }
-
 
 #body {
 	float: right;
 	width: 550px;
-	margin: 2px 1px 0 0;	
+	margin: 2px 1px 0 0;
 	border: 2px solid #659db4;
 	position: relative;
 }
@@ -156,8 +155,7 @@ h3 {
 	padding: 0;
 }
 
-#body .leftbox,
-#body .rightbox {
+#body .leftbox,#body .rightbox {
 	margin-top: 5px;
 	color: #464646;
 	height: 100px;

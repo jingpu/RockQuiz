@@ -140,7 +140,7 @@
 				disabledAttr = "disabled";
 		%>
 		<input type="checkbox" name="practiceMode" value="true"
-			<%=disabledAttr%> > Start in practice mode<br> <input
+			<%=disabledAttr%>> Start in practice mode<br> <input
 			type="submit" value="Start Quiz">
 	</form>
 

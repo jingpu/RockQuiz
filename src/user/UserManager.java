@@ -273,7 +273,7 @@ public class UserManager{
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		System.out.println("translate pwd");
+		//System.out.println("translate pwd");
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
@@ -648,20 +648,23 @@ public class UserManager{
 	 * **/
 	public static Message getMsg(String userId, String box, String msgCode){
 		String boxTable = userId + "_" + box;
-		Message msg = null;
+		
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + boxTable + " WHERE code='" + msgCode + "'");
 			if(rs.next()){
+				Message msg = null;
 				if(box.equals("inbox")){
 					msg = new Message(rs.getString("fromUser"), userId, rs.getString("type"), 
 							rs.getString("title"), rs.getString("content"));
-					msg.setRead(rs.getString("ifRead") == "1");
+					msg.setRead(rs.getString("ifRead").equals("1"));
 				} else if(box.equals("sent")){
 					msg = new Message(userId, rs.getString("toUser"), rs.getString("type"), 
 							rs.getString("title"), rs.getString("content"));
 				}
 				msg.setTime(rs.getString("Time"));
+				close();
+				return msg;
 			} else {
 				System.out.println("Message does not exist.");
 			}
@@ -673,7 +676,7 @@ public class UserManager{
 			e.printStackTrace();
 		}
 		close();
-		return msg;
+		return null;
 	}
 
 	/** @return the information of the message by reading it.
@@ -725,52 +728,58 @@ public class UserManager{
 	}
 
 	public static List<String> getMessagesInbox(String userId){
-		List<String> msgs = new LinkedList<String>(); 
 		setDriver();
 		try {
+			List<String> msgs = new LinkedList<String>(); 
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_inbox ORDER BY Time DESC");
 			while(rs.next()){
 				msgs.add(rs.getString("code"));
 			}
+			close();
+			return msgs;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		close();
-		return msgs;
+		return null;
 	}
 
 	public static List<String> getUnreadMessages(String userId){
-		List<String> msgs = new LinkedList<String>(); 
 		setDriver();
 		try {
+			List<String> msgs = new LinkedList<String>(); 
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_inbox WHERE " +
 					"ifRead='0' ORDER BY Time DESC");
 			while(rs.next()){
 				msgs.add(rs.getString("code"));
 			}
+			close();
+			return msgs;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		close();
-		return msgs;
+		return null;
 	}
 
 	public static List<String> getMessagesSent(String userId){
-		List<String> msgs = new LinkedList<String>(); 
 		setDriver();
 		try {
+			List<String> msgs = new LinkedList<String>(); 
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_sent ORDER BY Time DESC");
 			while(rs.next()){
 				msgs.add(rs.getString("code"));
 			}
+			close();
+			return msgs;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		close();
-		return msgs;
+		return null;
 	}
 
 	public static boolean addQuizTaken(String userId, String quizName, String quizId){

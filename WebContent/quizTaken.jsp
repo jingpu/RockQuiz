@@ -37,7 +37,9 @@
 		if (taken.isEmpty()) {
 			String prefix = guest.equals(userId)? "You" : userId;
 	%>
-	<p><%=prefix%> did't take any quiz yet.</p>
+	<p><%=prefix%>
+		did't take any quiz yet.
+	</p>
 	<%
 		} else {
 			for (Activity act : taken) {

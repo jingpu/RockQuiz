@@ -63,22 +63,22 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<center>
-	<br>
-	<a href="password.jsp">Change Password</a>
-	<form action="SaveProfile" method="post"
-		onsubmit="return judge()">
-		<p>
-			Gender: <input type="radio" name="gender" value="male"
-				checked=<%=male%>>Male <input type="radio" name="gender"
-				value="female" checked=<%=male%>>Female
-		</p>
-		<p>
-			Email: <input type="text" name="email" value="<%=email%>">
-		</p>
-		<p><input type="submit" value="Save"></p>
-	</form>
+		<br> <a href="password.jsp">Change Password</a>
+		<form action="SaveProfile" method="post" onsubmit="return judge()">
+			<p>
+				Gender: <input type="radio" name="gender" value="male"
+					checked=<%=male%>>Male <input type="radio" name="gender"
+					value="female" checked=<%=male%>>Female
+			</p>
+			<p>
+				Email: <input type="text" name="email" value="<%=email%>">
+			</p>
+			<p>
+				<input type="submit" value="Save">
+			</p>
+		</form>
 	</center>
 </body>
 </html>

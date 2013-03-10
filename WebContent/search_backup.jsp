@@ -21,18 +21,19 @@
 </head>
 <body>
 	<%--return to homepage --%>
-	<p><a href="home.jsp">Home</a></p>
-	
+	<p>
+		<a href="home.jsp">Home</a>
+	</p>
+
 	<%--choose whether to search user--%>
 	<p>
-		Quizzes Search
-		<a href=<%=searchUser%>>Users Search</a>
+		Quizzes Search <a href=<%=searchUser%>>Users Search</a>
 	</p>
 	<%--quizzes/users search box--%>
 	<form action="Search" method="post">
 		<p>
-			<input type="text" name="query" size="50" value=<%=query%>> 
-			<input type="submit" value="Click">
+			<input type="text" name="query" size="50" value=<%=query%>> <input
+				type="submit" value="Click">
 		</p>
 	</form>
 
