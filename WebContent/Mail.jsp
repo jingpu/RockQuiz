@@ -34,12 +34,12 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 	Date time = sdf.parse(msg.getTime());
 	String timeDscr = TimeTrsf.dscr(time, new Date());
-	String fromDisplay = msg.to == userId ? ("<a href=\"userpage.jsp?id="
-			+ msg.from + "\" target=\"_top\">" + msg.from + "</a>")
+	String fromDisplay = msg.to == userId ? ("<a href='userpage.jsp?id="
+			+ msg.from + "' target=\"another\">" + msg.from + "</a>")
 			: msg.from;
 	String toDisplay = msg.to == userId ? msg.to
-			: ("<a href=\"userpage.jsp?id=" + msg.to
-					+ "\" target=\"_top\">" + msg.to + "</a>");
+			: ("<a href='userpage.jsp?id=" + msg.to
+					+ "' target=\"another\">" + msg.to + "</a>");
 %>
 <body>
 	<div id="wrapper">
@@ -51,7 +51,7 @@
 
 		<table border="2" width="300" rules="rows">
 			<tr>
-				<th><%=msg.title%> | <%=timeDscr%></th>
+				<th><%=msg.getTitle()%> | <%=timeDscr%></th>
 			</tr>
 			<tr>
 				<td>From: <%=fromDisplay%></td>
@@ -60,7 +60,7 @@
 				<td>To:<%=toDisplay%></td>
 			</tr>
 			<tr>
-				<td><%=msg.content%></td>
+				<td><%=msg.getContent()%></td>
 			</tr>
 		</table>
 	</div>

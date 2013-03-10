@@ -62,7 +62,7 @@
 	<h3>
 		<a href=<%=userpageUrl%>>My Page</a>
 	</h3>
-	
+
 	<%--new message --%>
 	<h3>
 		<a href=<%=mailBoxUrl%>>Message(<%=unreadCount%>)
@@ -115,23 +115,23 @@
 	<form action="SearchServlet" method="post">
 		<p>
 			<input type="text" name="query" size="30"
-				placeholder="Search quizzes OR users here" /> 
-			<input type="submit" value="Click" />
+				placeholder="Search quizzes OR users here" /> <input type="submit"
+				value="Click" />
 		</p>
 	</form>
 
 	<%--popular quizzes --%>
 	<h3>Popular Quizzes</h3>
-	<%
+	<%--
 		QuizManager man = new MyQuizManager();
 		List<String> popQuizzes = man.getPopularQuiz();
 		for(String name : popQuizzes){
 			Quiz quiz = man.getQuiz(name);
-			String quizUrl = quiz.getSummaryPage();  %>
+			String quizUrl = quiz.getSummaryPage();  
 			<a ahref=<%=quizUrl%>><%=name%></a>
-	<%	}
+	<	}
 	
-	%>
+	--%>
 
 	<%--recent created quizzes --%>
 	<h3>Recent Quizzes</h3>

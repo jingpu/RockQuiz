@@ -29,8 +29,10 @@
 </head>
 
 <Frameset cols="35%,*">
- <frame src="Mailbox_browse.jsp?id=<%=userId%>" marginheight=60 bordercolor=blue>
- <frame src="Mailbox_inbox.jsp?id=<%=userId%>" name=another marginheight=60>
+	<frame src="Mailbox_browse.jsp?id=<%=userId%>" marginheight=60
+		bordercolor=blue>
+	<frame src="Mailbox_inbox.jsp?id=<%=userId%>" name=another
+		marginheight=60>
 </frameset>
 
 </html>

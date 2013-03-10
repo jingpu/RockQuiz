@@ -1,53 +1,60 @@
 <?xml version="1.0"?>
 <quiz random="true" one-page="false" practice-mode="true">
-<title>Bunny Quiz</title>
-<category>Animals</category>
-<description>An homage to the departed, legendary Bunny World project.</description>
+	<title>Bunny Quiz</title>
+	<category>Animals</category>
+	<description>An homage to the departed, legendary Bunny World project.</description>
 
-<question type="question-response">
-  <query>What is the Biological Family for Bunnies?</query>
-  <answer>Leporidae</answer>
-</question>
+	<question type="question-response">
+		<query>What is the Biological Family for Bunnies?</query>
+		<answer>Leporidae</answer>
+	</question>
 
-<question type="fill-in-blank">
-  <blank-query><pre>The book</pre><blank /><post>Down, about a bunch of rabbits, won the 1972 Carnegie Medal</post></blank-query>
-  <answer>Watership</answer>
-</question>
+	<question type="fill-in-blank">
+		<blank-query>
+			<pre>The book</pre>
+			<blank />
+			<post>Down, about a bunch of rabbits, won the 1972 Carnegie Medal</post>
+		</blank-query>
+		<answer>Watership</answer>
+	</question>
 
-<question type="multiple-choice">
-  <query>Which of the following statements is false</query>
-  <option>Aztec mythology includes a rabbit pantheon.</option>
-  <option>In Japanese folklore, rabbits live on the moon.</option>
-  <option answer="answer">In Stanford tradition, rubbing the nose of a rabbit guarantees an A on the CS108 class project</option>
-</question>
+	<question type="multiple-choice">
+		<query>Which of the following statements is false</query>
+		<option>Aztec mythology includes a rabbit pantheon.</option>
+		<option>In Japanese folklore, rabbits live on the moon.</option>
+		<option answer="answer">In Stanford tradition, rubbing the nose of a
+			rabbit guarantees an A on the CS108 class project</option>
+	</question>
 
-<question type="picture-response">
-  <image-location>http://upload.wikimedia.org/wikipedia/en/b/b9/Bugs_Bunny_Pose.PNG</image-location>
-  <answer-list>
-    <answer preferred="preferred">Bugs Bunny</answer>
-	<answer>Bugs</answer>
-  </answer-list>
-</question>
+	<question type="picture-response">
+		<image-location>http://upload.wikimedia.org/wikipedia/en/b/b9/Bugs_Bunny_Pose.PNG</image-location>
+		<answer-list>
+			<answer preferred="preferred">Bugs Bunny</answer>
+			<answer>Bugs</answer>
+		</answer-list>
+	</question>
 
-<question type="multi-answer">
-  <query>Plase name the top 3 most populous countries in the world</query>
-  <answer-list isorder="true">
-    <answer>China</answer>
-    <answer>India</answer>
-    <answer>USA</answer>
-  </answer-list>
-  <score>3</score>
-  <time-limit>10</time-limit>
-  <tag>geo</tag>
-</question>
+	<question type="multi-answer">
+		<query>Plase name the top 3 most populous countries in the world</query>
+		<answer-list isorder="true">
+			<answer>China</answer>
+			<answer>India</answer>
+			<answer>USA</answer>
+		</answer-list>
+		<score>3</score>
+		<time-limit>10</time-limit>
+		<tag>geo</tag>
+	</question>
 
-<question type="multi-choice-multi-answer">
-  <query>Which ones of the following are correct?</query>
-  <option answer="answer">Stanford is one of the most famous universities in the world.</option>
-  <option>Stanford is on the east coast of USA</option>
-  <option answer="answer">Stanford has the best computer science department in the world.</option>
-  <option answer="answer">This xml parser is working now.</option>
-  <score>3</score>
-  <time-limit>10</time-limit>
-</question>  
+	<question type="multi-choice-multi-answer">
+		<query>Which ones of the following are correct?</query>
+		<option answer="answer">Stanford is one of the most famous universities
+			in the world.</option>
+		<option>Stanford is on the east coast of USA</option>
+		<option answer="answer">Stanford has the best computer science
+			department in the world.</option>
+		<option answer="answer">This xml parser is working now.</option>
+		<score>3</score>
+		<time-limit>10</time-limit>
+	</question>
 </quiz>

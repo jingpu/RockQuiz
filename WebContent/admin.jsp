@@ -85,9 +85,7 @@
 		String ann = request.getParameter("ann");
 		if (ann != null) {
 	%>
-	<p>
-		New Announcement is Posted.
-	</p>
+	<p>New Announcement is Posted.</p>
 	<%
 		}
 	%>

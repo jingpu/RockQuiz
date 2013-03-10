@@ -34,12 +34,10 @@
 	List<Activity> achieves = user.getAchievements();
 	// generate quizzes taken history
 	List<Activity> taken = user.getQuizTaken();
-	System.out.println(taken.toString());
 	// generate quizzes created history
 	List<Activity> created = user.getQuizCreated();
 	// mail messages
 	List<String> inbox = user.getMessageInbox();
-	List<String> sent = user.getMessageSent();
 	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
 	// friends' activities
@@ -160,7 +158,7 @@
 
 						<%
 							QuizManager man = new MyQuizManager();
-							List<Quiz> popQuizzes = man.getPopularQuiz(3);
+							List<Quiz> popQuizzes = man.getPopularQuiz(5);
 							System.out.println(popQuizzes);
 							int i = 0;
 							for (Quiz quiz : popQuizzes) {
@@ -186,7 +184,7 @@
 						<h3>Recent Quizzes</h3>
 
 						<%
-							List<Quiz> recentQuizzes = man.getRecentCreateQuiz(3);
+							List<Quiz> recentQuizzes = man.getRecentCreateQuiz(5);
 							int j = 0;
 							for (Quiz quiz : recentQuizzes) {
 								j++;

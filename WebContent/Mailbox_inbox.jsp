@@ -38,29 +38,37 @@
 		</div>
 
 		<table width="400" border="2" rules="rows">
-			<tr>
+			<tr class="normal">
 				<th>From</th>
 				<th>Title</th>
 				<th>Date</th>
 			</tr>
 			<%
 				List<String> msgsInbox = user.getMessageInbox();
-				for (String msgCode : msgsInbox) {
-					Message msg = user.getMessage("inbox", msgCode);
-					SimpleDateFormat sdf = new SimpleDateFormat(
-							"yyyy-MM-dd HH:mm:ss.S");
-					Date time = sdf.parse(msg.getTime());
-					String timeDscr = TimeTrsf.dscr(time, new Date());
-
-					if (!msg.getRead())
-						out.println("<b>");
-					out.println("<tr><td><a href=\"userpage.jsp?id=" + msg.from
-							+ "\" target=\"_top\">" + msg.from + "</a></td><td>"
-							+ "<a href=\"Mail.jsp?id=" + userId + "&box=inbox&msg="
-							+ msgCode + "\">" + msg.title + "</a></td><td>"
-							+ timeDscr + "</td></tr>");
-					if (!msg.getRead())
-						out.println("</b>");
+				if (msgsInbox == null || msgsInbox.isEmpty()) {
+					out.println("<tr><td></td><td>(empty)</td><td></td></tr>");
+				} else {
+					for (String msgCode : msgsInbox) {
+						Message msg = user.getMessage("inbox", msgCode);
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy-MM-dd HH:mm:ss.S");
+						Date time = sdf.parse(msg.getTime());
+						String timeDscr = TimeTrsf.dscr(time, new Date());
+						String style = "normal";
+						if (!msg.getRead())
+							style = "bold";
+			%>
+			<tr class="<%=style%>" bgcolor="#f0f0f0"
+				onMouseOver="this.style.backgroundColor='#ffffcc'"
+				onMouseOut="this.style.backgroundColor='#f0f0f0'"
+				onclick="window.location.href='Mail.jsp?id=<%=userId%>&box=inbox&msg=<%=msgCode%>';">
+				<td><a href="userpage.jsp?id=<%=msg.from%>" target="_top"
+				style="color: black; text-decoration: underline"><%=msg.from%> </a></td>
+				<td><%=msg.getTitle()%></td>
+				<td><%=timeDscr%></td>
+			</tr>
+			<%
+				}
 				}
 			%>
 		</table>

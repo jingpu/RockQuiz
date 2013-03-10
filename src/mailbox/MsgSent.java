@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import user.Account;
 import user.Message;
+import util.Helper;
 
 /**
  * Servlet implementation class MsgSent
@@ -45,18 +46,18 @@ public class MsgSent extends HttpServlet {
 		String fromUser = (String) session.getAttribute("guest");
 		String toUser = request.getParameter("toUser");
 		String title = request.getParameter("title");
-		title = title == null? "" : title;
+		String retUrl = request.getParameter("retUrl");
+		System.out.println(retUrl);
+		title = title == null? "" : Helper.replaceComma(title);
 		String content = request.getParameter("content");
-		content = content == null? "" : content;
+		content = content == null? "" : Helper.replaceComma(content);
 		Message msg = new Message(fromUser, toUser, "n", title, content);
 		Account user = new Account(fromUser);
 		if(user.sendMessage(msg)) {
-			RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_sent.jsp?id="+ fromUser);
-			dispatch.forward(request, response);
+			response.sendRedirect(retUrl);
 			return;
 		}
-		RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_inbox.jsp?id="+ fromUser);
-		dispatch.forward(request, response);
+		response.sendRedirect(retUrl);
 		return;
 	}
 }

@@ -32,24 +32,28 @@
 	<div id="wrapper">
 		<div id="inner">
 			<div id="header">
-				<h1><%=userId%>'s Mailbox</h1>
+				<h1><%=userId%>'s Mailbox
+				</h1>
 				<h3><%=new Date()%></h3>
 				<div id="nav">
-				<h2><a href="home.jsp">Home</a> | <a href="WriteMessage?username=<%=userId%>">Compose</a></h2>
+					<h2>
+						<a href="home.jsp">Home</a> | <a
+							href="WriteMessage?username=<%=userId%>">Compose</a>
+					</h2>
 				</div>
 			</div>
-			
+
 			<div id="body">
-				<div class="inner">									
+				<div class="inner">
 					<div class="leftbox">
 						<h3>Inbox</h3>
-							<table width="300" border="1" rules="rows">
-								<tr>
-									<th>From</th>
-									<th>Title</th>
-									<th>Date</th>
-								</tr>
-								<%
+						<table width="300" border="1" rules="rows">
+							<tr>
+								<th>From</th>
+								<th>Title</th>
+								<th>Date</th>
+							</tr>
+							<%
 									List<String> msgsInbox = user.getMessageInbox();
 									for (String msgCode : msgsInbox) {
 										Message msg = user.getMessage("inbox", msgCode);
@@ -65,19 +69,19 @@
 										if (!msg.getRead())  out.println("</b>");
 									}
 								%>
-							</table>
+						</table>
 						<div class="clear"></div>
 					</div>
 					<div class="rightbox">
 						<h3>Sent</h3>
-						<p class="readmore"><a href=""><b>MORE</b></a></p>
+						<p class="readmore">
+							<a href=""><b>MORE</b></a>
+						</p>
 						<div class="clear"></div>
 					</div>
-					
+
 					<div class="clear br"></div>
 				</div>
 			</div>
-
-
 </body>
 </html>

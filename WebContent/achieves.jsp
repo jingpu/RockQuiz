@@ -37,7 +37,9 @@
 		if (achieves.isEmpty()) {
 			String prefix = guest.equals(userId)? "You" : userId;
 	%>
-	<p><%=prefix%> don't have any achievements now.</p>
+	<p><%=prefix%>
+		don't have any achievements now.
+	</p>
 	<%
 		} else {
 			for (Activity act : achieves) {

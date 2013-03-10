@@ -24,12 +24,16 @@
 <title>Quiz - <%=quiz.getQuizName()%></title>
 </head>
 <body>
-	<h1>Quiz - <%=quiz.getQuizName()%></h1>
+	<h1>
+		Quiz -
+		<%=quiz.getQuizName()%></h1>
 	<form action="QuizResultSinglePageServlet" method="post">
 		<%
 			for (int i = 0; i < questionList.size(); i++) {
 		%>
-		<h2>Question <%=i + 1%></h2>
+		<h2>
+			Question
+			<%=i + 1%></h2>
 		<%
 				QuestionBase question = questionList.get(i);
 				out.print(question.printReadHtmlForSingle());

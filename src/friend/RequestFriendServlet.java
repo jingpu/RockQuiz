@@ -34,14 +34,14 @@ public class RequestFriendServlet extends HttpServlet {
 		String toUser = request.getParameter("to");
 		HttpSession session = request.getSession();
 		String guest = (String) session.getAttribute("guest");
-		String toUsersPage = "userpage.jsp?id=" + toUser;
+		String referer = request.getHeader("Referer"); 
 		if (toUser == null || guest.equals("guest")) {
-			response.sendRedirect(toUsersPage);
+			response.sendRedirect(referer);
 			return;
 		} 
 		Account fromUser = new Account(guest);
 		fromUser.requestFriend(toUser);
-		response.sendRedirect(toUsersPage);
+		response.sendRedirect(referer);
 	}
 
 	/**

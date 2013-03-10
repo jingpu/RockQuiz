@@ -35,6 +35,7 @@
 	List<Activity> taken = pageOwner.getQuizTaken();
 	// generate quizzes created history
 	List<Activity> created = pageOwner.getQuizCreated();
+	System.out.println(pageOwner.seeFriendStatus(guest));
 %>
 
 <script language="javascript" type="text/javascript">
@@ -92,7 +93,7 @@
 						%>
 
 						<%--if guest!=id, show message --%>
-						<a href="LeaveMessage?to=<%=id%>">Message</a> |
+						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>">Message</a> |
 						<%
 							}
 						%>
@@ -106,7 +107,9 @@
 				<%
 					if (achieves.isEmpty()) {
 				%>
-				<p><%=id%> don't have any achievements yet.</p>
+				<p><%=id%>
+					don't have any achievements yet.
+				</p>
 				<%
 					} else {
 						for (int k = 0; k < 5; k++) {
@@ -125,7 +128,9 @@
 						<%
 							if (taken.isEmpty()) {
 						%>
-						<p><%=id%> did't take any quiz yet.</p>
+						<p><%=id%>
+							did't take any quiz yet.
+						</p>
 						<%
 							} else {
 								for (int k = 0; k < 5; k++) {
@@ -145,7 +150,9 @@
 						<%
 							if (created.isEmpty()) {
 						%>
-						<p><%=id%> did't create any quiz yet.</p>
+						<p><%=id%>
+							did't create any quiz yet.
+						</p>
 						<%
 							} else {
 								for (int k = 0; k < 5; k++) {

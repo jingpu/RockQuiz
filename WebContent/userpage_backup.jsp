@@ -64,7 +64,7 @@
 	<%
 		if(!guest.equals(id)) {
 	%>
-	
+
 	<%--if guest!=id, show friend related operation --%>
 	<%
 		if (pageOwner.seeFriendStatus(guest).equals("x")) {
@@ -115,7 +115,7 @@
 	<% 
 		}
 	%>
-	
+
 	<%--achievements list --%>
 	<h3>Achievements</h3>
 	<ul>
