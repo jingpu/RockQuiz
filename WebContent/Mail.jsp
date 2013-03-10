@@ -35,11 +35,11 @@
 	Date time = sdf.parse(msg.getTime());
 	String timeDscr = TimeTrsf.dscr(time, new Date());
 	String fromDisplay = msg.to == userId ? ("<a href='userpage.jsp?id="
-			+ msg.from + "' target=\"another\">" + msg.from + "</a>")
+			+ msg.from + "' target=\"_top\">" + msg.from + "</a>")
 			: msg.from;
 	String toDisplay = msg.to == userId ? msg.to
 			: ("<a href='userpage.jsp?id=" + msg.to
-					+ "' target=\"another\">" + msg.to + "</a>");
+					+ "' target=\"_top\">" + msg.to + "</a>");
 %>
 <body>
 	<div id="wrapper">
