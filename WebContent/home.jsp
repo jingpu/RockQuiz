@@ -38,7 +38,7 @@
 	List<Activity> created = user.getQuizCreated();
 	// mail messages
 	List<String> inbox = user.getMessageInbox();
-	List<String> unread = user.getUnreadMessage();
+	List<String> unread = user.getUnreadMessage(3);
 	int unreadCount = unread.size();
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity();
@@ -93,13 +93,16 @@
 					} else {
 						for (String msgCode : unread) {
 							Message msg = user.getMessage("inbox", msgCode);
-							String description = msg.from + ": \"" + msg.title + "\"";
+							String description = msg.from + ": \"" + msg.getTitle()
+									+ "\"";
 							SimpleDateFormat sdf = new SimpleDateFormat(
 									"yyyy-MM-dd HH:mm:ss.S");
 							Date time = sdf.parse(msg.getTime());
 							Date now = new Date();
 							String timeDscr = TimeTrsf.dscr(time, now);
-							out.println("<dd>" + description + " " + timeDscr + "</dd>");
+							out.println("<dd><a href='Mail.jsp?id=" + userId
+									+ "&box=inbox&msg=" + msgCode + "'" + description
+									+ " " + timeDscr + "</a></dd>");
 						}
 					}
 				%>

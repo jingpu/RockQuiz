@@ -165,8 +165,8 @@ public class Account implements User{
 	/**Get all unread messages in the inbox.
 	 * @return a list of message's encrypted code
 	 * **/
-	public List<String> getUnreadMessage(){
-		return UserManager.getUnreadMessages(userId);
+	public List<String> getUnreadMessage(int num){
+		return UserManager.getUnreadMessages(userId, num);
 	}
 	
 	public List<String> getFriendsList(){

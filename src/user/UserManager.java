@@ -745,14 +745,17 @@ public class UserManager{
 		return null;
 	}
 
-	public static List<String> getUnreadMessages(String userId){
+	public static List<String> getUnreadMessages(String userId, int num){
 		setDriver();
 		try {
 			List<String> msgs = new LinkedList<String>(); 
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId + "_inbox WHERE " +
 					"ifRead='0' ORDER BY Time DESC");
+			int i = 0;
 			while(rs.next()){
+				if(i == num) break;
 				msgs.add(rs.getString("code"));
+				i++;
 			}
 			close();
 			return msgs;
