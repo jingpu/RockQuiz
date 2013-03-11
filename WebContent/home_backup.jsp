@@ -40,7 +40,7 @@
 	// mail messages
 	List<String> inbox = user.getMessageInbox();
 	List<String> sent = user.getMessageSent();
-	List<String> unread = user.getUnreadMessage(3);
+	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity();

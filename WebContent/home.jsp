@@ -38,7 +38,7 @@
 	List<Activity> created = user.getQuizCreated();
 	// mail messages
 	List<String> inbox = user.getMessageInbox();
-	List<String> unread = user.getUnreadMessage(3);
+	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity();
@@ -57,7 +57,7 @@
 				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
-						<a href=<%=userpageUrl%>>My Page</a> | <a href=<%=mailBoxUrl%>>Message(<%=unreadCount%>)
+						<a href=<%=userpageUrl%>>My Page</a> | <a href=<%=mailBoxUrl%>>Mailbox
 						</a> | <a href="Logout">Log out</a>
 					</h2>
 				</div>
@@ -86,29 +86,35 @@
 				<dd class="readmore">
 					<a href="announce.jsp"><b>MORE</b></a>
 				</dd>
-				<dt>New Message</dt>
+				<dt>
+					<a href='<%=mailBoxUrl%>' class="leftred">New
+						Message(<%=unreadCount%>)
+					</a>
+				</dt>
 				<%
 					if (unread.isEmpty()) {
 						out.println("<dd>No New Message</dd>");
 					} else {
+						int i = 0;
 						for (String msgCode : unread) {
+							if (i == 3)
+								break;
 							Message msg = user.getMessage("inbox", msgCode);
-							String description = msg.from + ": \"" + msg.getTitle()
-									+ "\"";
+							String str = msg.getTitle();
+							str = str.length() > 30 ? str.substring(0, 29) : str;
+							String description = msg.from + ": \"" + str + "\"";
 							SimpleDateFormat sdf = new SimpleDateFormat(
 									"yyyy-MM-dd HH:mm:ss.S");
 							Date time = sdf.parse(msg.getTime());
 							Date now = new Date();
 							String timeDscr = TimeTrsf.dscr(time, now);
 							out.println("<dd><a href='Mail.jsp?id=" + userId
-									+ "&box=inbox&msg=" + msgCode + "'" + description
+									+ "&box=inbox&msg=" + msgCode + "'>" + description
 									+ " " + timeDscr + "</a></dd>");
+							i++;
 						}
 					}
 				%>
-				<dd class="readmore">
-					<a href=<%=mailBoxUrl%>><b>MORE</b></a>
-				</dd>
 				<dt>
 					<form action="QuizCreationServlet" method="post">
 						<input type="submit" value="Create Quiz">
@@ -144,7 +150,7 @@
 				<dd class="searchform">
 					<form action="Search" method="post">
 						<div>
-							<input type="text" name="query" class="text"
+							<input type="search" name="query" class="text"
 								placeholder="Search quizzes OR users here" />
 						</div>
 						<div class="readmore">

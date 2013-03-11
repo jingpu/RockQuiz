@@ -40,6 +40,7 @@
 	String toDisplay = msg.to == userId ? msg.to
 			: ("<a href='userpage.jsp?id=" + msg.to
 					+ "' target=\"_top\">" + msg.to + "</a>");
+	String referer = request.getHeader("referer"); 
 %>
 <body>
 	<div id="wrapper">
@@ -65,9 +66,8 @@
 		</table>
 	</div>
 
-	<form action="ReplyMessage" method="post">
-		<input name="to" type="hidden" value="<%=to%>"> <input
-			type="submit" value="Reply">
+	<form action="WriteMessage.jsp?id=<%=guest%>&to=<%=to%>" method="post">
+		<input type="submit" value="Reply">
 	</form>
 
 	<form action="DeleteMessage" method="post">
@@ -75,6 +75,8 @@
 			name="box" type="hidden" value="<%=box%>"> <input
 			type="submit" value="Delete">
 	</form>
+
+	<a href="<%=referer%>"><input type="button" value="Cancel"></a>
 </body>
 </html>
 

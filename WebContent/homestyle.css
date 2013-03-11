@@ -103,6 +103,18 @@ h3 {
 	font-weight: bold;
 }
 
+#browse dt a{
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+	padding: 3px 22px;
+}
+
+#browse dt a hover:{
+	background: #fa8282;
+}
+
 #browse dd {
 	background: #227293;
 	color: white;
@@ -120,7 +132,7 @@ h3 {
 	padding: 3px 22px;
 }
 
-#browse dd a:hover {
+#browse dd a.leftred:hover {
 	background: #74a7b7;
 }
 
