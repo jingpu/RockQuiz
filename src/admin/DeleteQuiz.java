@@ -11,16 +11,16 @@ import user.Administrator;
 import user.UserManager;
 
 /**
- * Servlet implementation class AppointAdmin
+ * Servlet implementation class DeleteQuiz
  */
-@WebServlet("/AppointAdmin")
-public class AppointAdmin extends HttpServlet {
+@WebServlet("/DeleteQuiz")
+public class DeleteQuiz extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AppointAdmin() {
+	public DeleteQuiz() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -37,18 +37,20 @@ public class AppointAdmin extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String userId = request.getParameter("id");
+		String quizName = request.getParameter("quiz");
 		String user = (String)request.getSession().getAttribute("guest");
 		Administrator admin = new Administrator(user);
-		if(admin.getInfo("status") != "s"){
+		if(!admin.getInfo("status").equals("s")){
 			response.sendRedirect("home.jsp");
 			return;
 		}
-		if(UserManager.alreadyExist(userId)) {
-			admin.setStatus(userId, "s");
+		if(admin.canFindQuiz(quizName)) {
+			String op = request.getParameter("operation");
+			if(op.equals("1")) admin.deleteQuiz(quizName);
+			else if(op.equals("2")) admin.clearQuizHistory(quizName);
 			response.sendRedirect("admin.jsp?id=" + user);
 		} else {
-			response.sendRedirect("admin.jsp?id=" + user + "&adm=" + userId);
+			response.sendRedirect("admin.jsp?id=" + user + "&delq=" + quizName);
 		}
 	}
 

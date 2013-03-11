@@ -254,4 +254,31 @@ public final class MyQuizManager implements QuizManager {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see quiz.QuizManager#containsQuiz(java.lang.String)
+	 */
+	@Override
+	public boolean containsQuiz(String quizName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see quiz.QuizManager#deleteQuiz(java.lang.String)
+	 */
+	@Override
+	public void deleteQuiz(String quizName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see quiz.QuizManager#deleteQuizHistory(java.lang.String)
+	 */
+	@Override
+	public void deleteQuizHistory(String quizName) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
