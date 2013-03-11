@@ -16,6 +16,8 @@
 <link href="search_style.css" rel="stylesheet" type="text/css" />
 <%
 	String query = request.getParameter("q");
+	String pquery = query == null ? "" : query;
+	String searchUser = "search_user.jsp?q=" + pquery;
 	String sort = request.getParameter("s");
 	List<Quiz> resultList = null;
 	QuizManager man = new MyQuizManager();
@@ -24,22 +26,32 @@
 	// d - order by creation date
 	// t - order by taken times
 	// null(default) - order by quiz relativity
-	if (query != null && request.getParameter("s") == null)
+	String byRelavance = "<a href='search.jsp?q=" + pquery
+			+ "'>Relavance</a>";
+	String byCreateDate = "<a href='search.jsp?s=d&q=" + pquery
+			+ "'>Create date</a>";
+	String byTakenCount = "<a href='search.jsp?s=t&q=" + pquery
+			+ "'>Taken count</a>";
+	String byCreator = "<a href='search.jsp?s=c&q=" + pquery
+			+ "'>Creator ID</a>";
+	if (query != null && request.getParameter("s") == null) {
+		byRelavance = "Relavence";
 		resultList = man.searchForQuiz(query, 3);
-	else if (query != null && request.getParameter("s") != null
-			&& request.getParameter("s").equals("c"))
+	} else if (query != null && request.getParameter("s") != null
+			&& request.getParameter("s").equals("c")) {
+		byCreator = "Creator ID";
 		resultList = man.searchForQuizCreator(query, 3);
-	else if (query != null && request.getParameter("s") != null
-			&& request.getParameter("s").equals("d"))
+	} else if (query != null && request.getParameter("s") != null
+			&& request.getParameter("s").equals("d")) {
+		byCreateDate = "Create date";
 		resultList = man.searchForQuiz(query, 1);
-	else if (query != null && request.getParameter("s") != null
-			&& request.getParameter("s").equals("t"))
+	} else if (query != null && request.getParameter("s") != null
+			&& request.getParameter("s").equals("t")) {
+		byTakenCount = "Taken count";
 		resultList = man.searchForQuiz(query, 2);
-
-	String pquery = query == null ? "" : query;
-	String searchUser = "search_user.jsp?q=" + pquery;
+	}
 %>
-<title>Search Results - <%=query%></title>
+<title>Search Results - <%=pquery%></title>
 </head>
 <body>
 	<div id="wrapper">
@@ -72,10 +84,19 @@
 			</dl>
 
 			<div id="body">
+				<p>
+					Order by:
+					<%=byRelavance%>
+					|
+					<%=byCreateDate%>
+					|
+					<%=byTakenCount%>
+					|
+					<%=byCreator%></p>
 				<%--exactly matched user result--%>
-				<p>Related user</p>
 				<%
 					if (query != null && UserManager.alreadyExist(query)) {
+						out.println("<p>Related user</p>");
 						StringBuilder str = new StringBuilder();
 						str.append("<p><a href='userpage.jsp?id=" + query + "'>"
 								+ query + "</a></p>");
@@ -84,20 +105,22 @@
 				%>
 
 				<%--related quizzes search results--%>
-				<p>Related quizzes</p>
 				<ul>
 					<%
 						if (query != null && (resultList == null || resultList.isEmpty())) {
 							out.println("<p>There is no related quiz.</p>");
 						} else if (query != null) {
+							out.println("<p>Related quizzes</p>");
 							for (Quiz quiz : resultList) {
 								String quizUrl = quiz.getSummaryPage();
 								String creator = quiz.getCreatorId();
+								int takenTimes = quiz.getTakenTimes();
 								Timestamp time = quiz.getCreateTime();
 								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					%>
-					<li>Quiz <a href='<%=quizUrl%>'><%=quiz.getQuizName()%></a> Created
-						by:<a href="userpage.jsp?id=<%=creator%>"><%=creator%></a> On <%=sdf.format(time)%><br>Description: <%=quiz.getQuizDescription()%></li>
+					<li>Quiz <a href='<%=quizUrl%>'><%=quiz.getQuizName()%></a>
+						Created by:<a href="userpage.jsp?id=<%=creator%>"><%=creator%></a>
+						On <%=sdf.format(time)%> Taken counts: <%=takenTimes%><br>Description: <%=quiz.getQuizDescription()%></li>
 					<%
 						}
 						}

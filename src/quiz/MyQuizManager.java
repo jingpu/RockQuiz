@@ -239,7 +239,7 @@ public final class MyQuizManager implements QuizManager {
 			Collections.sort(list, new Comparator<Quiz>() {
 				@Override
 				public int compare(Quiz o1, Quiz o2) {
-					return o1.getCreateTime().compareTo(o2.getCreateTime());
+					return o2.getCreateTime().compareTo(o1.getCreateTime());
 				}
 			});
 			break;
@@ -247,7 +247,7 @@ public final class MyQuizManager implements QuizManager {
 			Collections.sort(list, new Comparator<Quiz>() {
 				@Override
 				public int compare(Quiz o1, Quiz o2) {
-					return o1.getTakenTimes() - o2.getTakenTimes();
+					return o2.getTakenTimes() - o1.getTakenTimes();
 				}
 			});
 			break;

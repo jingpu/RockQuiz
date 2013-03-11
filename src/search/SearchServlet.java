@@ -19,14 +19,14 @@ import user.UserManager;
 @WebServlet("/Search")
 public class SearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SearchServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public SearchServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,6 +41,11 @@ public class SearchServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String query = request.getParameter("query");
-		response.sendRedirect("search.jsp?q="+ query);
+		String sort = request.getParameter("s");
+		if(sort == null)
+			response.sendRedirect("search.jsp?q="+ query);
+		else {
+			response.sendRedirect("search.jsp?s="+ sort +"&q="+ query);
+		}
 	}
 }
