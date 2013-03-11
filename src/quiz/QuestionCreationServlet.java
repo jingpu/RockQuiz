@@ -19,6 +19,7 @@ import util.Helper;
 /**
  * Servlet implementation class QuestionCreationServlet
  */
+@Deprecated
 @WebServlet("/QuestionCreationServlet")
 public class QuestionCreationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

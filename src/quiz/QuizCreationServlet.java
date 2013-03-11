@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class QuizCreationServlet
  */
+@Deprecated
 @WebServlet("/QuizCreationServlet")
 public class QuizCreationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

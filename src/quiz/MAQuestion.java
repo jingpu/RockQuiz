@@ -305,6 +305,19 @@ public class MAQuestion extends QuestionBase {
 		return answer.toString();
 	}
 
+	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
+		int numAnswers = Integer.parseInt(request.getParameter("numAnswers"
+				+ "_" + suffix));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+			answer.append(request.getParameter("answer" + i + "_" + suffix));
+			answer.append("#");
+		}
+		return answer.toString();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

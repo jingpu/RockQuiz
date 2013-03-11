@@ -46,20 +46,56 @@ function deleteQuestion(button) {
 <title>Create Quiz</title>
 </head>
 <body>
+	<%
+		/*
+		 * prepare the page for creating quiz
+		 */
+		// set default values for form inputs
+		String quizName = "";
+		String tagString = "";
+		String quizDescription = "";
+		String canPractice = "checked";
+		String isRandom = "checked";
+		String isOnePage = "";
+		String isImmCorrection = "";
+
+		// get form input values from session
+		String tmp;
+		tmp = (String) session.getAttribute("quizName");
+		if (tmp != null)
+			quizName = tmp;
+		tmp = (String) session.getAttribute("tagString");
+		if (tmp != null)
+			tagString = tmp;
+		tmp = (String) session.getAttribute("quizDescription");
+		if (tmp != null)
+			quizDescription = tmp;
+		tmp = (String) session.getAttribute("canPractice");
+		if (tmp != null && tmp.equals("false"))
+			canPractice = "";
+		tmp = (String) session.getAttribute("isRandom");
+		if (tmp != null && tmp.equals("false"))
+			isRandom = "";
+		tmp = (String) session.getAttribute("isOnePage");
+		if (tmp != null && tmp.equals("true"))
+			isOnePage = "checked";
+		tmp = (String) session.getAttribute("isImmCorrection");
+		if (tmp != null && tmp.equals("true"))
+			isImmCorrection = "checked";
+	%>
 	<h1>Create Quiz</h1>
-	<form action="QuestionCreationServlet" method="post">
+	<form action="QuizCreateAndSaveServlet" method="post">
 		<h2>Quiz Information</h2>
 		<p>
-			Quiz Name: <input type="text" name="quizName" required><br>
-			Tags: <input type="text" name="tagString"><br> Quiz
-			Description:<br>
-			<textarea name="quizDescription" rows="10" cols="50" required></textarea>
-			<br> <input type="checkbox" name="canPractice" value="true">Allow
-			practice mode<br> <input type="checkbox" name="isRandom"
-				value="true">Automatically randomized question order<br>
-			<input type="checkbox" name="isOnePage" value="true">Displays
-			in one page<br> <input type="checkbox" name="isImmCorrection"
-				value="true">Allow immediate Correction if Multi-Page mode
+			Quiz Name: <input type="text" name="quizName" required value="<%=quizName%>"><br> 
+			Tags: <input type="text" name="tagString" value="<%=tagString%>"><br> 
+			Quiz Description:<br>
+			<textarea name="quizDescription" rows="10" cols="50" required><%=quizDescription%></textarea>
+			<br> 
+			<input type="checkbox" name="canPractice" value="true" <%=canPractice%>>Allow practice mode<br> 
+			<input type="checkbox" name="isRandom" value="true" <%=isRandom%>>Automatically randomized question order<br> 
+			<input type="checkbox" name="isOnePage" value="true" <%=isOnePage%>>Displays in one page<br> 
+			<input type="checkbox" name="isImmCorrection" value="true" <%=isImmCorrection%>>Allow immediate Correction if Multi-Page mode
 			enabled<br>
 		</p>
 
