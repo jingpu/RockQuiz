@@ -103,7 +103,7 @@ h3 {
 	font-weight: bold;
 }
 
-#browse dt a{
+#browse dt a {
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
@@ -111,8 +111,8 @@ h3 {
 	padding: 3px 22px;
 }
 
-#browse dt a hover:{
-	background: #fa8282;
+#browse dt a:hover {
+	background: #f96969;
 }
 
 #browse dd {
@@ -132,7 +132,7 @@ h3 {
 	padding: 3px 22px;
 }
 
-#browse dd a.leftred:hover {
+#browse dd a:hover {
 	background: #74a7b7;
 }
 
@@ -183,6 +183,25 @@ h3 {
 	width: 302px;
 	margin-right: 18px;
 	border-left: 2px solid #659db4;
+}
+
+#body li.quizlist {
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	list-style-type: decimal;
+	text-align: center;
+	margin-left: 20px;
+	padding-bottom: 5px;
+}
+
+#body li.quizlist a {
+	color: #202020;
+	text-decoration: none;
+}
+
+#body li.quizlist a:hover {
+	text-decoration: underline;
 }
 
 #body .br {

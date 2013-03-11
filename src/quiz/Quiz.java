@@ -33,5 +33,7 @@ public interface Quiz {
 	public int getTakenTimes();
 
 	public Timestamp getCreateTime();
+	
+	public String getQuizDescription();
 
 }
