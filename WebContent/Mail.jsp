@@ -35,11 +35,18 @@
 	Date time = sdf.parse(msg.getTime());
 	String timeDscr = TimeTrsf.dscr(time, new Date());
 	String fromDisplay = msg.to == userId ? ("<a href='userpage.jsp?id="
-			+ msg.from + "' target=\"another\">" + msg.from + "</a>")
+			+ msg.from + "' target=\"_top\">" + msg.from + "</a>")
 			: msg.from;
 	String toDisplay = msg.to == userId ? msg.to
 			: ("<a href='userpage.jsp?id=" + msg.to
-					+ "' target=\"another\">" + msg.to + "</a>");
+					+ "' target=\"_top\">" + msg.to + "</a>");
+	String retUrl = "";
+	if (box.equals("inbox")){
+		retUrl = "Mailbox_inbox.jsp";
+	} else if (box.equals("sent")){
+		retUrl = "Mailbox_sent.jsp";
+	}
+	System.out.println(retUrl);
 %>
 <body>
 	<div id="wrapper">
@@ -64,17 +71,23 @@
 			</tr>
 		</table>
 	</div>
-
-	<form action="ReplyMessage" method="post">
-		<input name="to" type="hidden" value="<%=to%>"> <input
-			type="submit" value="Reply">
+	<p>
+	<form action="<%=retUrl%>">
+	<%
+		System.out.println(retUrl);
+	%>
+		<input type="hidden" name="id" value="<%=userId%>">
+		<input type="submit" value="Back">
 	</form>
-
+	<form action="WriteMessage.jsp?id=<%=guest%>&to=<%=to%>">
+		<input type="submit" value="Reply">
+	</form>
 	<form action="DeleteMessage" method="post">
 		<input name="code" type="hidden" value="<%=msgCode%>"> <input
 			name="box" type="hidden" value="<%=box%>"> <input
 			type="submit" value="Delete">
 	</form>
+	</p>
 </body>
 </html>
 

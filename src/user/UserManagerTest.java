@@ -78,16 +78,17 @@ public class UserManagerTest {
 		assertEquals(2, UserManager.countHistory("a1", "c"));
 		assertEquals(4, UserManager.countHistory("a1", "t"));
 	}
-	
+	*/
 	@Test
 	public void admin(){
 		UserManager.deleteAll();
 		UserManager.addNewAccount("yy", "123", "s", "f", "asf@asdf.edu");
+		UserManager.addNewAccount("y1", "123", "u", "f", "asf@asdf.edu");
 		UserManager.addNewAccount("hj", "123", "s", "f", "asf@asdf.edu");
 		UserManager.addNewAccount("zy", "123", "s", "m", "asf@asdf.edu");
 		UserManager.addNewAccount("pj", "123", "s", "m", "asf@asdf.edu");
 	}
-	*/
+	
 	@Test
 	public void charProcess(){
 		String admin="admin";

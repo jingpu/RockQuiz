@@ -160,10 +160,6 @@ h3 {
 	position: relative;
 }
 
-table {
-	font-size: 12px;
-}
-
 #body p {
 	margin: 1em 0;
 	padding: 0;
@@ -183,10 +179,35 @@ table {
 	margin: 1px 0 3px 0;
 }
 
-tr.normal {
-	font-weight:normal;
+#box {
+	font-size: 12px;
+	width: 500px;
+	border-collapse: collapse
+	table-layout: fixed;
 }
 
-tr.bold {
-	font-weight:bold;
+#box .user {
+	width: 100px;
+}
+
+#box .title {
+	width: 300px;
+}
+
+#box .time {
+	width: 100px;
+}
+
+#box td,th{
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#box tr {
+	height: 1em;
+}
+
+#box tr.bold {
+	height: 1em;
+	font-weight: bold;
 }

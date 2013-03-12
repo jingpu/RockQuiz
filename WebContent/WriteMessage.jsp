@@ -36,7 +36,7 @@
 	<p>
 		<input type="hidden" name="retUrl" value="<%=referer%>" form="Compose">
 		<input type="submit" value="Send" form="Compose"><a
-			href="<%=referer%>"><input type="submit" value="Cancel"></a>
+			href="<%=referer%>"><input type="button" value="Cancel"></a>
 	</p>
 </body>
 </html>

@@ -152,7 +152,8 @@ h3 {
 
 #body p {
 	margin: 1em 0;
-	padding: 0;
+	padding-left: 20px;
+	text-align: left;
 }
 
 #body .leftbox,#body .rightbox {
@@ -200,4 +201,8 @@ h3 {
 	color: #5d5d5d;
 	padding: 0 0 0 18px;
 	margin: 1px 0 3px 0;
+}
+
+#body ul {
+	list-style-type: none;
 }

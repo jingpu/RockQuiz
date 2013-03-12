@@ -35,7 +35,7 @@
 	List<Activity> taken = pageOwner.getQuizTaken();
 	// generate quizzes created history
 	List<Activity> created = pageOwner.getQuizCreated();
-	System.out.println(pageOwner.seeFriendStatus(guest));
+	//System.out.println(pageOwner.seeFriendStatus(guest));
 %>
 
 <script language="javascript" type="text/javascript">
@@ -58,7 +58,7 @@
 				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
-						<a href="home.jsp">Home</a> |
+						<a href="home.jsp?id=<%=guest%>">Home</a> |
 						<%
 							if (!guest.equals(id)) {
 						%>
@@ -103,6 +103,7 @@
 			</div>
 
 			<dl id="browse">
+
 				<dt>Achievements</dt>
 				<%
 					if (achieves.isEmpty()) {
@@ -119,6 +120,18 @@
 						}
 					}
 				%>
+				<dt>Search Quizzers Or Users</dt>
+				<dd class="searchform">
+					<form action="Search" method="post">
+						<div>
+							<input type="search" name="query" class="text"
+								placeholder="Search quizzes OR users here" />
+						</div>
+						<div class="readmore">
+							<input type="image" src="images/search.gif" />
+						</div>
+					</form>
+				</dd>
 			</dl>
 
 			<div id="body">
