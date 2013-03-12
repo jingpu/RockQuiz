@@ -18,13 +18,14 @@ import javax.servlet.http.HttpSession;
 public class QuestionFactory {
 
 	public static String[] getQuestionTypes() {
-		String types[] = new String[6];
+		String types[] = new String[7];
 		types[0] = QuestionBase.QR;
 		types[1] = QuestionBase.FIB;
 		types[2] = QuestionBase.MC;
 		types[3] = QuestionBase.PR;
 		types[4] = QuestionBase.MA;
 		types[5] = QuestionBase.MCMA;
+		types[6] = QuestionBase.MATCH;
 		return types;
 	}
 
@@ -128,6 +129,18 @@ public class QuestionFactory {
 			return new MCMAQuestion(questionType, creatorId, timeLimit,
 					questionDescription, answer, maxScore, tagString, -1,
 					choices);
+
+		} else if (questionType.equals(QuestionBase.MATCH)) {
+			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
+			String questionDescription = request
+					.getParameter("questionDescription");
+			String answer = getCreatedAnswer(questionType, request);
+			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
+			String tagString = request.getParameter("tag");
+			String choices = getCreatedChoices(questionType, request);
+			return new Matching(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1,
+					choices);
 		}
 		return null;
 	}
@@ -147,8 +160,29 @@ public class QuestionFactory {
 			return MAQuestion.printCreateHtml();
 		else if (questionType.equals(QuestionBase.MCMA))
 			return MCMAQuestion.printCreateHtml();
-		else
-			return "error";
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.printCreateHtml();
+		return "error";
+	}
+
+	// called by quiz to print html for every question
+	// essentially, it is a html-string
+	public static String printCreateHtmlSinglePage(String questionType) {
+		if (questionType.equals(QuestionBase.QR))
+			return QResponse.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.FIB))
+			return FillInBlank.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.MC))
+			return MultiChoice.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.PR))
+			return PResponse.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.MA))
+			return MAQuestion.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.printCreateHtmlSinglePage();
+		return "error";
 	}
 
 	/**
@@ -170,8 +204,10 @@ public class QuestionFactory {
 			return PResponse.getCreatedAnswer(request);
 		else if (questionType.equals(QuestionBase.MA))
 			return MAQuestion.getCreatedAnswer(request);
-		if (questionType.equals(QuestionBase.MCMA))
+		else if (questionType.equals(QuestionBase.MCMA))
 			return MCMAQuestion.getCreatedAnswer(request);
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.getCreatedAnswer(request);
 		return "error";
 	}
 
@@ -186,8 +222,10 @@ public class QuestionFactory {
 			HttpServletRequest request) {
 		if (questionType.equals(QuestionBase.MC))
 			return MultiChoice.getCreatedChoices(request);
-		if (questionType.equals(QuestionBase.MCMA))
+		else if (questionType.equals(QuestionBase.MCMA))
 			return MCMAQuestion.getCreatedChoices(request);
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.getCreatedChoices(request);
 		return "error";
 	}
 
@@ -196,4 +234,31 @@ public class QuestionFactory {
 		// test printSummaryPageHTML method
 		System.out.print(printCreateHtml(questionTypes[0]));
 	}
+
+	/**
+	 * @param questionType
+	 * @return
+	 */
+	public static String printReference(String questionType) {
+		if (questionType.equals(QuestionBase.QR))
+			return QResponse.printReference();
+		else if (questionType.equals(QuestionBase.FIB))
+			return FillInBlank.printReference();
+		else if (questionType.equals(QuestionBase.MC))
+			return MultiChoice.printReference();
+		else if (questionType.equals(QuestionBase.PR))
+			return PResponse.printReference();
+		else if (questionType.equals(QuestionBase.MA))
+			return MAQuestion.printReference();
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.printReference();
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.printReference();
+		return "error";
+	}
+
+	public static String printReference() {
+		return QuestionBase.printReference();
+	}
+
 }

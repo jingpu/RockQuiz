@@ -542,4 +542,22 @@ public class MyQuiz implements Quiz {
 		return quizId;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.Quiz#clearQuizEvent()
+	 */
+	@Override
+	public void clearQuizEvents() {
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// delete all rows from quizName_Event_Table
+			stmt.executeUpdate("DELETE FROM " + quizName + "_Event_Table");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 }

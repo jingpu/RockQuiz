@@ -51,20 +51,46 @@ public class QResponse extends QuestionBase {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a question-response question</h1>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
+		html.append("<p class= 'description'>Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
 
 		// Hidden information - questionType and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
-				+ QuestionBase.QR + "\" ></input></p>");
+				+ QuestionBase.QR + "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+		html.append("<input type=\"submit\" value = \"Save\"/></form>\n");
 		return html.toString();
 	}
+
+	public static String printCreateHtmlSinglePage() {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>This page will guide you to create a question-response question</h4>\n");
+		html.append("<p> Please enter proposed question description and answer </p>\n");
+		html.append("<p class= 'description'>Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+
+		// Hidden information - questionType and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
+				+ QuestionBase.QR + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
+		return html.toString();
+	}
+
 
 	@Override
 	public String printReadHtml() {
@@ -80,9 +106,8 @@ public class QResponse extends QuestionBase {
 				+ getQuestionId() + "\" ></input></p>");
 
 		// Hidden information - questionType and questionId information
-		// TODO: timeLimit pass to javascript
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
-				+ timeLimit + "\" ></input></p>");
+		html.append("<input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input>");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
 				+ "\" ></input></p>");
@@ -140,7 +165,10 @@ public class QResponse extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		return request.getParameter("answer_" + getQuestionId());
+		String userAnswer = request.getParameter("answer_" + getQuestionId());
+		if (userAnswer == null)
+			userAnswer = "";
+		return userAnswer;
 	}
 
 	public Element toElement(Document doc) {
@@ -184,5 +212,9 @@ public class QResponse extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
+	}
+
+	public static String printReference() {
+		return QuestionBase.printReference();
 	}
 }

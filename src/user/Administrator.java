@@ -3,6 +3,11 @@
  */
 package user;
 
+import quiz.MyQuiz;
+import quiz.MyQuizManager;
+import quiz.Quiz;
+import quiz.QuizManager;
+
 /**
  * @author youyuan
  *
@@ -18,8 +23,19 @@ public class Administrator extends Account implements User{
 		System.out.println("Deleting Account Failed");
 	}
 	
-	public void deleteQuiz(String quizname) {
-		
+	public boolean canFindQuiz(String quizName){
+		QuizManager man = new MyQuizManager();
+		if(man.getQuiz(quizName) == null) return false;
+		return true;
+	}
+	public void deleteQuiz(String quizName) {
+		QuizManager man = new MyQuizManager();
+		man.deleteQuiz(quizName);
+	}
+	
+	public void clearQuizHistory(String quizName) {
+		Quiz quiz = new MyQuiz(quizName);
+		quiz.clearQuizEvents();
 	}
 	
 	public void setAnnouncement(String annoucement){

@@ -40,10 +40,6 @@ import quiz.QuestionBase;
  */
 public class XMLParser {
 
-	public XMLParser(String xmlFile) {
-
-	}
-
 	public static MyQuiz getQuizFromXml(String xmlFile) {
 		Document dom = parseXmlFile(xmlFile);
 		Element quizEle = dom.getDocumentElement();
@@ -146,9 +142,6 @@ public class XMLParser {
 			for (Element question : questionElemList) {
 				quizElement.appendChild(question);
 			}
-
-			// // remove all empty tags
-			// quizElement.removeChild(emptyLine);
 
 			// write the content into xml file
 			TransformerFactory transformerFactory = TransformerFactory

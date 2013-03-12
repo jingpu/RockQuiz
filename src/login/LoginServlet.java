@@ -57,8 +57,7 @@ public class LoginServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 	        session.setAttribute("guest", usrname);
 			String homepage = "home.jsp?id=" + usrname;
-			RequestDispatcher dispatch = request.getRequestDispatcher(homepage);
-			dispatch.forward(request, response);
+			response.sendRedirect(homepage);
 			return;
 		} else {
 			RequestDispatcher dispatch = request.getRequestDispatcher("infoIncorrect.html");

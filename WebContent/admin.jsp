@@ -43,12 +43,24 @@
 
 	function confirmAppointment() {
 		var name = document.forms[2].id.value;
-		var r = confirm("Are you sure to appoint " + name
-				+ " as administrator?");
+		var r = confirm("Are you sure to change " + name + "'s authority?");
 		if (r) {
 			return true;
 		}
 		return false;
+	}
+
+	function confirmDeleteQuiz() {
+		var name = document.forms[3].quiz.value;
+		var e = document.getElementById("quizOp");
+		var selected = e.options[e.selectedIndex].value;
+		if (selected == '1') {
+			return confirm("Are you sure to delete quiz " + name + "?");
+		}
+		if (selected == '2') {
+			return confirm("Are you sure to clear quiz " + name
+					+ "'s history'?");
+		}
 	}
 </script>
 
@@ -97,8 +109,18 @@
 		String ann = request.getParameter("ann");
 		if (ann != null) {
 	%>
+	<p>New Announcement is Posted.</p>
+	<%
+		}
+	%>
+	<%
+		String delq = request.getParameter("delq");
+		if (delq != null) {
+	%>
 	<p>
-		New Announcement is Posted.
+		Quiz Operation Failed.
+		<%=delq%>
+		Doesn't Exist.
 	</p>
 	<%
 		}
@@ -117,27 +139,34 @@
 	<br>
 	<br>
 	<h3>Account Management</h3>
-	<form action="DeleteAccount" method="post">
+	<form action="DeleteAccount" method="post"
+		onsubmit="return confirmDeletion()">
 		<p>
 			<input type="text" name="id" placeholder="User name"> <input
-				type="submit" value="Delete Account" onclick="confirmDeletion()">
+				type="submit" value="Delete Account">
 		</p>
 	</form>
-	<form action="AppointAdmin" method="post">
+	<form action="ChangeStatus" method="post"
+		onsubmit="return confirmAppointment()">
 		<p>
-			<input type="text" name="id" placeholder="User name"> <input
-				type="submit" value="Appoint as Admin"
-				onclick="confirmAppointment()">
-
+			Set <input type="text" name="id" placeholder="User name"> as
+			<select name="status">
+				<option value="u">Normal User</option>
+				<option value="s">Administrator</option>
+			</select> <input type="submit" value="Change Authority">
 		</p>
 	</form>
 	<br>
 	<br>
 	<h3>Quiz Management</h3>
-	<form action="DeleteQuiz" method="post">
+	<form action="DeleteQuiz" method="post"
+		onsubmit="return confirmDeleteQuiz()">
 		<p>
-			<input type="text" name="quiz" placeholder="Quiz name"> <input
-				type="submit" value="Delete Quiz">
+			<input type="text" name="quiz" placeholder="Quiz name"> <select
+				name="operation" id="quizOp">
+				<option value="2">Clear taken history</option>
+				<option value="1">Delete quiz</option>
+			</select> <input type="submit">
 		</p>
 	</form>
 	</div>

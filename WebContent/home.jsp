@@ -18,8 +18,9 @@
 <link href="homestyle.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
-
+	System.out.println(userId);
 	String guest = (String) session.getAttribute("guest");
+	System.out.println(guest);
 	if (guest == null || guest.equals("guest")) {
 		response.sendRedirect("index.html");
 		return;
@@ -38,7 +39,6 @@
 	List<Activity> created = user.getQuizCreated();
 	// mail messages
 	List<String> inbox = user.getMessageInbox();
-	List<String> sent = user.getMessageSent();
 	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
 	// friends' activities
@@ -58,7 +58,7 @@
 				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
-						<a href=<%=userpageUrl%>>My Page</a> | <a href=<%=mailBoxUrl%>>Message(<%=unreadCount%>)
+						<a href=<%=userpageUrl%>>My Page</a> | <a href=<%=mailBoxUrl%>>Mailbox
 						</a> | <a href="Logout">Log out</a>
 					</h2>
 				</div>
@@ -93,27 +93,37 @@
 				<dd class="readmore">
 					<a href="announce.jsp"><b>MORE</b></a>
 				</dd>
-				<dt>New Message</dt>
+				<dt>
+					<a href='<%=mailBoxUrl%>'>New Message(<%=unreadCount%>)
+					</a>
+				</dt>
 				<%
 					if (unread.isEmpty()) {
 						out.println("<dd>No New Message</dd>");
 					} else {
+						int i = 0;
 						for (String msgCode : unread) {
+							if (i == 3)
+								break;
 							Message msg = user.getMessage("inbox", msgCode);
-							String description = msg.from + ": \"" + msg.title + "\"";
+							String str = msg.getTitle();
+							str = str.length() > 30 ? str.substring(0, 29) : str;
+							String description = msg.from + ": \"" + str + "\"";
 							SimpleDateFormat sdf = new SimpleDateFormat(
 									"yyyy-MM-dd HH:mm:ss.S");
 							Date time = sdf.parse(msg.getTime());
 							Date now = new Date();
 							String timeDscr = TimeTrsf.dscr(time, now);
-							out.println("<dd>" + description + " " + timeDscr + "</dd>");
+							out.println("<dd><a href='Mail.jsp?id=" + userId
+									+ "&box=inbox&msg=" + msgCode + "'>" + description
+									+ " " + timeDscr + "</a></dd>");
+							i++;
 						}
 					}
 				%>
 				<dd class="readmore">
 					<a href=<%=mailBoxUrl%>><b>MORE</b></a>
 				</dd>
-				
 				<dt>Quick Link</dt>
 				<%
 					if (user.getInfo("status").equals("s")) {
@@ -143,7 +153,7 @@
 				<dd class="searchform">
 					<form action="Search" method="post">
 						<div>
-							<input type="text" name="query" class="text"
+							<input type="search" name="query" class="text"
 								placeholder="Search quizzes OR users here" />
 						</div>
 						<div class="readmore">
@@ -157,25 +167,24 @@
 				<div class="inner">
 					<div class="leftbox">
 						<h3>Popular Quizzes</h3>
-
-						<%
-							QuizManager man = new MyQuizManager();
-							List<Quiz> popQuizzes = man.getPopularQuiz(3);
-							System.out.println(popQuizzes);
-							int i = 0;
-							for (Quiz quiz : popQuizzes) {
-								i++;
-								String quizUrl = quiz.getSummaryPage();
-								String creator = quiz.getCreatorId();
-						%>
-						<p>
-							<a href=<%=quizUrl%>><%=i%>. <%=quiz.getQuizName()%></a> (by:<a
-								href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)
-						</p>
-						<%
-							}
-						%>
-
+						<ul>
+							<%
+								QuizManager man = new MyQuizManager();
+								List<Quiz> popQuizzes = man.getPopularQuiz(5);
+								//System.out.println(popQuizzes);
+								for (Quiz quiz : popQuizzes) {
+									String quizUrl = quiz.getSummaryPage();
+									String creator = quiz.getCreatorId();
+									String description = quiz.getQuizName() + "\n"
+											+ quiz.getQuizDescription();
+							%>
+							<li class="quizlist"><a href='<%=quizUrl%>'
+								title='<%=description%>'><%=quiz.getQuizName()%></a> (by:<a
+								href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)</li>
+							<%
+								}
+							%>
+						</ul>
 
 						<p class="readmore">
 							<a href="popQuiz.jsp"><b>MORE</b></a>
@@ -184,23 +193,22 @@
 					</div>
 					<div class="rightbox">
 						<h3>Recent Quizzes</h3>
-
-						<%
-							List<Quiz> recentQuizzes = man.getRecentCreateQuiz(3);
-							int j = 0;
-							for (Quiz quiz : recentQuizzes) {
-								j++;
-								String quizUrl = quiz.getSummaryPage();
-								String creator = quiz.getCreatorId();
-						%>
-						<p>
-							<a href=<%=quizUrl%>><%=j%>. <%=quiz.getQuizName()%></a>(by:<a
-								href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)
-						</p>
-						<%
-							}
-						%>
-
+						<ul>
+							<%
+								List<Quiz> recentQuizzes = man.getRecentCreateQuiz(5);
+								for (Quiz quiz : recentQuizzes) {
+									String quizUrl = quiz.getSummaryPage();
+									String creator = quiz.getCreatorId();
+									String description = quiz.getQuizName() + "\n"
+											+ quiz.getQuizDescription();
+							%>
+							<li class="quizlist"><a href='<%=quizUrl%>'
+								title="<%=description%>"><%=quiz.getQuizName()%></a> (by:<a
+								href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)</li>
+							<%
+								}
+							%>
+						</ul>
 						<p class="readmore">
 							<a href="recentQuiz.jsp"><b>MORE</b></a>
 						</p>

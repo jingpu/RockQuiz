@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import user.Account;
 import user.Message;
+import util.Helper;
 
 /**
  * Servlet implementation class MsgSent
@@ -20,14 +21,14 @@ import user.Message;
 @WebServlet("/SendMessage")
 public class MsgSent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MsgSent() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public MsgSent() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -45,18 +46,19 @@ public class MsgSent extends HttpServlet {
 		String fromUser = (String) session.getAttribute("guest");
 		String toUser = request.getParameter("toUser");
 		String title = request.getParameter("title");
-		title = title == null? "" : title;
+		String retUrl = request.getParameter("retUrl");
+		if(retUrl.contains("Mailbox_browse.jsp?id="+ fromUser) || retUrl.contains("Mail.jsp?id=yy&box=")) 
+			retUrl = "Mailbox_sent.jsp?id="+ fromUser;
+		title = title == null? "" : Helper.replaceComma(title);
 		String content = request.getParameter("content");
-		content = content == null? "" : content;
+		content = content == null? "" : Helper.replaceComma(content);
 		Message msg = new Message(fromUser, toUser, "n", title, content);
 		Account user = new Account(fromUser);
 		if(user.sendMessage(msg)) {
-			RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_sent.jsp?id="+ fromUser);
-			dispatch.forward(request, response);
+			response.sendRedirect(retUrl);
 			return;
 		}
-		RequestDispatcher dispatch = request.getRequestDispatcher("Mailbox_inbox.jsp?id="+ fromUser);
-		dispatch.forward(request, response);
+		response.sendRedirect(retUrl);
 		return;
 	}
 }

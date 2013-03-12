@@ -1,26 +1,27 @@
 @CHARSET "UTF-8";
 
 body {
-        font-family: tahoma, helvetica, arial, sans-serif;
-        font-size: 10px;
-        text-align: center;
-        background: url(images/home_bg.gif);
-    }
-    
-html, body, #wrapper, h1 {
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 12px;
+	text-align: center;
+	background: url(images/home_bg.gif);
+}
+
+html,body,#wrapper,h1 {
 	margin: 0;
 	padding: 0;
 }
 
-img { border: 0; }
+img {
+	border: 0;
+}
 
 #wrapper {
 	margin: auto;
 	text-align: center;
-	width: 860px;
+	width: 870px;
 	position: relative;
 }
-
 
 h1 {
 	font-size: 30pt;
@@ -57,7 +58,6 @@ h3 {
 	text-align: right;
 }
 
-
 #inner {
 	border-left: 2px solid white;
 	border-right: 2px solid white;
@@ -73,8 +73,8 @@ h3 {
 	position: relative;
 }
 
-#nav, #nav a {
-	text-align:center;
+#nav,#nav a {
+	text-align: center;
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
@@ -86,7 +86,7 @@ h3 {
 
 #browse {
 	float: left;
-	width: 250px;
+	width: 230px;
 	margin: 0;
 	padding: 0;
 	background: white;
@@ -128,7 +128,7 @@ h3 {
 	padding: 10px;
 }
 
-#browse .text, #browse select {
+#browse .text,#browse select {
 	width: 160px;
 }
 
@@ -139,25 +139,26 @@ h3 {
 
 #browse form div {
 	padding-bottom: 8px;
-	width: 160px; 
+	width: 160px;
 }
-
 
 #body {
 	float: right;
-	width: 550px;
-	margin: 2px 1px 0 0;	
+	width: 600px;
+	margin: 2px 1px 0 0;
 	border: 2px solid #659db4;
 	position: relative;
 }
 
 #body p {
-	margin: 1em 0;
-	padding: 0;
+	margin: 1em 1em;
+	padding-left: 20px;
+	text-align: left;
+	margin-left: 20px;
+	padding-bottom: 8px;
 }
 
-#body .leftbox,
-#body .rightbox {
+#body .leftbox,#body .rightbox {
 	margin-top: 5px;
 	color: #464646;
 	height: 100px;
@@ -199,7 +200,34 @@ h3 {
 	font-family: tahoma, helvetica, arial, sans-serif;
 	font-size: 15px;
 	font-weight: normal;
-	color: #5d5d5d;
 	padding: 0 0 0 18px;
 	margin: 1px 0 3px 0;
 }
+
+#body h4 {
+	text-align: center;
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 15px;
+}
+
+#body h5 {
+	text-align: left;
+	margin-left: 20px;
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 13px;
+}
+
+#body li {
+	font-size: 12px;
+	font-weight: normal;
+	list-style-type: decimal;
+	text-align: left;
+	margin-left: 20px;
+	padding-bottom: 8px;
+}
+
+#body ul {
+	list-style-type: none;
+}
+
+
