@@ -117,6 +117,7 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("<head>");
 			out.println("<meta charset=\"UTF-8\">");
 			out.println("<title>Question " + (questionIndex + 1) + "</title>");
+			out.println("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\" >");
 			// TODO: why no questionType parameter
 			out.println(QuestionFactory.printReference());
 			out.println("</head>");

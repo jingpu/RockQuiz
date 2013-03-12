@@ -153,8 +153,11 @@ public class QResponse extends QuestionBase {
 	}
 
 	public static String getCreatedAnswer(HttpServletRequest request) {
-		// TODO Auto-generated method stub
 		return request.getParameter("answer");
+	}
+
+	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
+		return request.getParameter("answer_" + suffix);
 	}
 
 	/*

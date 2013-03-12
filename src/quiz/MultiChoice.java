@@ -196,6 +196,19 @@ public class MultiChoice extends QuestionBase {
 		return choices.toString();
 	}
 
+	public static String getCreatedChoices(HttpServletRequest request,
+			int suffix) {
+		int numChoices = Integer.parseInt(request.getParameter("numChoices"
+				+ "_" + suffix));
+		StringBuilder choices = new StringBuilder();
+		for (int i = 0; i < numChoices; i++) {
+			choices.append("#");
+			choices.append(request.getParameter("choice" + i + "_" + suffix));
+			choices.append("#");
+		}
+		return choices.toString();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -245,6 +258,10 @@ public class MultiChoice extends QuestionBase {
 		// str is a string, i.e. "choice0"
 		String str = request.getParameter("answer");
 		return request.getParameter(str);
+	}
+
+	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
+		return request.getParameter("answer_" + suffix);
 	}
 
 	/*
