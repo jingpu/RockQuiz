@@ -21,6 +21,7 @@
 %>
 <head>
 <meta charset="UTF-8">
+<link href="CSS/style.css" rel="stylesheet" type="text/css" >
 <title>Quiz - <%=quiz.getQuizName()%></title>
 </head>
 <body>

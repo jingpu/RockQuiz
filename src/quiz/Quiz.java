@@ -38,4 +38,6 @@ public interface Quiz {
 
 	public void clearQuizEvents();
 
+	public int getBestScore();
+
 }

@@ -1,0 +1,44 @@
+@import url('http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic');
+@CHARSET "ISO-8859-1";
+
+
+html, input, textarea, select {
+    font-family:'Lato', 'Arial', sans-serif;
+}
+
+* html, * html input, * html textarea, * html select {
+    font-family:'Arial', sans-serif;
+}
+
+body {
+    margin:8px;
+}
+
+a:link, a:visited {
+    color:#555;
+}
+
+a:link:hover, a:visited:hover {
+    color:#18afcb;
+}
+
+a:link:active, a:visited:active {
+    color:#f18458;
+}
+
+h1 {
+    margin-top:0px;
+    border-bottom:4px solid #18afcb;
+}
+
+hr {
+    display:block;
+    margin-left:0px;
+    margin-right:0px;
+    margin-top:8px;
+    margin-right:8px;
+    color:#18afcb;
+    background-color:#18afcb;
+    height:4px;
+    border-width:0px;
+}

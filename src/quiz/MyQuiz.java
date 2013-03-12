@@ -182,6 +182,7 @@ public class MyQuiz implements Quiz {
 			String tagString = rs.getString("tagString");
 			tags = Helper.parseTags(tagString);
 			createTime = rs.getTimestamp("createTime");
+			category = rs.getString("category");
 
 			// query quizName_Content_Table
 			int score = 0;
@@ -558,6 +559,18 @@ public class MyQuiz implements Quiz {
 			e.printStackTrace();
 		}
 
+	}
+
+	public int getBestScore() {
+		List<QuizEvent> list = allEvents();
+		int bestScore = 0;
+		for (int i = 0; i < list.size(); i++) {
+			int curScore = list.get(i).getScore();
+			if (bestScore < curScore)
+				bestScore = curScore;
+		}
+		assert bestScore <= getTotalScore();
+		return bestScore;
 	}
 
 }
