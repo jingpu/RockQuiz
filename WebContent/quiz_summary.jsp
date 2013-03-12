@@ -32,6 +32,11 @@
 	<p>
 		<%=quiz.getQuizDescription()%>
 	</p>
+	
+	<h2>Quiz Category</h2>
+	<p>
+		<%=quiz.getCategory()%>
+	</p>
 
 	<!--  The time created -->
 	<h3>Date Created</h3>
