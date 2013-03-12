@@ -182,6 +182,7 @@ public class MyQuiz implements Quiz {
 			String tagString = rs.getString("tagString");
 			tags = Helper.parseTags(tagString);
 			createTime = rs.getTimestamp("createTime");
+			category = rs.getString("category");
 
 			// query quizName_Content_Table
 			int score = 0;
