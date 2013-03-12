@@ -3,7 +3,9 @@
  */
 package user;
 
+import quiz.MyQuiz;
 import quiz.MyQuizManager;
+import quiz.Quiz;
 import quiz.QuizManager;
 
 /**
@@ -23,7 +25,8 @@ public class Administrator extends Account implements User{
 	
 	public boolean canFindQuiz(String quizName){
 		QuizManager man = new MyQuizManager();
-		return man.containsQuiz(quizName);
+		if(man.getQuiz(quizName) == null) return false;
+		return true;
 	}
 	public void deleteQuiz(String quizName) {
 		QuizManager man = new MyQuizManager();
@@ -31,8 +34,8 @@ public class Administrator extends Account implements User{
 	}
 	
 	public void clearQuizHistory(String quizName) {
-		QuizManager man = new MyQuizManager();
-		man.deleteQuizHistory(quizName);
+		Quiz quiz = new MyQuiz(quizName);
+		quiz.clearQuizEvents();
 	}
 	
 	public void setAnnouncement(String annoucement){

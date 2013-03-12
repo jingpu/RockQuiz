@@ -64,22 +64,51 @@ public class PResponse extends QuestionBase {
 	public static String printCreateHtml() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a picture-response question</h1>");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
-		html.append("<p> Please enter proposed question description and answer </p>");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+		html.append("<h1>This page will guide you to create a picture-response question</h1>\n");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
+		html.append("<p> Please enter proposed question description and answer </p>\n");
+		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>\n");
 
 		// url information
-		html.append("<p>Picture URL: <input type=\"text\" name=\"url\" ></input></p>\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\" ></input></p>");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
+		html.append("<p>Picture URL: <input type=\"text\" name=\"url\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ QuestionBase.PR + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+				+ QuestionBase.PR + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
+		html.append("<input type=\"submit\" value = \"Save\"/></form>\n");
+		return html.toString();
+
+	}
+
+	public static String printCreateHtmlSinglePage() {
+		// TODO Auto-generated method stub
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>This page will guide you to create a picture-response question</h4>\n");
+		html.append("<p> Please enter proposed question description and answer </p>\n");
+		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea></p>\n");
+
+		// url information
+		html.append("<p>Picture URL: <input type=\"text\" name=\"url\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
+				+ "\" required></input></p>\n");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+
+		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ QuestionBase.PR + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 		return html.toString();
 
 	}
@@ -90,27 +119,28 @@ public class PResponse extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" >\n");
 		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>");
+		html.append(questionDescription + "</p>\n");
 
 		html.append("<img border=\"0\" src=\"" + url
-				+ "\" width=\"304\" height=\"228\">");
+				+ "\" width=\"304\" height=\"228\">\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
-				+ getQuestionId() + "\" ></input></p>");
+				+ getQuestionId() + "\" ></input></p>\n");
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
+
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
-				+ "\"></input></p>");
+				+ "\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
-				+ "\" ></input></p>");
-		html.append("<input type=\"submit\" value = \"Next\"/></form>");
+				+ "\" ></input></p>\n");
+		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
 
 		return html.toString();
 
@@ -139,26 +169,26 @@ public class PResponse extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 
 		// form action should be here
 		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>");
+		html.append(questionDescription + "</p>\n");
 
 		// every form field will be renamed as xx_questionId
 		html.append("<img border=\"0\" src=\"" + url
-				+ "\" width=\"304\" height=\"228\">");
+				+ "\" width=\"304\" height=\"228\">\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
-				+ getQuestionId() + "\" ></input></p>");
+				+ getQuestionId() + "\" ></input></p>\n");
 
 		// Hidden information - questionType and questionId information
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
-				+ "\" ></input></p>");
+				+ "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
-				+ "\"  ></input></p>");
+				+ "\"  ></input></p>\n");
 
 		return html.toString();
 	}
@@ -176,7 +206,10 @@ public class PResponse extends QuestionBase {
 	 */
 	@Override
 	public String getUserAnswer(HttpServletRequest request) {
-		return request.getParameter("answer_" + getQuestionId());
+		String userAnswer = request.getParameter("answer_" + getQuestionId());
+		if (userAnswer == null)
+			userAnswer = "";
+		return userAnswer;
 	}
 
 	public Element toElement(Document doc) {
@@ -226,5 +259,12 @@ public class PResponse extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
+	}
+
+	/**
+	 * @return
+	 */
+	public static String printReference() {
+		return QuestionBase.printReference();
 	}
 }

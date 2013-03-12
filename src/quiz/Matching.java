@@ -51,24 +51,29 @@ public class Matching extends MCMAQuestion {
 	public static String printCreateHtml() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multiChoice question</h1>");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
+		html.append("<h1>This page will guide you to create a Matching question</h1>");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description and answer </p>");
 		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
 
 		// Choice options
+		html.append("<div id='options'>");
 		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input></p>");
 		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choice1\" ></input></p>");
 		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input></p>");
 		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input></p>");
+		html.append("</div>");
 
 		// Answer options
+		html.append("<div id='answers'>");
 		html.append("<p>AnswerA:   <input type=\"text\" name=\"answer0\" ></input></p>");
 		html.append("<p>AnswerB:   <input type=\"text\" name=\"answer1\" ></input></p>");
 		html.append("<p>AnswerC:   <input type=\"text\" name=\"answer2\" ></input></p>");
 		html.append("<p>AnswerD:   <input type=\"text\" name=\"answer3\" ></input></p>");
+		html.append("</div>");
 
 		// Full Score
+		html.append("<div id='option'>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
@@ -78,9 +83,49 @@ public class Matching extends MCMAQuestion {
 		html.append("<p><input type=\"hidden\" name=\"numOptions\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
 		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+		html.append("</div>");
 
 		return html.toString();
 
+	}
+
+	public static String printCreateHtmlSinglePage() {
+		// TODO Auto-generated method stub
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>This page will guide you to create a Matching question</h4>");
+		html.append("<p> Please enter proposed question description and answer </p>");
+		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+	
+		// Choice options
+		html.append("<div id='options'>");
+		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input></p>");
+		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choice1\" ></input></p>");
+		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input></p>");
+		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input></p>");
+		html.append("</div>");
+	
+		// Answer options
+		html.append("<div id='answers'>");
+		html.append("<p>AnswerA:   <input type=\"text\" name=\"answer0\" ></input></p>");
+		html.append("<p>AnswerB:   <input type=\"text\" name=\"answer1\" ></input></p>");
+		html.append("<p>AnswerC:   <input type=\"text\" name=\"answer2\" ></input></p>");
+		html.append("<p>AnswerD:   <input type=\"text\" name=\"answer3\" ></input></p>");
+		html.append("</div>");
+	
+		// Full Score
+		html.append("<div id='option'>");
+		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
+	
+		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ QuestionBase.MATCH + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"numOptions\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
+		html.append("</div>");
+	
+		return html.toString();
+	
 	}
 
 	/*
@@ -116,7 +161,7 @@ public class Matching extends MCMAQuestion {
 			// + "\">" + answersList.get(i) + "</input></p>");
 		}
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numOption_"
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
@@ -175,4 +220,10 @@ public class Matching extends MCMAQuestion {
 		return super.toElement(doc);
 	}
 
+	/**
+	 * @return
+	 */
+	public static String printReference() {
+		return QuestionBase.printReference();
+	}
 }

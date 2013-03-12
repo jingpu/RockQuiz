@@ -36,4 +36,7 @@ public interface Quiz {
 	
 	public String getQuizDescription();
 
+	public void clearQuizEvents();
+
+
 }

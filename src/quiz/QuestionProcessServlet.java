@@ -117,6 +117,8 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("<head>");
 			out.println("<meta charset=\"UTF-8\">");
 			out.println("<title>Question " + (questionIndex + 1) + "</title>");
+			// TODO: why no questionType parameter
+			out.println(QuestionFactory.printReference());
 			out.println("</head>");
 			out.println("<body>");
 
@@ -177,5 +179,4 @@ public class QuestionProcessServlet extends HttpServlet {
 		}
 
 	}
-
 }

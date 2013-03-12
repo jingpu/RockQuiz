@@ -140,7 +140,7 @@ public class MCMAQuestion extends QuestionBase {
 		int score = 0;
 		for (String str : inputList) {
 			if (answerSet.contains(str))
-				score += 1; // if correct, score + 1
+				score += maxScore; // if correct, score + 1
 			else
 				return 0; // if incorrect, score = 0
 		}
@@ -154,28 +154,69 @@ public class MCMAQuestion extends QuestionBase {
 
 	public static String printCreateHtml() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multiChoice-MultiAnswer question</h1>");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\">");
-		html.append("<p> Please enter proposed question description here: </p>");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
-		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>");
+		html.append("<h1>This page will guide you to create a multiChoice-MultiAnswer question</h1>\n");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
+		html.append("<p> Please enter proposed question description here: </p>\n");
+		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
+		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>\n");
 
 		// Choice options and answers
-		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input>  <input type=\"checkbox\" name=\"answer\" value=\"choice0\"></input></p>");
-		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choice1\" ></input>  <input type=\"checkbox\" name=\"answer\" value=\"choice1\"></input></p>");
-		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input>  <input type=\"checkbox\" name=\"answer\" value=\"choice2\"></input></p>");
-		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input>  <input type=\"checkbox\" name=\"answer\" value=\"choice3\"></input></p>");
+		html.append("<div id=\"MCMA\"");
+		html.append("<p>Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice0\"></input></p>\n");
+		html.append("<p>Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice1\"></input></p>\n");
+		html.append("<p>Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice2\"></input></p>\n");
+		html.append("<p>Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice3\"></input></p>\n");
+		html.append("</div>\n");
+
+		// add/delete choices
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice();\" />\n");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice();\" />\n");
 
 		// Full Score
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
+		html.append("<p>Score per correct answer:   <input type=\"text\" name=\"maxScore\" ></input></p>\n");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
 
 		// Hidden information - question Type and tag information
-		html.append("<p><input type=\"hidden\" name=\"numChoices\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"numChoices\" id=\"numChoices\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ QuestionBase.MCMA + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+				+ QuestionBase.MCMA + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");
+		html.append("<input type=\"submit\" value = \"Save\"/></form>\n");
+
+		return html.toString();
+
+	}
+
+	public static String printCreateHtmlSinglePage() {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>This page will guide you to create a multiChoice-MultiAnswer question</h4>\n");
+		html.append("<p> Please enter proposed question description here: </p>\n");
+		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
+		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>\n");
+
+		// Choice options and answers
+		html.append("<div id=\"MCMA\"");
+		html.append("<p>Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice0\"></input></p>\n");
+		html.append("<p>Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice1\"></input></p>\n");
+		html.append("<p>Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice2\"></input></p>\n");
+		html.append("<p>Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice3\"></input></p>\n");
+		html.append("</div>\n");
+
+		// add/delete choices
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice();\" />\n");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice();\" />\n");
+
+		// Full Score
+		html.append("<p>Score per correct answer:   <input type=\"text\" name=\"maxScore\" ></input></p>\n");
+		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+
+		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"numChoices\" id=\"numChoices\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
+				+ QuestionBase.MCMA + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");
 
 		return html.toString();
 
@@ -187,11 +228,11 @@ public class MCMAQuestion extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">\n");
 		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>");
+		html.append(questionDescription + "</p>\n");
 
 		// create choice options
 		String choicesList[] = choices.split("#");
@@ -200,21 +241,22 @@ public class MCMAQuestion extends QuestionBase {
 				++i;
 			html.append("<p><input type=\"checkbox\" name=\"answer_"
 					+ getQuestionId() + "\" value= \"" + choicesList[i] + "\">"
-					+ choicesList[i] + "</input></p>");
+					+ choicesList[i] + "</input></p>\n");
 		}
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\""
+		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
+
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
-				+ "\"></input></p>");
+				+ "\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
-				+ "\" ></input></p>");
-		html.append("<input type=\"submit\" value = \"Next\"/></form>");
+				+ "\" ></input></p>\n");
+		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
 		System.out.println(html.toString());
 		return html.toString();
 
@@ -230,12 +272,12 @@ public class MCMAQuestion extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
+		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 
 		// form action should be here
 		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>");
+		html.append(questionDescription + "</p>\n");
 
 		// every form field will be renamed as xx_questionId
 		// create choice options
@@ -245,7 +287,7 @@ public class MCMAQuestion extends QuestionBase {
 				++i;
 			html.append("<p><input type=\"checkbox\" name=\"answer_"
 					+ getQuestionId() + "\" value= \"" + choicesList[i] + "\">"
-					+ choicesList[i] + "</input></p>");
+					+ choicesList[i] + "</input></p>\n");
 		}
 
 		// Hidden information - questionType and questionId information
@@ -253,10 +295,10 @@ public class MCMAQuestion extends QuestionBase {
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
-				+ "\" ></input></p>");
+				+ "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
-				+ "\"  ></input></p>");
+				+ "\"  ></input></p>\n");
 
 		return html.toString();
 	}
@@ -271,6 +313,8 @@ public class MCMAQuestion extends QuestionBase {
 	public String getUserAnswer(HttpServletRequest request) {
 		String answerList[] = request.getParameterValues("answer_"
 				+ getQuestionId());
+		if (answerList == null)
+			return "";
 		StringBuilder answer = new StringBuilder();
 		for (String str : answerList) {
 			answer.append("#");
@@ -334,6 +378,13 @@ public class MCMAQuestion extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
+	}
+
+	/**
+	 * @return
+	 */
+	public static String printReference() {
+		return QuestionBase.printReference();
 	}
 
 }

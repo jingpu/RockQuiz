@@ -165,6 +165,26 @@ public class QuestionFactory {
 		return "error";
 	}
 
+	// called by quiz to print html for every question
+	// essentially, it is a html-string
+	public static String printCreateHtmlSinglePage(String questionType) {
+		if (questionType.equals(QuestionBase.QR))
+			return QResponse.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.FIB))
+			return FillInBlank.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.MC))
+			return MultiChoice.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.PR))
+			return PResponse.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.MA))
+			return MAQuestion.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.printCreateHtmlSinglePage();
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.printCreateHtmlSinglePage();
+		return "error";
+	}
+
 	/**
 	 * Used by quiz servlet when creating multi-answer for a question
 	 * 
@@ -214,4 +234,31 @@ public class QuestionFactory {
 		// test printSummaryPageHTML method
 		System.out.print(printCreateHtml(questionTypes[0]));
 	}
+
+	/**
+	 * @param questionType
+	 * @return
+	 */
+	public static String printReference(String questionType) {
+		if (questionType.equals(QuestionBase.QR))
+			return QResponse.printReference();
+		else if (questionType.equals(QuestionBase.FIB))
+			return FillInBlank.printReference();
+		else if (questionType.equals(QuestionBase.MC))
+			return MultiChoice.printReference();
+		else if (questionType.equals(QuestionBase.PR))
+			return PResponse.printReference();
+		else if (questionType.equals(QuestionBase.MA))
+			return MAQuestion.printReference();
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.printReference();
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.printReference();
+		return "error";
+	}
+
+	public static String printReference() {
+		return QuestionBase.printReference();
+	}
+
 }

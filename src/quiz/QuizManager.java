@@ -37,6 +37,14 @@ public interface QuizManager {
 	public Quiz getQuiz(String name);
 
 	/**
+	 * deletes the quiz from data base
+	 * 
+	 * @param name
+	 *            String of the quizName
+	 */
+	public void deleteQuiz(String name);
+
+	/**
 	 * Search Quizzes which has the certain querying pattern (sub-string) in
 	 * QuizCreator field
 	 * 
@@ -100,7 +108,4 @@ public interface QuizManager {
 	public List<Quiz> searchForQuiz(String pattern, 
 			int sortMethod);
 
-	public boolean containsQuiz(String quizName);
-	public void deleteQuiz(String quizName);
-	public void deleteQuizHistory(String quizName);
 }
