@@ -44,6 +44,10 @@ function deleteQuestion(button) {
 </script>
 <meta charset="UTF-8">
 <title>Create Quiz</title>
+<link href="CSS/style.css" rel="stylesheet" type="text/css" >
+<style type="text/css">
+.question{border-bottom:1px dotted}
+</style>
 </head>
 <body>
 	<%

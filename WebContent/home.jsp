@@ -109,7 +109,7 @@
 					<a href=<%=mailBoxUrl%>><b>MORE</b></a>
 				</dd>
 				<dt>
-					<form action="QuizCreationServlet" method="post">
+					<form action="quiz_create.jsp" method="post">
 						<input type="submit" value="Create Quiz">
 					</form>
 
