@@ -72,6 +72,12 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 		if (isImmCorrection == null || !isImmCorrection.equals("true"))
 			isImmCorrection = "false";
 		
+		String categoryType = request.getParameter("category_type");
+		String category;
+		if (categoryType.equals("existing_categories"))
+			category = request.getParameter("existing_categories");
+		else
+			category = request.getParameter("new_category");
 
 		// get a QuizManager
 		QuizManager quizManager = new MyQuizManager();
@@ -92,7 +98,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 				// we are not finishing quiz creation, so save all params to
 				// session
 				saveToSession(session, quizName, tagString, quizDescription,
-						canPractice, isRandom, isOnePage, isImmCorrection);
+					canPractice, isRandom, isOnePage, isImmCorrection,
+					categoryType, category);
 
 			} else {
 			// construct question list and store them to database
@@ -121,12 +128,11 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 						+ "Please go back and create some questions.";
 				out.print(printCreationFailPage(message));
 
-				// reset quizName
-				quizName = "";
 				// we are not finishing quiz creation, so save all params to
 				// session
 				saveToSession(session, quizName, tagString, quizDescription,
-						canPractice, isRandom, isOnePage, isImmCorrection);
+						canPractice, isRandom, isOnePage, isImmCorrection,
+						categoryType, category);
 			} else {
 			// construct the quiz class and store it to database
 			Timestamp createTime = new Timestamp(new java.util.Date().getTime());
@@ -136,7 +142,7 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 					Boolean.parseBoolean(isRandom),
 					Boolean.parseBoolean(isOnePage),
 					Boolean.parseBoolean(isImmCorrection), questionList,
-					createTime, "Not_Implemented_Category");
+						createTime, category);
 			quiz.saveToDatabase();
 			// add quiz to user's database
 			Account user = new Account(userName);
@@ -155,7 +161,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 
 	private void saveToSession(HttpSession session, String quizName,
 			String tagString, String quizDescription, String canPractice,
-			String isRandom, String isOnePage, String isImmCorrection) {
+			String isRandom, String isOnePage, String isImmCorrection,
+			String categoryType, String category) {
 		session.setAttribute("quizName", quizName);
 		session.setAttribute("tagString", tagString);
 		session.setAttribute("quizDescription", quizDescription);
@@ -163,6 +170,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 		session.setAttribute("isRandom", isRandom);
 		session.setAttribute("isOnePage", isOnePage);
 		session.setAttribute("isImmCorrection", isImmCorrection);
+		session.setAttribute("categoryType", categoryType);
+		session.setAttribute("category", category);
 	}
 
 	private void removeFromSession(HttpSession session) {
@@ -173,6 +182,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 		session.removeAttribute("isRandom");
 		session.removeAttribute("isOnePage");
 		session.removeAttribute("isImmCorrection");
+		session.removeAttribute("categoryType");
+		session.removeAttribute("category");
 	}
 
 	private String printCreationFailPage(String message) {

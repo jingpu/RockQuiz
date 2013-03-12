@@ -77,6 +77,9 @@ function enterNewCategory(){
 		String isRandom = "checked";
 		String isOnePage = "";
 		String isImmCorrection = "";
+		String category = "";
+		String existingRadio = "checked";
+		String newRadio = "";
 
 		// get form input values from session
 		String tmp;
@@ -101,6 +104,17 @@ function enterNewCategory(){
 		tmp = (String) session.getAttribute("isImmCorrection");
 		if (tmp != null && tmp.equals("true"))
 			isImmCorrection = "checked";
+		tmp = (String) session.getAttribute("categoryType");
+		if (tmp != null) {
+			category = (String) session.getAttribute("category");
+			if (tmp.equals("new_category")) {
+				existingRadio = "";
+				newRadio = "checked";
+			} else {
+				existingRadio = "checked";
+				newRadio = "";
+			}
+		}
 	%>
 	<h1>Create Quiz</h1>
 	<form action="QuizCreateAndSaveServlet" method="post">
@@ -116,22 +130,22 @@ function enterNewCategory(){
 			<table>
 				<tr id="existing_categories">
 					<td><input type="radio" name="category_type"
-						value="existing_categories" checked="checked" onclick="chooseExistingCategory();">Choose Category:</td>
-					<td><select name="existing_categories" id="existing_categories_box">
+						value="existing_categories" <%= existingRadio %> onclick="chooseExistingCategory();">Choose Category:</td>
+					<td><select name="existing_categories" id="existing_categories_box" <%= (existingRadio.equals("checked")?"":"disabled=\"disabled\"")%>>
 							<%
 								QuizManager quizManager = new MyQuizManager();
 								Set<String> categorySet = quizManager.getCategories();
-								for (String category : categorySet) {
+								for (String c : categorySet) {
 							%>
-							<option value="<%=category%>"><%=category%></option>
+							<option value="<%=c%>"  <%= (existingRadio.equals("checked") && c.equals(category)?"selected":"")%> ><%=c%></option>
 							<%
 								}
 							%>
 					</select></td>
 				</tr>
 				<tr id="new_category">
-					<td><input type="radio" name="category_type" value="new_category" onclick="enterNewCategory();">New Category:</td>
-					<td><input type="text" name="new_category"  disabled="disabled" id="new_category_box"></td>
+					<td><input type="radio" name="category_type" value="new_category" <%= newRadio %> onclick="enterNewCategory();">New Category:</td>
+					<td><input type="text" name="new_category" id="new_category_box" <%= (newRadio.equals("checked")?"":"disabled=\"disabled\"")%>  value="<%= (newRadio.equals("checked")?category:"")%>"></td>
 
 				</tr>
 			</table>
