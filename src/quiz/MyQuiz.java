@@ -561,4 +561,16 @@ public class MyQuiz implements Quiz {
 
 	}
 
+	public int getBestScore() {
+		List<QuizEvent> list = allEvents();
+		int bestScore = 0;
+		for (int i = 0; i < list.size(); i++) {
+			int curScore = list.get(i).getScore();
+			if (bestScore < curScore)
+				bestScore = curScore;
+		}
+		assert bestScore <= getTotalScore();
+		return bestScore;
+	}
+
 }
