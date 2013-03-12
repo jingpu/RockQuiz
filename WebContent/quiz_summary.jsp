@@ -17,6 +17,7 @@
 	MyQuiz quiz = new MyQuiz(quizName);
 %>
 <head>
+<script type="text/javascript" src="challenge-msg.js"></script>
 <meta charset="UTF-8">
 <title>Quiz Summary - <%=quiz.getQuizName()%></title>
 </head>
@@ -155,8 +156,21 @@
 	<%
 		}
 	%>
-	<form action="home.jsp">
-		<input type="submit" value="Back to Homepage">
+
+	<%--challenge --%>
+	<input name='' type='button' value='Challenge my friends!'
+		onclick='AddElement()' />
+	<form action='ChallengeLetterSent' target='hidFrame' method='post'
+		id='letter'>
+		<input type='hidden' name='quizName' value=<%=quizName%>>
+		<div id='msg'></div>
+	</form>
+	<iframe name='hidFrame' style='display: none'></iframe>
+	<%--challenge --%>
+
+	<form action="home.jsp?">
+		<input type="hidden" name="userName" value="<%=userName%>"> <input
+			type="submit" value="Back to Homepage">
 	</form>
 </body>
 </html>

@@ -40,7 +40,13 @@
 	String toDisplay = msg.to == userId ? msg.to
 			: ("<a href='userpage.jsp?id=" + msg.to
 					+ "' target=\"_top\">" + msg.to + "</a>");
-	String referer = request.getHeader("referer"); 
+	String retUrl = "";
+	if (box.equals("inbox")){
+		retUrl = "Mailbox_inbox.jsp";
+	} else if (box.equals("sent")){
+		retUrl = "Mailbox_sent.jsp";
+	}
+	System.out.println(retUrl);
 %>
 <body>
 	<div id="wrapper">
@@ -65,18 +71,23 @@
 			</tr>
 		</table>
 	</div>
-
-	<form action="WriteMessage.jsp?id=<%=guest%>&to=<%=to%>" method="post">
+	<p>
+	<form action="<%=retUrl%>">
+	<%
+		System.out.println(retUrl);
+	%>
+		<input type="hidden" name="id" value="<%=userId%>">
+		<input type="submit" value="Back">
+	</form>
+	<form action="WriteMessage.jsp?id=<%=guest%>&to=<%=to%>">
 		<input type="submit" value="Reply">
 	</form>
-
 	<form action="DeleteMessage" method="post">
 		<input name="code" type="hidden" value="<%=msgCode%>"> <input
 			name="box" type="hidden" value="<%=box%>"> <input
 			type="submit" value="Delete">
 	</form>
-
-	<a href="<%=referer%>"><input type="button" value="Cancel"></a>
+	</p>
 </body>
 </html>
 
