@@ -17,7 +17,7 @@ public class Message {
 	public final String content;
 	private String time;
 	private boolean ifRead;
-	private static final String challengeTitle = ">>>CHALLENGE Letter<<<";
+	private static final String challengeTitle = "**CHALLENGE Letter**";
 	private static final String friendRequestTitle = "**Friend Request**";
 	private static final String friendConfirmTitle = " Are Friends Now";
 	private static final String challengeContent = " wants to challenge you with this quiz ";
@@ -66,17 +66,17 @@ public class Message {
 	}
 	
 	public String getContent(){
-		String fromDisp = "<a href='userpage.jsp?id=" + from + "'>" + from + "</a>";
+		String fromDisp = "<a href='userpage.jsp?id=" + from + "' target='_top'>" + from + "</a>";
 		if(type.equals("c")){
 			QuizManager man = new MyQuizManager();
-			Quiz quiz = man.getQuiz(content);
+			Quiz quiz = man.getQuiz(title);
 			String quizUrl = quiz.getSummaryPage();
-			String quizDisp = "<a href='" + quizUrl + "'>" + content + "</a>";
-			return fromDisp + challengeContent + quizDisp;
+			String quizDisp = "<a href='" + quizUrl + "' target='_top'>" + title + "</a>";
+			return fromDisp + challengeContent + quizDisp + "<br>\""+ content +"\"";
 		} else if(type.equals("r")){
 			StringBuilder sb = new StringBuilder();
 			sb.append(fromDisp).append(friendRequestContent);
-			sb.append("<a href='RespondFriend?to="+ from +"'>Accept</a>");
+			sb.append("<a href='RespondFriend?to="+ from +"' target='_top'>Accept</a>");
 			return sb.toString();
 		} else if(type.equals("f")){
 			return friendConfirmContent + fromDisp;

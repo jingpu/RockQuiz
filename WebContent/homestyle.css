@@ -103,6 +103,18 @@ h3 {
 	font-weight: bold;
 }
 
+#browse dt a {
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+	padding: 3px 22px;
+}
+
+#browse dt a:hover {
+	background: #f96969;
+}
+
 #browse dd {
 	background: #227293;
 	color: white;
@@ -171,6 +183,25 @@ h3 {
 	width: 302px;
 	margin-right: 18px;
 	border-left: 2px solid #659db4;
+}
+
+#body li.quizlist {
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	list-style-type: decimal;
+	text-align: center;
+	margin-left: 20px;
+	padding-bottom: 5px;
+}
+
+#body li.quizlist a {
+	color: #202020;
+	text-decoration: none;
+}
+
+#body li.quizlist a:hover {
+	text-decoration: underline;
 }
 
 #body .br {

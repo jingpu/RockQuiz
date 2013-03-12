@@ -15,20 +15,19 @@ import user.Message;
 import util.Helper;
 
 /**
- * Servlet implementation class MsgSent
- * @author youyuan
+ * Servlet implementation class ChallengeLetterSent
  */
-@WebServlet("/SendMessage")
-public class MsgSent extends HttpServlet {
+@WebServlet("/ChallengeLetterSent")
+public class ChallengeLetterSent extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public MsgSent() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ChallengeLetterSent() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,23 +41,24 @@ public class MsgSent extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("about to send1");
 		HttpSession session = request.getSession();
 		String fromUser = (String) session.getAttribute("guest");
 		String toUser = request.getParameter("toUser");
-		String title = request.getParameter("title");
-		String retUrl = request.getParameter("retUrl");
-		if(retUrl.contains("Mailbox_browse.jsp?id="+ fromUser) || retUrl.contains("Mail.jsp?id=yy&box=")) 
-			retUrl = "Mailbox_sent.jsp?id="+ fromUser;
-		title = title == null? "" : Helper.replaceComma(title);
+		String title = request.getParameter("quizName");
 		String content = request.getParameter("content");
+		String retUrl = request.getHeader("referer"); 
 		content = content == null? "" : Helper.replaceComma(content);
-		Message msg = new Message(fromUser, toUser, "n", title, content);
+		Message msg = new Message(fromUser, toUser, "c", title, content);
 		Account user = new Account(fromUser);
+		System.out.println("about to send2");
 		if(user.sendMessage(msg)) {
+			System.out.println("sent");
 			response.sendRedirect(retUrl);
 			return;
 		}
 		response.sendRedirect(retUrl);
 		return;
 	}
+
 }

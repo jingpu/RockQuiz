@@ -1,4 +1,4 @@
-package user;
+ package user;
 
 import java.security.DigestException;
 import java.security.MessageDigest;
@@ -655,8 +655,12 @@ public class UserManager{
 			if(rs.next()){
 				Message msg = null;
 				if(box.equals("inbox")){
+					String title = rs.getString("title");
+					String content = rs.getString("content");
+					title = title == null? "" : title;
+					content = content == null? "" : title;
 					msg = new Message(rs.getString("fromUser"), userId, rs.getString("type"), 
-							rs.getString("title"), rs.getString("content"));
+							title, content);
 					msg.setRead(rs.getString("ifRead").equals("1"));
 				} else if(box.equals("sent")){
 					msg = new Message(userId, rs.getString("toUser"), rs.getString("type"), 

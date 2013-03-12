@@ -93,6 +93,7 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<head>");
+		out.println("<script type=\"text/javascript\" src=\"challenge-msg.js\"></script>");
 		out.println("<meta charset=\"UTF-8\">");
 		out.println("<title>Quiz Results</title>");
 		out.println("</head>");
@@ -102,9 +103,19 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 				+ quiz.getMaxScore() + "</p>");
 
 		out.println("<p>Time: " + quiz.getTimeElapsed(quizId) + "s </p>");
+
+		//*** add challenge button
+
+		out.println("<input name='' type='button' value='Challenge my friends!'onclick='AddElement()'>");
+		out.println("<form action='ChallengeLetterSent' target='hidFrame' method='post' id='letter'>");
+		out.println("<input type='hidden' name='quizName' value=" + quizName + ">");
+		out.println("<div id='msg'></div>");
+		out.println("</form>");
+		out.println("<iframe name='hidFrame' style='display: none'></iframe>");
+
 		out.println("<p><a href=\"" + quiz.getSummaryPage()
 				+ "\">Go back to summary page.</p>");
-		//*** add chanllenge button
+
 		out.println("</body>");
 		out.println("</html>");
 

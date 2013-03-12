@@ -36,7 +36,7 @@ public class TimeTrsf {
 			SimpleDateFormat fmt3 = new SimpleDateFormat("MMM dd 'at' hh:mm");
 			description.append(fmt3.format(date1));
 		} else {
-			SimpleDateFormat fmt4 = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mm");
+			SimpleDateFormat fmt4 = new SimpleDateFormat("yyyy-MM-dd");
 			description.append(fmt4.format(date1));
 		}
 		return description.toString();
