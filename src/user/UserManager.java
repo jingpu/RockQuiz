@@ -628,11 +628,11 @@ public class UserManager{
 		setDriver();
 		try {
 			stmt.executeUpdate("INSERT INTO " + msg.from + "_sent" + " VALUES ('" + hashValue + "','" 
-					+ currentTime + "', '" + msg.to + "','" + msg.type + "','" + msg.title + "','" 
+					+ currentTime + "','" + msg.to + "','" + msg.type + "','" + msg.title + "','" 
 					+ msg.content + "')");
 
 			stmt.executeUpdate("INSERT INTO " + msg.to + "_inbox" + " VALUES ('"+ hashValue + "','" 
-					+ currentTime + "', '" + msg.from + "','" + msg.type + "','" + msg.title + "','" 
+					+ currentTime + "','" + msg.from + "','" + msg.type + "','" + msg.title + "','" 
 					+ msg.content + "','0')");
 
 		} catch (SQLException e) {

@@ -47,17 +47,13 @@ public class ChallengeLetterSent extends HttpServlet {
 		String toUser = request.getParameter("toUser");
 		String title = request.getParameter("quizName");
 		String content = request.getParameter("content");
-		String retUrl = request.getHeader("referer"); 
 		content = content == null? "" : Helper.replaceComma(content);
 		Message msg = new Message(fromUser, toUser, "c", title, content);
 		Account user = new Account(fromUser);
 		System.out.println("about to send2");
 		if(user.sendMessage(msg)) {
 			System.out.println("sent");
-			response.sendRedirect(retUrl);
-			return;
 		}
-		response.sendRedirect(retUrl);
 		return;
 	}
 

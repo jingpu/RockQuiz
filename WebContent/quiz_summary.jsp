@@ -168,7 +168,7 @@
 	<iframe name='hidFrame' style='display: none'></iframe>
 	<%--challenge --%>
 
-	<form action="home.jsp?">
+	<form action="home.jsp">
 		<input type="hidden" name="userName" value="<%=userName%>"> <input
 			type="submit" value="Back to Homepage">
 	</form>
