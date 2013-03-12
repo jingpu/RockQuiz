@@ -80,9 +80,20 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 		long startTime = (Long) session.getAttribute("quizStartTime");
 		long timeElapsed = new Date().getTime() - startTime;
 		String quizId = quiz.saveQuizEvent(userName, timeElapsed, currentScore);
+		
 		// save quiz event to user database
+		String newAchieve1 = null;
+		String newAchieve2 = null;
 		Account user = new Account(userName);
-		user.addQuizTaken(quizName, quizId);
+		if(quizName != null){
+			user.addQuizTaken(quizName, quizId);
+			if(user.countHistory("t") == 10){
+				newAchieve1 = "Quiz Machine";
+			}
+			if(currentScore >= quiz.getBestScore()){
+				newAchieve2 = "I am the Greatest";
+			}
+		}
 
 		/*
 		 * write html
@@ -118,6 +129,8 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 
 		out.println("</body>");
 		out.println("</html>");
+
+
 
 		// remove all the session attributes defined in this servlet
 		session.removeAttribute("quizStartTime");

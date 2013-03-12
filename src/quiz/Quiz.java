@@ -38,5 +38,4 @@ public interface Quiz {
 
 	public void clearQuizEvents();
 
-
 }

@@ -44,7 +44,7 @@
 
 			<dl id="browse">
 				<dt>
-					<a href="WriteMessage.jsp?id=<%=userId%>" target="another">Compose</a>
+					<a href="WriteMessage.jsp?id=<%=userId%>" target="_blank">Compose</a>
 				</dt>
 				<dd></dd>
 				<dd>

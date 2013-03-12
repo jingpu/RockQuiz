@@ -39,6 +39,7 @@
 %>
 
 <script language="javascript" type="text/javascript">
+<!--
 	function friendQuery(text) {
 		var r = confirm(text);
 		if (r) {
@@ -46,6 +47,7 @@
 		}
 		return false;
 	}
+//-->
 </script>
 
 <title><%=title%></title>
@@ -93,7 +95,7 @@
 						%>
 
 						<%--if guest!=id, show message --%>
-						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>">Message</a> |
+						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>">Message me</a> |
 						<%
 							}
 						%>

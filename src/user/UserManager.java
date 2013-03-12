@@ -1,4 +1,4 @@
- package user;
+package user;
 
 import java.security.DigestException;
 import java.security.MessageDigest;
@@ -648,7 +648,7 @@ public class UserManager{
 	 * **/
 	public static Message getMsg(String userId, String box, String msgCode){
 		String boxTable = userId + "_" + box;
-		
+
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + boxTable + " WHERE code='" + msgCode + "'");
@@ -815,11 +815,11 @@ public class UserManager{
 		return true;
 	}
 
-	public static boolean addAchievement(String userId, String name){
+	public static boolean addAchievement(String userId, String achieveId, String quizName, String quizId){
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), 'a', '" + name + "')");
+					+ " VALUES (now(), 'a"+ achieveId + quizId + "', '" + quizName + "')");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

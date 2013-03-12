@@ -116,7 +116,7 @@
 					}
 				%>
 				<dt>
-					<form action="QuizCreationServlet" method="post">
+					<form action="QuizCreationServlet" target='_blank' method="post">
 						<input type="submit" value="Create Quiz">
 					</form>
 

@@ -51,3 +51,7 @@ function DelElement(){
 	alert('Challenge Message Sent');
 	return false;
 }    
+
+function NewAchievement(){
+	
+}

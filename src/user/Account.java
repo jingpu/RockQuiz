@@ -101,7 +101,7 @@ public class Account implements User{
 	 * 		{"a"(achievement), "t"(quiz taken), "c"(quiz created)}
 	 * @return count
 	 * **/
-	public int countHistory(String userId, String type){
+	public int countHistory(String type){
 		return UserManager.countHistory(userId, type);
 	}
 	
