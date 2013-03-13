@@ -154,14 +154,12 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 						newAchieve = "a1";
 					} else if(user.countHistory("c") == 5){
 						newAchieve = "a2";
-					} else if(user.countHistory("c") == 15){
+					} else if(user.countHistory("c") == 10){
 						newAchieve = "a3";
 					}
-					System.out.println(user.countHistory("c"));
 					if(!newAchieve.equals("0")){
 						user.addAchievement(newAchieve, quizName);
 						String title = Helper.getTitle(newAchieve);
-						System.out.println(title);
 						response.setContentType("text/html");
 						PrintWriter out = response.getWriter();
 						StringBuilder html = new StringBuilder();
