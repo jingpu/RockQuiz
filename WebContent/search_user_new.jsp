@@ -42,7 +42,7 @@
 					<%--quizzes/users search box--%>
 					<form action="UserSearch" method="post">
 						<div>
-							<input type="text" name="query" size="40" value=<%=query%>>
+							<input type="search" name="query" size="40">
 						</div>
 						<div class="readmore">
 							<input type="image" src="images/search.gif" />
