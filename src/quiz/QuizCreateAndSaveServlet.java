@@ -188,20 +188,21 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 
 	private String printCreationFailPage(String message) {
 		StringBuilder html = new StringBuilder();
-		html.append("<!DOCTYPE html>");
-		html.append("<html>");
-		html.append("<head>");
-		html.append("<meta charset=\"UTF-8\">");
-		html.append("<title>Quiz Creation Fails</title>");
-		html.append("</head>");
-		html.append("<body>");
-		html.append("<h1>Quiz Creation Fails</h1>");
-		html.append("<p>" + message + "</p>");
+		html.append("<!DOCTYPE html>\n");
+		html.append("<html>\n");
+		html.append("<head>\n");
+		html.append("<meta charset=\"UTF-8\">\n");
+		html.append("<title>Quiz Creation Fails</title>\n");
+		html.append("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\" >\n");
+		html.append("</head>\n");
+		html.append("<body>\n");
+		html.append("<h1>Quiz Creation Fails</h1>\n");
+		html.append("<p>" + message + "</p>\n");
 		html.append("<form action=\"quiz_create.jsp\" method=\"post\">\n");
 		html.append("<input type=\"submit\" value=\"Back\" >\n");
 		html.append("</form>\n");
-		html.append("</body>");
-		html.append("</html>");
+		html.append("</body>\n");
+		html.append("</html>\n");
 
 		return html.toString();
 	}

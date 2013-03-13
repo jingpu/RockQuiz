@@ -150,7 +150,7 @@ public class Matching extends MCMAQuestion {
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">");
 		html.append("<p class=\"description\">Question Description:</p>\n");
 		html.append(questionDescription + "</p>");
 

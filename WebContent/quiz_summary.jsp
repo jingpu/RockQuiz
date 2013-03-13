@@ -41,12 +41,14 @@
 	<!--  The time created -->
 	<h3>Date Created</h3>
 	<p>
-		<a href="userpage.jsp?id=<%=quiz.getCreateTime()%>"><%=quiz.getCreateTime()%></a>
+		<%=quiz.getCreateTime()%>
 	</p>
 
 	<!-- The creator of the quiz(hot linked to the creator’s user page -->
 	<h3>Quiz Creator</h3>
-	<p><%=quiz.getCreatorId()%></p>
+	<p>
+		<a href="userpage.jsp?id=<%=quiz.getCreatorId()%>"><%=quiz.getCreatorId()%></a>
+	</p>
 
 	<h3>Tags</h3>
 	<p>

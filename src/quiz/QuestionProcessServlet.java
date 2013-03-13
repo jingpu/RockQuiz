@@ -149,6 +149,7 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("<head>");
 			out.println("<meta charset=\"UTF-8\">");
 			out.println("<title>Quiz Results</title>");
+			out.println("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\" >");
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>Quiz Results</h1>");

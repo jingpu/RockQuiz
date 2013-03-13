@@ -126,8 +126,8 @@ public class PResponse extends QuestionBase {
 		html.append(super.printReadHtml());
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
-		html.append("<p>" + typeIntro + "</p><br>");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" >\n");
+		html.append("<p>" + typeIntro + "</p>\n");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">\n");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>\n");
 
