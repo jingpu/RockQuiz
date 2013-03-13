@@ -135,7 +135,7 @@
 					<a href="profile.jsp?id=<%=userId%>">Edit Profile</a>
 				</dd>
 				<dd>
-					<a href="">444</a>
+					<a href="myfields.jsp?id=<%=userId%>">Interesting Fields</a>
 				</dd>
 				<dd>
 					<a href="">555</a>
