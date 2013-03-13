@@ -25,6 +25,9 @@
 <title>Following fields - <%=userId%></title>
 </head>
 <body>
+	<h2>
+		<a href="home.jsp?id=<%=guest%>">Home</a>
+	</h2>
 	<h1>Interesting Fields</h1>
 	<%
 		for (int i = 0; i < categories.length; i++) {
@@ -37,8 +40,8 @@
 	%>
 	<form action="Search" method="post">
 		<input type="search" name="query" class="text"
-			placeholder="Search quizzes"><br>
-		<input type="submit" value="Search">
+			placeholder="Search quizzes"><br> <input type="submit"
+			value="Search">
 	</form>
 
 </body>

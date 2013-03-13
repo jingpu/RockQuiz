@@ -16,13 +16,13 @@
 	String userId = request.getParameter("id");
 	String guest = (String) session.getAttribute("guest");
 %>
-<title>Quizzes Created - <%=userId%></title>
+<title>Friends Activities</title>
 </head>
 <body>
 	<h2>
 		<a href="home.jsp?id=<%=guest%>">Home</a>
 	</h2>
-	<h1>Quizzes Created</h1>
+	<h1>Friends Activity</h1>
 	<%
 		if (guest == null || guest.equals("guest")) {
 			response.sendRedirect("index.html");
@@ -30,7 +30,7 @@
 		}
 		String id = request.getParameter("id");
 		if (id == null) {
-			response.sendRedirect("quizCreated.jsp?id=" + guest);
+			response.sendRedirect("friendsActivity.jsp?id=" + guest);
 			return;
 		} else if (!UserManager.alreadyExist(id) || id.equals("guest")) {
 			response.sendRedirect("userinvalid.jsp?id=" + id);
@@ -43,21 +43,15 @@
 				: true) : false);
 
 		if (!forbid) {
-			List<Activity> created = user.getQuizCreated();
-			if (created.isEmpty()) {
-				String prefix = guest.equals(userId) ? "I" : userId;
+			List<Activity> friendsAct = user.getFriendsRecentActivity();
+			if (friendsAct.isEmpty()) {
 	%>
-	<p><%=prefix%>
-		did't create any quiz yet.
+	<p>There isn't any news yet.
 	</p>
 	<%
 		} else {
-				for (Activity act : created) {
-					if (guest.equals(userId)) {
-						out.println("<p>" + act.toStringMe(false) + "</p>");
-					} else {
-						out.println("<p>" + act.toString(false) + "</p>");
-					}
+				for (Activity act : friendsAct) {
+					out.println("<p>" + act.toString(false) + "</p>");
 				}
 			}
 		} else {

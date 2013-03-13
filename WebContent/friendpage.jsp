@@ -72,7 +72,7 @@
 						<%
 		if (unconfirmed.isEmpty()) {
 	%>
-						<p>You don't have any friend requests now.</p>
+						<p>I don't have any friend requests now.</p>
 						<%
 		} else {
 			for (String friend : unconfirmed) {

@@ -199,7 +199,7 @@
 					<div class="clear br"></div>
 					<%
 						} else {%>
-							<h1 style='font-family:serif; color:black;'><%=id%> set privacy. <br>Only friends can see this page.</h1>
+							<h1 style='font-family:serif; color:black;'>Sorry. <%=id%> set privacy. <br>Only friends can see this page.</h1>
 					<%	}
 					%>
 				</div>

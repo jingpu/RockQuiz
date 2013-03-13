@@ -14,41 +14,60 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <%
 	String userId = request.getParameter("id");
+	String guest = (String) session.getAttribute("guest");
 %>
 <title>Quizzes Taken - <%=userId%></title>
 </head>
 <body>
 	<h2>
-		<a href="home.jsp">Home</a>
+		<a href="home.jsp?id=<%=guest%>">Home</a>
 	</h2>
 	<h1>Quizzes Taken</h1>
 	<%
-		String guest = (String) session.getAttribute("guest");
 		if (guest == null || guest.equals("guest")) {
 			response.sendRedirect("index.html");
 			return;
 		}
-		if (userId == null || !UserManager.alreadyExist(userId)) {
-			response.sendRedirect("home.jsp");
+		String id = request.getParameter("id");
+		if (id == null) {
+			response.sendRedirect("quizTaken.jsp?id=" + guest);
+			return;
+		} else if (!UserManager.alreadyExist(id) || id.equals("guest")) {
+			response.sendRedirect("userinvalid.jsp?id=" + id);
 			return;
 		}
 		Account user = new Account(userId);
-		List<Activity> taken = user.getQuizTaken();
-		if (taken.isEmpty()) {
-			String prefix = guest.equals(userId)? "You" : userId;
+		List<String> friends = user.getFriendsList();
+		boolean forbid = userId.equals(guest) ? false : (user.getInfo(
+				"privacy").equals("1") ? (friends.contains(guest) ? false
+				: true) : false);
+
+		if (!forbid) {
+			List<Activity> taken = user.getQuizTaken();
+			if (taken.isEmpty()) {
+				String prefix = guest.equals(userId) ? "I" : userId;
 	%>
 	<p><%=prefix%>
 		did't take any quiz yet.
 	</p>
 	<%
 		} else {
-			for (Activity act : taken) {
-				if (guest.equals(userId)) {
-					out.println("<p>" + act.toStringMe(false) + "</p>");
-				} else {
-					out.println("<p>" + act.toString(false) + "</p>");
+				for (Activity act : taken) {
+					if (guest.equals(userId)) {
+						out.println("<p>" + act.toStringMe(false) + "</p>");
+					} else {
+						out.println("<p>" + act.toString(false) + "</p>");
+					}
 				}
 			}
+		} else {
+	%>
+	<p style='font-family: serif; color: black;'>
+		Sorry.
+		<%=id%>
+		set privacy. Only friends can see this page.
+	</p>
+	<%
 		}
 	%>
 </body>

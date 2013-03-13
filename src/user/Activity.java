@@ -63,7 +63,7 @@ public class Activity {
 	public String toStringMe(boolean useTimeTrsf){
 		System.out.println(type);
 		StringBuilder dscr = new StringBuilder();
-		dscr.append("You");
+		dscr.append("I");
 		if(type.charAt(0) == 't') {
 			Quiz quiz = new MyQuiz(content);
 			String quizId = type.substring(1);
