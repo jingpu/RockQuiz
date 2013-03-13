@@ -23,6 +23,7 @@
 	<div id="wrapper">
 		<div id="inner">
 			<div id="header">
+			<h1>Welcome to RockQuiz</h1>
 				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
@@ -62,7 +63,7 @@
 				<dd class="searchform">
 					<form action="Search" method="post">
 						<div>
-							<input type="text" name="query" class="text"
+							<input type="search" name="query" class="text"
 								placeholder="Search quizzes OR users here" />
 						</div>
 						<div class="readmore">
