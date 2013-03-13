@@ -104,6 +104,23 @@ public final class Helper {
 		return tagString;
 	}
 
+	public static String array2String(String[] category){
+		StringBuilder sb = new StringBuilder();
+		String delim = "";
+		if(category.length >= 1){
+			for(int i = 0; i < category.length; i++){
+				sb.append(delim).append(category[i]);
+				delim = "#";
+			}
+		}
+		return sb.toString();
+	}
+	
+	public static String[] string2Array(String cateStr){
+		String[] category = cateStr.split("[#]+");
+		return category;
+	}
+	
 	public static String getTitle(String str){
 		/*
 		achieveId-

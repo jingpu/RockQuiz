@@ -27,8 +27,10 @@
 		return;
 	}
 	String title = id + "'s Page";
-
+	
 	Account pageOwner = new Account(id);
+	List<String> friends = pageOwner.getFriendsList();
+	boolean isFriend = friends.contains(guest);
 	// generate achievements history
 	List<Activity> achieves = pageOwner.getAchievements();
 	// generate quizzes taken history

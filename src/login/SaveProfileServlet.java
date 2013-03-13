@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import user.Account;
+import util.Helper;
 
 /**
  * Servlet implementation class SaveProfileServlet
@@ -38,25 +39,23 @@ public class SaveProfileServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String guest = (String)request.getSession().getAttribute("guest");
 		String userId = request.getParameter("id");
-		System.out.println(guest+" "+userId);
-		System.out.println("m0");
-		System.out.println("m1");
 		if (guest == null || guest.equals("guest")) {
 			response.sendRedirect("index.html");
 			return;
 		} else if (!guest.equals(userId)) {
 			response.sendRedirect("home.jsp?id=" + guest);
-			System.out.println(guest+" "+userId);
-			System.out.println("m2");
 			return;
 		}
-		System.out.println("m3");
 		String gender = request.getParameter("gender");
-		System.out.println(gender);
 		String email = request.getParameter("email");
+		String[] categories = request.getParameterValues("favor");
+		String cateStr = Helper.array2String(categories);
+		String privacy = request.getParameter("privacy");
 		Account user = new Account(userId);
 		user.editInfo("gender", gender);
 		user.editInfo("email", email);
+		user.editInfo("category", cateStr);
+		user.editInfo("privacy", privacy);
 		response.sendRedirect("profile.jsp?id=" + userId + "&p=s");
 	}
 

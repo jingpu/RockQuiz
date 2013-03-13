@@ -5,11 +5,13 @@ CREATE TABLE userTable (
 	status char(1), -- u/s: u-user;s-admin
 	gender char(1), -- m/f
 	email varchar(50),
+	category text;
+	privacy char(1);
 )
 
 CREATE TABLE userId_history (
 	Time datetime,
-	Type varchar(36), 
+	Type varchar(33), 
 	content varchar(32)
 )
 
@@ -18,7 +20,7 @@ userId_history format:
 time --|--------- type -------|---- content
 	         (t)ake(quizId)---|---- quizName
 		       (c)reate ------|---- quizName
-   (a)chieve(id#)(quizId) -|---- quizName
+             (a)chieve(id#) --|---- quizName
    
 achieveId-
 1- Amateur Author
