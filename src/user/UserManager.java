@@ -146,7 +146,7 @@ public class UserManager{
 	 * @return true if this account has been added to the database successfully.
 	 * **/
 	public static boolean addNewAccount(String userId, String password, 
-			String status, String gender, String email){
+			String status, String gender, String email, String category){
 		if(userId.equals("guest")) return false;
 		setDriver();
 		// information invalid - too short
@@ -163,7 +163,7 @@ public class UserManager{
 			try {
 				stmt.executeUpdate("CREATE TABLE " + userTable + " ( " +
 						"userId varchar(20), password varchar(40), " +
-						"registrationTime datetime, status char(1), gender char(1), email char(50));");
+						"registrationTime datetime, status char(1), gender char(1), email char(50), category text, privacy char(1));");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				System.out.println("Adding new table fails.");
@@ -206,9 +206,9 @@ public class UserManager{
 		try {
 			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES ('"
 					+ userId + "','" + hashValue + "',now(),'" + status + "','" 
-					+ gender + "','" + email + "')");
+					+ gender + "','" + email + "','" + category + "','0')");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_history( Time datetime, " +
-					"Type char(33), content varchar(50));");
+					"Type char(33), content varchar(32));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_network( userId varchar(20), " +
 					"status char(1));");
 			stmt.executeUpdate("CREATE TABLE " + userId + "_inbox( code char(40), Time text, " +
@@ -363,7 +363,7 @@ public class UserManager{
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * from " 
-					+ userTable + " WHERE userId='" + userId + "'");
+					+ userTable + " WHERE userId LIKE '" + userId + "'");
 			if(rs.next() && rs.getString(column) != null){
 				str = rs.getString(column);			
 			}
@@ -815,11 +815,11 @@ public class UserManager{
 		return true;
 	}
 
-	public static boolean addAchievement(String userId, String achieveId, String quizName, String quizId){
+	public static boolean addAchievement(String userId, String achieveId, String quizName){
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), 'a"+ achieveId + quizId + "', '" + quizName + "')");
+					+ " VALUES (now(), 'a"+ achieveId + "', '" + quizName + "')");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -852,10 +852,10 @@ public class UserManager{
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
-					+ "_history WHERE Type='a' ORDER BY Time DESC");
+					+ "_history WHERE Type LIKE 'a%' ORDER BY Time DESC");
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
-						rs.getString("type"), rs.getString("content"));
+						rs.getString("Type"), rs.getString("content"));
 				achieves.add(act);
 			}
 		} catch(SQLException e) {
@@ -874,7 +874,7 @@ public class UserManager{
 					+ "_history WHERE Type LIKE 't%' ORDER BY Time DESC");
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
-						rs.getString("type"), rs.getString("content"));
+						rs.getString("Type"), rs.getString("content"));
 				taken.add(act);
 			}
 		} catch(SQLException e) {
@@ -893,7 +893,7 @@ public class UserManager{
 					+ "_history WHERE Type='c' ORDER BY Time DESC");
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
-						rs.getString("type"), rs.getString("content"));
+						rs.getString("Type"), rs.getString("content"));
 				created.add(act);
 			}
 		} catch(SQLException e) {
@@ -913,7 +913,7 @@ public class UserManager{
 			int i = 0;
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
-						rs.getString("type"), rs.getString("content"));
+						rs.getString("Type"), rs.getString("content"));
 				recent.add(act);
 				i++;
 				if(i == recentActivityLoad) break;

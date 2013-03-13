@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.RequestDispatcher;
 
 import user.UserManager;
+import util.Helper;
 
 /**
  * @author huijie
@@ -50,6 +51,7 @@ public class CreationServlet extends HttpServlet {
 		String usrname = request.getParameter("name");
 		String pwd = request.getParameter("pwd");
 		String gender = request.getParameter("gender");
+		String[] category = request.getParameterValues("favour");
 		gender = gender.substring(0, 1);
 		String email = request.getParameter("email");
 
@@ -63,14 +65,13 @@ public class CreationServlet extends HttpServlet {
 			RequestDispatcher dispatch = request.getRequestDispatcher("nameInUse.jsp");
 			dispatch.forward(request, response);
 		} else {
-			UserManager.addNewAccount(usrname, pwd, "u", gender, email);
+			String cateStr = Helper.array2String(category);
+			UserManager.addNewAccount(usrname, pwd, "u", gender, email, cateStr);
 			String usrpage = "home.jsp?id=" + usrname;
 			//String usrpage = "userWelcome.jsp";
 			RequestDispatcher dispatch = request.getRequestDispatcher(usrpage);
 			dispatch.forward(request, response);
 		}
-			
-		
 	}
 
 }

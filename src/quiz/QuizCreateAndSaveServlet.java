@@ -23,13 +23,13 @@ import util.Helper;
 @WebServlet("/QuizCreateAndSaveServlet")
 public class QuizCreateAndSaveServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public QuizCreateAndSaveServlet() {
-        super();
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public QuizCreateAndSaveServlet() {
+		super();
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,7 +71,7 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 		String isImmCorrection = request.getParameter("isImmCorrection");
 		if (isImmCorrection == null || !isImmCorrection.equals("true"))
 			isImmCorrection = "false";
-		
+
 		String categoryType = request.getParameter("category_type");
 		String category;
 		if (categoryType.equals("existing_categories"))
@@ -82,26 +82,26 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 		// get a QuizManager
 		QuizManager quizManager = new MyQuizManager();
 		if (quizManager.getQuiz(quizName) != null) {
-				// quizName already exists. It should
-				// redirect to quiz creation page and display some message
+			// quizName already exists. It should
+			// redirect to quiz creation page and display some message
 
-				// write html
-				response.setContentType("text/html");
-				PrintWriter out = response.getWriter();
-				String message = "Quiz name \"" + quizName
-						+ "\" already exists. "
-						+ "Please go back and use a valid quiz name.";
-				out.print(printCreationFailPage(message));
+			// write html
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			String message = "Quiz name \"" + quizName
+					+ "\" already exists. "
+					+ "Please go back and use a valid quiz name.";
+			out.print(printCreationFailPage(message));
 
-				// reset quizName
-				quizName = "";
-				// we are not finishing quiz creation, so save all params to
-				// session
-				saveToSession(session, quizName, tagString, quizDescription,
+			// reset quizName
+			quizName = "";
+			// we are not finishing quiz creation, so save all params to
+			// session
+			saveToSession(session, quizName, tagString, quizDescription,
 					canPractice, isRandom, isOnePage, isImmCorrection,
 					categoryType, category);
 
-			} else {
+		} else {
 			// construct question list and store them to database
 			List<QuestionBase> questionList = new ArrayList<QuestionBase>();
 			int max_num = Integer.parseInt(request.getParameter("max_num"));
@@ -134,27 +134,57 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 						canPractice, isRandom, isOnePage, isImmCorrection,
 						categoryType, category);
 			} else {
-			// construct the quiz class and store it to database
-			Timestamp createTime = new Timestamp(new java.util.Date().getTime());
-			List<String> tags = Helper.parseTags(tagString);
-			MyQuiz quiz = new MyQuiz(quizName, creatorId, quizDescription,
-					tags, Boolean.parseBoolean(canPractice),
-					Boolean.parseBoolean(isRandom),
-					Boolean.parseBoolean(isOnePage),
-					Boolean.parseBoolean(isImmCorrection), questionList,
+				// construct the quiz class and store it to database
+				Timestamp createTime = new Timestamp(new java.util.Date().getTime());
+				List<String> tags = Helper.parseTags(tagString);
+				MyQuiz quiz = new MyQuiz(quizName, creatorId, quizDescription,
+						tags, Boolean.parseBoolean(canPractice),
+						Boolean.parseBoolean(isRandom),
+						Boolean.parseBoolean(isOnePage),
+						Boolean.parseBoolean(isImmCorrection), questionList,
 						createTime, category);
-			quiz.saveToDatabase();
-			// add quiz to user's database
-			Account user = new Account(userName);
-			user.addQuizCreated(quizName);
+				quiz.saveToDatabase();
 
-			// remove all session attributes
-			removeFromSession(session);
+				// add quiz to user's database
+				String newAchieve = "0";
+				Account user = new Account(userName);
+				if(quizName != null){
+					user.addQuizCreated(quizName);
+					if(user.countHistory("c") == 1){
+						newAchieve = "a1";
+					} else if(user.countHistory("c") == 5){
+						newAchieve = "a2";
+					} else if(user.countHistory("c") == 10){
+						newAchieve = "a3";
+					}
+					if(!newAchieve.equals("0")){
+						user.addAchievement(newAchieve, quizName);
+						String title = Helper.getTitle(newAchieve);
+						response.setContentType("text/html");
+						PrintWriter out = response.getWriter();
+						StringBuilder html = new StringBuilder();
+						html.append("<!DOCTYPE html>");
+						html.append("<html>");
+						html.append("<head>");
+						html.append("<script language=javascript>");
+						html.append("alert('New Achievement - ").append(title).append("');");
+						html.append("</script>");
+						html.append("<meta charset=\"UTF-8\">");
+						html.append("<title></title>");
+						html.append("</head>");
+						html.append("<body>");
+						html.append("</body>");
+						html.append("</html>");
+						out.print(html.toString());
+					}
+				}
 
-			// redirect to the quiz summary page
-			RequestDispatcher dispatch = request.getRequestDispatcher(quiz
-					.getSummaryPage());
-			dispatch.forward(request, response);
+				// remove all session attributes
+				removeFromSession(session);
+
+				// redirect to the quiz summary page
+				response.setHeader("Refresh","0.2;"+ quiz.getSummaryPage());
+
 			}
 		}
 	}

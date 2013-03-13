@@ -36,7 +36,7 @@
 				<h1>Inbox</h1>
 			</div>
 		</div>
-
+		
 		<table border="2" rules="rows" id="box">
 			<col class="user" />
 			<col class="title" />

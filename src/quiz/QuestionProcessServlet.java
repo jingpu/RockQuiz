@@ -140,19 +140,21 @@ public class QuestionProcessServlet extends HttpServlet {
 			String quizId = quiz.saveQuizEvent(userName, timeElapsed,
 					currentScore);
 			
-			// save quiz event to user database
-			String newAchieve1 = null;
-			String newAchieve2 = null;
+			/* 
+			 * save quiz event and achievement to user database
+			 * */
+			boolean newAchieve1 = false;
+			boolean newAchieve2 = false;
 			Account user = new Account(userName);
 			if(quizName != null){
 				user.addQuizTaken(quizName, quizId);
-				if(user.countHistory("t") == 10){
-					newAchieve1 = "Quiz Machine";
-					user.addAchievement(newAchieve1);
+				if(user.countHistory("t") == 9){
+					newAchieve1 = true;
+					user.addAchievement("4", quizName);
 				}
 				if(currentScore >= quiz.getBestScore()){
-					newAchieve2 = "I am the Greatest";
-					user.addAchievement(newAchieve2);
+					newAchieve2 = true;
+					user.addAchievement("5", quizName);
 				}
 			}
 			
@@ -166,7 +168,16 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\" >");
 
 			out.println("</head>");
-			out.println("<body>");
+			if(newAchieve1 && newAchieve2){
+				out.println("<body onload=\"javascript:Auto_both()\"");
+			} else if(newAchieve1 && !newAchieve2){
+				out.println("<body onload=\"javascript:Auto_1()\"");
+			} else if(!newAchieve1 && newAchieve2){
+				out.println("<body onload=\"javascript:Auto_2()\"");
+			} else {
+				out.println("<body>");
+			}
+			
 			out.println("<h1>Quiz Results</h1>");
 			out.println("<p>Score: " + quiz.getScore(quizId) + "/"
 					+ quiz.getMaxScore() + "</p>");
@@ -186,9 +197,6 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("</body>");
 			out.println("</html>");
 
-			/*
-
-			 */
 			// remove all the session attributes defined in this servlet
 			session.removeAttribute("quizName");
 			session.removeAttribute("questionIndex");

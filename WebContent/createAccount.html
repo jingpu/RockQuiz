@@ -13,6 +13,19 @@ function judge( ){
       document.forms[0].name.focus( );
       return false;
    }
+   
+   if (document.forms[0].name.value.indexOf(",") ||
+	   document.forms[0].name.value.indexOf(".") ||
+	   document.forms[0].name.value.indexOf("/") ||
+	   document.forms[0].name.value.indexOf("\\") ||
+	   document.forms[0].name.value.indexOf("%")  ||
+	   document.forms[0].name.value.indexOf("&") ||
+	   document.forms[0].name.value.indexOf("\"") ||
+	   document.forms[0].name.value.indexOf("'")) {
+	      alert("USERNAME contains invalid characters!");
+	      document.forms[0].name.focus( );
+	      return false;
+	}
 
 if (document.forms[0].pwd.value==""){
       alert("Please fill in PASSWORD!");
@@ -114,10 +127,10 @@ return true;
 				<TR>What type of quizzes are you interested in?
 				</TR>
 				<TR>
-					<TD><INPUT TYPE="checkbox" NAME="favour">Science</TD>
-					<TD><INPUT TYPE="checkbox" NAME="favour">Engineering</TD>
-					<TD><INPUT TYPE="checkbox" NAME="favour">Arts</TD>
-					<TD><INPUT TYPE="checkbox" NAME="favour">Language</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour" value="Science">Science</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour" value="Engineering">Engineering</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour" value="Arts">Arts</TD>
+					<TD><INPUT TYPE="checkbox" NAME="favour" value="Language">Language</TD>
 				</TR>
 			</TABLE>
 			<TABLE>

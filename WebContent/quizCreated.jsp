@@ -44,9 +44,9 @@
 		} else {
 			for (Activity act : created) {
 				if (guest.equals(userId)) {
-					out.println("<p>" + act.toStringMe() + "</p>");
+					out.println("<p>" + act.toStringMe(false) + "</p>");
 				} else {
-					out.println("<p>" + act.toString() + "</p>");
+					out.println("<p>" + act.toString(false) + "</p>");
 				}
 			}
 		}

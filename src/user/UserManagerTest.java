@@ -82,11 +82,11 @@ public class UserManagerTest {
 	@Test
 	public void admin(){
 		UserManager.deleteAll();
-		UserManager.addNewAccount("yy", "123", "s", "f", "asf@asdf.edu");
-		UserManager.addNewAccount("y1", "123", "u", "f", "asf@asdf.edu");
-		UserManager.addNewAccount("hj", "123", "s", "f", "asf@asdf.edu");
-		UserManager.addNewAccount("zy", "123", "s", "m", "asf@asdf.edu");
-		UserManager.addNewAccount("pj", "123", "s", "m", "asf@asdf.edu");
+		UserManager.addNewAccount("yy", "123", "s", "f", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("y1", "123", "u", "f", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("hj", "123", "s", "f", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("zy", "123", "s", "m", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("pj", "123", "s", "m", "asf@asdf.edu", "Science#Engineering");
 	}
 	
 	@Test
@@ -95,9 +95,6 @@ public class UserManagerTest {
 		String announce = "\"test\"";
 		UserManager.setAnnouncement(announce, admin);
 		Announce ann = UserManager.getLatestAnnounce();
-		System.out.println(ann.getContent());
-		System.out.println(ann.getTime());
-		System.out.println(ann.getAdmin());
 		UserManager.deleteAnnouncement(ann.getTime(), ann.getAdmin());
 	}
 }

@@ -47,11 +47,18 @@ function DelElement(){
 		e4.parentNode.removeChild(e4);
 		var e5 = document.forms['letter'].elements['send'];
 		e5.parentNode.removeChild(e5);
-    }, 50);
-	alert('Challenge Message Sent');
+	}, 50);
 	return false;
-}    
+}
 
-function NewAchievement(){
-	
+function Auto_both(){
+	alert('New Achievements - <Quiz Machine> and <I am the Greatest>');
+}
+
+function Auto_1(){
+	alert('New achievement - <Quiz Machine>');
+}
+
+function Auto_2(){
+	alert('New achievement - <I am the Greatest>');
 }

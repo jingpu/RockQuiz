@@ -1,20 +1,18 @@
 @CHARSET "UTF-8";
 
 body {
-	font-family: tahoma, helvetica, arial, sans-serif;
-	font-size: 10px;
-	text-align: center;
-	background: url(images/home_bg.gif);
-}
-
-html,body,#wrapper,h1 {
+        font-family: tahoma, helvetica, arial, sans-serif;
+        font-size: 10px;
+        text-align: center;
+        background: url(images/home_bg.gif);
+    }
+    
+html, body, #wrapper, h1 {
 	margin: 0;
 	padding: 0;
 }
 
-img {
-	border: 0;
-}
+img { border: 0; }
 
 #wrapper {
 	margin: auto;
@@ -23,8 +21,9 @@ img {
 	position: relative;
 }
 
+
 h1 {
-	font-size: 30pt;
+	font-size: 25pt;
 	font-weight: 900;
 	color: white;
 	font-variant: small-caps;
@@ -58,6 +57,7 @@ h3 {
 	text-align: right;
 }
 
+
 #inner {
 	border-left: 2px solid white;
 	border-right: 2px solid white;
@@ -73,8 +73,8 @@ h3 {
 	position: relative;
 }
 
-#nav,#nav a {
-	text-align: center;
+#nav, #nav a {
+	text-align:center;
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
@@ -84,10 +84,12 @@ h3 {
 	text-decoration: underline;
 }
 
+
 #body {
 	float: right;
+	font-size: 12px;
 	width: 700px;
-	margin: 2px 1px 0 0;
+	margin: 2px 1px 0 0;	
 	border: 2px solid #ad1c1c;
 	position: relative;
 }
@@ -99,10 +101,11 @@ h3 {
 	font-weight: normal;
 }
 
-#body .leftbox,#body .rightbox {
+#body .leftbox,
+#body .rightbox {
 	margin-top: 5px;
 	color: Black;
-	height: 300px;
+	height: 430px;
 }
 
 #body .leftbox {
@@ -117,17 +120,13 @@ h3 {
 	border-left: 2px solid #ad1c1c;
 }
 
-#body br {
-	margin-top: 15px;
-	padding: 15px;
-}
-
 #body h3 {
 	text-align: center;
 	font-family: tahoma, helvetica, arial, sans-serif;
 	font-size: 18px;
 	font-weight: normal;
-	color: #5d5d5d;
+	color: black;
 	padding: 0 0 0 18px;
 	margin: 1px 0 3px 0;
 }
+

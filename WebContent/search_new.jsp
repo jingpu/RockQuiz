@@ -122,7 +122,7 @@
 					<%--quizzes/users search box--%>
 					<form action="Search" method="post">
 						<div>
-							<input type="search" name="query" value="<%=pquery%>" size="40">
+							<input type="search" name="query" size="40">
 							<input type="hidden" name="s" value="<%=sort%>">
 						</div>
 						<div class="readmore">

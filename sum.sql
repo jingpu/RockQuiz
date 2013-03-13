@@ -5,20 +5,30 @@ CREATE TABLE userTable (
 	status char(1), -- u/s: u-user;s-admin
 	gender char(1), -- m/f
 	email varchar(50),
+	category text;
+	privacy char(1);
 )
 
 CREATE TABLE userId_history (
 	Time datetime,
-	Type varchar(36), 
+	Type varchar(33), 
 	content varchar(32)
 )
 
 /*
 userId_history format:
-time --|------ type -------|---- content
-	      (t)ake(quizId)---|---- quizName
-		    (c)reate ------|---- quizName
-   (a)chieve(id#000)(quizId) --|---- quizName
+time --|--------- type -------|---- content
+	         (t)ake(quizId)---|---- quizName
+		       (c)reate ------|---- quizName
+             (a)chieve(id#) --|---- quizName
+   
+achieveId-
+1- Amateur Author
+2- Prolific Author
+3- Prodigious Author
+4- Quiz Machine
+5- I am the Greatest
+6- Practice Makes Perfect
 */
 
 CREATE TABLE userId_network (

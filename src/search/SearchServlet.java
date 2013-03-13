@@ -42,7 +42,8 @@ public class SearchServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String query = request.getParameter("query");
 		String sort = request.getParameter("s");
-		if(sort == null)
+		System.out.println(sort);
+		if(sort == null || sort.equals("null"))
 			response.sendRedirect("search.jsp?q="+ query);
 		else {
 			response.sendRedirect("search.jsp?s="+ sort +"&q="+ query);
