@@ -22,15 +22,18 @@
 		return;
 	}
 	String id = request.getParameter("id");
-	if (id == null || !UserManager.alreadyExist(id)) {
-		response.sendRedirect("home.jsp");
+	if (id == null) {
+		response.sendRedirect("userpage.jsp?id="+ guest);
+		return;
+	} else if(!UserManager.alreadyExist(id)){
+		response.sendRedirect("userinvalid.jsp?id="+ id);
 		return;
 	}
 	String title = id + "'s Page";
 	
 	Account pageOwner = new Account(id);
 	List<String> friends = pageOwner.getFriendsList();
-	boolean isFriend = friends.contains(guest);
+	boolean forbid = pageOwner.getInfo("privacy").equals("1")?(friends.contains(guest)?false:true):false;
 	// generate achievements history
 	List<Activity> achieves = pageOwner.getAchievements();
 	// generate quizzes taken history
@@ -97,7 +100,8 @@
 						%>
 
 						<%--if guest!=id, show message --%>
-						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>" target="_blank">Message me</a> |
+						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>"
+							target="_blank">Message me</a> |
 						<%
 							}
 						%>
@@ -107,7 +111,9 @@
 			</div>
 
 			<dl id="browse">
-
+				<%
+					if (!forbid) {
+				%>
 				<dt>Achievements</dt>
 				<%
 					if (achieves.isEmpty()) {
@@ -117,10 +123,11 @@
 				</p>
 				<%
 					} else {
-						for (int k = 0; k < 5; k++) {
-							if (k == achieves.size())
-								break;
-							out.println("<p>" + achieves.get(k).content + "</p>");
+							for (int k = 0; k < 5; k++) {
+								if (k == achieves.size())
+									break;
+								out.println("<p>" + achieves.get(k).content + "</p>");
+							}
 						}
 					}
 				%>
@@ -137,9 +144,11 @@
 					</form>
 				</dd>
 			</dl>
-
 			<div id="body">
 				<div class="inner">
+					<%
+						if (!forbid) {
+					%>
 					<div class="leftbox">
 						<h3>Quizzes Taken</h3>
 						<%
@@ -150,12 +159,13 @@
 						</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; k++) {
-									if (k == taken.size())
-										break;
-									out.println("<p>" + taken.get(k).toString(true) + "</p>");
+									for (int k = 0; k < 5; k++) {
+										if (k == taken.size())
+											break;
+										out.println("<p>" + taken.get(k).toString(true)
+												+ "</p>");
+									}
 								}
-							}
 						%>
 						<p class="readmore">
 							<a href="quizTakan.jsp?id=<%=id%>"><b>MORE</b></a>
@@ -172,12 +182,13 @@
 						</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; k++) {
-									if (k == created.size())
-										break;
-									out.println("<p>" + created.get(k).toString(true) + "</p>");
+									for (int k = 0; k < 5; k++) {
+										if (k == created.size())
+											break;
+										out.println("<p>" + created.get(k).toString(true)
+												+ "</p>");
+									}
 								}
-							}
 						%>
 						<p class="readmore">
 							<a href="quizCreated.jsp?id=<%=id%>"><b>MORE</b></a>
@@ -186,7 +197,15 @@
 					</div>
 
 					<div class="clear br"></div>
+					<%
+						} else {%>
+							<h1 style='font-family:serif; color:black;'><%=id%> set privacy. <br>Only friends can see this page.</h1>
+					<%	}
+					%>
 				</div>
 			</div>
+
+		</div>
+	</div>
 </body>
 </html>
