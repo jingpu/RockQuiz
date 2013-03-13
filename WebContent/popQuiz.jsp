@@ -5,6 +5,9 @@
 <%@ page import="quiz.Quiz"%>
 <%@ page import="quiz.QuizManager"%>
 <%@ page import="quiz.MyQuizManager"%>
+<%@ page import="util.Helper"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.sql.Timestamp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,6 +20,7 @@
 		<a href="home.jsp">Home</a>
 	</h2>
 	<h1>Popular Quizzes</h1>
+	<ul>
 	<%
 		QuizManager man = new MyQuizManager();
 		List<Quiz> popQuizzes = man.getPopularQuiz(20);
@@ -24,15 +28,19 @@
 		int i = 0;
 		for (Quiz quiz : popQuizzes) {
 			i++;
-			String quizUrl = quiz.getSummaryPage();
-			String creator = quiz.getCreatorId();
+			int takenTimes = quiz.getTakenTimes();
+			Timestamp time = quiz.getCreateTime();
+			String category =quiz.getCategory();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	%>
-	<p>
-		<a href=<%=quizUrl%>><%=i%>. <%=quiz.getQuizName()%></a> (by:<a
-			href="userpage.jsp?id=<%=creator%>"><%=creator%></a>)
-	</p>
+	<li style='list-style-type: decimal; margin-top: 1em;'>
+		<%=Helper.displayQuiz(quiz, true)%><br>
+		Category: <a href='search.jsp?s=g&q=<%=category%>'><%=category%></a>
+		On <%=sdf.format(time)%> Taken counts: <%=takenTimes%>
+	</li>
 	<%
 		}
 	%>
+	</ul>
 </body>
 </html>

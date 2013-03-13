@@ -47,7 +47,7 @@
 				if (guest.equals(userId)) {
 					out.println("<p>" + act.toStringMe(false) + "</p>");
 				} else {
-					out.println("<p>" + Helper.getTitle(act.type.substring(1)) + "</p>");
+					out.println("<p>" + act.toString(false) + "</p>");
 				}
 			}
 		}

@@ -96,5 +96,6 @@ public class UserManagerTest {
 		UserManager.setAnnouncement(announce, admin);
 		Announce ann = UserManager.getLatestAnnounce();
 		UserManager.deleteAnnouncement(ann.getTime(), ann.getAdmin());
+		UserManager.addAchievement("yy", "a2", "imm_test");
 	}
 }

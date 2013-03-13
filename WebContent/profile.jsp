@@ -100,7 +100,7 @@
 				<td>
 			</tr>
 		</table>
-		Set Privacy: <input type="radio" name="privacy" value="1"
+		Set Privacy: <br><input type="radio" name="privacy" value="1"
 			<%=checkStatus%>>Only my friends can see my information<br><input type="radio" name="privacy" 
 			value="0" <%=antiCheckStatus%>>Every one can see my information
 		<p>

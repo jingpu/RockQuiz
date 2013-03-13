@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import quiz.MyQuiz;
 import quiz.Quiz;
 
 public final class Helper {
@@ -148,6 +147,33 @@ public final class Helper {
 		return "";
 	}
 
+	public static String getTitleDescription(String str){
+		/*
+		achieveId-
+		1- Amateur Author
+		2- Prolific Author
+		3- Prodigious Author
+		4- Quiz Machine
+		5- I am the Greatest
+		6- Practice Makes Perfect
+		 */
+		String title = str.substring(1);
+		if(title.equals("1")){
+			return "When user created a quiz";
+		} else if(title.equals("2")){
+			return "When user created five quizzes";
+		} else if(title.equals("3")){
+			return "When user created ten quizzes";
+		} else if(title.equals("4")){
+			return "When user took ten quizzes";
+		} else if(title.equals("5")){
+			return "When user had the highest score on a quiz";
+		} else if(title.equals("6")){
+			return "The user took a quiz in practice mode";
+		}
+		return "";
+	}
+	
 	public static String displayQuiz(Quiz quiz, boolean showCreator){
 		String quizUrl = quiz.getSummaryPage();
 		String creator = quiz.getCreatorId();

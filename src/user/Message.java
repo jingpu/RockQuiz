@@ -76,7 +76,7 @@ public class Message {
 		} else if(type.equals("r")){
 			StringBuilder sb = new StringBuilder();
 			sb.append(fromDisp).append(friendRequestContent);
-			sb.append("<a href='RespondFriend?to="+ from +"' target='_top'>Accept</a>");
+			sb.append("<a href='RespondFriend?to="+ from +"'>Accept</a>");
 			return sb.toString();
 		} else if(type.equals("f")){
 			return friendConfirmContent + fromDisp;

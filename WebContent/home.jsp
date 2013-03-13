@@ -211,7 +211,7 @@
 						<ul>
 							<%
 								} else {
-									for (int k = 0; k < 5; k++) {
+									for (int k = 0; k < 4; k++) {
 										if (k == taken.size())
 											break;
 										out.println("<li class='activity'>" + taken.get(k).toStringMe(true) + "</li>");
@@ -232,7 +232,7 @@
 						<p>You did't create any quiz yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; k++) {
+								for (int k = 0; k < 4; k++) {
 									if (k == created.size())
 										break;
 									out.println("<li class='activity'>" + created.get(k).toStringMe(true)
@@ -256,7 +256,7 @@
 						<p>You don't have any achievements yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 10; k++) {
+								for (int k = 0; k < 3; k++) {
 									if (k == achieves.size())
 										break;
 									out.println("<li class='activity'>" + achieves.get(k).toStringMe(true)

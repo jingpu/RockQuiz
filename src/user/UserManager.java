@@ -819,7 +819,7 @@ public class UserManager{
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), 'a"+ achieveId + "', '" + quizName + "')");
+					+ " VALUES (now(), '"+ achieveId + "', '" + quizName + "')");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
