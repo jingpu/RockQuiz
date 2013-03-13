@@ -99,7 +99,7 @@ public class QResponse extends QuestionBase {
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"

@@ -221,7 +221,7 @@
 	</form>
 	<!-- question templates of all supported question -->
 	<%
-		for (int i = 0; i > questionTypes.length; i++) {
+		for (int i = 0; i < questionTypes.length; i++) {
 			String questionType = questionTypes[i];
 	%>
 	<div id="<%=questionType%>_template" hidden="hidden" class="question">

@@ -17,6 +17,20 @@ $(document).ready(function() {
 	    
 	});
     
+	
+	$('#questionRead').submit(function() {
+		$.ajax({
+			type: "GET",
+			url: "GetScoreServlet",
+			data: $("#questionRead").serialize(), 
+			success: function(data)
+			{
+				alert(data);
+				submitForm();
+			}
+		});
+		return false;
+	});
 });
 
 function submitForm() {
@@ -221,3 +235,6 @@ function deleteMatchOption() {
 	}
 	document.getElementById('numOptions').value = numOption;
 }
+
+
+
