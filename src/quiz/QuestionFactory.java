@@ -57,6 +57,7 @@ public class QuestionFactory {
 	 * @param request
 	 * @return
 	 */
+	@Deprecated
 	public static QuestionBase createQuestion(String questionType,
 			HttpServletRequest request) {
 		HttpSession session = request.getSession();
@@ -145,6 +146,61 @@ public class QuestionFactory {
 		return null;
 	}
 
+	public static QuestionBase createQuestion(String questionType,
+			HttpServletRequest request, int suffix) {
+		HttpSession session = request.getSession();
+		String creatorId = (String) session.getAttribute("guest_" + suffix);
+		int timeLimit = Integer.parseInt(request.getParameter("timeLimit_"
+				+ suffix));
+		String questionDescription = request
+				.getParameter("questionDescription_" + suffix);
+		String answer = getCreatedAnswer(questionType, request, suffix);
+		String tagString = request.getParameter("tag_" + suffix);
+		int maxScore = Integer.parseInt(request.getParameter("maxScore_"
+				+ suffix));
+
+		if (questionType.equals(QuestionBase.QR)) {
+			return new QResponse(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1);
+
+		} else if (questionType.equals(QuestionBase.FIB)) {
+			return new FillInBlank(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1);
+
+		} else if (questionType.equals(QuestionBase.MC)) {
+			String choices = getCreatedChoices(questionType, request, suffix);
+			return new MultiChoice(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1,
+					choices);
+
+		} else if (questionType.equals(QuestionBase.PR)) {
+			String url = request.getParameter("url_" + suffix);
+			return new PResponse(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1, url);
+
+		} else if (questionType.equals(QuestionBase.MA)) {
+			String isOrder = request.getParameter("isOrder_" + suffix);
+			if (isOrder == null)
+				isOrder = "false";
+			return new MAQuestion(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1,
+					isOrder);
+
+		} else if (questionType.equals(QuestionBase.MCMA)) {
+			String choices = getCreatedChoices(questionType, request, suffix);
+			return new MCMAQuestion(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1,
+					choices);
+
+		} else if (questionType.equals(QuestionBase.MATCH)) {
+			String choices = getCreatedChoices(questionType, request, suffix);
+			return new Matching(questionType, creatorId, timeLimit,
+					questionDescription, answer, maxScore, tagString, -1,
+					choices);
+		}
+		return null;
+	}
+
 	// called by quiz to print html for every question
 	// essentially, it is a html-string
 	public static String printCreateHtml(String questionType) {
@@ -192,6 +248,7 @@ public class QuestionFactory {
 	 * @param request
 	 * @return
 	 */
+	@Deprecated
 	public static String getCreatedAnswer(String questionType,
 			HttpServletRequest request) {
 		if (questionType.equals(QuestionBase.QR))
@@ -211,6 +268,25 @@ public class QuestionFactory {
 		return "error";
 	}
 
+	public static String getCreatedAnswer(String questionType,
+			HttpServletRequest request, int suffix) {
+		if (questionType.equals(QuestionBase.QR))
+			return QResponse.getCreatedAnswer(request, suffix);
+		else if (questionType.equals(QuestionBase.FIB))
+			return FillInBlank.getCreatedAnswer(request, suffix);
+		else if (questionType.equals(QuestionBase.MC))
+			return MultiChoice.getCreatedAnswer(request, suffix);
+		else if (questionType.equals(QuestionBase.PR))
+			return PResponse.getCreatedAnswer(request, suffix);
+		else if (questionType.equals(QuestionBase.MA))
+			return MAQuestion.getCreatedAnswer(request, suffix);
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.getCreatedAnswer(request, suffix);
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.getCreatedAnswer(request, suffix);
+		return "error";
+	}
+
 	/**
 	 * Used by quiz servlet to wrap answers for MCMA and MultiChoice
 	 * 
@@ -218,6 +294,7 @@ public class QuestionFactory {
 	 * @param request
 	 * @return
 	 */
+	@Deprecated
 	public static String getCreatedChoices(String questionType,
 			HttpServletRequest request) {
 		if (questionType.equals(QuestionBase.MC))
@@ -226,6 +303,17 @@ public class QuestionFactory {
 			return MCMAQuestion.getCreatedChoices(request);
 		else if (questionType.equals(QuestionBase.MATCH))
 			return Matching.getCreatedChoices(request);
+		return "error";
+	}
+
+	public static String getCreatedChoices(String questionType,
+			HttpServletRequest request, int suffix) {
+		if (questionType.equals(QuestionBase.MC))
+			return MultiChoice.getCreatedChoices(request, suffix);
+		else if (questionType.equals(QuestionBase.MCMA))
+			return MCMAQuestion.getCreatedChoices(request, suffix);
+		else if (questionType.equals(QuestionBase.MATCH))
+			return Matching.getCreatedChoices(request, suffix);
 		return "error";
 	}
 

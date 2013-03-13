@@ -19,6 +19,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Quiz Summary - <%=quiz.getQuizName()%></title>
+<link href="CSS/style.css" rel="stylesheet" type="text/css" >
+<style type="text/css"></style>
 </head>
 <body>
 	<h1>
@@ -29,6 +31,11 @@
 	<h2>Quiz Description</h2>
 	<p>
 		<%=quiz.getQuizDescription()%>
+	</p>
+	
+	<h2>Quiz Category</h2>
+	<p>
+		<%=quiz.getCategory()%>
 	</p>
 
 	<!--  The time created -->

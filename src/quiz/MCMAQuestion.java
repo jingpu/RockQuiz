@@ -100,6 +100,21 @@ public class MCMAQuestion extends QuestionBase {
 		return answer.toString();
 	}
 
+	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
+		String answerList[] = request.getParameterValues("answer" + "_"
+				+ suffix);
+		StringBuilder answer = new StringBuilder();
+		for (String str : answerList) {
+			answer.append("#");
+			// delete "answer=" will get choice index i.e. choice0
+			// then use request.getParameter(choice0) to get answerBody
+			String answerBody = request.getParameter(str + "_" + suffix);
+			answer.append(answerBody);
+			answer.append("#");
+		}
+		return answer.toString();
+	}
+
 	/**
 	 * Get Choices string from several distinct choice(input) fields Since input
 	 * fields are different from checkbox field, here we have to use multiple
@@ -116,6 +131,20 @@ public class MCMAQuestion extends QuestionBase {
 		for (int i = 0; i < numChoices; i++) {
 			choices.append("#");
 			choices.append(request.getParameter("choice" + i));
+			choices.append("#");
+		}
+		return choices.toString();
+	}
+
+	public static String getCreatedChoices(HttpServletRequest request,
+			int suffix) {
+		// TODO: changeable numChoices
+		// int numChoices = request.getParameter("numChoices"));
+		int numChoices = 4;
+		StringBuilder choices = new StringBuilder();
+		for (int i = 0; i < numChoices; i++) {
+			choices.append("#");
+			choices.append(request.getParameter("choice" + i + "_" + suffix));
 			choices.append("#");
 		}
 		return choices.toString();

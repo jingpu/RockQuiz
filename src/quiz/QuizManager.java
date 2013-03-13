@@ -1,6 +1,7 @@
 package quiz;
 
 import java.util.List;
+import java.util.Set;
 
 public interface QuizManager {
 
@@ -106,5 +107,10 @@ public interface QuizManager {
 	 */
 	public List<Quiz> searchForQuiz(String pattern, int numEntries,
 			int sortMethod);
+
+	public List<Quiz> searchForCategory(String pattern,
+			int sortMethod);
+
+	public Set<String> getCategories();
 
 }

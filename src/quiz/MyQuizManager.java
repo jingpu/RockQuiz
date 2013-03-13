@@ -10,7 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import database.MyDB;
 
@@ -258,6 +260,60 @@ public final class MyQuizManager implements QuizManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#searchForCategory(java.lang.String, int)
+	 */
+	@Override
+	public List<Quiz> searchForCategory(String pattern, int sortMethod) {
+		List<Quiz> list = new ArrayList<Quiz>();
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query Global_Quiz_Info_Table
+			ResultSet rs = stmt
+					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
+							+ " WHERE category LIKE \"%" + pattern
+							+ "%\"");
+			while (rs.next()) {
+				String quizName = rs.getString("quizName");
+				list.add(new MyQuiz(quizName));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		// sort list
+		sortQuizList(list, sortMethod);
+		// return sublist of the first numEntries elements
+		return list;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#getCategories()
+	 */
+	@Override
+	public Set<String> getCategories() {
+		Set<String> list = new HashSet<String>();
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query Global_Quiz_Info_Table
+			ResultSet rs = stmt
+					.executeQuery("SELECT category FROM Global_Quiz_Info_Table");
+			while (rs.next()) {
+				String category = rs.getString("category");
+				if (!list.contains(category))
+					list.add(category);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }
