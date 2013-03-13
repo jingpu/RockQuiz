@@ -160,6 +160,11 @@ h3 {
 	position: relative;
 }
 
+table {
+	float: left;
+	font-size: 12px;
+}
+
 #body p {
 	margin: 1em 0;
 	padding: 0;

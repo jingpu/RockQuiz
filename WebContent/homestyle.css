@@ -136,6 +136,11 @@ h3 {
 	background: #74a7b7;
 }
 
+#browse .create {
+	padding: 10px;
+}
+
+
 #browse .searchform {
 	padding: 10px;
 }
@@ -170,7 +175,7 @@ h3 {
 #body .leftbox,#body .rightbox {
 	margin-top: 5px;
 	color: #464646;
-	height: 100px;
+	height: 200px;
 }
 
 #body .leftbox {

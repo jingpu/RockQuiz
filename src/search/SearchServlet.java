@@ -43,7 +43,7 @@ public class SearchServlet extends HttpServlet {
 		String query = request.getParameter("query");
 		String sort = request.getParameter("s");
 		System.out.println(sort);
-		if(sort.equals("null"))
+		if(sort == null || sort.equals("null"))
 			response.sendRedirect("search.jsp?q="+ query);
 		else {
 			response.sendRedirect("search.jsp?s="+ sort +"&q="+ query);

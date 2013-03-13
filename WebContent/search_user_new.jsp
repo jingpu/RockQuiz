@@ -52,13 +52,13 @@
 			</dl>
 
 			<div id="body">
-				<%--partially matched user results--%>
+				<%-- matched user results--%>
 				<%
 					if(query != ""){
-						List<String> userResult = UserManager.getUserList(query);
-							if (userResult.isEmpty()) {
-								out.println("<p>There is no related user.</p>");
-							} else {
+							List<String> userResult = UserManager.getUserList(query);
+								if (userResult.isEmpty()) {
+									out.println("<p>There is no related user.</p>");
+								} else {
 				%>
 				<p>Related users</p>
 				<ul>
@@ -81,6 +81,7 @@
 
 </body>
 <script type="text/javascript">
-	highlight("<%=query%>", "c");
+	highlight("<%=query%>
+	", "c");
 </script>
 </html>
