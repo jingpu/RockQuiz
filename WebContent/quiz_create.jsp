@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%= QuestionFactory.printReference() %>
 <script>
 function addQuestion() {
 	var questionType = document.getElementById("questionTypeList").value;
@@ -55,6 +56,7 @@ function enterNewCategory(){
 	existing_categories_box.disabled = true;
 	new_category_box.disabled = false;
 }
+
 
 </script>
 <meta charset="UTF-8">
@@ -117,7 +119,7 @@ function enterNewCategory(){
 		}
 	%>
 	<h1>Create Quiz</h1>
-	<form action="QuizCreateAndSaveServlet" method="post">
+	<form action="QuizCreateAndSaveServlet" method="post" onsubmit="return validateForm()">
 		<h2>Quiz Information</h2>
 		<div>
 			Quiz Name: <input type="text" name="quizName" required

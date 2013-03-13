@@ -1,5 +1,5 @@
-$(document).ready(function() {
-	var timeLimit = $("#time_limit").val();
+$(document).ready(function() { //unload in javascript
+	var timeLimit = $(".time_limit").val();
 	if (timeLimit != "" && timeLimit != null && timeLimit != 0) {
 		setTimeout(function(){
 			alert("Your time is out, please move forward to next question!");
@@ -19,107 +19,126 @@ $(document).ready(function() {
     
 });
 
+function validateForm() {
+	if (!checkScore()) return false;
+	if (!checkBlank()) return false;
+	return true;
+}
+
+//used for multi-page read mode
 function submitForm() {
 	document.forms[0].submit();
 }
 
+//For creation check
 function checkScore() {
-	var val = document.forms[0].maxScore.value;
+	var elements = document.getElementByClass("max_score");
 	
-	if (isNaN (val-0) || val == null || val =="") {
-		 alert("score should be an integer!");
-		 document.forms[0].maxScore.focus( );
-		 return false;
+	for (var i = 0; i < elements.length; i++){
+		var val = elements[i];
+		if (isNaN (val-0) || val == null || val =="") {
+			 alert("score should be an integer!");
+			 val.focus();  //val is an element type
+			 return false;
+		}
 	}
 	return true;
 }
 
-function containsBlank() {
-	var str = document.FIB_form.questionDescription.value;
-	if (str == null || str == "" || str.indexOf("#blank#") == -1) {
-		document.FIB_form.questionDescription.focus( );
-		 return false;
-	}
-	return true;
-}
 
 function checkBlank() {
-	if (!checkScore()) return false;
-	if (!containsBlank()) {
-		 alert("The question description must contains a #blank#");
+	var elements = document.getElementByClass("FIB");
+
+	for (var i = 0; i < elements.length; i++){
+		var elem = elements[i];
+		if (!containsBlank(elem)) {
+			alert("The question description must contains a #blank#");
+			elem.focus();  
+			return false;
+		}
+	}
+	return true;
+}
+
+/**
+ * Called by either addBlank() or checkBlank
+ * @param elem
+ * @returns {Boolean}
+ */
+function containsBlank(elem) {
+	var str = elem.value;
+	if (str == null || str == "" || str.indexOf("#blank#") == -1) {
+		elem.focus( );
 		return false;
 	}
 	return true;
 }
 
-function addBlank() {
-	if (containsBlank()) {
+
+/**
+ * Function exclusively used in Fill-In-Blank Question type
+ * @param button
+ */
+function addBlank(button) {
+	var parent = button.parentNode;
+	if (containsBlank(parent.firstChild)) {
 		alert("One question can contain only one blank");
 		return;
 	}
-	document.FIB_form.questionDescription.value += "#blank#";
+	var questionDescription = button.parentNode.firstChild;
+	questionDescription.value += "#blank#";
 }
 
-
-function validForm() {
+/**
+ * Get element from a node's children nodes
+ * @param parent
+ * @param tag
+ * @returns
+ */
+function getElem(parent, tag) {
+	var elements = parent.childNodes;
 	
-}
-
-
-
-
-var numAnswer = 1;
-function addAnswer() {
-	var tempDiv = document.getElementById("form_input");
-	var newPara = document.createElement("p");
-	var newInput = document.createElement("input");
-	newInput.type = "text";
-	newInput.name = "answer" + numAnswer;
-
-	newPara.innerHTML = "Answer" + numAnswer;
-	tempDiv.appendChild(newPara);
-	newPara.appendChild(newInput);
-	++numAnswer;
-	document.getElementById('numAnswers').value = numAnswer;
-}
-
-function deleteAnswer() {
-	var parent = document.getElementById("form_input");
-	if (numAnswer > 1) {
-		parent.removeChild(parent.lastChild);
-		--numAnswer;
-	} else {
-		alert("There must be at least ONE answer");
+	for (var i = 0; i < elements.length; i++){
+		if (elements[i].className == tag)
+			return elements[i];
 	}
-	document.getElementById('numAnswers').value = numAnswer;
 }
 
 /**
  * function for multi-choice
  */
 var numMC = 4; //num multi-choice 
-
-function addChoice() {
-	var tempDiv = document.getElementById("multi_choice");
-	//<p>
-	var newPara = document.createElement("p");
-	//<input>
-	var newInput = document.createElement("input");
-	newInput.type = "text";
-	newInput.name = "choice" + numMC;
-	//<radio>
-	var newRadio = document.createElement("input");
-	newRadio.type = "radio";
-	newRadio.name = "answer";
-	newRadio.value = "choice" + numMC;
-
-	newPara.innerHTML = "Choice" + numMC + ": ";
-	newPara.appendChild(newInput);
-	newPara.appendChild(newRadio);
-	tempDiv.appendChild(newPara);
-
-	++numMC;
-	document.getElementById('numChoices').value = numMC;
+function addChoice(button) {
+	var parentDiv = button.parentNode;
+	var choiceDiv = getElem(parentDiv, "choices");
+	
+	var choice = getElem(parentDiv, "choice_template");
+    var newChoice = choice.cloneNode(true);
+    newChoice.removeAttribute("hidden");
+	choiceDiv.appendChild(newChoice);
+	++numAnswer;
+	parentDiv.lastChild.value = numAnswer;
+	
+//	var tempDiv = document.getElementById("multi_choice");
+//	//<p>
+//	var newPara = document.createElement("p");
+//	//<input>
+//	var newInput = document.createElement("input");
+//	newInput.type = "text";
+//	newInput.name = "choice" + numMC;
+//	//<radio>
+//	var newRadio = document.createElement("input");
+//	newRadio.type = "radio";
+//	newRadio.name = "answer";
+//	newRadio.value = "choice" + numMC;
+//
+//	newPara.innerHTML = "Choice" + numMC + ": ";
+//	newPara.appendChild(newInput);
+//	newPara.appendChild(newRadio);
+//	tempDiv.appendChild(newPara);
+//
+//	++numMC;
+//	document.getElementById('numChoices').value = numMC;
 }
 
 function deleteChoice() {
@@ -131,6 +150,33 @@ function deleteChoice() {
 		alert("There must be at least THREE choice options");
 	}
 	document.getElementById('numChoices').value = numMC;
+}
+
+
+
+/**
+ * Function for multi-answer questions
+ */
+var numAnswer = 1;
+function addAnswer(button) {
+	var tempDiv = button.parentNode;
+    var newChoice = qr.cloneNode(true);
+    newChoice.removeAttribute("hidden");
+    newChoice.innerHTML = "Answer" + numAnswer;
+	tempDiv.appendChild(newChoice);
+	++numAnswer;
+	tmpDiv.lastChild.value = numAnswer;
+}
+
+function deleteAnswer() {
+	var parent = document.getElementById("form_input");
+	if (numAnswer > 1) {
+		parent.removeChild(parent.lastChild);
+		--numAnswer;
+	} else {
+		alert("There must be at least ONE answer");
+	}
+	document.getElementById('numAnswers').value = numAnswer;
 }
 
 

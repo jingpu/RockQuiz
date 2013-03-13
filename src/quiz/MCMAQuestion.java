@@ -203,7 +203,7 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice();\" />\n");
 
 		// Full Score
-		html.append("<p>Score per correct answer:   <input type=\"text\" name=\"maxScore\" ></input></p>\n");
+		html.append("<p>Score per correct answer:   <input class=\"max_score\" type=\"text\" name=\"maxScore\" ></input></p>\n");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
 
 		// Hidden information - question Type and tag information
@@ -226,23 +226,27 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>\n");
 
 		// Choice options and answers
-		html.append("<div id=\"MCMA\"");
-		html.append("<p>Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice0\"></input></p>\n");
-		html.append("<p>Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice1\"></input></p>\n");
-		html.append("<p>Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice2\"></input></p>\n");
-		html.append("<p>Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice3\"></input></p>\n");
-		html.append("</div>\n");
+		html.append("<div class=\"MCMA\"");
+		html.append("Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice0\"></input><br>");
+		html.append("Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice1\"></input><br>");
+		html.append("Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice2\"></input><br>");
+		html.append("Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice3\"></input><br>");
+		html.append("</div><br>");
 
 		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice();\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice();\" />\n");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice();\" /><br>");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice();\" /><br>");
 
 		// Full Score
-		html.append("<p>Score per correct answer:   <input type=\"text\" name=\"maxScore\" ></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+		html.append("Score per correct answer:   <input class=\"max_score\" type=\"text\" name=\"maxScore\" ></input><br>");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
+		html.append("</div>");
 
 		// Hidden information - question Type and tag information
-		html.append("<p><input type=\"hidden\" name=\"numChoices\" id=\"numChoices\"></input></p>\n");
+		html.append("<p><input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MCMA + "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");

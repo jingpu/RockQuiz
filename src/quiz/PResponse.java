@@ -92,25 +92,29 @@ public class PResponse extends QuestionBase {
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a picture-response question</h4>\n");
-		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<h1>This page will guide you to create a picture-response question</h1><br>");
+		html.append("<p> Please enter proposed question description and answer </p><br>");
+		html.append("<p class=\"description\">Question Description:</p><br>");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p>\n");
+				+ "\" required></textarea></p><br>");
 
 		// url information
-		html.append("<p>Picture URL: <input type=\"text\" name=\"url\""
-				+ "\" required></input></p>\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
-				+ "\" required></input></p>\n");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
-				+ "\" required></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+		html.append("Picture URL: <input type=\"text\" name=\"url\""
+				+ "\" required></input><br>");
+		html.append("Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required></input><br>");
+		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\""
+				+ "\" required></input><br>");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
+		html.append("</div>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ QuestionBase.PR + "\" ></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
+				+ QuestionBase.PR + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>");
 		return html.toString();
 
 	}
@@ -122,7 +126,7 @@ public class PResponse extends QuestionBase {
 		html.append(super.printReadHtml());
 
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
-		html.append("<p>" + typeIntro + "</p>\n");
+		html.append("<p>" + typeIntro + "</p><br>");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" >\n");
 		html.append("<p>Question Description: ");
 		html.append(questionDescription + "</p>\n");

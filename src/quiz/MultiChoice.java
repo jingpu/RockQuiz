@@ -70,24 +70,24 @@ public class MultiChoice extends QuestionBase {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a multiChoice question</h1>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
-		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
+		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\"><br>");
+		html.append("<p> Please enter proposed question description and answer </p><br>");
+		html.append("Question Description<br>: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
 
 		// Choice options
-		html.append("<div id=\"multi_choice\">\n");
-		html.append("<p>Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"radio\" name=\"answer\" value=\"choice0\"></input></p>\n");
-		html.append("<p>Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"radio\" name=\"answer\" value=\"choice1\"></input></p>\n");
-		html.append("<p>Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"radio\" name=\"answer\" value=\"choice2\"></input></p>\n");
-		html.append("<p>Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"radio\" name=\"answer\" value=\"choice3\"></input></p>\n");
-		html.append("</div>\n");
-
+		html.append("<div class=\"multi_choice\">");
+		html.append("Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"radio\" name=\"answer\" value=\"choice0\"></input><br>");
+		html.append("Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"radio\" name=\"answer\" value=\"choice1\"></input><br>");
+		html.append("Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"radio\" name=\"answer\" value=\"choice2\"></input><br>");
+		html.append("Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"radio\" name=\"answer\" value=\"choice3\"></input><br>");
 		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice();\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice();\" />\n");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice();\" /><br>");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice();\" /><br>");
+		html.append("</div><br>");
+
 		// Answer and Full Score
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+		html.append("Score:   <input type=\"text\" name=\"maxScore\" ></input><br>");
+		html.append("Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
@@ -103,29 +103,43 @@ public class MultiChoice extends QuestionBase {
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a multiChoice question</h4>\n");
-		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
+		html.append("<h1>This page will guide you to create a multiChoice question</h4>\n");
+		html.append("<p> Please enter proposed question description and answer </p><br>");
+		html.append("Question Description:<br> <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
 
 		// Choice options
-		html.append("<div id=\"multi_choice\">\n");
-		html.append("<p>Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"radio\" name=\"answer\" value=\"choice0\"></input></p>\n");
-		html.append("<p>Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"radio\" name=\"answer\" value=\"choice1\"></input></p>\n");
-		html.append("<p>Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"radio\" name=\"answer\" value=\"choice2\"></input></p>\n");
-		html.append("<p>Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"radio\" name=\"answer\" value=\"choice3\"></input></p>\n");
-		html.append("</div>\n");
+		html.append("<div>");
+		html.append("<div class=\"choices\">");
+		html.append("Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"radio\" name=\"answer\" value=\"choice0\"></input><br>");
+		html.append("Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"radio\" name=\"answer\" value=\"choice1\"></input><br>");
+		html.append("Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"radio\" name=\"answer\" value=\"choice2\"></input><br>");
+		html.append("Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"radio\" name=\"answer\" value=\"choice3\"></input><br>");
+		html.append("</div>"); // multi_choice div
 
 		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice();\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice();\" />\n");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice(this);\" /><br>");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice(this);\" /><br>");
+
+		// hidden choice option template
+		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
+		html.append("Choice: <input type=\"text\" name=\"choice\"></input><input type=\"radio\" name=\"answer\" value=\"choice\"></input><br>");
+		html.append("</div>");
+
+		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" ></input>");
+		html.append("</div>"); // whole set div
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
+		html.append("</div>");
+
 		// Answer and Full Score
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\" ></input><br>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MC + "\" ></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"numChoices\" id=\"numChoices\"></input></p>\n");
+
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");
 
 		return html.toString();

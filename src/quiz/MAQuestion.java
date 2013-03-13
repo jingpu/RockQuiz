@@ -126,35 +126,39 @@ public class MAQuestion extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a multi-answer question</h4>\n");
-		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p class= 'description'>Question Description:</p>\n");
+		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
+		html.append("Please enter proposed question description and answer <br>");
+		html.append("<span class= 'description'>Question Description:</span><br>");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p>\n");
+				+ "\" required></textarea></p><br>");
 
 		// add answers, can be expanded
-		html.append("<div id=\"form_input\">\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\""
-				+ "\" required></input></p>\n");
-		html.append("</div>\n");
+		html.append("<div class=\"form_input\"><br>");
+		html.append("Answer:   <input type=\"text\" name=\"answer0\""
+				+ "\" required></input><br>");
+		html.append("</div><br>");
 
-		html.append("<div id='option'>\n");
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" />\n");
-		html.append("</div>\n");
+		html.append("<div class='option'>");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" /><br>");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" /><br>");
+		html.append("</div><br>");
 
-		html.append("<p>Point per correct answer: <input type=\"text\" name=\"maxScore\""
-				+ "\" required></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+		html.append("Point per correct answer: <input class=\"max_score\" type=\"text\" name=\"maxScore\""
+				+ "\" required></input><br>\n");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
+		html.append("</div>");
 
 		// checkbox: tick means true, otherwise null means false
-		html.append("<p><input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input></p>\n");
+		html.append("<input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input><br>");
 
 		// Hidden information - questionType,tag and number of answers
 		// TODO: numAnswer will be automatically generated in javascript??
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
 				+ QuestionBase.MA + "\" ></input></p>\n");
-		html.append("<p><input id=\"numAnswers\" type=\"hidden\" name=\"numAnswers\"></input></p>\n");
+		html.append("<p><input class=\"numAnswers\" type=\"hidden\" name=\"numAnswers\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 
 		return html.toString();

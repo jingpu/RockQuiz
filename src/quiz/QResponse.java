@@ -73,16 +73,20 @@ public class QResponse extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a question-response question</h4>\n");
+		html.append("<h1>This page will guide you to create a question-response question</h1>\n");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p class= 'description'>Question Description:</p>\n");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p>\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer\""
-				+ "\" required></input></p>\n");
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\""
-				+ "\" required></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+		html.append("<span class= 'description'>Question Description:</span><br>");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea><br>");
+		html.append("Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required></input><br>");
+		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\""
+				+ "\" required></input><br>");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
+		html.append("</div>");
 
 		// Hidden information - questionType and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
@@ -90,7 +94,6 @@ public class QResponse extends QuestionBase {
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 		return html.toString();
 	}
-
 
 	@Override
 	public String printReadHtml() {
