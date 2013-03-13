@@ -141,8 +141,8 @@ function deleteChoice() {
 var numMCMA = 4; //num multi-choice-multi-answer
 var numAnswerMCMA = 0;
 
-function addMCMAChoice(suffix) {
-	var tempDiv = document.getElementById("MCMA"+ suffix);
+function addMCMAChoice() {
+	var tempDiv = document.getElementById("MCMA");
 	//<p>
 	var newPara = document.createElement("p");
 	//<input>
