@@ -106,64 +106,68 @@ function addBlank(button) {
 /**
  * Get element from a node's children nodes
  * @param parent
- * @param tag
+ * @param classname
  * @returns
  */
-function getElem(parent, tag) {
+function getElem(parent, classname) {
 	var elements = parent.childNodes;
-	
 	for (var i = 0; i < elements.length; i++){
-		if (elements[i].className == tag)
+		if (elements[i].className == classname)
 			return elements[i];
 	}
+	return null;
 }
 
+
+function addChoiceSuffix(newChoiceDiv, numMC) {
+	var elements = newChoiceDiv.querySelectorAll("input");
+	for ( var i = 0; i < elements.length; i++) {
+		var e = elements[i];
+		// add suffix to name
+		if (e.hasAttribute("name")) {
+			if(e.name == "choice")
+				e.name += numMC;
+		}
+		if (e.hasAttribute("value")) {
+			if (e.value == "choice")
+				e.value += numMC;
+		}
+	}
+}
 /**
  * function for multi-choice
+ * Too hacky..here
+ * lastChild, div, hidden, suffix, numMC, string to num
  */
-var numMC = 4; //num multi-choice 
 function addChoice(button) {
 	var parentDiv = button.parentNode;
 	var choiceDiv = getElem(parentDiv, "choices");
+	//update numMC
+	var numMC = parentDiv.lastChild.value - 0 + 1;
+	parentDiv.lastChild.value = numMC;
 	
 	var choice = getElem(parentDiv, "choice_template");
-    var newChoice = choice.cloneNode(true);
+    
+	var newChoice = choice.cloneNode(true);
     newChoice.removeAttribute("hidden");
-	choiceDiv.appendChild(newChoice);
-	++numAnswer;
-	parentDiv.lastChild.value = numAnswer;
+  
+    newChoice.firstChild.innerHTML = "Choice" + numMC + ": ";
+    addChoiceSuffix(newChoice, numMC);
+    choiceDiv.appendChild(newChoice);
 	
-//	var tempDiv = document.getElementById("multi_choice");
-//	//<p>
-//	var newPara = document.createElement("p");
-//	//<input>
-//	var newInput = document.createElement("input");
-//	newInput.type = "text";
-//	newInput.name = "choice" + numMC;
-//	//<radio>
-//	var newRadio = document.createElement("input");
-//	newRadio.type = "radio";
-//	newRadio.name = "answer";
-//	newRadio.value = "choice" + numMC;
-//
-//	newPara.innerHTML = "Choice" + numMC + ": ";
-//	newPara.appendChild(newInput);
-//	newPara.appendChild(newRadio);
-//	tempDiv.appendChild(newPara);
-//
-//	++numMC;
-//	document.getElementById('numChoices').value = numMC;
 }
 
-function deleteChoice() {
-	var parent = document.getElementById("multi_choice");
+function deleteChoice(button) {
+	var parentDiv = button.parentNode;
+	var choiceDiv = getElem(parentDiv, "choices");
+	//update numMC
+	var numMC = parentDiv.lastChild.value;
 	if (numMC > 3) {
-		parent.removeChild(parent.lastChild);
-		--numMC;
+		choiceDiv.removeChild(choiceDiv.lastChild);
+		parentDiv.lastChild.value = numMC - 0 - 1;
 	} else {
 		alert("There must be at least THREE choice options");
 	}
-	document.getElementById('numChoices').value = numMC;
 }
 
 
@@ -171,7 +175,6 @@ function deleteChoice() {
 /**
  * Function for multi-answer questions
  */
-var numAnswer = 1;
 function addAnswer(button) {
 	var tempDiv = button.parentNode;
     var newChoice = qr.cloneNode(true);
