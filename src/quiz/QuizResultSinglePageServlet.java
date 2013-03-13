@@ -80,9 +80,20 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 		long startTime = (Long) session.getAttribute("quizStartTime");
 		long timeElapsed = new Date().getTime() - startTime;
 		String quizId = quiz.saveQuizEvent(userName, timeElapsed, currentScore);
+		
 		// save quiz event to user database
+		String newAchieve1 = null;
+		String newAchieve2 = null;
 		Account user = new Account(userName);
-		user.addQuizTaken(quizName, quizId);
+		if(quizName != null){
+			user.addQuizTaken(quizName, quizId);
+			if(user.countHistory("t") == 10){
+				newAchieve1 = "Quiz Machine";
+			}
+			if(currentScore >= quiz.getBestScore()){
+				newAchieve2 = "I am the Greatest";
+			}
+		}
 
 		/*
 		 * write html
@@ -93,6 +104,7 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<head>");
+		out.println("<script type=\"text/javascript\" src=\"challenge-msg.js\"></script>");
 		out.println("<meta charset=\"UTF-8\">");
 		out.println("<title>Quiz Results</title>");
 		out.println("</head>");
@@ -102,10 +114,23 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 				+ quiz.getMaxScore() + "</p>");
 
 		out.println("<p>Time: " + quiz.getTimeElapsed(quizId) + "s </p>");
+
+		//*** add challenge button
+
+		out.println("<input name='' type='button' value='Challenge my friends!'onclick='AddElement()'>");
+		out.println("<form action='ChallengeLetterSent' target='hidFrame' method='post' id='letter'>");
+		out.println("<input type='hidden' name='quizName' value=" + quizName + ">");
+		out.println("<div id='msg'></div>");
+		out.println("</form>");
+		out.println("<iframe name='hidFrame' style='display: none'></iframe>");
+
 		out.println("<p><a href=\"" + quiz.getSummaryPage()
 				+ "\">Go back to summary page.</p>");
+
 		out.println("</body>");
 		out.println("</html>");
+
+
 
 		// remove all the session attributes defined in this servlet
 		session.removeAttribute("quizStartTime");

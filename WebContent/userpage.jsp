@@ -35,9 +35,11 @@
 	List<Activity> taken = pageOwner.getQuizTaken();
 	// generate quizzes created history
 	List<Activity> created = pageOwner.getQuizCreated();
+	//System.out.println(pageOwner.seeFriendStatus(guest));
 %>
 
 <script language="javascript" type="text/javascript">
+<!--
 	function friendQuery(text) {
 		var r = confirm(text);
 		if (r) {
@@ -45,6 +47,7 @@
 		}
 		return false;
 	}
+//-->
 </script>
 
 <title><%=title%></title>
@@ -57,7 +60,7 @@
 				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
-						<a href="home.jsp">Home</a> |
+						<a href="home.jsp?id=<%=guest%>">Home</a> |
 						<%
 							if (!guest.equals(id)) {
 						%>
@@ -92,7 +95,7 @@
 						%>
 
 						<%--if guest!=id, show message --%>
-						<a href="LeaveMessage?to=<%=id%>">Message</a> |
+						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>">Message me</a> |
 						<%
 							}
 						%>
@@ -102,11 +105,14 @@
 			</div>
 
 			<dl id="browse">
+
 				<dt>Achievements</dt>
 				<%
 					if (achieves.isEmpty()) {
 				%>
-				<p><%=id%> don't have any achievements yet.</p>
+				<p><%=id%>
+					don't have any achievements yet.
+				</p>
 				<%
 					} else {
 						for (int k = 0; k < 5; k++) {
@@ -116,6 +122,18 @@
 						}
 					}
 				%>
+				<dt>Search Quizzers Or Users</dt>
+				<dd class="searchform">
+					<form action="Search" method="post">
+						<div>
+							<input type="search" name="query" class="text"
+								placeholder="Search quizzes OR users here" />
+						</div>
+						<div class="readmore">
+							<input type="image" src="images/search.gif" />
+						</div>
+					</form>
+				</dd>
 			</dl>
 
 			<div id="body">
@@ -125,7 +143,9 @@
 						<%
 							if (taken.isEmpty()) {
 						%>
-						<p><%=id%> did't take any quiz yet.</p>
+						<p><%=id%>
+							did't take any quiz yet.
+						</p>
 						<%
 							} else {
 								for (int k = 0; k < 5; k++) {
@@ -145,7 +165,9 @@
 						<%
 							if (created.isEmpty()) {
 						%>
-						<p><%=id%> did't create any quiz yet.</p>
+						<p><%=id%>
+							did't create any quiz yet.
+						</p>
 						<%
 							} else {
 								for (int k = 0; k < 5; k++) {

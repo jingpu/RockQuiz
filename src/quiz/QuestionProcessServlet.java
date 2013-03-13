@@ -139,17 +139,32 @@ public class QuestionProcessServlet extends HttpServlet {
 			long timeElapsed = new Date().getTime() - startTime;
 			String quizId = quiz.saveQuizEvent(userName, timeElapsed,
 					currentScore);
+			
 			// save quiz event to user database
+			String newAchieve1 = null;
+			String newAchieve2 = null;
 			Account user = new Account(userName);
-			user.addQuizTaken(quizName, quizId);
-
+			if(quizName != null){
+				user.addQuizTaken(quizName, quizId);
+				if(user.countHistory("t") == 10){
+					newAchieve1 = "Quiz Machine";
+					user.addAchievement(newAchieve1);
+				}
+				if(currentScore >= quiz.getBestScore()){
+					newAchieve2 = "I am the Greatest";
+					user.addAchievement(newAchieve2);
+				}
+			}
+			
 			// print to result page
 			out.println("<!DOCTYPE html>");
 			out.println("<html>");
 			out.println("<head>");
+			out.println("<script type=\"text/javascript\" src=\"challenge-msg.js\"></script>");
 			out.println("<meta charset=\"UTF-8\">");
 			out.println("<title>Quiz Results</title>");
 			out.println("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\" >");
+
 			out.println("</head>");
 			out.println("<body>");
 			out.println("<h1>Quiz Results</h1>");
@@ -157,11 +172,23 @@ public class QuestionProcessServlet extends HttpServlet {
 					+ quiz.getMaxScore() + "</p>");
 
 			out.println("<p>Time: " + quiz.getTimeElapsed(quizId) + "s </p>");
+
+			//*** add challenge button
+			out.println("<input name='' type='button' value='Challenge my friends!'onclick='AddElement()'>");
+			out.println("<form action='ChallengeLetterSent' target='hidFrame' method='post' id='letter'>");
+			out.println("<input type='hidden' name='quizName' value=" + quizName + ">");
+			out.println("<div id='msg'></div>");
+			out.println("</form>");
+			out.println("<iframe name='hidFrame' style='display: none'></iframe>");
+
 			out.println("<p><a href=\"" + quiz.getSummaryPage()
 					+ "\">Go back to summary page.</p>");
 			out.println("</body>");
 			out.println("</html>");
 
+			/*
+
+			 */
 			// remove all the session attributes defined in this servlet
 			session.removeAttribute("quizName");
 			session.removeAttribute("questionIndex");

@@ -39,16 +39,15 @@ public class ChangePassword extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String userId = (String)request.getSession().getAttribute("guest");
-		System.out.println(userId);
 		String currPwd = request.getParameter("currPwd");
-		System.out.println(currPwd);
+		//System.out.println(currPwd);
 		String newPwd = request.getParameter("newPwd");
-		System.out.println(newPwd);
+		//System.out.println(newPwd);
 		String cnfPwd = request.getParameter("cnfPwd");
-		System.out.println(cnfPwd);
+		//System.out.println(cnfPwd);
 		Account user = new Account(userId);
 		if(user.matchPwd(currPwd)){
-			System.out.println("match old pwd");
+			//System.out.println("match old pwd");
 			if(newPwd.equals(cnfPwd)){
 				user.editInfo("password", newPwd);
 				response.sendRedirect("password.jsp?err=0");

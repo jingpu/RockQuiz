@@ -28,22 +28,31 @@
 %>
 <title>Mailbox - <%=userId%></title>
 </head>
-<body>	
+<body>
 	<div id="wrapper">
 		<div id="inner">
 			<div id="header">
-				<h1><%=userId%>'s Mailbox</h1>
+				<h1><%=userId%>'s Mailbox
+				</h1>
 				<h3><%=new Date()%></h3>
 				<div id="nav">
-				<h2><a href="home.jsp" target="_top">Home</a></h2>
+					<h2>
+						<a href="home.jsp?id=<%=guest%>" target="_top">Home</a>
+					</h2>
 				</div>
 			</div>
-			
+
 			<dl id="browse">
-				<dt><a href="WriteMessage?username=<%=userId%>" target="another">Compose</a></dt>
+				<dt>
+					<a href="WriteMessage.jsp?id=<%=userId%>" target="_blank">Compose</a>
+				</dt>
 				<dd></dd>
-				<dd><a href="Mailbox_inbox.jsp?id=<%=userId%>" target="another">Inbox</a></dd>
-				<dd><a href="Mailbox_sent.jsp?id=<%=userId%>" target="another">Sent</a></dd>
+				<dd>
+					<a href="Mailbox_inbox.jsp?id=<%=userId%>" target="another">Inbox</a>
+				</dd>
+				<dd>
+					<a href="Mailbox_sent.jsp?id=<%=userId%>" target="another">Sent</a>
+				</dd>
 			</dl>
 		</div>
 	</div>

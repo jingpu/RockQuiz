@@ -9,16 +9,16 @@ CREATE TABLE userTable (
 
 CREATE TABLE userId_history (
 	Time datetime,
-	Type varchar(33), 
-	content varchar(50)
+	Type varchar(36), 
+	content varchar(32)
 )
 
 /*
 userId_history format:
-time --|----- type ------|---- content
-	     (t)ake(quizId)--|---- quizName
-		   (c)reate -----|---- quizName
-		  (a)chievement -|-- achievename
+time --|------ type -------|---- content
+	      (t)ake(quizId)---|---- quizName
+		    (c)reate ------|---- quizName
+   (a)chieve(id#000)(quizId) --|---- quizName
 */
 
 CREATE TABLE userId_network (

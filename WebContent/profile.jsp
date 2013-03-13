@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Edit Profile</title>
-</head>
 <%
 	String userId = request.getParameter("id");
 
@@ -21,49 +20,69 @@
 	}
 
 	Account user = new Account(userId);
-	String status = user.getInfo("status") == "s" ? "admin" : "user";
-	boolean male = user.getInfo("gender") == "m";
+	String regTime = user.getInfo("registrationTime");
+	String status = user.getInfo("status").equals("s")
+			? "admin"
+			: "user";
+	System.out.println("new gender = " + user.getInfo("gender"));
+	boolean male = user.getInfo("gender").equals("m");
+	System.out.println("male = " + male);
 	String email = user.getInfo("email");
 	String password = user.getInfo("password");
 %>
 
-
 <script language="javascript" type="text/javascript">
-	function judge(){   	
+	function judge() {
 		// email
-   		var pos1 = document.forms[0].email.value.indexOf("@");
-   		var pos2 = document.forms[0].email.value.indexOf(".");
-   		if (pos1 == -1 && pos2 == -1){
-     		alert("Please fill in the correct email address!");
-      		document.forms[0].email.focus( );
-      		document.forms[0].email.select( );
-      		return false;
-   		}
+		var pos1 = document.forms[0].email.value.indexOf("@");
+		var pos2 = document.forms[0].email.value.indexOf(".");
+		if (pos1 == -1 && pos2 == -1) {
+			alert("Please fill in the correct email address!");
+			document.forms[0].email.focus();
+			document.forms[0].email.select();
+			return false;
+		}
 		return true;
 	}
 </script>
+</head>
+
 <body>
-	<h2><a href="home.jsp">Home</a></h2>
+	<h2>
+		<a href="home.jsp">Home</a>
+	</h2>
+	<%
+		String save = request.getParameter("p");
+		System.out.println("save = " + save);
+		if (save != null && save.equals("s")) {
+			System.out.println("valid");
+	%>
+	Profile Saved
+	<%
+		}
+	%>
 	<h1><%=userId%></h1>
 	<p>
 		Registration Time:
-		<%=status%></p>
+		<%=regTime%></p>
 	<p>
 		Status:
 		<%=status%></p>
 	<h3>Edit Profile</h3>
 	<a href="password.jsp">Change Password</a>
-	<form action="SaveProfile" method="post"
+	<form action="SaveProfile?id=<%=userId%>" method="post"
 		onsubmit="return judge()">
 		<p>
-			Gender: <input type="radio" name="gender" value="male"
-				checked=<%=male%>>Male <input type="radio" name="gender"
-				value="female" checked=<%=male%>>Female
+			Gender: <input type="radio" name="gender" value="m" <%if (male) {%>
+				checked="checked" <%}%>>Male <input type="radio"
+				name="gender" value="f" <%if (!male) {%> checked="checked" <%}%>>Female
 		</p>
 		<p>
 			Email: <input type="text" name="email" value="<%=email%>">
 		</p>
-		<p><input type="submit" value="Save"></p>
+		<p>
+			<input type="submit" value="Save">
+		</p>
 	</form>
 </body>
 </html>

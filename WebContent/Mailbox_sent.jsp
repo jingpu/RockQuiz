@@ -17,6 +17,8 @@
 	String userId = request.getParameter("id");
 	session = request.getSession();
 	String guest = (String) session.getAttribute("guest");
+	System.out.println(guest);
+	System.out.println(userId);
 	if (userId == null || guest.equals("guest")) {
 		response.sendRedirect("index.html");
 		return;
@@ -36,7 +38,10 @@
 			</div>
 		</div>
 
-		<table width="400" border="2" rules="rows">
+		<table border="2" rules="rows" id="box">
+			<col class="user" />
+			<col class="title" />
+			<col class="time" />
 			<tr>
 				<th>To</th>
 				<th>Title</th>
@@ -46,19 +51,29 @@
 
 			<%
 				List<String> msgsSent = user.getMessageSent();
-				for (String msgCode : msgsSent) {
-					//System.out.println(msgCode);
-					Message msg = user.getMessage("sent", msgCode);
-					SimpleDateFormat sdf = new SimpleDateFormat(
-							"yyyy-MM-dd HH:mm:ss.S");
-					Date time = sdf.parse(msg.getTime());
-					String timeDscr = TimeTrsf.dscr(time, new Date());
-
-					out.println("<tr><td><a href=\"userpage.jsp?id=" + msg.to
-							+ "\" target=\"_top\">" + msg.to
-							+ "</a></td><td><a href=\"Mail.jsp?id=" + userId
-							+ "&box=sent&msg=" + msgCode + "\">" + msg.title
-							+ "</a></td><td>" + timeDscr + "</td></tr>");
+				System.out.println("msgsSent=" + msgsSent);
+				if (msgsSent == null || msgsSent.isEmpty()) {
+					out.println("<tr><td></td><td>(empty)</td><td></td></tr>");
+				} else {
+					for (String msgCode : msgsSent) {
+						//System.out.println(msgCode);
+						Message msg = user.getMessage("sent", msgCode);
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"yyyy-MM-dd HH:mm:ss.S");
+						Date time = sdf.parse(msg.getTime());
+						String timeDscr = TimeTrsf.dscr(time, new Date());
+			%>
+			<tr bgcolor="#f0f0f0"
+				onMouseOver="this.style.backgroundColor='#ffffcc'"
+				onMouseOut="this.style.backgroundColor='#f0f0f0'"
+				onclick="window.location.href='Mail.jsp?id=<%=userId%>&box=sent&msg=<%=msgCode%>';">
+				<td><a href="userpage.jsp?id=<%=msg.to%>" target="_top"
+					style="color: black; text-decoration: none"><%=msg.to%></a></td>
+				<td><%=msg.getTitle()%></td>
+				<td><%=timeDscr%></td>
+			</tr>
+			<%
+				}
 				}
 			%>
 		</table>

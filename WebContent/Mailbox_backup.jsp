@@ -30,7 +30,7 @@
 </head>
 <body>
 	<h1>Mailbox</h1>
-	
+
 	<form action="WriteMessage" method="post">
 		<input name="username" type="hidden" value=<%=userId%>> <input
 			type="submit" value="Compose">
@@ -64,7 +64,7 @@
 		<tr>
 			<th>To</th>
 			<th>Title</th>
-			
+
 			<th>Date</th>
 		</tr>
 
@@ -85,8 +85,10 @@
 			}
 		%>
 	</table>
-	
+
 	<%--return to homepage --%>
-	<p><a href="home.jsp">Home</a></p>
+	<p>
+		<a href="home.jsp">Home</a>
+	</p>
 </body>
 </html>

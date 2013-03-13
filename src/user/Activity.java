@@ -33,13 +33,13 @@ public class Activity {
 			String url = quiz.getSummaryPage();
 			dscr.append(" took <a href=\"" + url + "\">" + content + "</a> ");
 
-		} else if(type == "c"){
+		} else if(type.equals("c")){
 			QuizManager man = new MyQuizManager();
 			Quiz quiz = man.getQuiz(content);
 			String url = quiz.getSummaryPage();
 			dscr.append(" created a quiz <a href=\"" + url + "\">" + content + "</a> ");
 
-		} else if(type == "a"){
+		} else if(type.equals("a")){
 			dscr.append(" earned the " + content + " achievement ");
 		} else {
 			System.out.println("activity does not exist");
@@ -59,12 +59,14 @@ public class Activity {
 	}
 
 	public String toStringMe(){
+		System.out.println(type);
 		StringBuilder dscr = new StringBuilder();
 		dscr.append("You");
 		if(type.charAt(0) == 't') {
 			QuizManager man = new MyQuizManager();
 			Quiz quiz = man.getQuiz(content);
 			String quizId = type.substring(1);
+			System.out.println(quizId);
 			String url = quiz.getSummaryPage();
 			String score = quiz.getScore(quizId);
 			String full = quiz.getMaxScore();
