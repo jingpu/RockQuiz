@@ -37,7 +37,9 @@ public class Activity {
 
 		} else if(type.charAt(0) == 'a'){
 			Quiz quiz = new MyQuiz(content);
-			dscr.append(" earned " + Helper.getTitle(type) + " in quiz "
+			dscr.append(" earned " + "<a href='#' title='"
+					+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
+					+ Helper.getTitle(type) + "</a> in "
 					+ Helper.displayQuiz(quiz, false));
 
 		} else {
@@ -79,7 +81,7 @@ public class Activity {
 		} else if(type.charAt(0) == 'a'){
 			Quiz quiz = new MyQuiz(content);
 			dscr.append(" earned " + "<a href='#' title='"
-					+ Helper.getTitleDescription(type) +"'>"
+					+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
 					+ Helper.getTitle(type) + "</a> in "
 					+ Helper.displayQuiz(quiz, false));
 
