@@ -157,7 +157,6 @@ public class QuestionProcessServlet extends HttpServlet {
 					user.addAchievement("5", quizName);
 				}
 			}
-			System.out.println(newAchieve1 + "&" + newAchieve2);
 			
 			// print to result page
 			out.println("<!DOCTYPE html>");

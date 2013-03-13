@@ -98,7 +98,6 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 				user.addAchievement("5", quizName);
 			}
 		}
-		System.out.println(newAchieve1 + "&" + newAchieve2);
 
 		/*
 		 * write html
