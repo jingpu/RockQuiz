@@ -131,7 +131,7 @@
 						}
 					}
 				%>
-				<dt>Search Quizzers Or Users</dt>
+				<dt>Search Quizzes Or Users</dt>
 				<dd class="searchform">
 					<form action="Search" method="post">
 						<div>
