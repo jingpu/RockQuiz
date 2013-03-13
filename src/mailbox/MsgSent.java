@@ -3,7 +3,6 @@ package mailbox;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,9 +47,6 @@ public class MsgSent extends HttpServlet {
 		String fromUser = (String) session.getAttribute("guest");
 		String toUser = request.getParameter("toUser");
 		String title = request.getParameter("title");
-		String retUrl = request.getParameter("retUrl");
-		if(retUrl.contains("Mailbox_browse.jsp?id="+ fromUser) || retUrl.contains("Mail.jsp?id=yy&box=")) 
-			retUrl = "Mailbox_sent.jsp?id="+ fromUser;
 		title = title == null? "" : Helper.replaceComma(title);
 		String content = request.getParameter("content");
 		content = content == null? "" : Helper.replaceComma(content);
@@ -81,7 +77,7 @@ public class MsgSent extends HttpServlet {
 				out.println("<p>" + toUser + " doesn't exist.<p>");
 			}
 		}
-		out.println("<p>This page will close within 5 seconds.<p>");
+		out.println("<a href='Mailbox_frame.jsp?id=" + fromUser +"'>Back to mailbox.</a>");
 		out.println("</body>");
 		out.println("</html>");
 		return;

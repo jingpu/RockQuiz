@@ -105,15 +105,15 @@
 							Date time = sdf.parse(msg.getTime());
 							Date now = new Date();
 							String timeDscr = TimeTrsf.dscr(time, now);
-							out.println("<dd><a href='Mail.jsp?id=" + userId
-									+ "&box=inbox&msg=" + msgCode + "'>" + description
+							out.println("<dd><a href='Mailbox_frame.jsp?id=" + userId
+									+ "&box=inbox&msg=" + msgCode + "' target='_blank'>" + description
 									+ " " + timeDscr + "</a></dd>");
 							i++;
 						}
 					}
 				%>
 				<dt>
-					<form action="quiz_create.jsp" method="post">
+					<form action="quiz_create.jsp" target="_blank" method="post">
 						<input type="submit" value="Create Quiz">
 					</form>
 

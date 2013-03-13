@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="quiz.*"%>
+<%@ page import="user.*"%>
+<%@ page import="util.*"%>
 <%@ page import="quiz.MyQuiz.QuizEvent"%>
 
 <!DOCTYPE html>
@@ -20,7 +22,7 @@
 <script type="text/javascript" src="challenge-msg.js"></script>
 <meta charset="UTF-8">
 <title>Quiz Summary - <%=quiz.getQuizName()%></title>
-<link href="CSS/style.css" rel="stylesheet" type="text/css" >
+<link href="CSS/style.css" rel="stylesheet" type="text/css">
 <style type="text/css"></style>
 </head>
 <body>
@@ -33,21 +35,21 @@
 	<p>
 		<%=quiz.getQuizDescription()%>
 	</p>
-	
+
 	<h2>Quiz Category</h2>
 	<p>
-		<%=quiz.getCategory()%>
+		<a href='search.jsp?s=g&q=<%=quiz.getCategory()%>'><%=quiz.getCategory()%></a>
 	</p>
 
 	<!--  The time created -->
 	<h3>Date Created</h3>
 	<p>
-		<a href="userpage.jsp?id=<%=quiz.getCreateTime()%>"><%=quiz.getCreateTime()%></a>
+		<%=quiz.getCreateTime()%>
 	</p>
 
 	<!-- The creator of the quiz(hot linked to the creator’s user page -->
 	<h3>Quiz Creator</h3>
-	<p><%=quiz.getCreatorId()%></p>
+	<p><%=Helper.displayUser(quiz.getCreatorId())%></p>
 
 	<h3>Tags</h3>
 	<p>
@@ -73,9 +75,16 @@
 		<%
 			List<QuizEvent> highScores = quiz.highScoreEvents(5);
 			for (QuizEvent e : highScores) {
+				String taker = e.getUserName();
+				Account user = new Account(taker);
+				List<String> friends = user.getFriendsList();
+				boolean forbid = user.equals(userName) ? false
+						: (user.getInfo("privacy").equals("1") ? (friends
+								.contains(userName) ? false : true) : false);
+				taker = forbid ? "anonymous" : Helper.displayUser(taker);
 		%>
 		<tr>
-			<td><a href="userpage.jsp?id=<%=e.getUserName()%>"><%=e.getUserName()%></a></td>
+			<td><%=taker%></td>
 			<td><%=e.getScore()%></td>
 			<td><%=e.getTimeElapsed() / 1000.0%>s</td>
 			<td><%=e.getSubmitTime()%></td>
@@ -97,9 +106,16 @@
 		<%
 			List<QuizEvent> highScoresLastday = quiz.highScoreLastDayEvents(5);
 			for (QuizEvent e : highScoresLastday) {
+				String taker = e.getUserName();
+				Account user = new Account(taker);
+				List<String> friends = user.getFriendsList();
+				boolean forbid = user.equals(userName) ? false
+						: (user.getInfo("privacy").equals("1") ? (friends
+								.contains(userName) ? false : true) : false);
+				taker = forbid ? "anonymous" : Helper.displayUser(taker);
 		%>
 		<tr>
-			<td><a href="userpage.jsp?id=<%=e.getUserName()%>"><%=e.getUserName()%></a></td>
+			<td><%=taker%></td>
 			<td><%=e.getScore()%></td>
 			<td><%=e.getTimeElapsed() / 1000.0%>s</td>
 			<td><%=e.getSubmitTime()%></td>
@@ -122,9 +138,16 @@
 		<%
 			List<QuizEvent> recentEvents = quiz.recentTakenEvents(5);
 			for (QuizEvent e : recentEvents) {
+				String taker = e.getUserName();
+				Account user = new Account(taker);
+				List<String> friends = user.getFriendsList();
+				boolean forbid = user.equals(userName) ? false
+						: (user.getInfo("privacy").equals("1") ? (friends
+								.contains(userName) ? false : true) : false);
+				taker = forbid ? "anonymous" : Helper.displayUser(taker);
 		%>
 		<tr>
-			<td><a href="userpage.jsp?id=<%=e.getUserName()%>"><%=e.getUserName()%></a></td>
+			<td><%=taker%></td>
 			<td><%=e.getScore()%></td>
 			<td><%=e.getTimeElapsed() / 1000.0%>s</td>
 			<td><%=e.getSubmitTime()%></td>

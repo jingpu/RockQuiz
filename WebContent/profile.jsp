@@ -101,8 +101,8 @@
 			</tr>
 		</table>
 		Set Privacy: <input type="radio" name="privacy" value="1"
-			<%=checkStatus%>>Enable <input type="radio" name="privacy" 
-			value="0" <%=antiCheckStatus%>>Disable
+			<%=checkStatus%>>Only my friends can see my information<br><input type="radio" name="privacy" 
+			value="0" <%=antiCheckStatus%>>Every one can see my information
 		<p>
 			<input type="submit" value="Save">
 		</p>

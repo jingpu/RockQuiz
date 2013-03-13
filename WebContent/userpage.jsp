@@ -25,7 +25,7 @@
 	if (id == null) {
 		response.sendRedirect("userpage.jsp?id="+ guest);
 		return;
-	} else if(!UserManager.alreadyExist(id)){
+	} else if(!UserManager.alreadyExist(id) || id.equals("guest")){
 		response.sendRedirect("userinvalid.jsp?id="+ id);
 		return;
 	}
@@ -33,7 +33,7 @@
 	
 	Account pageOwner = new Account(id);
 	List<String> friends = pageOwner.getFriendsList();
-	boolean forbid = pageOwner.getInfo("privacy").equals("1")?(friends.contains(guest)?false:true):false;
+	boolean forbid = pageOwner.equals(guest)?false : (pageOwner.getInfo("privacy").equals("1")?(friends.contains(guest)?false:true):false);
 	// generate achievements history
 	List<Activity> achieves = pageOwner.getAchievements();
 	// generate quizzes taken history
