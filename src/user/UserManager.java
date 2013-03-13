@@ -815,11 +815,11 @@ public class UserManager{
 		return true;
 	}
 
-	public static boolean addAchievement(String userId, String achieveId, String quizName, String quizId){
+	public static boolean addAchievement(String userId, String achieveId, String quizName){
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), 'a"+ achieveId + quizId + "', '" + quizName + "')");
+					+ " VALUES (now(), 'a"+ achieveId + "', '" + quizName + "')");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -852,10 +852,10 @@ public class UserManager{
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
-					+ "_history WHERE Type='a' ORDER BY Time DESC");
+					+ "_history WHERE Type LIKE 'a%' ORDER BY Time DESC");
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
-						rs.getString("type"), rs.getString("content"));
+						rs.getString("Type"), rs.getString("content"));
 				achieves.add(act);
 			}
 		} catch(SQLException e) {
@@ -874,7 +874,7 @@ public class UserManager{
 					+ "_history WHERE Type LIKE 't%' ORDER BY Time DESC");
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
-						rs.getString("type"), rs.getString("content"));
+						rs.getString("Type"), rs.getString("content"));
 				taken.add(act);
 			}
 		} catch(SQLException e) {
@@ -893,7 +893,7 @@ public class UserManager{
 					+ "_history WHERE Type='c' ORDER BY Time DESC");
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
-						rs.getString("type"), rs.getString("content"));
+						rs.getString("Type"), rs.getString("content"));
 				created.add(act);
 			}
 		} catch(SQLException e) {
@@ -913,7 +913,7 @@ public class UserManager{
 			int i = 0;
 			while(rs.next()){
 				Activity act = new Activity(userId, rs.getString("Time"), 
-						rs.getString("type"), rs.getString("content"));
+						rs.getString("Type"), rs.getString("content"));
 				recent.add(act);
 				i++;
 				if(i == recentActivityLoad) break;

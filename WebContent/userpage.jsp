@@ -95,7 +95,7 @@
 						%>
 
 						<%--if guest!=id, show message --%>
-						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>">Message me</a> |
+						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>" target="_blank">Message me</a> |
 						<%
 							}
 						%>
@@ -151,7 +151,7 @@
 								for (int k = 0; k < 5; k++) {
 									if (k == taken.size())
 										break;
-									out.println("<p>" + taken.get(k).toStringMe() + "</p>");
+									out.println("<p>" + taken.get(k).toString(true) + "</p>");
 								}
 							}
 						%>
@@ -173,7 +173,7 @@
 								for (int k = 0; k < 5; k++) {
 									if (k == created.size())
 										break;
-									out.println("<p>" + created.get(k).toStringMe() + "</p>");
+									out.println("<p>" + created.get(k).toString(true) + "</p>");
 								}
 							}
 						%>

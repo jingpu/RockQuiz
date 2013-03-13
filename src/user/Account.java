@@ -64,14 +64,10 @@ public class Account implements User{
 		
 	}
 	
-	/**Add new achievemetn into userId_history table 
-	 * @param name
-	 * see details about format in sum.sql
-	 * **/
 	@Override
-	public void addAchievement(String name) {
+	public void addAchievement(String achieveId, String quizName) {
 		// TODO Auto-generated method stub
-		UserManager.addAchievement(userId, name);
+		UserManager.addAchievement(userId, achieveId, quizName);
 	}
 	
 	/**Get achievements list in desc time order

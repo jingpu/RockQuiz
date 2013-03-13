@@ -7,15 +7,16 @@
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
 <%@ page import="user.TimeTrsf"%>
-<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="util.Helper"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script type="text/javascript" src="searchpage.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <link href="search_style.css" rel="stylesheet" type="text/css" />
 <%
 	String query = request.getParameter("q");
-	query = query == null? "" : query;
+	query = query == null ? "" : query;
 	String searchQuiz = "search.jsp?q=" + query;
 %>
 <title>Search Results - <%=query%></title>
@@ -52,15 +53,25 @@
 
 			<div id="body">
 				<%--partially matched user results--%>
-				<p>Related users</p>
 				<%
 					List<String> userResult = UserManager.getUserList(query);
-					for(String str : userResult){
-						System.out.println(str);
-						StringBuilder strb = new StringBuilder();
-						strb.append("<p><a href=\"userpage.jsp?id=" + str + "\">"
-								+ str + "</a></p>");
-						out.println(strb.toString());
+							if (userResult.isEmpty()) {
+								out.println("<p>There is no related user.</p>");
+							} else {
+				%>
+				<p>Related users</p>
+				<ul>
+					<%
+						for (String str : userResult) {
+					%>
+					<li><a href="userpage.jsp?id=<%=str%>"><div
+								name='creatorset' style='display: inline;'><%=str%></div></a></li>
+					<%
+						}
+					%>
+
+				</ul>
+				<%
 					}
 				%>
 			</div>
@@ -68,4 +79,7 @@
 	</div>
 
 </body>
+<script type="text/javascript">
+	highlight("<%=query%>", "c");
+</script>
 </html>

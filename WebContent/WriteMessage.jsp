@@ -18,8 +18,6 @@
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	}
-	String referer = request.getHeader("referer"); 
-	System.out.println(referer);
 %>
 
 <body>
@@ -34,9 +32,8 @@
 	<textarea rows="10" cols="50" name="content" form="Compose"
 		placeholder="Composing message here"></textarea>
 	<p>
-		<input type="hidden" name="retUrl" value="<%=referer%>" form="Compose">
-		<input type="submit" value="Send" form="Compose"><a
-			href="<%=referer%>"><input type="button" value="Cancel"></a>
+		<input type="submit" value="Send" form="Compose">
+		<button onClick = "javascript:window.close();">Cancel</button>
 	</p>
 </body>
 </html>

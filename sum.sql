@@ -15,10 +15,18 @@ CREATE TABLE userId_history (
 
 /*
 userId_history format:
-time --|------ type -------|---- content
-	      (t)ake(quizId)---|---- quizName
-		    (c)reate ------|---- quizName
-   (a)chieve(id#000)(quizId) --|---- quizName
+time --|--------- type -------|---- content
+	         (t)ake(quizId)---|---- quizName
+		       (c)reate ------|---- quizName
+   (a)chieve(id#)(quizId) -|---- quizName
+   
+achieveId-
+1- Amateur Author
+2- Prolific Author
+3- Prodigious Author
+4- Quiz Machine
+5- I am the Greatest
+6- Practice Makes Perfect
 */
 
 CREATE TABLE userId_network (

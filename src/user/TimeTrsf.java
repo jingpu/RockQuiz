@@ -19,15 +19,15 @@ public class TimeTrsf {
 		if(fmt1.format(date1).equals(fmt1.format(date2))){
 			long difference = date2.getTime() - date1.getTime();
 			
-			if(difference > ahour) {
+			if(difference >= 2*ahour) {
 				description.append(difference/ahour).append(" hours ago");
-			} else if(difference == ahour) {
+			} else if(difference >= ahour) {
 				description.append("1 hour ago");
-			} else if(difference > amin) {
+			} else if(difference >= 2*amin) {
 				description.append(difference/amin).append(" mins ago");
-			} else if(difference == amin) {
+			} else if(difference >= amin) {
 				description.append("1 min ago");
-			} else if(difference > asec) {
+			} else if(difference >= 2*asec) {
 				description.append(difference/asec).append(" secs ago");
 			} else {
 				description.append(" just now");

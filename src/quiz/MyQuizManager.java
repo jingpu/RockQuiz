@@ -132,12 +132,16 @@ public final class MyQuizManager implements QuizManager {
 			e.printStackTrace();
 		}
 		// sort list
-		Collections.sort(list, new Comparator<Quiz>() {
-			@Override
-			public int compare(Quiz o1, Quiz o2) {
-				return o2.getCreatorId().length() - o1.getCreatorId().length();
-			}
-		});
+		if(sortMethod == SORT_BY_RELATIVITY){
+			Collections.sort(list, new Comparator<Quiz>() {
+				@Override
+				public int compare(Quiz o1, Quiz o2) {
+					return o2.getCreatorId().length() - o1.getCreatorId().length();
+				}
+			});
+		} else {
+			sortQuizList(list, sortMethod);
+		}
 		// return sublist of the first numEntries elements
 		return list;
 	}
@@ -268,7 +272,7 @@ public final class MyQuizManager implements QuizManager {
 			Statement stmt = con.createStatement();
 			// delete from Global_Quiz_Info_Table
 			stmt.executeUpdate("DELETE FROM Global_Quiz_Info_Table"
-					+ " WHERE quizName = \"" + name + "\"");
+					+ " WHERE quizName = '" + name + "'");
 			// drop quizName_Content_Table
 			stmt.executeUpdate("DROP TABLE IF EXISTS " + name
 					+ "_Content_Table");
@@ -294,8 +298,8 @@ public final class MyQuizManager implements QuizManager {
 			// query Global_Quiz_Info_Table
 			ResultSet rs = stmt
 					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
-							+ " WHERE category LIKE \"%" + pattern
-							+ "%\"");
+							+ " WHERE category LIKE '%" + pattern
+							+ "%'");
 			while (rs.next()) {
 				String quizName = rs.getString("quizName");
 				list.add(new MyQuiz(quizName));
