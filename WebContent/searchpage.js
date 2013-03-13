@@ -21,7 +21,6 @@ function highlight(needle,type) {
 			document.getElementsByName("categoryset")[i].innerHTML = replaced;
 			i++;
 		}
-		return;
 	}
 	if(type.search("c") == -1 && type.search("g") == -1){
 		var set = document.getElementsByName("resultset");

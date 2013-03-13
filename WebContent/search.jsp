@@ -98,6 +98,7 @@
 				+ "'>Create date</a>";
 		resultList = man.searchForCategory(query, 2);
 	} 
+	String psort = sort == null? "": sort;
 %>
 <title>Search Results - <%=pquery%></title>
 </head>
@@ -192,6 +193,6 @@
 
 </body>
 <script type="text/javascript">
-	highlight("<%=pquery%>","<%=sort%>");
+	highlight("<%=pquery%>","<%=psort%>");
 </script>
 </html>
