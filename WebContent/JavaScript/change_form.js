@@ -6,7 +6,17 @@ $(document).ready(function() {
 			submitForm();
 			},timeLimit * 1000);	
 	}
-//	setTimeout(document.write(timeLimit), 5000);
+
+//TODO: this part is still problematic
+	$('#submit').click(function () {
+	    $(':input:not(:button)').each(function(index, element) {
+	        if (element.value === '') {
+	            alert("please fill up all fields");
+	        }
+	    });
+	    
+	});
+    
 });
 
 function submitForm() {
@@ -49,6 +59,13 @@ function addBlank() {
 	}
 	document.FIB_form.questionDescription.value += "#blank#";
 }
+
+
+function validForm() {
+	
+}
+
+
 
 
 var numAnswer = 1;
@@ -107,7 +124,6 @@ function addChoice() {
 
 function deleteChoice() {
 	var parent = document.getElementById("multi_choice");
-	document.getElementById('numChoices').value = numMC;
 	if (numMC > 3) {
 		parent.removeChild(parent.lastChild);
 		--numMC;
@@ -125,15 +141,15 @@ function deleteChoice() {
 var numMCMA = 4; //num multi-choice-multi-answer
 var numAnswerMCMA = 0;
 
-function addMCMAChoice() {
-	var tempDiv = document.getElementById("MCMA");
+function addMCMAChoice(suffix) {
+	var tempDiv = document.getElementById("MCMA"+ suffix);
 	//<p>
 	var newPara = document.createElement("p");
 	//<input>
 	var newInput = document.createElement("input");
 	newInput.type = "text";
-	newInput.name = "choice" + numMC;
-	//<radio>
+	newInput.name = "choice" + numMCMA;
+	//<chkbox>
 	var newCkbox = document.createElement("input");
 	newCkbox.type = "checkbox";
 	newCkbox.name = "answer";
@@ -150,12 +166,58 @@ function addMCMAChoice() {
 
 function deleteMCMAChoice() {
 	var parent = document.getElementById("MCMA");
-	document.getElementById('numChoices').value = numMCMA;
-	if (numMC > 3) {
+	if (numMCMA > 3) {
 		parent.removeChild(parent.lastChild);
 		--numMCMA;
 	} else {
 		alert("There must be at least THREE choice options");
 	}
 	document.getElementById('numChoices').value = numMCMA;
+}
+
+
+/**
+ * Matching
+ */
+var numOption = 4; //num of options of Matching
+
+function addMatchOption() {
+	var tempOption = document.getElementById("options");
+	var tempResult = document.getElementById("results");
+	//<p>
+	var paraOption = document.createElement("p");
+	var paraResult = document.createElement("p");
+	//<input>
+	var inputOption = document.createElement("input");
+	inputOption.type = "text";
+	inputOption.name = "choice" + numOption;
+	
+	var inputResult = document.createElement("input");
+	inputResult.type = "text";
+	inputResult.name = "answer" + numOption;
+	
+	paraOption.innerHTML = "Choice" + numOption + ": ";
+	paraResult.innerHTML = "Answer" + numOption + ": ";
+	paraOption.appendChild(inputOption);
+	paraResult.appendChild(inputResult);
+	tempOption.appendChild(paraOption);
+	tempResult.appendChild(paraResult);
+
+	++numOption;
+	document.getElementById('numOptions').value = numOption;
+}
+
+
+function deleteMatchOption() {
+	var tempOption = document.getElementById("options");
+	var tempResult = document.getElementById("results");
+	
+	if (numOption > 3) {
+		tempOption.removeChild(tempOption.lastChild);
+		tempResult.removeChild(tempResult.lastChild);
+		--numOption;
+	} else {
+		alert("There must be at least THREE choice options");
+	}
+	document.getElementById('numOptions').value = numOption;
 }

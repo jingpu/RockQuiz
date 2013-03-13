@@ -54,22 +54,27 @@ public class Matching extends MCMAQuestion {
 		html.append("<h1>This page will guide you to create a Matching question</h1>");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">");
 		html.append("<p> Please enter proposed question description and answer </p>");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
 
 		// Choice options
 		html.append("<div id='options'>");
-		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input></p>");
-		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choice1\" ></input></p>");
-		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input></p>");
-		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input></p>");
+		html.append("<p>Choice0:   <input type=\"text\" name=\"choice0\" ></input></p>");
+		html.append("<p>Choice1:   <input type=\"text\" name=\"choice1\" ></input></p>");
+		html.append("<p>Choice2:   <input type=\"text\" name=\"choice2\" ></input></p>");
+		html.append("<p>Choice3:   <input type=\"text\" name=\"choice3\" ></input></p>");
 		html.append("</div>");
 
+		// add/delete choices
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMatchOption();\" />\n");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMatchOption();\" />\n");
+
 		// Answer options
-		html.append("<div id='answers'>");
-		html.append("<p>AnswerA:   <input type=\"text\" name=\"answer0\" ></input></p>");
-		html.append("<p>AnswerB:   <input type=\"text\" name=\"answer1\" ></input></p>");
-		html.append("<p>AnswerC:   <input type=\"text\" name=\"answer2\" ></input></p>");
-		html.append("<p>AnswerD:   <input type=\"text\" name=\"answer3\" ></input></p>");
+		html.append("<div id='results'>");
+		html.append("<p>Answer0:   <input type=\"text\" name=\"answer0\" ></input></p>");
+		html.append("<p>Answer1:   <input type=\"text\" name=\"answer1\" ></input></p>");
+		html.append("<p>Answer2:   <input type=\"text\" name=\"answer2\" ></input></p>");
+		html.append("<p>Answer3:   <input type=\"text\" name=\"answer3\" ></input></p>");
 		html.append("</div>");
 
 		// Full Score
@@ -80,9 +85,9 @@ public class Matching extends MCMAQuestion {
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MATCH + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"numOptions\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"numOptions\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>");
+		html.append("<input id = \"submit\" type=\"submit\" value = \"Save\"/></form>");
 		html.append("</div>");
 
 		return html.toString();
@@ -94,8 +99,13 @@ public class Matching extends MCMAQuestion {
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>This page will guide you to create a Matching question</h4>");
 		html.append("<p> Please enter proposed question description and answer </p>");
-		html.append("<p>Question Description: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
-	
+		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+
+		// add/delete choices
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMatchOption();\" />\n");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMatchOption();\" />\n");
+
 		// Choice options
 		html.append("<div id='options'>");
 		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input></p>");
@@ -103,7 +113,7 @@ public class Matching extends MCMAQuestion {
 		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input></p>");
 		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input></p>");
 		html.append("</div>");
-	
+
 		// Answer options
 		html.append("<div id='answers'>");
 		html.append("<p>AnswerA:   <input type=\"text\" name=\"answer0\" ></input></p>");
@@ -111,21 +121,21 @@ public class Matching extends MCMAQuestion {
 		html.append("<p>AnswerC:   <input type=\"text\" name=\"answer2\" ></input></p>");
 		html.append("<p>AnswerD:   <input type=\"text\" name=\"answer3\" ></input></p>");
 		html.append("</div>");
-	
+
 		// Full Score
 		html.append("<div id='option'>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
-	
+
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MATCH + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numOptions\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
 		html.append("</div>");
-	
+
 		return html.toString();
-	
+
 	}
 
 	/*
@@ -141,7 +151,7 @@ public class Matching extends MCMAQuestion {
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\">");
-		html.append("<p>Question Description: ");
+		html.append("<p class=\"description\">Question Description:</p>\n");
 		html.append(questionDescription + "</p>");
 
 		// create choice options
@@ -224,6 +234,13 @@ public class Matching extends MCMAQuestion {
 	 * @return
 	 */
 	public static String printReference() {
-		return QuestionBase.printReference();
+		StringBuilder reference = new StringBuilder();
+		reference.append(QuestionBase.printReference());
+		reference
+				.append("<script src=\"http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js\"></script>");
+		reference.append("<script src=\"JavaScript/match.js\"></script>");
+		reference
+				.append("<script src=\"JavaScript/match-question.js\"></script>)");
+		return reference.toString();
 	}
 }

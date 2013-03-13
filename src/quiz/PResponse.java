@@ -67,7 +67,8 @@ public class PResponse extends QuestionBase {
 		html.append("<h1>This page will guide you to create a picture-response question</h1>\n");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
 				+ "\" required></textarea></p>\n");
 
 		// url information
@@ -93,7 +94,8 @@ public class PResponse extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>This page will guide you to create a picture-response question</h4>\n");
 		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p>Question Description\n: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
 				+ "\" required></textarea></p>\n");
 
 		// url information
