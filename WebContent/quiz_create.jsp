@@ -5,57 +5,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script>
-function addQuestion() {
-	var questionType = document.getElementById("questionTypeList").value;
-    var questions = document.getElementById("questions");
-    var qr = document.getElementById(questionType+"_template");
-    var question = qr.cloneNode(true);
-    question.removeAttribute("hidden");
-    question.id = questionType;
-    addSuffix(question);
-    questions.appendChild(question);
-    incMaxNum();
-}
+<script type="text/javascript">
 
-function addSuffix(question){
-	var maxNum = document.getElementById("max_num");
-	var curIndex = parseInt(maxNum.value);
-	question.id = question.id + "_" + curIndex;
-	var elements = question.querySelectorAll("input, textarea");
-	for (var i = 0; i < elements.length; i++){
-		var e = elements[i];
-		var name = e.name + "_" + curIndex;
-		e.name = name;
+	function addQuestion() {
+		var questionType = document.getElementById("questionTypeList").value;
+		var questions = document.getElementById("questions");
+		var qr = document.getElementById(questionType + "_template");
+		var question = qr.cloneNode(true);
+		question.removeAttribute("hidden");
+		question.id = questionType;
+		addSuffix(question);
+		questions.appendChild(question);
+		incMaxNum();
 	}
-}
 
-function incMaxNum(){
-	var maxNum = document.getElementById("max_num");
-	var curIndex = parseInt(maxNum.value);
-	maxNum.value = curIndex + 1;
-}
+	function addSuffix(question) {
+		var maxNum = document.getElementById("max_num");
+		var curIndex = parseInt(maxNum.value);
+		question.id = question.id + "_" + curIndex;
+		var elements = question.querySelectorAll("input, textarea, div");
+		for ( var i = 0; i < elements.length; i++) {
+			var e = elements[i];
+			// add suffix to name
+			if (e.hasAttribute("name")) {
+				var name = e.name + "_" + curIndex;
+				e.name = name;
+			}
+			/*
+			// add suffix to id
+			if (e.hasAttribute("id")) {
+				var id = e.id + "_" + curIndex;
+				e.id = id;
+			}
+			// add suffix to js call parameter
+			if (e.type === "button") {
+				// replace "addBlank();" with "addBlank(curIndex);"
+				var regexp = /\(\s*\)/;
+				e.onclick.replace(regexp, "(" + curIndex + ")");
+			}
+			 */
+		}
+	}
 
-function deleteQuestion(button) {
-	var question = button.parentNode;
-    var questions = document.getElementById("questions");
-    questions.removeChild(question);
-}
+	function incMaxNum() {
+		var maxNum = document.getElementById("max_num");
+		var curIndex = parseInt(maxNum.value);
+		maxNum.value = curIndex + 1;
+	}
 
-function chooseExistingCategory(){
-	var new_category_box = document.getElementById("new_category_box");
-	var existing_categories_box = document.getElementById("existing_categories_box");
-	new_category_box.disabled = true;
-	existing_categories_box.disabled = false;
-}
+	function deleteQuestion(button) {
+		var question = button.parentNode;
+		var questions = document.getElementById("questions");
+		questions.removeChild(question);
+	}
 
-function enterNewCategory(){
-	var new_category_box = document.getElementById("new_category_box");
-	var existing_categories_box = document.getElementById("existing_categories_box");
-	existing_categories_box.disabled = true;
-	new_category_box.disabled = false;
-}
+	function chooseExistingCategory() {
+		var new_category_box = document.getElementById("new_category_box");
+		var existing_categories_box = document
+				.getElementById("existing_categories_box");
+		new_category_box.disabled = true;
+		existing_categories_box.disabled = false;
+	}
 
+	function enterNewCategory() {
+		var new_category_box = document.getElementById("new_category_box");
+		var existing_categories_box = document
+				.getElementById("existing_categories_box");
+		existing_categories_box.disabled = true;
+		new_category_box.disabled = false;
+	}
+	
+	function changeOnePage(checkbox){
+		if(checkbox.checked == true){
+			document.getElementById("isImmCorrection").disabled = true;
+			document.getElementById("isImmCorrection").checked = false;
+			//Hide class time_limit_div, disable and reset time_limit
+			var elements = document.getElementsByClassName("time_limit_div");
+			for ( var i = 0; i < elements.length; i++) 
+				elements[i].hidden = true;
+			var elements = document.getElementsByClassName("time_limit");
+			for ( var i = 0; i < elements.length; i++){
+				elements[i].disable = true;
+				elements[i].value = "0";
+			}
+		} else {
+			document.getElementById("isImmCorrection").disabled = false;
+			//show class time_limit_div, enable time_limit
+			var elements = document.getElementsByClassName("time_limit_div");
+			for ( var i = 0; i < elements.length; i++) 
+				elements[i].hidden = false;
+			var elements = document.getElementsByClassName("time_limit");
+			for ( var i = 0; i < elements.length; i++)
+				elements[i].disable = false;
+		}
+	}
 </script>
 <meta charset="UTF-8">
 <title>Create Quiz</title>
@@ -154,8 +197,8 @@ function enterNewCategory(){
 		Tags: <input type="text" name="tagString" value="<%=tagString%>"><br> 
 			<input type="checkbox" name="canPractice" value="true" <%=canPractice%>>Allow practice mode<br> 
 			<input type="checkbox" name="isRandom" value="true" <%=isRandom%>>Automatically randomized question order<br> 
-			<input type="checkbox" name="isOnePage" value="true" <%=isOnePage%>>Displays in one page<br> 
-			<input type="checkbox" name="isImmCorrection" value="true" <%=isImmCorrection%>>Allow immediate Correction if Multi-Page mode
+			<input type="checkbox" name="isOnePage" value="true" onchange="changeOnePage(this);" <%=isOnePage%>>Displays in one page<br> 
+			<input type="checkbox" name="isImmCorrection" value="true" id="isImmCorrection" <%=isImmCorrection%> >Allow immediate Correction if Multi-Page mode
 			enabled<br>
 		</div>
 
@@ -178,7 +221,7 @@ function enterNewCategory(){
 	</form>
 	<!-- question templates of all supported question -->
 	<%
-		for (int i = 0; i < questionTypes.length; i++) {
+		for (int i = 0; i > questionTypes.length; i++) {
 			String questionType = questionTypes[i];
 	%>
 	<div id="<%=questionType%>_template" hidden="hidden" class="question">
@@ -187,6 +230,7 @@ function enterNewCategory(){
 		%>
 		<input type="button" value="Delete" onclick="deleteQuestion(this);">
 	</div>
+	
 	<%
 		}
 	%>
