@@ -133,7 +133,7 @@
 					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
 				</dd>
 				<dd>
-					<a href="profile.jsp?id=<%=userId%>">Edit Profile</a>
+					<a href="profile.jsp?id=<%=userId%>" target='_blank'>Edit Profile</a>
 				</dd>
 				<dd>
 					<a href="myfields.jsp?id=<%=userId%>">Interesting Fields</a>

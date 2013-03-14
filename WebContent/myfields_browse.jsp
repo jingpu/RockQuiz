@@ -33,14 +33,14 @@
 		for (int i = 0; i < categories.length; i++) {
 	%>
 	<h2>
-		<a href='search.jsp?s=g&q=<%=categories[i]%>'><%=categories[i]%></a>
+		<a href='myfields_search.jsp?q=<%=categories[i]%>' target='another'><%=categories[i]%></a>
 	</h2>
 	<%
 		}
 	%>
-	<form action="Search" method="post">
+	<form action="Search" method="post" target='another'>
 		<input type="search" name="query" class="text"
-			placeholder="Search quizzes"><br> <input type="submit"
+			placeholder="Search category"><br> <input type="submit"
 			value="Search">
 	</form>
 
