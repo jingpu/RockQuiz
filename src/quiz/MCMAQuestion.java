@@ -219,23 +219,38 @@ public class MCMAQuestion extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a multiChoice-MultiAnswer question</h4>\n");
+		html.append("<h1>This page will guide you to create a multiChoice-MultiAnswer question</h1>\n");
 		html.append("<p> Please enter proposed question description here: </p>\n");
 		html.append("<p class=\"description\">Question Description:</p>\n");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
 		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>\n");
 
+		html.append("<div class=\"MCMA_div\">");
 		// Choice options and answers
-		html.append("<div class=\"MCMA\"");
-		html.append("Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice0\"></input><br>");
-		html.append("Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice1\"></input><br>");
-		html.append("Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice2\"></input><br>");
-		html.append("Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice3\"></input><br>");
-		html.append("</div><br>");
+		html.append("<div class=\"choices\">");
+		for (int i = 1; i <= 4; i++) {
+			html.append("<div class=\"combo\">");
+			html.append("<span class='option'>Choice"
+					+ i
+					+ "</span>: <input type=\"text\" name=\"choice"
+					+ i
+					+ "\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice"
+					+ i + "\"></input>");
+			html.append("</div>");
+		}
+		html.append("</div>"); // div for choices
+
+		// hidden choice option template
+		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
+		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\"></input><input type=\"checkbox\" name=\"answer\" value=\"choice\"></input>");
+		html.append("</div>");
 
 		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice();\" /><br>");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice();\" /><br>");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice(this);\" /><br>");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice(this);\" /><br>");
+
+		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" value =\"4\"></input>");
+		html.append("</div>"); // div for MCMA_div
 
 		// Full Score
 		html.append("Score per correct answer:   <input class=\"max_score\" type=\"text\" name=\"maxScore\" ></input><br>");
@@ -246,7 +261,7 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("</div>");
 
 		// Hidden information - question Type and tag information
-		html.append("<p><input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" ></input></p>\n");
+
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MCMA + "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");

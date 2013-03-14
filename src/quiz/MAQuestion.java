@@ -132,16 +132,27 @@ public class MAQuestion extends QuestionBase {
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
 				+ "\" required></textarea></p><br>");
 
-		// add answers, can be expanded
-		html.append("<div class=\"form_input\"><br>");
-		html.append("Answer:   <input type=\"text\" name=\"answer0\""
+		html.append("<div class=\"MA_div\">");
+		// answers
+		html.append("<div class=\"answers\">");
+		html.append("<div class=\"combo\">");
+		html.append("<span class='option'>Answer1: </span><input type=\"text\" name=\"answer1\""
 				+ "\" required></input><br>");
-		html.append("</div><br>");
+		html.append("</div>"); // div for combo
+		html.append("</div>"); // div for answers
 
-		html.append("<div class='option'>");
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" /><br>");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" /><br>");
-		html.append("</div><br>");
+		// hidden answer option template
+		html.append("<div class=\"answer_template\" hidden=\"hidden\">");
+		html.append("<span class='option'></span><input type=\"text\" name=\"answer1\""
+				+ "\" required></input><br>");
+		html.append("</div>");
+
+		// add, delete button
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer(this);\" /><br>");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer(this);\" /><br>");
+
+		html.append("<input class=\"numAnswers\" type=\"hidden\" name=\"numAnswers\" value =\"1\"></input>");
+		html.append("</div>"); // div for MA_div
 
 		html.append("Point per correct answer: <input class=\"max_score\" type=\"text\" name=\"maxScore\""
 				+ "\" required></input><br>\n");
@@ -155,10 +166,9 @@ public class MAQuestion extends QuestionBase {
 		html.append("<input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input><br>");
 
 		// Hidden information - questionType,tag and number of answers
-		// TODO: numAnswer will be automatically generated in javascript??
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
 				+ QuestionBase.MA + "\" ></input></p>\n");
-		html.append("<p><input class=\"numAnswers\" type=\"hidden\" name=\"numAnswers\"></input></p>\n");
+
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
 
 		return html.toString();

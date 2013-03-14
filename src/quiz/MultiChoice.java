@@ -105,10 +105,11 @@ public class MultiChoice extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append("<h1>This page will guide you to create a multiChoice question</h1>\n");
 		html.append("<p> Please enter proposed question description and answer </p><br>");
-		html.append("Question Description:<br> <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
+		html.append("<span class= 'description'>Question Description:</span><br>");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
 
+		html.append("<div class=\"MC_div\">");
 		// Choice options
-		html.append("<div class=\"question_div\">");
 		html.append("<div class=\"choices\">");
 		for (int i = 1; i <= 4; i++) {
 			html.append("<div class=\"combo\">");
@@ -122,14 +123,14 @@ public class MultiChoice extends QuestionBase {
 		}
 		html.append("</div>"); // choices div
 
-		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice(this);\" /><br>");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice(this);\" /><br>");
-
 		// hidden choice option template
 		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
 		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\"></input><input type=\"radio\" name=\"answer\" value=\"choice\"></input>");
 		html.append("</div>");
+
+		// add/delete choices
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice(this);\" /><br>");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice(this);\" /><br>");
 
 		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" value =\"4\" ></input>");
 		html.append("</div>"); // whole set div
@@ -145,7 +146,6 @@ public class MultiChoice extends QuestionBase {
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MC + "\" ></input></p>\n");
-
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");
 
 		return html.toString();

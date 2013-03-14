@@ -119,18 +119,18 @@ function getElem(parent, classname) {
 }
 
 
-function addChoiceSuffix(newChoiceDiv, numMC) {
+function addOptionSuffix(newChoiceDiv, suffix) {
 	var elements = newChoiceDiv.querySelectorAll("input");
 	for ( var i = 0; i < elements.length; i++) {
 		var e = elements[i];
 		// add suffix to name
 		if (e.hasAttribute("name")) {
 			if(e.name == "choice")
-				e.name += numMC;
+				e.name += suffix;
 		}
 		if (e.hasAttribute("value")) {
 			if (e.value == "choice")
-				e.value += numMC;
+				e.value += suffix;
 		}
 	}
 }
@@ -152,7 +152,7 @@ function addChoice(button) {
     newChoice.removeAttribute("hidden");
   
     newChoice.firstChild.innerHTML = "Choice" + numMC + ": ";
-    addChoiceSuffix(newChoice, numMC);
+    addOptionSuffix(newChoice, numMC);
     choiceDiv.appendChild(newChoice);
 	
 }
@@ -171,29 +171,38 @@ function deleteChoice(button) {
 }
 
 
-
 /**
  * Function for multi-answer questions
  */
 function addAnswer(button) {
-	var tempDiv = button.parentNode;
-    var newChoice = qr.cloneNode(true);
-    newChoice.removeAttribute("hidden");
-    newChoice.innerHTML = "Answer" + numAnswer;
-	tempDiv.appendChild(newChoice);
-	++numAnswer;
-	tmpDiv.lastChild.value = numAnswer;
+	var parentDiv = button.parentNode;
+	var answerDiv = getElem(parentDiv, "answers");
+	//update numMA
+	var numMA = parentDiv.lastChild.value - 0 + 1;
+	parentDiv.lastChild.value = numMA;
+	
+	var answer = getElem(parentDiv, "answer_template");
+    
+	var newAnswer = answer.cloneNode(true);
+    newAnswer.removeAttribute("hidden");
+  
+    newAnswer.firstChild.innerHTML = "Answer" + numMA + ": ";
+    addOptionSuffix(newAnswer, numMA);
+    answerDiv.appendChild(newAnswer);
 }
 
-function deleteAnswer() {
-	var parent = document.getElementById("form_input");
-	if (numAnswer > 1) {
-		parent.removeChild(parent.lastChild);
-		--numAnswer;
+
+function deleteAnswer(button) {
+	var parentDiv = button.parentNode;
+	var answerDiv = getElem(parentDiv, "answers");
+	//update numMA
+	var numMA = parentDiv.lastChild.value;
+	if (numMA > 1) {
+		answerDiv.removeChild(answerDiv.lastChild);
+		parentDiv.lastChild.value = numMA - 0 - 1;
 	} else {
 		alert("There must be at least ONE answer");
 	}
-	document.getElementById('numAnswers').value = numAnswer;
 }
 
 
@@ -201,41 +210,35 @@ function deleteAnswer() {
 /**
  * Function for multi-choice-multi-answer
  */
-var numMCMA = 4; //num multi-choice-multi-answer
-var numAnswerMCMA = 0;
+function addMCMAChoice(button) {
+	var parentDiv = button.parentNode;
+	var choiceDiv = getElem(parentDiv, "choices");
+	//update numMCMA
+	var numMCMA = parentDiv.lastChild.value - 0 + 1;
+	parentDiv.lastChild.value = numMCMA;
+	
+	var choice = getElem(parentDiv, "choice_template");
+    
+	var newChoice = choice.cloneNode(true);
+    newChoice.removeAttribute("hidden");
+  
+    newChoice.firstChild.innerHTML = "Choice" + numMCMA + ": ";
+    addOptionSuffix(newChoice, numMCMA);
+    choiceDiv.appendChild(newChoice);
 
-function addMCMAChoice() {
-	var tempDiv = document.getElementById("MCMA");
-	//<p>
-	var newPara = document.createElement("p");
-	//<input>
-	var newInput = document.createElement("input");
-	newInput.type = "text";
-	newInput.name = "choice" + numMCMA;
-	//<chkbox>
-	var newCkbox = document.createElement("input");
-	newCkbox.type = "checkbox";
-	newCkbox.name = "answer";
-	newCkbox.value = "choice" + numMCMA;
-
-	newPara.innerHTML = "Choice" + numMCMA + ": ";
-	newPara.appendChild(newInput);
-	newPara.appendChild(newCkbox);
-	tempDiv.appendChild(newPara);
-
-	++numMCMA;
-	document.getElementById('numChoices').value = numMCMA;
 }
 
-function deleteMCMAChoice() {
-	var parent = document.getElementById("MCMA");
+function deleteMCMAChoice(button) {
+	var parentDiv = button.parentNode;
+	var choiceDiv = getElem(parentDiv, "choices");
+	//update numMC
+	var numMCMA = parentDiv.lastChild.value;
 	if (numMCMA > 3) {
-		parent.removeChild(parent.lastChild);
-		--numMCMA;
+		choiceDiv.removeChild(choiceDiv.lastChild);
+		parentDiv.lastChild.value = numMCMA - 0 - 1;
 	} else {
 		alert("There must be at least THREE choice options");
 	}
-	document.getElementById('numChoices').value = numMCMA;
 }
 
 
