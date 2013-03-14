@@ -7,13 +7,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <title>Announcement Page</title>
 </head>
 <body>
-	<h2>
-		<a href="home.jsp">Home</a>
-	</h2>
-	<h1>Announcement</h1>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Announcement</h1>
+				<h3><%=new Date()%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			
+			<div id="body">
+				<div class="inner">
+	
 	<%
 			String guest = (String) session.getAttribute("guest");
 			if (guest == null || guest.equals("guest")) {
@@ -38,6 +50,10 @@
 	<%
 			}
 		%>
-
+	</div>
+	</div>
+	</center>
+	</div>
+	</div>
 </body>
 </html>

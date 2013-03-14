@@ -34,7 +34,6 @@ public class UserManager{
 
 	private static final List<String> attributes = new LinkedList<String>(
 			Arrays.asList("history", "network", "inbox", "sent"));
-	private static final int recentActivityLoad = 10;
 
 	/** Set DriverManager
 	 * **/
@@ -819,7 +818,7 @@ public class UserManager{
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
-					+ " VALUES (now(), 'a"+ achieveId + "', '" + quizName + "')");
+					+ " VALUES (now(), '"+ achieveId + "', '" + quizName + "')");
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -847,16 +846,19 @@ public class UserManager{
 		return 0;
 	}
 
-	public static List<Activity> getAchievements(String userId){
+	public static List<Activity> getAchievements(String userId, int number){
 		List<Activity> achieves = new LinkedList<Activity>();
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
 					+ "_history WHERE Type LIKE 'a%' ORDER BY Time DESC");
+			int i = 0;
 			while(rs.next()){
+				if(i == number) break;
 				Activity act = new Activity(userId, rs.getString("Time"), 
 						rs.getString("Type"), rs.getString("content"));
 				achieves.add(act);
+				i++;
 			}
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
@@ -866,16 +868,19 @@ public class UserManager{
 		return achieves;
 	}
 
-	public static List<Activity> getQuizTaken(String userId){
+	public static List<Activity> getQuizTaken(String userId, int number){
 		List<Activity> taken = new LinkedList<Activity>();
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId 
 					+ "_history WHERE Type LIKE 't%' ORDER BY Time DESC");
+			int i = 0;
 			while(rs.next()){
+				if(i == number) break;
 				Activity act = new Activity(userId, rs.getString("Time"), 
 						rs.getString("Type"), rs.getString("content"));
 				taken.add(act);
+				i++;
 			}
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
@@ -885,16 +890,19 @@ public class UserManager{
 		return taken;
 	}
 
-	public static List<Activity> getQuizCreated(String userId){
+	public static List<Activity> getQuizCreated(String userId, int number){
 		List<Activity> created = new LinkedList<Activity>();
 		setDriver();
 		try{
+			int i = 0;
 			ResultSet rs = stmt.executeQuery("SELECT * from " + userId 
 					+ "_history WHERE Type='c' ORDER BY Time DESC");
 			while(rs.next()){
+				if(i == number) break;
 				Activity act = new Activity(userId, rs.getString("Time"), 
 						rs.getString("Type"), rs.getString("content"));
 				created.add(act);
+				i++;
 			}
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
@@ -904,7 +912,8 @@ public class UserManager{
 		return created;
 	}
 
-	public static List<Activity> getRecentActivity(String userId){
+	
+	public static List<Activity> getRecentActivity(String userId, int number){
 		List<Activity> recent = new LinkedList<Activity>();
 		setDriver();
 		try{
@@ -912,11 +921,11 @@ public class UserManager{
 					+ "_history ORDER BY Time DESC");
 			int i = 0;
 			while(rs.next()){
+				if(i == number) break;
 				Activity act = new Activity(userId, rs.getString("Time"), 
 						rs.getString("Type"), rs.getString("content"));
 				recent.add(act);
 				i++;
-				if(i == recentActivityLoad) break;
 			}
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block

@@ -57,9 +57,6 @@ public class MsgSent extends HttpServlet {
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<head>");
-		out.println("<script type=\"text/javascript\">");
-		out.println("<!--setTimeout('self.close()',5000);");
-		out.println("//--></script>");
 		out.println("<meta charset=\"UTF-8\">");
 		if(user.sendMessage(msg)) {
 			System.out.println("sent");
@@ -77,7 +74,8 @@ public class MsgSent extends HttpServlet {
 				out.println("<p>" + toUser + " doesn't exist.<p>");
 			}
 		}
-		out.println("<a href='Mailbox_frame.jsp?id=" + fromUser +"'>Back to mailbox.</a>");
+		out.println("<p><a href='Mailbox_frame.jsp?id=" + fromUser +"'>Back to mailbox.</a></p>");
+		out.println("<p><a href='' onclick='self.close();return false;'>Close This window</a></p>");
 		out.println("</body>");
 		out.println("</html>");
 		return;

@@ -37,12 +37,15 @@ public class Activity {
 
 		} else if(type.charAt(0) == 'a'){
 			Quiz quiz = new MyQuiz(content);
-			dscr.append(" earned " + Helper.getTitle(type) + " in quiz "
+			dscr.append(" earned " + "<a href='#' title='"
+					+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
+					+ Helper.getTitle(type) + "</a> in "
 					+ Helper.displayQuiz(quiz, false));
 
 		} else {
 			System.out.println("activity does not exist");
 		}
+		dscr.append(" | ");
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss.S");
 		try {
@@ -51,7 +54,7 @@ public class Activity {
 			Date now = new Date();
 			if(useTimeTrsf) dscr.append(TimeTrsf.dscr(date, now));
 			else dscr.append(date);
-		
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -62,7 +65,7 @@ public class Activity {
 	public String toStringMe(boolean useTimeTrsf){
 		System.out.println(type);
 		StringBuilder dscr = new StringBuilder();
-		dscr.append("You");
+		dscr.append("I");
 		if(type.charAt(0) == 't') {
 			Quiz quiz = new MyQuiz(content);
 			String quizId = type.substring(1);
@@ -77,20 +80,22 @@ public class Activity {
 
 		} else if(type.charAt(0) == 'a'){
 			Quiz quiz = new MyQuiz(content);
-			dscr.append(" earned " + Helper.getTitle(type) + " in "
+			dscr.append(" earned " + "<a href='#' title='"
+					+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
+					+ Helper.getTitle(type) + "</a> in "
 					+ Helper.displayQuiz(quiz, false));
-			
+
 		} else {
 			System.out.println("activity does not exist");
 		}
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat(
 				"yyyy-MM-dd HH:mm:ss.S");
 		try {
 			Date date;
 			date = sdf.parse(time);
 			Date now = new Date();
-			dscr.append(" ");
+			dscr.append(" | ");
 			if(useTimeTrsf) dscr.append(TimeTrsf.dscr(date, now));
 			else dscr.append(date);
 		} catch (ParseException e) {

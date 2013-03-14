@@ -8,6 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <title>Edit Profile</title>
 <%
 	String userId = request.getParameter("id");
@@ -38,9 +39,24 @@
 </head>
 
 <body>
-	<h2>
-		<a href="home.jsp">Home</a>
-	</h2>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+					<h1><%=userId%></h1>
+	<h3>
+		Registration Time:
+		<%=regTime%></h3>
+	<h3>
+		Status:
+		<%=status%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			<div id="body">
+				<div class="inner">
 	<%
 		String save = request.getParameter("p");
 		if (save != null && save.equals("s")) {
@@ -49,35 +65,29 @@
 	<%
 		}
 	%>
-	<h1><%=userId%></h1>
-	<p>
-		Registration Time:
-		<%=regTime%></p>
-	<p>
-		Status:
-		<%=status%></p>
-	<h3>Edit Profile</h3>
-	<a href="password.jsp">Change Password</a>
+	<a href="password.jsp"><h4>Change Password</h4></a>
+	<br>
 	<form action="SaveProfile?id=<%=userId%>" method="post" id="profileform"
 		onsubmit="return judge()">
-		<p>
-			Gender: <input type="radio" name="gender" value="m" <%if (male) {%>
+		
+			<h4>Gender: <input type="radio" name="gender" value="m" <%if (male) {%>
 				checked="checked" <%}%>>Male <input type="radio"
-				name="gender" value="f" <%if (!male) {%> checked="checked" <%}%>>Female
-		</p>
-		<p>
-			Email: <input type="text" name="email" value="<%=email%>">
-		</p>
-
-		Interesting Fields: <br>
+				name="gender" value="f" <%if (!male) {%> checked="checked" <%}%>>Female</h4>
+		<br>
+		<h4>Email: 
+		<input type="text" name="email" value="<%=email%>"></h4>
+		<br>
+		<h4>Interesting Fields: </h4>
+		<center>
 		<table>
 			<tr>
-				<td style='width:200px; text-align:left; vertical-align:top;'>
+				<td style='width:150px; text-align:left; vertical-align:top;'>
 					<%
+					if(categories != null){
 						for (int i = 0; i < categories.length; i++) {
 					%> <input type="checkbox" name="favor" value="<%=categories[i]%>"
 					checked><%=categories[i]%><br><%
- 	}
+ 	}}
  %>
 					<div id="new_category_type"></div>
 				</td>
@@ -100,13 +110,20 @@
 				<td>
 			</tr>
 		</table>
-		Set Privacy: <input type="radio" name="privacy" value="1"
+		</center>
+		<br>
+		<h4>Set Privacy: </h4>
+		<input type="radio" name="privacy" value="1" 
 			<%=checkStatus%>>Only my friends can see my information<br><input type="radio" name="privacy" 
 			value="0" <%=antiCheckStatus%>>Every one can see my information
 		<p>
 			<input type="submit" value="Save">
 		</p>
 	</form>
+			</div>
+	</div>
+	</div>
+	</div>
 </body>
 <script type="text/javascript" src="addnewcategory.js"></script>
 </html>

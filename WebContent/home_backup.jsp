@@ -43,7 +43,7 @@
 	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
 	// friends' activities
-	List<Activity> friendsAct = user.getFriendsRecentActivity();
+	//List<Activity> friendsAct = user.getFriendsRecentActivity();
 	System.out.println("mark1");
 	String mailBoxUrl = "Mailbox.jsp?id=" + userId;
 	String userpageUrl  = "userpage.jsp?id=" + userId;
@@ -104,11 +104,11 @@
 	<%--my friends activity --%>
 	<h3>Friends Activities</h3>
 	<ul>
-		<%
+		<%--
 			for (Activity act : friendsAct) {
 				out.println("<li>" + act.toString() + "</li>");
 			}
-		%>
+		--%>
 	</ul>
 
 	<%--quizzes/users search box--%>

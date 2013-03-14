@@ -13,15 +13,15 @@ function judge( ){
       document.forms[0].name.focus( );
       return false;
    }
-   
-   if (document.forms[0].name.value.indexOf(",") ||
-	   document.forms[0].name.value.indexOf(".") ||
-	   document.forms[0].name.value.indexOf("/") ||
-	   document.forms[0].name.value.indexOf("\\") ||
-	   document.forms[0].name.value.indexOf("%")  ||
-	   document.forms[0].name.value.indexOf("&") ||
-	   document.forms[0].name.value.indexOf("\"") ||
-	   document.forms[0].name.value.indexOf("'")) {
+
+   if (document.forms[0].name.value.indexOf(",") != -1 ||
+	   document.forms[0].name.value.indexOf(".") != -1 ||
+	   document.forms[0].name.value.indexOf("/") != -1 ||
+	   document.forms[0].name.value.indexOf("\\") != -1 ||
+	   document.forms[0].name.value.indexOf("%") != -1 ||
+	   document.forms[0].name.value.indexOf("&") != -1 ||
+	   document.forms[0].name.value.indexOf("\"") != -1 ||
+	   document.forms[0].name.value.indexOf("'") != -1) {
 	      alert("USERNAME contains invalid characters!");
 	      document.forms[0].name.focus( );
 	      return false;

@@ -35,11 +35,11 @@
 	List<String> friends = pageOwner.getFriendsList();
 	boolean forbid = pageOwner.equals(guest)?false : (pageOwner.getInfo("privacy").equals("1")?(friends.contains(guest)?false:true):false);
 	// generate achievements history
-	List<Activity> achieves = pageOwner.getAchievements();
+	List<Activity> achieves = pageOwner.getAchievements(3);
 	// generate quizzes taken history
-	List<Activity> taken = pageOwner.getQuizTaken();
+	List<Activity> taken = pageOwner.getQuizTaken(5);
 	// generate quizzes created history
-	List<Activity> created = pageOwner.getQuizCreated();
+	List<Activity> created = pageOwner.getQuizCreated(5);
 	//System.out.println(pageOwner.seeFriendStatus(guest));
 %>
 
@@ -123,10 +123,9 @@
 				</p>
 				<%
 					} else {
-							for (int k = 0; k < 5; k++) {
-								if (k == achieves.size())
-									break;
-								out.println("<p>" + achieves.get(k).content + "</p>");
+							for (Activity act : achieves) {
+								out.println("<li class='activity'>"
+										+ act.toStringMe(true) + "</li>");
 							}
 						}
 					}
@@ -159,11 +158,9 @@
 						</p>
 						<%
 							} else {
-									for (int k = 0; k < 5; k++) {
-										if (k == taken.size())
-											break;
-										out.println("<p>" + taken.get(k).toString(true)
-												+ "</p>");
+									for (Activity act : taken) {
+										out.println("<li class='activity'>"
+												+ act.toStringMe(true) + "</li>");
 									}
 								}
 						%>
@@ -182,11 +179,9 @@
 						</p>
 						<%
 							} else {
-									for (int k = 0; k < 5; k++) {
-										if (k == created.size())
-											break;
-										out.println("<p>" + created.get(k).toString(true)
-												+ "</p>");
+									for (Activity act : created) {
+										out.println("<li class='activity'>"
+												+ act.toStringMe(true) + "</li>");
 									}
 								}
 						%>
@@ -198,9 +193,15 @@
 
 					<div class="clear br"></div>
 					<%
-						} else {%>
-							<h1 style='font-family:serif; color:black;'><%=id%> set privacy. <br>Only friends can see this page.</h1>
-					<%	}
+						} else {
+					%>
+					<h1 style='font-family: serif; color: black;'>
+						Sorry.
+						<%=id%>
+						set privacy. <br>Only friends can see this page.
+					</h1>
+					<%
+						}
 					%>
 				</div>
 			</div>

@@ -65,7 +65,10 @@ public class CreationServlet extends HttpServlet {
 			RequestDispatcher dispatch = request.getRequestDispatcher("nameInUse.jsp");
 			dispatch.forward(request, response);
 		} else {
-			String cateStr = Helper.array2String(category);
+			String cateStr = null;
+			if(category != null) {
+				cateStr = Helper.array2String(category);
+			}
 			UserManager.addNewAccount(usrname, pwd, "u", gender, email, cateStr);
 			String usrpage = "home.jsp?id=" + usrname;
 			//String usrpage = "userWelcome.jsp";

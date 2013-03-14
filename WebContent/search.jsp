@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
-<%@ page import="java.sql.Timestamp"%>
 <%@ page import="user.Account"%>
 <%@ page import="user.UserManager"%>
 <%@ page import="quiz.Quiz"%>
 <%@ page import="quiz.QuizManager"%>
 <%@ page import="quiz.MyQuizManager"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.sql.Timestamp"%>
 <%@ page import="util.Helper"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -98,6 +98,7 @@
 				+ "'>Create date</a>";
 		resultList = man.searchForCategory(query, 2);
 	} 
+	String psort = sort == null? "": sort;
 %>
 <title>Search Results - <%=pquery%></title>
 </head>
@@ -155,8 +156,6 @@
 				%>
 
 				<%--related quizzes search results--%>
-
-
 				<%
 					if (query != null && (resultList == null || resultList.isEmpty())) {
 						out.println("<p>There is no related quiz.</p>");
@@ -182,16 +181,17 @@
 							}
 						%>
 					</ul>
-				</div>
+				
 				<%
 					}
 				%>
+				</div>
 			</div>
 		</div>
 	</div>
 
 </body>
 <script type="text/javascript">
-	highlight("<%=pquery%>","<%=sort%>");
+	highlight("<%=pquery%>","<%=psort%>");
 </script>
 </html>

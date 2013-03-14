@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="myfields.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
 	String guest = (String) session.getAttribute("guest");
@@ -14,7 +15,7 @@
 		response.sendRedirect("index.html");
 		return;
 	} else if (userId == null && UserManager.alreadyExist(guest)) {
-		response.sendRedirect("myfields.jsp?id=" + guest);
+		response.sendRedirect("myfields_browse.jsp?id=" + guest);
 	} else if (!guest.equals(userId)) {
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
@@ -25,20 +26,25 @@
 <title>Following fields - <%=userId%></title>
 </head>
 <body>
-	<h1>Interesting Fields</h1>
-	<%
+	<h2>
+		<a href="home.jsp?id=<%=guest%>" target="_top">Home</a>
+	</h2>
+	<h2>Interesting Fields</h2>
+	<% if(categories != null){
 		for (int i = 0; i < categories.length; i++) {
 	%>
-	<h2>
-		<a href='search.jsp?s=g&q=<%=categories[i]%>'><%=categories[i]%></a>
-	</h2>
+	<h3>
+		<a href='myfields_search.jsp?s=d&q=<%=categories[i]%>'
+			target='another'><%=categories[i]%></a>
+	</h3>
 	<%
-		}
+		}}
 	%>
-	<form action="Search" method="post">
-		<input type="search" name="query" class="text"
-			placeholder="Search quizzes"><br>
-		<input type="submit" value="Search">
+	<h3>Other categories:</h3>
+	<form action="myfields_search.jsp" method="post" target='another'>
+		<input type="hidden" name="s" value="d"> <input type="search"
+			name="q" class="text" placeholder="Search category"><input
+			type="submit" value="Search">
 	</form>
 
 </body>

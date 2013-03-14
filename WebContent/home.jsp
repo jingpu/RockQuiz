@@ -31,17 +31,18 @@
 	Account user = new Account(userId);
 	String status = user.getInfo("status");
 	// generate achievements history
-	List<Activity> achieves = user.getAchievements();
+	List<Activity> achieves = user.getAchievements(3);
 	// generate quizzes taken history
-	List<Activity> taken = user.getQuizTaken();
+	List<Activity> taken = user.getQuizTaken(4);
 	// generate quizzes created history
-	List<Activity> created = user.getQuizCreated();
+	List<Activity> created = user.getQuizCreated(10);
+	// friends' activities
+	List<Activity> friendsAct = user.getFriendsRecentActivity(10);
+	
 	// mail messages
-	List<String> inbox = user.getMessageInbox();
 	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
-	// friends' activities
-	List<Activity> friendsAct = user.getFriendsRecentActivity();
+
 	String mailBoxUrl = "Mailbox_frame.jsp?id=" + userId;
 	String userpageUrl = "userpage.jsp?id=" + userId;
 %>
@@ -62,6 +63,7 @@
 			</div>
 
 			<dl id="browse">
+				<dt><a href="quiz_create.jsp">Create Quiz</a></dt>
 				<dt>Announcements</dt>
 				<%
 					Announce ann = user.getLatestAnnounce();
@@ -112,12 +114,7 @@
 						}
 					}
 				%>
-				<dt>
-					<form action="quiz_create.jsp" target="_blank" method="post">
-						<input type="submit" value="Create Quiz">
-					</form>
 
-				</dt>
 				<dt>Quick Link</dt>
 				<%
 					if (user.getInfo("status").equals("s")) {
@@ -132,17 +129,12 @@
 					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
 				</dd>
 				<dd>
-					<a href="profile.jsp?id=<%=userId%>">Edit Profile</a>
+					<a href="profile.jsp?id=<%=userId%>" target='_blank'>Edit Profile</a>
 				</dd>
 				<dd>
-					<a href="myfields.jsp?id=<%=userId%>">Interesting Fields</a>
+					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
 				</dd>
-				<dd>
-					<a href="">555</a>
-				</dd>
-				<dd>
-					<a href="">666</a>
-				</dd>
+
 				<dt>Search Quizzes Or Users</dt>
 				<dd class="searchform">
 					<form action="Search" method="post">
@@ -211,10 +203,8 @@
 						<ul>
 							<%
 								} else {
-									for (int k = 0; k < 5; k++) {
-										if (k == taken.size())
-											break;
-										out.println("<li class='activity'>" + taken.get(k).toStringMe(true) + "</li>");
+									for (Activity act : taken) {
+										out.println("<li class='activity'>" + act.toStringMe(true) + "</li>");
 									}
 								}
 							%>
@@ -232,10 +222,8 @@
 						<p>You did't create any quiz yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; k++) {
-									if (k == created.size())
-										break;
-									out.println("<li class='activity'>" + created.get(k).toStringMe(true)
+								for (Activity act : created){
+									out.println("<li class='activity'>" + act.toStringMe(true)
 											+ "</li>");
 								}
 							}
@@ -256,10 +244,8 @@
 						<p>You don't have any achievements yet.</p>
 						<%
 							} else {
-								for (int k = 0; k < 10; k++) {
-									if (k == achieves.size())
-										break;
-									out.println("<li class='activity'>" + achieves.get(k).toStringMe(true)
+								for (Activity act : achieves) {
+									out.println("<li class='activity'>" + act.toStringMe(true)
 											+ "</li>");
 								}
 							}
