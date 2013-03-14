@@ -2,6 +2,7 @@
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
 <%@ page import="user.Account"%>
+<%@ page import="user.UserManager"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,11 +13,11 @@
 <%
 	String userId = request.getParameter("id");
 	String guest = (String) session.getAttribute("guest");
-	if (guest == null || guest.equals("guest")) {
+	if (guest == null || guest.equals("guest") || !UserManager.alreadyExist(guest)) {
 		response.sendRedirect("index.html");
 		return;
-	} else if (!guest.equals(userId)) {
-		response.sendRedirect("home.jsp?id=" + guest);
+	} else if(userId == null || !guest.equals(userId)){
+		response.sendRedirect("friendpage.jsp?id=" + guest);
 		return;
 	}
 	Account user = new Account(userId);

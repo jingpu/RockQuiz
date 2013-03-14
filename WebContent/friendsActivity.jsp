@@ -33,50 +33,45 @@
 			</div>
 			<div id="body">
 				<div class="inner">
-	<%
-		if (guest == null || guest.equals("guest")) {
-			response.sendRedirect("index.html");
-			return;
-		}
-		String id = request.getParameter("id");
-		if (id == null) {
-			response.sendRedirect("friendsActivity.jsp?id=" + guest);
-			return;
-		} else if (!UserManager.alreadyExist(id) || id.equals("guest")) {
-			response.sendRedirect("userinvalid.jsp?id=" + id);
-			return;
-		}
-		Account user = new Account(userId);
-		List<String> friends = user.getFriendsList();
-		boolean forbid = userId.equals(guest) ? false : (user.getInfo(
-				"privacy").equals("1") ? (friends.contains(guest) ? false
-				: true) : false);
+					<%
+						String id = request.getParameter("id");
+						if (guest == null || guest.equals("guest")) {
+							response.sendRedirect("index.html");
+							return;
+						} else if (!guest.equals(userId)) {
+							response.sendRedirect("friendsActivity.jsp?id=" + guest);
+							return;
+						}
+						Account user = new Account(userId);
+						List<String> friends = user.getFriendsList();
+						boolean forbid = userId.equals(guest) ? false : (user.getInfo(
+								"privacy").equals("1") ? (friends.contains(guest) ? false
+								: true) : false);
 
-		if (!forbid) {
-			List<Activity> friendsAct = user.getFriendsRecentActivity(-1);
-			if (friendsAct.isEmpty()) {
-	%>
-	<p>There isn't any news yet.
-	</p>
-	<%
-		} else {
-				for (Activity act : friendsAct) {
-					out.println("<p>" + act.toString(false) + "</p>");
-				}
-			}
-		} else {
-	%>
-	<p style='font-family: serif; color: black;'>
-		Sorry.
-		<%=id%>
-		set privacy. Only friends can see this page.
-	</p>
-	<%
-		}
-	%>
+						if (!forbid) {
+							List<Activity> friendsAct = user.getFriendsRecentActivity(-1);
+							if (friendsAct.isEmpty()) {
+					%>
+					<p>There isn't any news yet.</p>
+					<%
+						} else {
+								for (Activity act : friendsAct) {
+									out.println("<p>" + act.toString(false) + "</p>");
+								}
+							}
+						} else {
+					%>
+					<p style='font-family: serif; color: black;'>
+						Sorry.
+						<%=id%>
+						set privacy. Only friends can see this page.
+					</p>
+					<%
+						}
+					%>
+				</div>
+			</div>
 		</div>
-	</div>
-	</div>
 	</div>
 </body>
 </html>

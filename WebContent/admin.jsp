@@ -19,7 +19,7 @@
 	String userId = request.getParameter("id");
 
 	String guest = (String) session.getAttribute("guest");
-	if (guest == null || guest.equals("guest")) {
+	if (guest == null || guest.equals("guest") || !UserManager.alreadyExist(guest)) {
 		response.sendRedirect("index.html");
 		return;
 	} else if (!UserManager.getAccountInfo(guest, "status")

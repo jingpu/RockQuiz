@@ -63,7 +63,6 @@ public class Activity {
 	}
 
 	public String toStringMe(boolean useTimeTrsf){
-		System.out.println(type);
 		StringBuilder dscr = new StringBuilder();
 		dscr.append("I");
 		if(type.charAt(0) == 't') {
