@@ -7,6 +7,7 @@
 <%@ page import="quiz.Quiz"%>
 <%@ page import="quiz.QuizManager"%>
 <%@ page import="quiz.MyQuizManager"%>
+<%@ page import="util.Helper"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -37,14 +38,16 @@
 		if (achieves.isEmpty()) {
 			String prefix = guest.equals(userId)? "You" : userId;
 	%>
-	<p><%=prefix%> don't have any achievements now.</p>
+	<p><%=prefix%>
+		don't have any achievements now.
+	</p>
 	<%
 		} else {
 			for (Activity act : achieves) {
 				if (guest.equals(userId)) {
-					out.println("<p>" + act.toStringMe() + "</p>");
+					out.println("<p>" + act.toStringMe(false) + "</p>");
 				} else {
-					out.println("<p>" + act.content + "</p>");
+					out.println("<p>" + Helper.getTitle(act.type.substring(1)) + "</p>");
 				}
 			}
 		}

@@ -7,6 +7,7 @@ public interface QuizManager {
 
 	public static int SORT_BY_CREATION_TIME = 1;
 	public static int SORT_BY_TAKEN_TIMES = 2;
+	public static int SORT_BY_RELATIVITY = 3;
 
 	/**
 	 * Gets get popular quizzes
@@ -57,7 +58,7 @@ public interface QuizManager {
 	 *            static int field defined in QuizManager interface
 	 * @return List of Quiz objects
 	 */
-	public List<Quiz> searchForQuizCreator(String pattern, int numEntries,
+	public List<Quiz> searchForQuizCreator(String pattern, 
 			int sortMethod);
 
 	/**
@@ -73,7 +74,7 @@ public interface QuizManager {
 	 *            static int field defined in QuizManager interface
 	 * @return List of Quiz objects
 	 */
-	public List<Quiz> searchForQuizName(String pattern, int numEntries,
+	public List<Quiz> searchForQuizName(String pattern, 
 			int sortMethod);
 
 	/**
@@ -89,7 +90,7 @@ public interface QuizManager {
 	 *            static int field defined in QuizManager interface
 	 * @return List of Quiz objects
 	 */
-	public List<Quiz> searchForQuizDescription(String pattern, int numEntries,
+	public List<Quiz> searchForQuizDescription(String pattern, 
 			int sortMethod);
 
 	/**
@@ -105,7 +106,7 @@ public interface QuizManager {
 	 *            static int field defined in QuizManager interface
 	 * @return List of Quiz objects
 	 */
-	public List<Quiz> searchForQuiz(String pattern, int numEntries,
+	public List<Quiz> searchForQuiz(String pattern, 
 			int sortMethod);
 
 	public List<Quiz> searchForCategory(String pattern,

@@ -1,18 +1,20 @@
 @CHARSET "UTF-8";
 
 body {
-        font-family: tahoma, helvetica, arial, sans-serif;
-        font-size: 10px;
-        text-align: center;
-        background: url(images/home_bg.gif);
-    }
-    
-html, body, #wrapper, h1 {
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 10px;
+	text-align: center;
+	background: url(images/home_bg.gif);
+}
+
+html,body,#wrapper,h1 {
 	margin: 0;
 	padding: 0;
 }
 
-img { border: 0; }
+img {
+	border: 0;
+}
 
 #wrapper {
 	margin: auto;
@@ -20,7 +22,6 @@ img { border: 0; }
 	width: 860px;
 	position: relative;
 }
-
 
 h1 {
 	font-size: 30pt;
@@ -57,7 +58,6 @@ h3 {
 	text-align: right;
 }
 
-
 #inner {
 	border-left: 2px solid white;
 	border-right: 2px solid white;
@@ -73,8 +73,8 @@ h3 {
 	position: relative;
 }
 
-#nav, #nav a {
-	text-align:center;
+#nav,#nav a {
+	text-align: center;
 	color: white;
 	font-weight: bold;
 	text-decoration: none;
@@ -86,7 +86,7 @@ h3 {
 
 #browse {
 	float: left;
-	width: 190px;
+	width: 180px;
 	margin: 0;
 	padding: 0;
 	background: white;
@@ -101,6 +101,18 @@ h3 {
 	padding: 6px 0;
 	text-align: center;
 	font-weight: bold;
+}
+
+#browse dt a {
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+	padding: 3px 22px;
+}
+
+#browse dt a:hover {
+	background: #f96969;
 }
 
 #browse dd {
@@ -124,11 +136,16 @@ h3 {
 	background: #74a7b7;
 }
 
+#browse .create {
+	padding: 10px;
+}
+
+
 #browse .searchform {
 	padding: 10px;
 }
 
-#browse .text, #browse select {
+#browse .text,#browse select {
 	width: 160px;
 }
 
@@ -139,14 +156,13 @@ h3 {
 
 #browse form div {
 	padding-bottom: 8px;
-	width: 160px; 
+	width: 160px;
 }
-
 
 #body {
 	float: right;
 	width: 650px;
-	margin: 2px 1px 0 0;	
+	margin: 2px 1px 0 0;
 	border: 2px solid #659db4;
 	position: relative;
 }
@@ -156,24 +172,68 @@ h3 {
 	padding: 0;
 }
 
-#body .leftbox,
-#body .rightbox {
+#body .leftbox,#body .rightbox {
 	margin-top: 5px;
 	color: #464646;
-	height: 100px;
+	height: 200px;
 }
 
 #body .leftbox {
 	float: left;
 	width: 300px;
+	padding-left: 10px;
+	padding-right: 15px;
 }
 
 #body .rightbox {
 	float: right;
-	width: 302px;
-	margin-right: 18px;
+	width: 300px;
+	padding-left: 15px;
+	padding-right: 10px;
 	border-left: 2px solid #659db4;
 }
+
+#body li.quizlist {
+	color: #202020;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: 13px;
+	font-weight: normal;
+	list-style-type: decimal;
+	text-align: center;
+	margin-left: 20px;
+	padding-bottom: 5px;
+}
+
+#body li.quizlist a {
+	color: #202020;
+	text-decoration: none;
+}
+
+#body li.quizlist a:hover {
+	text-decoration: underline;
+}
+
+#body li.activity {
+	color: #202020;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: 13px;
+	font-weight: normal;
+	list-style-type: square;
+	text-align: left;
+	margin-left: 20px;
+	padding-bottom: 10px;
+	word-wrap: break-all;
+}
+
+#body li.activity a {
+	color: #202020;
+	text-decoration: none;
+}
+
+#body li.activity a:hover {
+	text-decoration: underline;
+}
+
 
 #body .br {
 	border-bottom: 2px solid #659db4;
@@ -198,7 +258,7 @@ h3 {
 	text-align: center;
 	font-family: tahoma, helvetica, arial, sans-serif;
 	font-size: 15px;
-	font-weight: normal;
+	font-weight: bold;
 	color: #5d5d5d;
 	padding: 0 0 0 18px;
 	margin: 1px 0 3px 0;

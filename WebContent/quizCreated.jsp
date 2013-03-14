@@ -37,14 +37,16 @@
 		if (created.isEmpty()) {
 			String prefix = guest.equals(userId)? "You" : userId;
 	%>
-	<p><%=prefix%> did't create any quiz yet.</p>
+	<p><%=prefix%>
+		did't create any quiz yet.
+	</p>
 	<%
 		} else {
 			for (Activity act : created) {
 				if (guest.equals(userId)) {
-					out.println("<p>" + act.toStringMe() + "</p>");
+					out.println("<p>" + act.toStringMe(false) + "</p>");
 				} else {
-					out.println("<p>" + act.toString() + "</p>");
+					out.println("<p>" + act.toString(false) + "</p>");
 				}
 			}
 		}

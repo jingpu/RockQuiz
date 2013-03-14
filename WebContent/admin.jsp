@@ -14,6 +14,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="admin_style.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
 
@@ -42,21 +43,44 @@
 
 	function confirmAppointment() {
 		var name = document.forms[2].id.value;
-		var r = confirm("Are you sure to appoint " + name
-				+ " as administrator?");
+		var r = confirm("Are you sure to change " + name + "'s authority?");
 		if (r) {
 			return true;
 		}
 		return false;
+	}
+
+	function confirmDeleteQuiz() {
+		var name = document.forms[3].quiz.value;
+		var e = document.getElementById("quizOp");
+		var selected = e.options[e.selectedIndex].value;
+		if (selected == '1') {
+			return confirm("Are you sure to delete quiz " + name + "?");
+		}
+		if (selected == '2') {
+			return confirm("Are you sure to clear quiz " + name
+					+ "'s history'?");
+		}
 	}
 </script>
 
 <title>Admin - <%=userId%></title>
 </head>
 <body>
-	<h2>
-		<a href="home.jsp">Home</a>
-	</h2>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Admin: <%=userId%></h1>
+				<h3><%=new Date()%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			
+	
+		<div id="body">
 	<%
 		String del = request.getParameter("del");
 		if (del != null) {
@@ -85,41 +109,74 @@
 		String ann = request.getParameter("ann");
 		if (ann != null) {
 	%>
+	<p>New Announcement is Posted.</p>
+	<%
+		}
+	%>
+	<%
+		String delq = request.getParameter("delq");
+		if (delq != null) {
+	%>
 	<p>
-		New Announcement is Posted.
+		Quiz Operation Failed.
+		<%=delq%>
+		Doesn't Exist.
 	</p>
 	<%
 		}
 	%>
-	<h1>Write Announcement</h1>
+
+	<div class="inner">
+	<div class="leftbox">
+	<h3>Write Announcement</h3>
 	<form action="WriteAnnounce" method="post" id="announce"></form>
 	<p>
 		<textarea rows="6" cols="50" name="content" form="announce"
 			placeholder="Write new announcement"></textarea>
 	</p>
-	<input type="submit" value="Post" form="announce">
-	<h1>Account Management</h1>
-	<form action="DeleteAccount" method="post">
+	<input type="submit" value="Post" form="announce" margin-bottom="35">
+	<br>
+	<br>
+	<br>
+	<h3>Account Management</h3>
+	<form action="DeleteAccount" method="post"
+		onsubmit="return confirmDeletion()">
 		<p>
 			<input type="text" name="id" placeholder="User name"> <input
-				type="submit" value="Delete Account" onclick="confirmDeletion()">
+				type="submit" value="Delete Account">
 		</p>
 	</form>
-	<form action="AppointAdmin" method="post">
+	<form action="ChangeStatus" method="post"
+		onsubmit="return confirmAppointment()">
 		<p>
-			<input type="text" name="id" placeholder="User name"> <input
-				type="submit" value="Appoint as Admin"
-				onclick="confirmAppointment()">
-
+			Set <input type="text" name="id" placeholder="User name"> as
+			<select name="status">
+				<option value="u">Normal User</option>
+				<option value="s">Administrator</option>
+			</select> <input type="submit" value="Change Authority">
 		</p>
 	</form>
-	<h1>Quiz Management</h1>
-	<form action="DeleteQuiz" method="post">
+	<br>
+	<br>
+	<h3>Quiz Management</h3>
+	<form action="DeleteQuiz" method="post"
+		onsubmit="return confirmDeleteQuiz()">
 		<p>
-			<input type="text" name="quiz" placeholder="Quiz name"> <input
-				type="submit" value="Delete Quiz">
+			<input type="text" name="quiz" placeholder="Quiz name"> <select
+				name="operation" id="quizOp">
+				<option value="2">Clear taken history</option>
+				<option value="1">Delete quiz</option>
+			</select> <input type="submit">
 		</p>
 	</form>
-	<h1>RockQuiz Statistics</h1>
+	</div>
+	
+	<div class="rightbox">
+	<h3>RockQuiz Statistics</h3>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>

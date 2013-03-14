@@ -22,22 +22,29 @@
 		return;
 	}
 	String id = request.getParameter("id");
-	if (id == null || !UserManager.alreadyExist(id)) {
-		response.sendRedirect("home.jsp");
+	if (id == null) {
+		response.sendRedirect("userpage.jsp?id="+ guest);
+		return;
+	} else if(!UserManager.alreadyExist(id) || id.equals("guest")){
+		response.sendRedirect("userinvalid.jsp?id="+ id);
 		return;
 	}
 	String title = id + "'s Page";
-
+	
 	Account pageOwner = new Account(id);
+	List<String> friends = pageOwner.getFriendsList();
+	boolean forbid = pageOwner.equals(guest)?false : (pageOwner.getInfo("privacy").equals("1")?(friends.contains(guest)?false:true):false);
 	// generate achievements history
 	List<Activity> achieves = pageOwner.getAchievements();
 	// generate quizzes taken history
 	List<Activity> taken = pageOwner.getQuizTaken();
 	// generate quizzes created history
 	List<Activity> created = pageOwner.getQuizCreated();
+	//System.out.println(pageOwner.seeFriendStatus(guest));
 %>
 
 <script language="javascript" type="text/javascript">
+<!--
 	function friendQuery(text) {
 		var r = confirm(text);
 		if (r) {
@@ -45,6 +52,7 @@
 		}
 		return false;
 	}
+//-->
 </script>
 
 <title><%=title%></title>
@@ -57,7 +65,7 @@
 				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
-						<a href="home.jsp">Home</a> |
+						<a href="home.jsp?id=<%=guest%>">Home</a> |
 						<%
 							if (!guest.equals(id)) {
 						%>
@@ -92,7 +100,8 @@
 						%>
 
 						<%--if guest!=id, show message --%>
-						<a href="LeaveMessage?to=<%=id%>">Message</a> |
+						<a href="WriteMessage.jsp?id=<%=guest%>&to=<%=id%>"
+							target="_blank">Message me</a> |
 						<%
 							}
 						%>
@@ -102,38 +111,61 @@
 			</div>
 
 			<dl id="browse">
+				<%
+					if (!forbid) {
+				%>
 				<dt>Achievements</dt>
 				<%
 					if (achieves.isEmpty()) {
 				%>
-				<p><%=id%> don't have any achievements yet.</p>
+				<p><%=id%>
+					don't have any achievements yet.
+				</p>
 				<%
 					} else {
-						for (int k = 0; k < 5; k++) {
-							if (k == achieves.size())
-								break;
-							out.println("<p>" + achieves.get(k).content + "</p>");
+							for (int k = 0; k < 5; k++) {
+								if (k == achieves.size())
+									break;
+								out.println("<p>" + achieves.get(k).content + "</p>");
+							}
 						}
 					}
 				%>
+				<dt>Search Quizzes Or Users</dt>
+				<dd class="searchform">
+					<form action="Search" method="post">
+						<div>
+							<input type="search" name="query" class="text"
+								placeholder="Search quizzes OR users here" />
+						</div>
+						<div class="readmore">
+							<input type="image" src="images/search.gif" />
+						</div>
+					</form>
+				</dd>
 			</dl>
-
 			<div id="body">
 				<div class="inner">
+					<%
+						if (!forbid) {
+					%>
 					<div class="leftbox">
 						<h3>Quizzes Taken</h3>
 						<%
 							if (taken.isEmpty()) {
 						%>
-						<p><%=id%> did't take any quiz yet.</p>
+						<p><%=id%>
+							did't take any quiz yet.
+						</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; k++) {
-									if (k == taken.size())
-										break;
-									out.println("<p>" + taken.get(k).toStringMe() + "</p>");
+									for (int k = 0; k < 5; k++) {
+										if (k == taken.size())
+											break;
+										out.println("<p>" + taken.get(k).toString(true)
+												+ "</p>");
+									}
 								}
-							}
 						%>
 						<p class="readmore">
 							<a href="quizTakan.jsp?id=<%=id%>"><b>MORE</b></a>
@@ -145,15 +177,18 @@
 						<%
 							if (created.isEmpty()) {
 						%>
-						<p><%=id%> did't create any quiz yet.</p>
+						<p><%=id%>
+							did't create any quiz yet.
+						</p>
 						<%
 							} else {
-								for (int k = 0; k < 5; k++) {
-									if (k == created.size())
-										break;
-									out.println("<p>" + created.get(k).toStringMe() + "</p>");
+									for (int k = 0; k < 5; k++) {
+										if (k == created.size())
+											break;
+										out.println("<p>" + created.get(k).toString(true)
+												+ "</p>");
+									}
 								}
-							}
 						%>
 						<p class="readmore">
 							<a href="quizCreated.jsp?id=<%=id%>"><b>MORE</b></a>
@@ -162,7 +197,15 @@
 					</div>
 
 					<div class="clear br"></div>
+					<%
+						} else {%>
+							<h1 style='font-family:serif; color:black;'><%=id%> set privacy. <br>Only friends can see this page.</h1>
+					<%	}
+					%>
 				</div>
 			</div>
+
+		</div>
+	</div>
 </body>
 </html>

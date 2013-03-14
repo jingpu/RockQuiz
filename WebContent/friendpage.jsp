@@ -44,53 +44,54 @@
 					</h2>
 				</div>
 			</div>
-	<div id="body">
-	<div class="inner">
-	<div class="leftbox">
-	<h3>My Friends</h3>
-	<%
+			<div id="body">
+				<div class="inner">
+					<div class="leftbox">
+						<h3>My Friends</h3>
+						<%
 		if (friends.isEmpty()) {
 	%>
-	<p>You don't have any friends yet.</p>
-	<%
+						<p>You don't have any friends yet.</p>
+						<%
 		} else {
 			for (String friend : friends) {
 				String text = "Are you sure to unfriend " + friend + "?";
 	%>
-	<p>
-		<a href="userpage.jsp?id=<%=friend%>"><%=friend%></a> | <a
-			href="RemoveFriend?to=<%=friend%>" onclick="friendQuery('<%=text%>')">Unfriend</a>
-	</p>
-	<%
+						<p>
+							<a href="userpage.jsp?id=<%=friend%>"><%=friend%></a> | <a
+								href="RemoveFriend?to=<%=friend%>"
+								onclick="friendQuery('<%=text%>')">Unfriend</a>
+						</p>
+						<%
 		}
 		}
 	%>
-	</div>
-	<div class="rightbox">
-	<h3>Friend Requests</h3>
-	<%
+					</div>
+					<div class="rightbox">
+						<h3>Friend Requests</h3>
+						<%
 		if (unconfirmed.isEmpty()) {
 	%>
-	<p>You don't have any friend requests now.</p>
-	<%
+						<p>You don't have any friend requests now.</p>
+						<%
 		} else {
 			for (String friend : unconfirmed) {
 				String text = "Do you want to add " + friend
 						+ " as friend?";
 	%>
-	<p>
-		<a href="userpage.jsp?id=<%=friend%>"><%=friend%></a> | <a
-			href="RespondFriend?to=<%=friend%>"
-			onclick="friendQuery('<%=text%>')">Respond</a>
-	</p>
-	<%
+						<p>
+							<a href="userpage.jsp?id=<%=friend%>"><%=friend%></a> | <a
+								href="RespondFriend?to=<%=friend%>"
+								onclick="friendQuery('<%=text%>')">Respond</a>
+						</p>
+						<%
 		}
 		}
 	%>
-	</div>
-	</div>
-	</div>
-	</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

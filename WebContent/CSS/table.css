@@ -1,0 +1,28 @@
+@CHARSET "ISO-8859-1";
+
+
+.fancy
+{
+width:100%;
+border-collapse:collapse;
+}
+.fancy td, .fancy th
+{
+font-size:1em;
+border:1px solid rgb(33, 140, 191);
+padding:3px 7px 2px 7px;
+}
+.fancy th
+{
+font-size:1.1em;
+text-align:left;
+padding-top:5px;
+padding-bottom:4px;
+background-color:rgb(66, 163, 201);
+color:#ffffff;
+}
+.fancy tr.alt td 
+{
+color:#000000;
+background-color:rgb(211, 222, 242);
+}

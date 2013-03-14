@@ -64,14 +64,10 @@ public class Account implements User{
 		
 	}
 	
-	/**Add new achievemetn into userId_history table 
-	 * @param name
-	 * see details about format in sum.sql
-	 * **/
 	@Override
-	public void addAchievement(String name) {
+	public void addAchievement(String achieveId, String quizName) {
 		// TODO Auto-generated method stub
-		UserManager.addAchievement(userId, name);
+		UserManager.addAchievement(userId, achieveId, quizName);
 	}
 	
 	/**Get achievements list in desc time order
@@ -101,7 +97,7 @@ public class Account implements User{
 	 * 		{"a"(achievement), "t"(quiz taken), "c"(quiz created)}
 	 * @return count
 	 * **/
-	public int countHistory(String userId, String type){
+	public int countHistory(String type){
 		return UserManager.countHistory(userId, type);
 	}
 	
@@ -118,8 +114,8 @@ public class Account implements User{
 	 * @param content - the content of the challenge letter
 	 * @return true if sent successfully
 	 * **/
-	public boolean sendChallengeMessage(String to, String content){
-		return UserManager.sendMsg(new Message(userId, to, "c", content));
+	public boolean sendChallengeMessage(String to, String quiz, String content){
+		return UserManager.sendMsg(new Message(userId, to, "c", quiz, content));
 	}
 	
 	/**Get the content of a message without activate "ifRead" flag.

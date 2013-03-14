@@ -8,6 +8,11 @@ public interface User {
 	
 	public void addQuizTaken(String quizName, String quizId);
 	public void addQuizCreated(String quizName);
-	public void addAchievement(String name);
+	
+	/**
+	 * @param achieveId
+	 * @param quizName
+	 */
+	void addAchievement(String achieveId, String quizName);
 	
 }
