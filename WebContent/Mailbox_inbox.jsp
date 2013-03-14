@@ -28,6 +28,12 @@
 	}
 	Account user = new Account(userId);
 %>
+<style type="text/css">
+#wrapper {
+	width: 500px;
+}
+
+</style>
 <title>Inbox - <%=userId%></title>
 </head>
 <body>

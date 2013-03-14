@@ -5,6 +5,7 @@ body {
 }
 
 #wrapper {
+	padding-top: 18px;
 	width: 800px;
 }
 
@@ -14,12 +15,14 @@ h1 {
 }
 
 #header {
+	padding-top: 8px;
 	background-color: white;
 }
 
 
 #browse {
 	width: 230px;
+	border: 2px solid #CCCCCC;
 }
 
 #browse dt {
@@ -28,6 +31,7 @@ h1 {
 }
 
 #browse dd {
+	background: white;
 	color: black;
 	border-bottom: 1px solid #CCCCCC;
 }
@@ -47,5 +51,6 @@ h1 {
 }
 
 #body {
-	width: 560px;
+	width: 550px;
+	border: 0px solid white;
 }

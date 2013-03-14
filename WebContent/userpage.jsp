@@ -189,7 +189,6 @@
 						<div class="clear"></div>
 					</div>
 
-					<div class="clear br"></div>
 					<%
 						} else {
 					%>
