@@ -329,10 +329,37 @@ public class MyQuiz implements Quiz {
 		return isImmCorrection;
 	}
 
+	public boolean containsQuizEvent(String quizId) {
+		// below declare a set of non-final variable, which is a hack to get
+		// around the exception issue
+		String userName = "error";
+		Timestamp submitTime = new Timestamp(0);
+		long timeElapsed = 0;
+		int score = 0;
+
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query quizName_Event_Table
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + quizName
+					+ "_Event_Table WHERE quizId = \"" + quizId + "\"");
+			if (rs.isBeforeFirst())
+				return true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	@Override
 	public String getScore(String quizId) {
+		if (containsQuizEvent(quizId)) {
 		QuizEvent event = new QuizEvent(quizId);
 		return "" + event.getScore();
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -363,15 +390,17 @@ public class MyQuiz implements Quiz {
 
 	@Override
 	public String getTimeElapsed(String quizId) {
-		QuizEvent event = new QuizEvent(quizId);
-		long timeElapsed = event.getTimeElapsed();
-		return String.format(
-				"%d:%d",
-				TimeUnit.MILLISECONDS.toMinutes(timeElapsed),
-				TimeUnit.MILLISECONDS.toSeconds(timeElapsed)
-						- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS
-								.toMinutes(timeElapsed)));
-
+		if (containsQuizEvent(quizId)) {
+			QuizEvent event = new QuizEvent(quizId);
+			long timeElapsed = event.getTimeElapsed();
+			return String.format(
+					"%d:%d",
+					TimeUnit.MILLISECONDS.toMinutes(timeElapsed),
+					TimeUnit.MILLISECONDS.toSeconds(timeElapsed)
+							- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS
+									.toMinutes(timeElapsed)));
+		} else
+			return null;
 	}
 
 	/**
