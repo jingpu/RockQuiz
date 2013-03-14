@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="myfields.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
 	String guest = (String) session.getAttribute("guest");
@@ -14,7 +15,7 @@
 		response.sendRedirect("index.html");
 		return;
 	} else if (userId == null && UserManager.alreadyExist(guest)) {
-		response.sendRedirect("myfields.jsp?id=" + guest);
+		response.sendRedirect("myfields_browse.jsp?id=" + guest);
 	} else if (!guest.equals(userId)) {
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;

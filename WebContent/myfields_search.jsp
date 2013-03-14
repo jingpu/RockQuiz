@@ -9,6 +9,7 @@
 <html>
 <head>
 <script type="text/javascript" src="searchpage.js"></script>
+<link href="myfields.css" rel="stylesheet" type="text/css" />
 <%
 	String query = request.getParameter("q");
 	String pquery = query == null ? "" : query;
