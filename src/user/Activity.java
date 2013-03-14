@@ -72,26 +72,25 @@ public class Activity {
 			quizDisplay = Helper.displayQuiz(quiz, false);
 		}
 		StringBuilder dscr = new StringBuilder();
-		dscr.append("I");
 		if(type.charAt(0) == 't') {
 			if(quiz == null){
-				dscr.append(" took "+ quizDisplay);
+				dscr.append(quizDisplay);
 			} else {
 				String quizId = type.substring(1);
 				String score = quiz.getScore(quizId);
 				if(score == null){
-					dscr.append(" took "+ quizDisplay);
+					dscr.append(quizDisplay);
 				} else{
 					String full = quiz.getMaxScore();
-					dscr.append(" got " + score + "/" + full + " in "
+					dscr.append("Got " + score + "/" + full + " in "
 							+ quizDisplay);
 				}
 			}
 		} else if(type.equals("c")){
-			dscr.append(" created a quiz "+ quizDisplay);
+			dscr.append(quizDisplay);
 
 		} else if(type.charAt(0) == 'a'){
-			dscr.append(" earned " + "<a href='#' title='"
+			dscr.append("Earned " + "<a href='#' title='"
 					+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
 					+ Helper.getTitle(type) + "</a> in "
 					+ quizDisplay);

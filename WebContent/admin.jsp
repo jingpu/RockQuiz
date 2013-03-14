@@ -146,8 +146,8 @@
 						<h3>RockQuiz Statistics</h3>
 						Register Users: <div id='usernumber' style='display: inline'></div>
 						<form action="CountUser" method="post">
-						<p>From:<input type="text" name="fromTime"> (YYYY-MM-DD)</p>
-						<p>To:
+						<p>From:<input type="text" name="fromTime"> (format: YYYY-MM-DD)</p>
+						<p>To:<input type="text" name="fromTime">
 						</form>
 					</div>
 				</div>
