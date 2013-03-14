@@ -1,9 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <title>Composing Message</title>
 </head>
 <%
@@ -21,7 +24,19 @@
 %>
 
 <body>
-	Fri Mar 08 13:36:11 PST 2013
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+			<h1>Compose Message</h1>
+			<h3><%=new Date()%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			<div id="body">
+				<div class="inner">
 	<form action="SendMessage" id="Compose" method="post"></form>
 	<p>
 		To <input type="text" name="toUser" form="Compose" value="<%=toUser%>">
@@ -35,5 +50,9 @@
 		<input type="submit" value="Send" form="Compose">
 		<button onClick = "javascript:window.close();">Cancel</button>
 	</p>
+	</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>
