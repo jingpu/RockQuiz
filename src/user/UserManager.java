@@ -420,12 +420,14 @@ public class UserManager{
 		close();
 	}
 
-	public static List<String> getUserList(String query){
+	public static List<String> getUserList(String query, String fromTime, String toTime){
 		List<String> userList = new LinkedList<String>();
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * from " 
-					+ userTable + " WHERE userId LIKE '%" + query + "%'");
+					+ userTable + " WHERE userId LIKE '%" 
+					+ query + "%' AND registrationTime > '"+ fromTime 
+					+"' AND registrationTime < '"+ toTime +"'");
 			while(rs.next()){
 				userList.add(rs.getString("userId"));		
 			}
@@ -912,7 +914,7 @@ public class UserManager{
 		return created;
 	}
 
-	
+
 	public static List<Activity> getRecentActivity(String userId, int number){
 		List<Activity> recent = new LinkedList<Activity>();
 		setDriver();

@@ -14,6 +14,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="admin_style.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
@@ -22,8 +23,7 @@
 	if (guest == null || guest.equals("guest") || !UserManager.alreadyExist(guest)) {
 		response.sendRedirect("index.html");
 		return;
-	} else if (!UserManager.getAccountInfo(guest, "status")
-					.equals("s")) {
+	} else if (!UserManager.getAccountInfo(guest, "status").equals("s")) {
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	} else if (userId == null || !guest.equals(userId)){
@@ -145,6 +145,11 @@
 
 					<div class="rightbox">
 						<h3>RockQuiz Statistics</h3>
+						Register Users: <div id='usernumber' style='display: inline'></div>
+						<form action="CountUser" method="post">
+						<p>From:<input type="text" name="fromTime"> (format: YYYY-MM-DD)</p>
+						<p>To:<input type="text" name="fromTime">
+						</form>
 					</div>
 				</div>
 			</div>

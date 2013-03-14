@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="Mailbox_style.css" rel="stylesheet" type="text/css" />
 <title>Reading Message</title>
 </head>
@@ -46,7 +47,6 @@
 	} else if (box.equals("sent")){
 		retUrl = "Mailbox_sent.jsp";
 	}
-	System.out.println(retUrl);
 %>
 <body>
 	<div id="wrapper">
@@ -73,9 +73,6 @@
 	</div>
 	<p>
 	<form action="<%=retUrl%>">
-	<%
-		System.out.println(retUrl);
-	%>
 		<input type="hidden" name="id" value="<%=userId%>">
 		<input type="submit" value="Back">
 	</form>
@@ -90,4 +87,3 @@
 	</p>
 </body>
 </html>
-

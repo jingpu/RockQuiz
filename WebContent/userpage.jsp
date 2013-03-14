@@ -11,6 +11,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="userpage_style.css" rel="stylesheet" type="text/css" />
 
 <%
@@ -28,7 +29,6 @@
 		return;
 	}
 	String title = id + "'s Page";
-	System.out.println(guest+id);
 	Account pageOwner = new Account(id);
 	List<String> friends = pageOwner.getFriendsList();
 	boolean forbid = id.equals(guest)?false : (pageOwner.getInfo("privacy").equals("1")?(friends.contains(guest)?false:true):false);
@@ -163,7 +163,7 @@
 								}
 						%>
 						<p class="readmore">
-							<a href="quizTakan.jsp?id=<%=id%>"><b>MORE</b></a>
+							<a href="quizTaken.jsp?id=<%=id%>"><b>MORE</b></a>
 						</p>
 						<div class="clear"></div>
 					</div>

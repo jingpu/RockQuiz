@@ -1,85 +1,11 @@
 @CHARSET "UTF-8";
 
 body {
-	font-family: tahoma, helvetica, arial, sans-serif;
 	font-size: 12px;
-	text-align: center;
 	background: url(4.gif);
 }
 
-html,body,#wrapper,h1 {
-	margin: 0;
-	padding: 0;
-}
-
-img {
-	border: 0;
-}
-
 #wrapper {
-	margin: auto;
-	text-align: center;
 	width: 800px;
-	position: relative;
 }
 
-h1 {
-	font-size: 30pt;
-	font-weight: 900;
-	color: white;
-	font-variant: small-caps;
-}
-
-h2 {
-	font-size: 12pt;
-	font-weight: 600;
-	color: white;
-}
-
-h3 {
-	font-size: 8pt;
-	color: white;
-}
-
-.block {
-	display: block;
-}
-
-.clear {
-	clear: both;
-	height: 2px;
-	padding-top: 0;
-	margin-top: 0;
-	margin-bottom: 3px;
-	font-size: 1px;
-}
-
-.readmore {
-	text-align: right;
-}
-
-#inner {
-	border-left: 2px solid white;
-	border-right: 2px solid white;
-	background: white;
-	color: black;
-	margin-bottom: 10px;
-}
-
-#header {
-	background-color: #c80000;
-	padding: 5px;
-	margin-bottom: 10px;
-	position: relative;
-}
-
-#nav,#nav a {
-	text-align: center;
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#nav a:hover {
-	text-decoration: underline;
-}

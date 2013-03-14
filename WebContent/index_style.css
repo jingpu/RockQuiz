@@ -1,118 +1,44 @@
 @CHARSET "UTF-8";
 
 body {
-	font-family: tahoma, helvetica, arial, sans-serif;
-	font-size: 10px;
-	text-align: center;
-	background: url(images/home_bg.gif);
 	color: black;
-}
-
-html,body,#wrapper,h1 {
-	margin: 0;
-	padding: 0;
-}
-
-img {
-	border: 0;
 }
 
 #wrapper {
-	margin: auto;
-	text-align: center;
-	width: 770px;
-	position: relative;
+	width: 800px;
 }
 
 h1 {
-	font-size: 30pt;
-	font-weight: 900;
 	color: #73b501;
 	font-family: 'Syncopate', sans-serif;
-	font-variant: small-caps;
-}
-
-.block {
-	display: block;
-}
-
-.clear {
-	clear: both;
-	height: 2px;
-	padding-top: 0;
-	margin-top: 0;
-	margin-bottom: 3px;
-	font-size: 1px;
-}
-
-#inner {
-	border-left: 2px solid white;
-	border-right: 2px solid white;
-	background: white;
-	color: black;
-	margin-bottom: 10px;
 }
 
 #header {
 	background-color: white;
-	padding: 5px;
-	margin-bottom: 10px;
-	position: relative;
 }
 
-#nav a:hover {
-	text-decoration: underline;
-}
 
 #browse {
-	float: left;
-	width: 200px;
-	margin: 0;
-	padding: 0;
-	background: white;
-	border-bottom: 2px solid white;
+	width: 230px;
 }
 
 #browse dt {
-	font-size: 10pt;
-	color: white;
 	background: #4496c6;
-	margin: 2px 2px 1px 2px;
-	padding: 6px 0;
-	text-align: center;
-	font-weight: bold;
 	border-bottom: 1px solid #CCCCCC;
 }
 
 #browse dd {
 	color: black;
-	margin: 1px 1px 1px 1px;
-	border-bottom: 1px solid #659db4;
-	padding: 3px 0;
-	margin: 0 2px;
 	border-bottom: 1px solid #CCCCCC;
 }
 
 #browse dd a {
 	color: black;
-	font-weight: bold;
-	text-decoration: none;
-	display: block;
-	padding: 3px 22px;
 }
 
 #browse dd a:hover {
 	background: rgba(0, 0, 0, 0.1);
 	text-decoration: underline;
-}
-
-#browse .text,#browse select {
-	width: 160px;
-}
-
-#browse form {
-	margin: 0;
-	padding: 0;
 }
 
 #browse form div {
@@ -121,8 +47,5 @@ h1 {
 }
 
 #body {
-	float: right;
 	width: 560px;
-	margin: 2px 1px 0 0;
-	position: relative;
 }
