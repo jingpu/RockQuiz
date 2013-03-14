@@ -87,6 +87,10 @@ public class UserManagerTest {
 		UserManager.addNewAccount("hj", "123", "s", "f", "asf@asdf.edu", "Science#Engineering");
 		UserManager.addNewAccount("zy", "123", "s", "m", "asf@asdf.edu", "Science#Engineering");
 		UserManager.addNewAccount("pj", "123", "s", "m", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("Jim", "123", "u", "m", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("Molly", "123", "u", "m", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("Patrick", "123", "u", "m", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("Kate", "123", "u", "m", "asf@asdf.edu", "Science#Engineering");
 	}
 	
 	@Test
@@ -96,6 +100,6 @@ public class UserManagerTest {
 		UserManager.setAnnouncement(announce, admin);
 		Announce ann = UserManager.getLatestAnnounce();
 		UserManager.deleteAnnouncement(ann.getTime(), ann.getAdmin());
-		UserManager.addAchievement("yy", "a2", "imm_test");
+		UserManager.addAchievement("yy", "a2", "quizExample0");
 	}
 }

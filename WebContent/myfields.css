@@ -1,0 +1,12 @@
+@CHARSET "US-ASCII";
+body {
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 12px;
+	text-align: center;
+	background: url(images/home_bg.gif);
+}
+
+html,body,#wrapper,h1 {
+	margin: 0;
+	padding: 0;
+}
