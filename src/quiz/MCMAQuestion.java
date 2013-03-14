@@ -216,7 +216,8 @@ public class MCMAQuestion extends QuestionBase {
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>This page will guide you to create a multiChoice-MultiAnswer question</h4>\n");
-		html.append("<p> Please enter proposed question description here: </p>\n");
+		html.append("Please enter proposed question description and answer, and label the right answer. Add and delete button could allow user to customize the number of choices.<br>");
+		html.append("<p class='notice'> Notice: one question could have one or more answer.</p>");
 		html.append("<p class=\"description\">Question Description:</p>\n");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
 		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>\n");
@@ -242,7 +243,7 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("</div>");
 
 		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice(this);\" /><br>");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice(this);\" />");
 		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice(this);\" /><br>");
 
 		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" value =\"4\"></input>");
