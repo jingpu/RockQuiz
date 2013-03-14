@@ -420,14 +420,14 @@ public class UserManager{
 		close();
 	}
 
-	public static List<String> getUserList(String query, String fromTime, String toTime){
+	public static List<String> getUserList(String query, String fromTime, String toTime, boolean orderByTime){
 		List<String> userList = new LinkedList<String>();
 		setDriver();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * from " 
 					+ userTable + " WHERE userId LIKE '%" 
 					+ query + "%' AND registrationTime > '"+ fromTime 
-					+"' AND registrationTime < '"+ toTime +"'");
+					+"' AND registrationTime < '"+ toTime +"' ORDER BY registrationTime");
 			while(rs.next()){
 				userList.add(rs.getString("userId"));		
 			}
@@ -436,11 +436,13 @@ public class UserManager{
 			e.printStackTrace();
 		}
 		close();
-		Collections.sort(userList, new Comparator<String>() {
-			public int compare(String a, String b) {
-				return (a.length() - b.length());
-			}
-		});
+		if(!orderByTime){
+			Collections.sort(userList, new Comparator<String>() {
+				public int compare(String a, String b) {
+					return (a.length() - b.length());
+				}
+			});
+		} 
 		return userList;
 	}
 
