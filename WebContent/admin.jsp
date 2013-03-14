@@ -10,6 +10,7 @@
 <%@ page import="quiz.QuizManager"%>
 <%@ page import="quiz.MyQuizManager"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -19,13 +20,14 @@
 	String userId = request.getParameter("id");
 
 	String guest = (String) session.getAttribute("guest");
-	if (guest == null || guest.equals("guest") || !UserManager.alreadyExist(guest)) {
+	if (guest == null || guest.equals("guest")
+			|| !UserManager.alreadyExist(guest)) {
 		response.sendRedirect("index.html");
 		return;
 	} else if (!UserManager.getAccountInfo(guest, "status").equals("s")) {
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
-	} else if (userId == null || !guest.equals(userId)){
+	} else if (userId == null || !guest.equals(userId)) {
 		response.sendRedirect("admin.jsp?id=" + guest);
 		return;
 	}
@@ -144,11 +146,66 @@
 
 					<div class="rightbox">
 						<h3>RockQuiz Statistics</h3>
-						Register Users: <div id='usernumber' style='display: inline'></div>
-						<form action="CountUser" method="post">
-						<p>From:<input type="text" name="fromTime"> (format: YYYY-MM-DD)</p>
-						<p>To:<input type="text" name="fromTime">
+						<%
+							String fromTime = request.getParameter("fromTime");
+							String toTime = request.getParameter("toTime");
+							fromTime = fromTime == null ? "" : fromTime;
+							toTime = toTime == null ? "" : toTime;
+							List<String> userList;
+							if (fromTime != "" && toTime != "") {
+								userList = UserManager.getUserList("", fromTime, toTime, true);
+							} else {
+								userList = UserManager.getUserList("", "2012",
+										new Date().toString(), true);
+							}
+						%>
+						Number of Users:
+						<%=userList.size()%>
+						<div id='usernumber' style='display: inline'></div>
+						<form action="admin.jsp?id=<%=guest%>" method="post">
+							<p>
+								From:<input type="text" name="fromTime" value="<%=fromTime%>">
+								(format: YYYY-MM-DD)
+							</p>
+							<p>
+								To:<input type="text" name="toTime" value="<%=toTime%>">
+								<input type="submit">
 						</form>
+						Users List:
+						<div id='userlist'
+							style="height: 120px; width: 300px; border: 1px solid #ccc; font: 16px/26px Georgia, Garamond, Serif; overflow: auto;">
+							<%
+								for (String id : userList) {
+									Account user = new Account(id);
+							%>
+							<li><%=Helper.displayUser(id)%> <%=user.getInfo("registrationTime")%></li>
+							<%
+								}
+							%>
+						</div>
+						<%
+							QuizManager man = new MyQuizManager();
+							List<Quiz> resultList = man.searchForQuizCreator("", 2);
+						%>
+						Number of Quizzes:
+						<%=resultList.size()%><br> Quizzes List:
+						<div
+							style="height: 120px; width: 300px; border: 1px solid #ccc; font: 16px/26px Georgia, Garamond, Serif; overflow: auto;">
+							<ul>
+								<%
+									int count = 0;
+									for (Quiz quiz : resultList) {
+										if (quiz.getTakenTimes() > 0)
+											count++;
+								%>
+								<li><%=Helper.displayQuiz(quiz, false)%><%=quiz.getTakenTimes()%></li>
+								<%
+									}
+								%>
+							</ul>
+						</div>
+						Number of Taken Quizzes: <%=count%>
+
 					</div>
 				</div>
 			</div>
