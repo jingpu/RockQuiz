@@ -4,8 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import quiz.MyQuiz;
-import quiz.Quiz;
+import quiz.*;
 import util.Helper;
 
 /**
@@ -25,23 +24,26 @@ public class Activity {
 	}
 
 	public String toString(boolean useTimeTrsf){
+		QuizManager man = new MyQuizManager();
+		String quizDisplay = content + "(deprecated)";
+		Quiz quiz = man.getQuiz(content);
+		if(quiz != null){
+			quizDisplay = Helper.displayQuiz(quiz, false);
+		}
 		StringBuilder dscr = new StringBuilder();
 		dscr.append(Helper.displayUser(user));
 		if(type.charAt(0) == 't') {
-			Quiz quiz = new MyQuiz(content);
-			dscr.append(" took "+ Helper.displayQuiz(quiz, false));
+			dscr.append(" took "+ quizDisplay);
 
 		} else if(type.equals("c")){
-			Quiz quiz = new MyQuiz(content);
-			dscr.append(" created a quiz " + Helper.displayQuiz(quiz, false));
+			dscr.append(" created a quiz " + quizDisplay);
 
 		} else if(type.charAt(0) == 'a'){
-			Quiz quiz = new MyQuiz(content);
 			dscr.append(" earned " + "<a href='#' title='"
 					+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
 					+ Helper.getTitle(type) + "</a> in "
-					+ Helper.displayQuiz(quiz, false));
-
+					+ quizDisplay);
+			
 		} else {
 			System.out.println("activity does not exist");
 		}
@@ -63,26 +65,36 @@ public class Activity {
 	}
 
 	public String toStringMe(boolean useTimeTrsf){
+		QuizManager man = new MyQuizManager();
+		String quizDisplay = content + "(deprecated)";
+		Quiz quiz = man.getQuiz(content);
+		if(quiz != null){
+			quizDisplay = Helper.displayQuiz(quiz, false);
+		}
 		StringBuilder dscr = new StringBuilder();
 		dscr.append("I");
 		if(type.charAt(0) == 't') {
-			Quiz quiz = new MyQuiz(content);
-			String quizId = type.substring(1);
-			String score = quiz.getScore(quizId);
-			String full = quiz.getMaxScore();
-			dscr.append(" got " + score + "/" + full + " in "
-					+ Helper.displayQuiz(quiz, false));
-
+			if(quiz == null){
+				dscr.append(" took "+ quizDisplay);
+			} else {
+				String quizId = type.substring(1);
+				String score = quiz.getScore(quizId);
+				if(score == null){
+					dscr.append(" took "+ quizDisplay);
+				} else{
+					String full = quiz.getMaxScore();
+					dscr.append(" got " + score + "/" + full + " in "
+							+ quizDisplay);
+				}
+			}
 		} else if(type.equals("c")){
-			Quiz quiz = new MyQuiz(content);
-			dscr.append(" created a quiz "+ Helper.displayQuiz(quiz, false));
+			dscr.append(" created a quiz "+ quizDisplay);
 
 		} else if(type.charAt(0) == 'a'){
-			Quiz quiz = new MyQuiz(content);
 			dscr.append(" earned " + "<a href='#' title='"
 					+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
 					+ Helper.getTitle(type) + "</a> in "
-					+ Helper.displayQuiz(quiz, false));
+					+ quizDisplay);
 
 		} else {
 			System.out.println("activity does not exist");
