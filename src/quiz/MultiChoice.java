@@ -111,7 +111,7 @@ public class MultiChoice extends QuestionBase {
 		html.append("<div class=\"MC_div\">");
 		// Choice options
 		html.append("<div class=\"choices\">");
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			html.append("<div class=\"combo\">");
 			html.append("<span class='option'>Choice"
 					+ i
@@ -133,7 +133,7 @@ public class MultiChoice extends QuestionBase {
 		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice(this);\" /><br>");
 
 		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" value =\"4\" ></input>");
-		html.append("</div>"); // whole set div
+		html.append("</div>"); // for MC_div
 
 		// add timeLimit field
 		html.append("<div class=time_limit_div>Time Limit:   ");

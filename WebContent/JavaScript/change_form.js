@@ -151,7 +151,8 @@ function addChoice(button) {
 	var newChoice = choice.cloneNode(true);
     newChoice.removeAttribute("hidden");
   
-    newChoice.firstChild.innerHTML = "Choice" + numMC + ": ";
+    //-1 because starts from 0
+    newChoice.firstChild.innerHTML = "Choice" + (numMC - 1) + ": ";
     addOptionSuffix(newChoice, numMC);
     choiceDiv.appendChild(newChoice);
 	
@@ -186,7 +187,7 @@ function addAnswer(button) {
 	var newAnswer = answer.cloneNode(true);
     newAnswer.removeAttribute("hidden");
   
-    newAnswer.firstChild.innerHTML = "Answer" + numMA + ": ";
+    newAnswer.firstChild.innerHTML = "Answer" + (numMA -1) + ": ";
     addOptionSuffix(newAnswer, numMA);
     answerDiv.appendChild(newAnswer);
 }
@@ -206,7 +207,6 @@ function deleteAnswer(button) {
 }
 
 
-
 /**
  * Function for multi-choice-multi-answer
  */
@@ -222,7 +222,7 @@ function addMCMAChoice(button) {
 	var newChoice = choice.cloneNode(true);
     newChoice.removeAttribute("hidden");
   
-    newChoice.firstChild.innerHTML = "Choice" + numMCMA + ": ";
+    newChoice.firstChild.innerHTML = "Choice" + (numMCMA -1) + ": ";
     addOptionSuffix(newChoice, numMCMA);
     choiceDiv.appendChild(newChoice);
 
@@ -241,51 +241,53 @@ function deleteMCMAChoice(button) {
 	}
 }
 
+function addMatchOptionSuffix(newOption, suffix) {
+	var elements = newOption.querySelectorAll("input");
+	for ( var i = 0; i < elements.length; i++) {
+		var e = elements[i];
+		// add suffix to name
+		if (e.hasAttribute("name")) {
+			if(e.name == "choice" || e.name == "anwser")
+				e.name += suffix;
+		}
+	}
+}
 
 /**
  * Matching
  */
-var numOption = 4; //num of options of Matching
 
-function addMatchOption() {
-	var tempOption = document.getElementById("options");
-	var tempResult = document.getElementById("results");
-	//<p>
-	var paraOption = document.createElement("p");
-	var paraResult = document.createElement("p");
-	//<input>
-	var inputOption = document.createElement("input");
-	inputOption.type = "text";
-	inputOption.name = "choice" + numOption;
+function addMatchOption(button) {
 	
-	var inputResult = document.createElement("input");
-	inputResult.type = "text";
-	inputResult.name = "answer" + numOption;
+	var parentDiv = button.parentNode;
+	var choiceDiv = getElem(parentDiv, "choices");
+	//update numMCMA
+	var numMatch = parentDiv.lastChild.value - 0 + 1;
+	parentDiv.lastChild.value = numMatch;
 	
-	paraOption.innerHTML = "Choice" + numOption + ": ";
-	paraResult.innerHTML = "Answer" + numOption + ": ";
-	paraOption.appendChild(inputOption);
-	paraResult.appendChild(inputResult);
-	tempOption.appendChild(paraOption);
-	tempResult.appendChild(paraResult);
-
-	++numOption;
-	document.getElementById('numOptions').value = numOption;
+	var choice = getElem(parentDiv, "choice_template");
+    
+	var newChoice = choice.cloneNode(true);
+    newChoice.removeAttribute("hidden");
+  
+    newChoice.firstChild.innerHTML = "Choice" + (numMatch - 1) + " & Answer" + (numMatch - 1) +": ";
+    addMatchOptionSuffix(newChoice, numMatch);
+    choiceDiv.appendChild(newChoice);
+	
 }
 
 
-function deleteMatchOption() {
-	var tempOption = document.getElementById("options");
-	var tempResult = document.getElementById("results");
-	
-	if (numOption > 3) {
-		tempOption.removeChild(tempOption.lastChild);
-		tempResult.removeChild(tempResult.lastChild);
-		--numOption;
+function deleteMatchOption(button) {
+	var parentDiv = button.parentNode;
+	var choiceDiv = getElem(parentDiv, "choices");
+	//update numMC
+	var numMatch = parentDiv.lastChild.value;
+	if (numMatch > 3) {
+		choiceDiv.removeChild(choiceDiv.lastChild);
+		parentDiv.lastChild.value = numMatch - 0 - 1;
 	} else {
 		alert("There must be at least THREE choice options");
 	}
-	document.getElementById('numOptions').value = numOption;
 }
 
 

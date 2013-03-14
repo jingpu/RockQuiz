@@ -136,14 +136,14 @@ public class MAQuestion extends QuestionBase {
 		// answers
 		html.append("<div class=\"answers\">");
 		html.append("<div class=\"combo\">");
-		html.append("<span class='option'>Answer1: </span><input type=\"text\" name=\"answer1\""
+		html.append("<span class='option'>Answer0: </span><input type=\"text\" name=\"answer0\""
 				+ "\" required></input><br>");
 		html.append("</div>"); // div for combo
 		html.append("</div>"); // div for answers
 
 		// hidden answer option template
 		html.append("<div class=\"answer_template\" hidden=\"hidden\">");
-		html.append("<span class='option'></span><input type=\"text\" name=\"answer1\""
+		html.append("<span class='option'></span><input type=\"text\" name=\"answer\""
 				+ "\" required></input><br>");
 		html.append("</div>");
 

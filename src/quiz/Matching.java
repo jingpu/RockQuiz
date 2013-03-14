@@ -97,30 +97,35 @@ public class Matching extends MCMAQuestion {
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a Matching question</h4>");
+		html.append("<h1>This page will guide you to create a Matching question</h1>");
 		html.append("<p> Please enter proposed question description and answer </p>");
 		html.append("<p class=\"description\">Question Description:</p>\n");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
 
+		html.append("<div class=\"Match_div\">");
 		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addMatchOption();\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMatchOption();\" />\n");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMatchOption(this);\" />\n");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMatchOption(this);\" />\n");
 
 		// Choice options
-		html.append("<div id='options'>");
-		html.append("<p>ChoiceA:   <input type=\"text\" name=\"choice0\" ></input></p>");
-		html.append("<p>ChoiceB:   <input type=\"text\" name=\"choice1\" ></input></p>");
-		html.append("<p>ChoiceC:   <input type=\"text\" name=\"choice2\" ></input></p>");
-		html.append("<p>ChoiceD:   <input type=\"text\" name=\"choice3\" ></input></p>");
+		html.append("<div class=\"choices\">");
+		for (int i = 0; i < 4; i++) {
+			html.append("<div class=\"combo\">");
+			html.append("<span class='option'>Choice" + i + " & Answer" + i
+					+ ": </span><input type=\"text\" name=\"choice" + i
+					+ "\" ></input><input type=\"text\" name=\"answer" + i
+					+ "\"></input>");
+			html.append("</div>");
+		}
+		html.append("</div>"); // for choices div
+
+		// hidden choice option template
+		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
+		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\"></input><input type=\"text\" name=\"answer\"></input>");
 		html.append("</div>");
 
-		// Answer options
-		html.append("<div id='answers'>");
-		html.append("<p>AnswerA:   <input type=\"text\" name=\"answer0\" ></input></p>");
-		html.append("<p>AnswerB:   <input type=\"text\" name=\"answer1\" ></input></p>");
-		html.append("<p>AnswerC:   <input type=\"text\" name=\"answer2\" ></input></p>");
-		html.append("<p>AnswerD:   <input type=\"text\" name=\"answer3\" ></input></p>");
-		html.append("</div>");
+		html.append("<input type=\"hidden\" name=\"numOptions\" value=\"4\"></input>");
+		html.append("</div>"); // for Match_div
 
 		// Full Score
 		html.append("<div id='option'>");
@@ -130,7 +135,6 @@ public class Matching extends MCMAQuestion {
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MATCH + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"numOptions\" value=\"4\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
 		html.append("</div>");
 
