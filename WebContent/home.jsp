@@ -113,12 +113,7 @@
 						}
 					}
 				%>
-				<dt>
-					<form action="quiz_create.jsp" target="_blank" method="post">
-						<input type="submit" value="Create Quiz">
-					</form>
 
-				</dt>
 				<dt>Quick Link</dt>
 				<%
 					if (user.getInfo("status").equals("s")) {
@@ -138,12 +133,7 @@
 				<dd>
 					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
 				</dd>
-				<dd>
-					<a href="">555</a>
-				</dd>
-				<dd>
-					<a href="">666</a>
-				</dd>
+
 				<dt>Search Quizzes Or Users</dt>
 				<dd class="searchform">
 					<form action="Search" method="post">

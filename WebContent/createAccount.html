@@ -14,18 +14,20 @@ function judge( ){
       return false;
    }
    
-   if (document.forms[0].name.value.indexOf(",") ||
-	   document.forms[0].name.value.indexOf(".") ||
-	   document.forms[0].name.value.indexOf("/") ||
-	   document.forms[0].name.value.indexOf("\\") ||
-	   document.forms[0].name.value.indexOf("%")  ||
-	   document.forms[0].name.value.indexOf("&") ||
-	   document.forms[0].name.value.indexOf("\"") ||
+   
+   if (document.forms[0].name.value.indexOf(",")||
+	   document.forms[0].name.value.indexOf(".")||
+	   document.forms[0].name.value.indexOf("/")||
+	   document.forms[0].name.value.indexOf("\\")||
+	   document.forms[0].name.value.indexOf("%")||
+	   document.forms[0].name.value.indexOf("&")||
+	   document.forms[0].name.value.indexOf("\"")||
 	   document.forms[0].name.value.indexOf("'")) {
 	      alert("USERNAME contains invalid characters!");
 	      document.forms[0].name.focus( );
 	      return false;
 	}
+   
 
 if (document.forms[0].pwd.value==""){
       alert("Please fill in PASSWORD!");
