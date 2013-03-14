@@ -126,11 +126,13 @@ public class MAQuestion extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a multi-answer question</h4>\n");
-		html.append("Please enter proposed question description and answer <br>");
+		html.append("<h4>This page will guide you to create a multi-answer question</h4>");
+		html.append("Please enter proposed question description and answer. Every Multi-Answer question could contain more than one answer.<br>");
+		html.append("Creator could also specify whether the answer should be answered in order or not by ticking the corresponding checkbox");
+		html.append("<p class='notice'> Notice: Creator should also specify the score per correct answer.</p>");
 		html.append("<span class= 'description'>Question Description:</span><br>");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p><br>");
+				+ "\" required></textarea></p>");
 
 		html.append("<div class=\"MA_div\">");
 		// answers
@@ -148,13 +150,13 @@ public class MAQuestion extends QuestionBase {
 		html.append("</div>");
 
 		// add, delete button
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer(this);\" /><br>");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer(this);\" />");
 		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer(this);\" /><br>");
 
 		html.append("<input class=\"numAnswers\" type=\"hidden\" name=\"numAnswers\" value =\"1\"></input>");
 		html.append("</div>"); // div for MA_div
 
-		html.append("Point per correct answer: <input class=\"max_score\" type=\"text\" name=\"maxScore\""
+		html.append("Score per correct answer: <input class=\"max_score\" type=\"text\" name=\"maxScore\""
 				+ "\" required></input><br>\n");
 
 		// add timeLimit field

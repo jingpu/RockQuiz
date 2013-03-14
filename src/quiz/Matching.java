@@ -169,13 +169,12 @@ public class Matching extends MCMAQuestion {
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>This page will guide you to create a Matching question</h4>");
 		html.append("<p> Please enter proposed question description and answer </p>");
+		html.append("<p class='notice'> Notice: For RockQuiz -alpha0.0, only one matching problem is allowed in \"one-page\" quiz creation.<br>");
+		html.append("Also, the matching question currently only supports 4 choices and answers.</p>");
 		html.append("<p class=\"description\">Question Description:</p>\n");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea>");
 
 		html.append("<div class=\"Match_div\">");
-		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addMatchOption(this);\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMatchOption(this);\" />\n");
 
 		// Choice options
 		html.append("<div class=\"choices\">");
@@ -189,17 +188,9 @@ public class Matching extends MCMAQuestion {
 		}
 		html.append("</div>"); // for choices div
 
-		// hidden choice option template
-		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
-		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\"></input><input type=\"text\" name=\"answer\"></input>");
-		html.append("</div>");
-
-		html.append("<input type=\"hidden\" name=\"numChoices\" value=\"4\"></input>");
-		html.append("</div>"); // for Match_div
-
 		// Full Score
-		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
+		html.append("Score:   <input type=\"text\" name=\"maxScore\" ></input>");
+		html.append("Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""

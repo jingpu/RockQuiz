@@ -92,11 +92,11 @@ public class PResponse extends QuestionBase {
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a picture-response question</h4><br>");
-		html.append("<p> Please enter proposed question description and answer </p><br>");
-		html.append("<p class=\"description\">Question Description:</p><br>");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p><br>");
+		html.append("<h4>This page will guide you to create a picture-response question</h4>");
+		html.append("Please enter proposed question description, answer and absolute picture url.");
+		html.append("<p class=\"description\">Question Description:</p>");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea><br>");
 
 		// url information
 		html.append("Picture URL: <input type=\"text\" name=\"url\""
@@ -104,7 +104,7 @@ public class PResponse extends QuestionBase {
 		html.append("Answer:   <input type=\"text\" name=\"answer\""
 				+ "\" required></input><br>");
 		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\""
-				+ "\" required></input><br>");
+				+ "\" required></input>");
 
 		// add timeLimit field
 		html.append("<div class=time_limit_div>Time Limit:   ");
