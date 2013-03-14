@@ -12,14 +12,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <title>Popular Quizzes</title>
 </head>
 
 <body>
-	<h2>
-		<a href="home.jsp">Home</a>
-	</h2>
-	<h1>Popular Quizzes</h1>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+			<h1>Popular Quizzes</h1>
+				<h3><%=new Date()%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			<div id="body">
+				<div class="inner">
+	
 	<ul>
 	<%
 		QuizManager man = new MyQuizManager();
@@ -42,5 +53,9 @@
 		}
 	%>
 	</ul>
+	</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>

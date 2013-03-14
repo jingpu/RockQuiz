@@ -90,12 +90,13 @@ h3 {
 	margin: 2px 1px 0 0;
 	border: 2px solid #ad1c1c;
 	position: relative;
+	font-size: 13px;
 }
 
 #body a {
 	text-align: center;
 	font-family: tahoma, helvetica, arial, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: normal;
 }
 
@@ -131,3 +132,33 @@ h3 {
 	padding: 0 0 0 18px;
 	margin: 1px 0 3px 0;
 }
+
+
+#body h4 {
+	text-align: center;
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 15px;
+}
+
+#body h5 {
+	text-align: left;
+	margin-left: 20px;
+	font-family: tahoma, helvetica, arial, sans-serif;
+	font-size: 13px;
+}
+
+#body li {
+	font-size: 13px;
+	font-weight: normal;
+	list-style-type: decimal;
+	text-align: left;
+	margin-left: 20px;
+	padding-bottom: 8px;
+}
+
+#body ul {
+	list-style-type: none;
+}
+
+
+

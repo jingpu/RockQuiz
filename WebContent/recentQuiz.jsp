@@ -12,13 +12,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <title>Recent Quizzes</title>
 </head>
 <body>
-	<h2>
-		<a href="home.jsp">Home</a>
-	</h2>
-	<h1>Recent Quizzes</h1>
+<body>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+				<h1>Recent Quizzes</h1>
+				<h3><%=new Date()%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			<div id="body">
+				<div class="inner">
+
 	<%
 		QuizManager man = new MyQuizManager();
 		List<Quiz> recentQuizzes = man.getRecentCreateQuiz(20);
@@ -37,5 +49,9 @@
 	<%
 		}
 	%>
+		</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>
