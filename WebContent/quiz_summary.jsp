@@ -29,17 +29,18 @@
 	Account user = new Account(userId);
 	String status = user.getInfo("status");
 	// generate achievements history
-	List<Activity> achieves = user.getAchievements();
+	List<Activity> achieves = user.getAchievements(3);
 	// generate quizzes taken history
-	List<Activity> taken = user.getQuizTaken();
+	List<Activity> taken = user.getQuizTaken(4);
 	// generate quizzes created history
-	List<Activity> created = user.getQuizCreated();
+	List<Activity> created = user.getQuizCreated(10);
+	// friends' activities
+	List<Activity> friendsAct = user.getFriendsRecentActivity(10);
+
 	// mail messages
-	List<String> inbox = user.getMessageInbox();
 	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
-	// friends' activities
-	List<Activity> friendsAct = user.getFriendsRecentActivity();
+
 	String mailBoxUrl = "Mailbox_frame.jsp?id=" + userId;
 	String userpageUrl = "userpage.jsp?id=" + userId;
 %>
