@@ -72,7 +72,7 @@ public class Message {
 			Quiz quiz = man.getQuiz(title);
 			String quizUrl = quiz.getSummaryPage();
 			String quizDisp = "<a href='" + quizUrl + "' target='_top'>" + title + "</a>";
-			return fromDisp + challengeContent + quizDisp + "<br>\""+ content +"\"";
+			return fromDisp + challengeContent + quizDisp + ".<br><br>\""+ content +"\"";
 		} else if(type.equals("r")){
 			StringBuilder sb = new StringBuilder();
 			sb.append(fromDisp).append(friendRequestContent);

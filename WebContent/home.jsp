@@ -38,7 +38,7 @@
 	List<Activity> created = user.getQuizCreated(5);
 	// friends' activities
 	List<Activity> friendsAct = user.getFriendsRecentActivity(5);
-	
+
 	// mail messages
 	List<String> unread = user.getUnreadMessage();
 	int unreadCount = unread.size();
@@ -63,7 +63,9 @@
 			</div>
 
 			<dl id="browse">
-				<dt><a href="quiz_create.jsp">Create Quiz</a></dt>
+				<dt>
+					<a href="quiz_create.jsp">Create Quiz</a>
+				</dt>
 				<dt>Announcements</dt>
 				<%
 					Announce ann = user.getLatestAnnounce();
@@ -108,8 +110,9 @@
 							Date now = new Date();
 							String timeDscr = TimeTrsf.dscr(time, now);
 							out.println("<dd><a href='Mailbox_frame.jsp?id=" + userId
-									+ "&box=inbox&msg=" + msgCode + "' target='_blank'>" + description
-									+ " " + timeDscr + "</a></dd>");
+									+ "&box=inbox&msg=" + msgCode
+									+ "' target='_blank'>" + description + " "
+									+ timeDscr + "</a></dd>");
 							i++;
 						}
 					}
@@ -129,7 +132,8 @@
 					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
 				</dd>
 				<dd>
-					<a href="profile.jsp?id=<%=userId%>" target='_blank'>Edit Profile</a>
+					<a href="profile.jsp?id=<%=userId%>" target='_blank'>Edit
+						Profile</a>
 				</dd>
 				<dd>
 					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
@@ -200,11 +204,15 @@
 							if (taken.isEmpty()) {
 						%>
 						<p>You did't take any quiz yet.</p>
+
+						<%
+							} else {
+						%>
 						<ul>
 							<%
-								} else {
-									for (Activity act : taken) {
-										out.println("<li class='activity'>" + act.toStringMe(true) + "</li>");
+								for (Activity act : taken) {
+										out.println("<li class='activity'>" + act.toStringMe(true)
+												+ "</li>");
 									}
 								}
 							%>
@@ -220,14 +228,19 @@
 							if (created.isEmpty()) {
 						%>
 						<p>You did't create any quiz yet.</p>
+
 						<%
 							} else {
-								for (Activity act : created){
-									out.println("<li class='activity'>" + act.toStringMe(true)
-											+ "</li>");
-								}
-							}
 						%>
+						<ul>
+							<%
+								for (Activity act : created) {
+										out.println("<li class='activity'>" + act.toStringMe(true)
+												+ "</li>");
+									}
+								}
+							%>
+						</ul>
 						<p class="readmore">
 							<a href="quizCreated.jsp?id=<%=userId%>"><b>MORE</b></a>
 						</p>
@@ -242,14 +255,19 @@
 							if (achieves.isEmpty()) {
 						%>
 						<p>You don't have any achievements yet.</p>
+
 						<%
 							} else {
-								for (Activity act : achieves) {
-									out.println("<li class='activity'>" + act.toStringMe(true)
-											+ "</li>");
-								}
-							}
 						%>
+						<ul>
+							<%
+								for (Activity act : achieves) {
+										out.println("<li class='activity'>" + act.toStringMe(true)
+												+ "</li>");
+									}
+								}
+							%>
+						</ul>
 						<p class="readmore">
 							<a href="achieves.jsp?id=<%=userId%>"><b>MORE</b></a>
 						</p>
@@ -263,15 +281,20 @@
 						<p>There is no news yet.</p>
 						<%
 							} else {
-								int p = 0;
-								for (Activity act : friendsAct) {
-									if (p == 10)
-										break;
-									out.println("<li class='activity'>" + act.toString() + "</li>");
-									p++;
-								}
-							}
 						%>
+						<ul>
+							<%
+								int p = 0;
+									for (Activity act : friendsAct) {
+										if (p == 5)
+											break;
+										out.println("<li class='activity'>" + act.toString(true)
+												+ "</li>");
+										p++;
+									}
+								}
+							%>
+						</ul>
 						<p class="readmore">
 							<a href="friendsActivity.jsp?id=<%=userId%>"><b>MORE</b></a>
 						</p>
