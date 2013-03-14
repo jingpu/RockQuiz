@@ -30,6 +30,9 @@ function submitForm() {
 	document.forms[0].submit();
 }
 
+function checkMatch() {
+	val 
+}
 //For creation check
 function checkScore() {
 	var elements = document.getElementByClass("max_score");
