@@ -120,6 +120,30 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\" >");
 			// TODO: why no questionType parameter
 			out.println(QuestionFactory.printReference());
+
+			out.println("<script type=\"text/javascript\">");
+			out.println("$(document).ready(function() {");
+			out.println("$('#questionRead').submit(function() {");
+			if (quiz.isImmCorrection()) {
+				out.println("$.ajax({");
+			out.println("type: \"GET\",");
+			out.println("url: \"GetScoreServlet\",");
+			out.println("data: $(\"#questionRead\").serialize(), ");
+				out.println("success: function(data)");
+				out.println("{");
+				out.println("alert(data);");
+				out.println("// $('#questionRead').submit() won't work here cause it will call this function recursively and never return");
+				out.println("document.forms[0].submit(); // hack here: assume forms[0] is #questionRead");
+				out.println("}");
+				out.println("});");
+				out.println("return false;");
+			} else {
+				out.println("return true;");
+			}
+			out.println("});");
+			out.println("});");
+			out.println("</script>");
+
 			out.println("</head>");
 			out.println("<body>");
 			QuestionBase question = questionList.get(questionIndex);
