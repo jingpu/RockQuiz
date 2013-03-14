@@ -180,13 +180,16 @@ h3 {
 
 #body .leftbox {
 	float: left;
-	width: 310px;
+	width: 300px;
+	padding-left: 10px;
+	padding-right: 15px;
 }
 
 #body .rightbox {
 	float: right;
-	width: 312px;
-	padding-right: 18px;
+	width: 300px;
+	padding-left: 15px;
+	padding-right: 10px;
 	border-left: 2px solid #659db4;
 }
 

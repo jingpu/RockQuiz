@@ -58,17 +58,6 @@ body {
 	font-size: 14px;
 }
 
-#body .leftbox {
-	width: 300px;
-	padding-left: 10px;
-	padding-right: 5px;
-}
-
-#body .rightbox {
-	width: 300px;
-	padding-left: 15px;
-	padding-right: 10px;
-}
 </style>
 </head>
 <body>
@@ -185,6 +174,7 @@ body {
 				</dd>
 			</dl>
 			<div id="body">
+				<div class="clear br"></div>
 				<!-- The text description of the quiz. -->
 				<h3>Quiz Description</h3>
 				<div class="alignleft">
