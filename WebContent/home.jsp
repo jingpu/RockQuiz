@@ -35,9 +35,9 @@
 	// generate quizzes taken history
 	List<Activity> taken = user.getQuizTaken(4);
 	// generate quizzes created history
-	List<Activity> created = user.getQuizCreated(10);
+	List<Activity> created = user.getQuizCreated(5);
 	// friends' activities
-	List<Activity> friendsAct = user.getFriendsRecentActivity(10);
+	List<Activity> friendsAct = user.getFriendsRecentActivity(5);
 	
 	// mail messages
 	List<String> unread = user.getUnreadMessage();
