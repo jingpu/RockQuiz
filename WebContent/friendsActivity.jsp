@@ -43,7 +43,7 @@
 				: true) : false);
 
 		if (!forbid) {
-			List<Activity> friendsAct = user.getFriendsRecentActivity();
+			List<Activity> friendsAct = user.getFriendsRecentActivity(-1);
 			if (friendsAct.isEmpty()) {
 	%>
 	<p>There isn't any news yet.

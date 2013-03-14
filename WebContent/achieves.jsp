@@ -46,7 +46,7 @@
 		if (!forbid) {
 	%>
 	<%
-		List<Activity> achieves = user.getAchievements();
+		List<Activity> achieves = user.getAchievements(-1);
 			if (achieves.isEmpty()) {
 				String prefix = guest.equals(userId) ? "You" : userId;
 	%>

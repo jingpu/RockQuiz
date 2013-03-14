@@ -43,7 +43,7 @@
 				: true) : false);
 
 		if (!forbid) {
-			List<Activity> taken = user.getQuizTaken();
+			List<Activity> taken = user.getQuizTaken(-1);
 			if (taken.isEmpty()) {
 				String prefix = guest.equals(userId) ? "I" : userId;
 	%>

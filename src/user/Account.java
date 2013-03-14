@@ -70,25 +70,28 @@ public class Account implements User{
 		UserManager.addAchievement(userId, achieveId, quizName);
 	}
 	
-	/**Get achievements list in desc time order
+	/**Get certain number achievements list in desc time order
+	 * If number == -1, take out all pieces.
 	 * @return achievement List<String>
 	 * **/
-	public List<Activity> getAchievements(){
-		return UserManager.getAchievements(userId);
+	public List<Activity> getAchievements(int number){
+		return UserManager.getAchievements(userId, number);
 	}
 	
-	/**Get taken quizzes list in desc time order
+	/**Get certain number taken quizzes list in desc time order
+	 * If number == -1, take out all pieces.
 	 * @return taken quizzes List<String>
 	 * **/
-	public List<Activity> getQuizTaken(){
-		return UserManager.getQuizTaken(userId);
+	public List<Activity> getQuizTaken(int number){
+		return UserManager.getQuizTaken(userId, number);
 	}
 	
-	/**Get created quizzes list in desc time order
+	/**Get certain number created quizzes list in desc time order
+	 * If number == -1, take out all pieces.
 	 * @return created quizzes List<String>
 	 * **/
-	public List<Activity> getQuizCreated(){
-		return UserManager.getQuizCreated(userId);
+	public List<Activity> getQuizCreated(int number){
+		return UserManager.getQuizCreated(userId, number);
 	}
 	
 	/**Count the number of certain type of activities in userId_history table.
@@ -173,16 +176,19 @@ public class Account implements User{
 		return UserManager.getUnconfirmedFriendsList(userId);
 	}
 	
-	public List<Activity> getRecentActivity(){
-		return UserManager.getRecentActivity(userId);
+	public List<Activity> getRecentActivity(int number){
+		return UserManager.getRecentActivity(userId, number);
 	}
 
-	public List<Activity> getFriendsRecentActivity(){
+	/**
+	 * @param number - the maximum number of pieces of news that a friend should contribute
+	 * **/
+	public List<Activity> getFriendsRecentActivity(int number){
 		List<String> friends = getFriendsList();
 		List<Activity> friendsActivity = new LinkedList<Activity>();
 		for(String friend : friends){
 			Account friendAcc = new Account(friend);
-			friendsActivity.addAll(friendAcc.getRecentActivity());
+			friendsActivity.addAll(friendAcc.getRecentActivity(number));
 		}
 		Collections.sort(friendsActivity, new Comparator<Activity>() {
 			public int compare(Activity a, Activity b) {
