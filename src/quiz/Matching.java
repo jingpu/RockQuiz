@@ -73,9 +73,6 @@ public class Matching extends MCMAQuestion {
 		List<String> solutionList = Helper.parseTags(answer);
 		int score = 0;
 		for (int i = 0; i < solutionList.size(); i++) {
-			System.out.println("length is " + solutionList.size());
-			System.out.println("length is " + inputList.size());
-			System.out.println(solutionList.get(i));
 			if (inputList.get(i).equals(solutionList.get(i)))
 				score += maxScore;
 			else
@@ -245,7 +242,6 @@ public class Matching extends MCMAQuestion {
 
 		// create answer options
 		List<String> answerList = Helper.parseTags(answer);
-		System.out.println("answerList length" + answerList.size());
 		Collections.shuffle(answerList);
 		for (int i = 0; i < answerList.size(); i++) {
 			String answerSpanId = "as" + i;
