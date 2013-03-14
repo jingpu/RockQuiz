@@ -26,22 +26,24 @@
 </head>
 <body>
 	<h2>
-		<a href="home.jsp?id=<%=guest%>">Home</a>
+		<a href="home.jsp?id=<%=guest%>" target="_top">Home</a>
 	</h2>
-	<h1>Interesting Fields</h1>
+	<h2>Interesting Fields</h2>
 	<%
 		for (int i = 0; i < categories.length; i++) {
 	%>
-	<h2>
-		<a href='myfields_search.jsp?q=<%=categories[i]%>' target='another'><%=categories[i]%></a>
-	</h2>
+	<h3>
+		<a href='myfields_search.jsp?s=d&q=<%=categories[i]%>'
+			target='another'><%=categories[i]%></a>
+	</h3>
 	<%
 		}
 	%>
-	<form action="Search" method="post" target='another'>
-		<input type="search" name="query" class="text"
-			placeholder="Search category"><br> <input type="submit"
-			value="Search">
+	<h3>Other categories:</h3>
+	<form action="myfields_search.jsp" method="post" target='another'>
+		<input type="hidden" name="s" value="d"> <input type="search"
+			name="q" class="text" placeholder="Search category"><input
+			type="submit" value="Search">
 	</form>
 
 </body>

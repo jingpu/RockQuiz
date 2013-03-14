@@ -28,11 +28,10 @@
 <title>Following fields - <%=userId%></title>
 </head>
 
-<Frameset cols="35%,*">
-	<frame src="myfields_browse.jsp?id=<%=userId%>" marginheight=60
-		bordercolor=blue >
-	<frame src="myfields_search.jsp?q=<%=first%>" name=another
-		marginheight=60>
-</frameset>
+<Frameset cols="25%,*">
+	<frame src="myfields_browse.jsp?id=<%=userId%>" marginheight=60 framebolder="0">
+	<frame src="myfields_search.jsp?s=d&q=<%=first%>" name=another
+		marginheight=60 framebolder="0">
+</Frameset>
 
 </html>

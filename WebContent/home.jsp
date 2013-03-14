@@ -136,7 +136,7 @@
 					<a href="profile.jsp?id=<%=userId%>" target='_blank'>Edit Profile</a>
 				</dd>
 				<dd>
-					<a href="myfields.jsp?id=<%=userId%>">Interesting Fields</a>
+					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
 				</dd>
 				<dd>
 					<a href="">555</a>
