@@ -263,9 +263,9 @@ public class MyQuiz implements Quiz {
 			// shuffle current question list
 			Collections.shuffle(questionList);
 			// populate quizName_Content_Table
+			// TODO: why need save to database every time? ? can't it be saved
+			// to session?
 			for (int i = 0; i < questionList.size(); i++) {
-				System.out.println("questionList size is "
-						+ questionList.size());
 				QuestionBase q = questionList.get(i);
 				String contentRow = "\"" + i + "\",\"" + q.getQuestionType()
 						+ "\",\"" + q.getQuestionId() + "\"";

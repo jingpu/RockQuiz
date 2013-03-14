@@ -46,6 +46,8 @@ public class QuestionFactory {
 			return new MAQuestion(questionType, questionId);
 		else if (questionType.equals(QuestionBase.MCMA))
 			return new MCMAQuestion(questionType, questionId);
+		else if (questionType.equals(QuestionBase.MATCH))
+			return new Matching(questionType, questionId);
 		return null;
 	}
 

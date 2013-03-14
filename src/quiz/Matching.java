@@ -3,6 +3,7 @@
  */
 package quiz;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,21 +49,6 @@ public class Matching extends MCMAQuestion {
 	 */
 	public Matching(String questionType, String questionId) {
 		super(questionType, questionId);
-		// TODO Auto-generated constructor stub
-		// String tmpChoices = "error";
-		//
-		// try {
-		// Connection con = MyDB.getConnection();
-		// Statement stmt = con.createStatement();
-		// stmt.executeQuery("USE c_cs108_yzhao3");
-		// ResultSet rs = stmt.executeQuery(queryStmt);
-		// rs.next();
-		// tmpChoices = rs.getString("choices");
-		// } catch (SQLException e) {
-		// e.printStackTrace();
-		// }
-		// choices = tmpChoices;
-		System.out.println(queryStmt);
 	}
 
 	/*
@@ -74,6 +60,51 @@ public class Matching extends MCMAQuestion {
 	public String getQuerySaveString() {
 		return "INSERT INTO " + MATCH_Table + " VALUES (\""
 				+ super.getBaseQuerySaveString() + ", \"" + choices + "\")";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#getScore(java.lang.String)
+	 */
+	@Override
+	public int getScore(String userInput) {
+		List<String> inputList = Helper.parseTags(userInput);
+		List<String> solutionList = Helper.parseTags(answer);
+		int score = 0;
+		for (int i = 0; i < solutionList.size(); i++) {
+			System.out.println("length is " + solutionList.size());
+			System.out.println("length is " + inputList.size());
+			System.out.println(solutionList.get(i));
+			if (inputList.get(i).equals(solutionList.get(i)))
+				score += maxScore;
+			else
+				score -= 1;
+		}
+		return score > 0 ? score : 0;
+	}
+
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		int numAnswers = Integer.parseInt(request.getParameter("numChoices_"
+				+ getQuestionId()));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+			// In matching problem, answer is inserted into the value field of
+			// choice
+			// since choice order(solution order) is fixed, while presented
+			// answer is shuffled
+			String userAnswer = request.getParameter("choice" + i + "_"
+					+ getQuestionId());
+			if (userAnswer == null)
+				userAnswer = "";
+
+			answer.append(userAnswer);
+			answer.append("#");
+		}
+		return answer.toString();
 	}
 
 	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
@@ -190,36 +221,44 @@ public class Matching extends MCMAQuestion {
 	@Override
 	public String printReadHtml() {
 		StringBuilder html = new StringBuilder();
-		html.append(super.printReadHtml());
-
+		html.append("<h2>Question Type Introduction</h2>\n");
+		html.append("<p>Question Creator: " + creatorId + "</p>\n");
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\"> onsubmit=false");
 		html.append("<span class= 'description'>Question Description:</span><br>");
-		html.append(questionDescription);
+		html.append(questionDescription + "<br>");
 
 		html.append("<div id=\"match\"></div>");
 		html.append("<div id=\"results\"></div>");
 		// create choice options
 		List<String> choiceList = Helper.parseTags(choices);
 		for (int i = 0; i < choiceList.size(); i++) {
-			String choiceIndex = "choice" + i;
-			html.append("<span id=" + "'" + choiceIndex + "'>"
-					+ "<input type=\"hidden\" name=\"" + choiceIndex
-					+ "\"></input>" + choiceList.get(i) + "</span>");
+			String choiceSpanId = "cs" + i;
+			String choiceId = "choice" + i;
+			String choiceName = "choice" + i + "_" + getQuestionId();
+			html.append("<span id=" + "'" + choiceSpanId
+					+ "' hidden=\"hidden\">" + "<input id=" + "'" + choiceId
+					+ "' type=\"hidden\" name=\"" + choiceName + "\"></input>"
+					+ choiceList.get(i) + "</span>");
 		}
 
 		// create answer options
 		List<String> answerList = Helper.parseTags(answer);
+		System.out.println("answerList length" + answerList.size());
+		Collections.shuffle(answerList);
 		for (int i = 0; i < answerList.size(); i++) {
-			String answerIndex = "answer" + i;
-			html.append("<span id=" + "'" + answerIndex + "'>"
-					+ "<input type=\"hidden\" name=\"" + answerIndex
-					+ "\"></input>" + answerList.get(i) + "</span>");
+			String answerSpanId = "as" + i;
+			String answerId = "answer" + i;
+			String answerName = "answer" + i + "_" + getQuestionId();
+			html.append("<span id=" + "'" + answerSpanId
+					+ "' hidden=\"hidden\">" + "<input id=" + "'" + answerId
+					+ "' type=\"hidden\" name=\"" + answerName + "\"></input>"
+					+ answerList.get(i) + "</span>");
 		}
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+		html.append("<p><input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
 				+ getQuestionId() + "\"  value=\"" + answerList.size()
@@ -231,11 +270,10 @@ public class Matching extends MCMAQuestion {
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>");
 
-		html.append("<button id=\"vals\">Results</button>");
+		// html.append("<button id=\"vals\">Results</button>");
 		html.append("<button id=\"clear\">Clear</button>");
-		html.append("<input type=\"submit\" value = \"Next\"/></form>");
+		html.append("<input id=\"result\" type=\"submit\" value = \"Next\"/></form>");
 
-		System.out.println(html.toString());
 		return html.toString();
 
 	}
@@ -266,13 +304,6 @@ public class Matching extends MCMAQuestion {
 	 * @return
 	 */
 	public static String printReference() {
-		StringBuilder reference = new StringBuilder();
-		reference.append(QuestionBase.printReference());
-		reference
-				.append("<script src=\"http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js\"></script>");
-		reference.append("<script src=\"JavaScript/match.js\"></script>");
-		reference
-				.append("<script src=\"JavaScript/match-question.js\"></script>)");
-		return reference.toString();
+		return QuestionBase.printReference();
 	}
 }

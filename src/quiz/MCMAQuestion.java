@@ -159,14 +159,14 @@ public class MCMAQuestion extends QuestionBase {
 	@Override
 	public int getScore(String userInput) {
 		Set<String> answerSet = getAnswerSet();
-		String[] inputList = parseAnswer(userInput);
+		List<String> inputList = Helper.parseTags(userInput);
 
 		return getScore(answerSet, inputList);
 	}
 
 	// overload
 	// TODO: dynamically assign score based on maxScore
-	private int getScore(Set<String> answerSet, String[] inputList) {
+	private int getScore(Set<String> answerSet, List<String> inputList) {
 		int score = 0;
 		for (String str : inputList) {
 			if (answerSet.contains(str))
@@ -175,11 +175,6 @@ public class MCMAQuestion extends QuestionBase {
 				return 0; // if incorrect, score = 0
 		}
 		return score;
-	}
-
-	private String[] parseAnswer(String answerString) {
-		String[] answerList = answerString.split("#");
-		return answerList;
 	}
 
 	public static String printCreateHtml() {
@@ -375,11 +370,8 @@ public class MCMAQuestion extends QuestionBase {
 	}
 
 	private Set<String> getAnswerSet() {
-		String[] answerList = parseAnswer(answer);
-		HashSet<String> answerSet = new HashSet<String>();
-		for (String str : answerList) {
-			answerSet.add(str);
-		}
+		List<String> answerList = Helper.parseTags(answer);
+		HashSet<String> answerSet = new HashSet<String>(answerList);
 		return answerSet;
 	}
 

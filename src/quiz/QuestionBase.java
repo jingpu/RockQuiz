@@ -257,7 +257,13 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 				.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"CSS/question_style.css\"/>");
 		refString
 				.append("<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js\"></script>");
+		refString
+				.append("<script src=\"http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/jquery-ui.min.js\"></script>");
 		refString.append("<script src=\"JavaScript/change_form.js\"></script>");
+		refString.append("<script src=\"JavaScript/match.js\"></script>");
+		refString
+				.append("<script src=\"JavaScript/match_question.js\"></script>");
+
 		return refString.toString();
 	}
 }
