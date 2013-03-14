@@ -34,13 +34,12 @@ h3 {
 }
 
 #body .leftbox {
-	width: 330px;
+	width: 325px;
 }
 
 #body .rightbox {
 	float: right;
-	width: 332px;
-	margin-right: 18px;
+	width: 322px;
 	border-left: 2px solid #ad1c1c;
 }
 
