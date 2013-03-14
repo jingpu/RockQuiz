@@ -74,10 +74,11 @@
 			<tr>
 				<td style='width:200px; text-align:left; vertical-align:top;'>
 					<%
+					if(categories != null){
 						for (int i = 0; i < categories.length; i++) {
 					%> <input type="checkbox" name="favor" value="<%=categories[i]%>"
 					checked><%=categories[i]%><br><%
- 	}
+ 	}}
  %>
 					<div id="new_category_type"></div>
 				</td>

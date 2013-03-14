@@ -29,7 +29,7 @@
 		<a href="home.jsp?id=<%=guest%>" target="_top">Home</a>
 	</h2>
 	<h2>Interesting Fields</h2>
-	<%
+	<% if(categories != null){
 		for (int i = 0; i < categories.length; i++) {
 	%>
 	<h3>
@@ -37,7 +37,7 @@
 			target='another'><%=categories[i]%></a>
 	</h3>
 	<%
-		}
+		}}
 	%>
 	<h3>Other categories:</h3>
 	<form action="myfields_search.jsp" method="post" target='another'>
