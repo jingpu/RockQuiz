@@ -54,9 +54,15 @@
 .alignleft {
 	text-align: left
 }
-
-body {
+.alignright {
+	text-align: right
+}
+#body {
 	font-size: 14px;
+}
+#body h2{
+	font-size: 20px;
+	color: #227293;
 }
 
 </style>
@@ -65,12 +71,8 @@ body {
 	<div id="wrapper">
 		<div id="inner">
 			<div id="header">
-				<h1><%=quiz.getQuizName()%></h1>
-				<h3>
-					created by
-					<%=Helper.displayUser(quiz.getCreatorId())%>
-					on
-					<%=quiz.getCreateTime()%></h3>
+				<h1>Quiz Summary</h1>
+				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
 						<a href="home.jsp?id=<%=guest%>">Home</a> | <a
@@ -175,10 +177,21 @@ body {
 				</dd>
 			</dl>
 			<div id="body">
-				<div class="clear br"></div>
+				<div class="clear"></div>
 				<!-- The text description of the quiz. -->
-				<h3>Quiz Description</h3>
+				<h2><%=quiz.getQuizName()%></h2>
+				<h4 class="alignright">
+					<%
+						SimpleDateFormat simpleDateFormat =
+					        new SimpleDateFormat("MMM d, yyyy");
+					%>
+					created by
+					<%=Helper.displayUser(quiz.getCreatorId())%>
+					on
+					<%=simpleDateFormat.format(quiz.getCreateTime())%>
+				</h4>
 				<div class="alignleft">
+				<h4>Quiz Description</h4>
 					<p>
 						<%=quiz.getQuizDescription()%>
 					</p>
@@ -198,55 +211,59 @@ body {
 					</p>
 				</div>
 
-				<!-- A way to initiate taking the quiz. A way to
+				<div class="clear"></div>
+
+				<div style="float: left">
+					<%--challenge --%>
+					<input name='' type='button' value='Challenge my friends!'
+						onclick='AddElement()' />
+
+					<%--challenge --%>
+				</div>
+				
+				<div style="float: right">
+					<form action="<%=quiz.getQuizStartPage()%>" method="POST">
+						<input type="hidden" name="quizName" value=<%=quiz.getQuizName()%>>
+						<%
+							String disabledAttr = "";
+							if (!quiz.isCanPractice())
+								disabledAttr = "disabled";
+						%>
+						<!-- A way to initiate taking the quiz. A way to
 		start the quiz in practice mode, if available.-->
-				<table bolder="0">
-					<tr>
-						<td>
-							<%--challenge --%> <input name='' type='button'
-							value='Challenge my friends!' onclick='AddElement()' />
-							<form action='ChallengeLetterSent' target='hidFrame'
-								method='post' id='letter'>
-								<input type='hidden' name='quizName' value=<%=quizName%>>
-								<div id='msg'></div>
-							</form> <iframe name='hidFrame' style='display: none'></iframe> <%--challenge --%>
-						</td>
-						<td>
-							<%
-								// A way to start editing the quiz, if the user is the quizowner. 
-								if (userName.equals(quiz.getCreatorId())) {
-							%>
-							<form action="<%=quiz.getQuizEditPage()%>" method="POST">
-								<input type="hidden" name="quizName"
-									value="<%=quiz.getQuizName()%>"> <input type="submit"
-									value="Edit Quiz">
-							</form> <%
- 	}
- %>
-						</td>
+						<input type="checkbox" name="practiceMode" value="true"
+							<%=disabledAttr%>> Start in practice mode <input
+							type="submit" value="Start Quiz">
+					</form>
 
-						<form action="<%=quiz.getQuizStartPage()%>" method="POST">
-							<input type="hidden" name="quizName"
-								value=<%=quiz.getQuizName()%>>
-							<%
-								String disabledAttr = "";
-								if (!quiz.isCanPractice())
-									disabledAttr = "disabled";
-							%>
-						
-						<td><input type="checkbox" name="practiceMode" value="true"
-							<%=disabledAttr%>> Start in practice mode<br></td>
-
-						<td><input type="submit" value="Start Quiz"></td>
-
-						</form>
-					</tr>
-				</table>
-
-
-
-
-
+				</div>
+				
+				<div style="float: right">
+					<%
+						// A way to start editing the quiz, if the user is the quizowner. 
+						if (userName.equals(quiz.getCreatorId())) {
+					%>
+					<form action="<%=quiz.getQuizEditPage()%>" method="POST">
+						<input type="hidden" name="quizName"
+							value="<%=quiz.getQuizName()%>"> <input type="submit"
+							value="Edit Quiz">
+					</form>
+					<%
+						}
+					%>
+				</div>
+				<div class="clear"></div>
+				
+				<%--challenge --%>
+				<div style="float: left">
+					<form action='ChallengeLetterSent' target='hidFrame' method='post'
+						id='letter'>
+						<input type='hidden' name='quizName' value=<%=quizName%>>
+						<div id='msg'></div>
+					</form>
+					<iframe name='hidFrame' style='display: none'></iframe>
+				</div>
+				<%--challenge --%>
 
 				<div class="clear br"></div>
 				<!-- TODO A list of the user’s past performance on this specific quiz. -->
