@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <title>Change Password</title>
 </head>
 <%
@@ -16,7 +17,19 @@
 	}
 %>
 <body>
-	<h1>Change Password</h1>
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+			<h1>Change Password</h1>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			<div id="body">
+				<div class="inner">
+	
 	<%
 		if (error != null && error.equals("0")) {
 			System.out.println("valid");
@@ -57,5 +70,9 @@
 				value="Return"></a>
 		</p>
 	</form>
+	</div>
+	</div>
+	</div>
+	</div>
 </body>
 </html>
