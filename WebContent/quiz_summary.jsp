@@ -48,7 +48,7 @@
 <script type="text/javascript" src="challenge-msg.js"></script>
 <meta charset="UTF-8">
 <title>Quiz Summary - <%=quiz.getQuizName()%></title>
-<link href="homestyle.css" rel="stylesheet" type="text/css" />
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="CSS/table.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .alignleft {
