@@ -1,38 +1,12 @@
 @CHARSET "UTF-8";
-
-body {
-        font-family: tahoma, helvetica, arial, sans-serif;
-        font-size: 10px;
-        text-align: center;
-        background: url(images/home_bg.gif);
-    }
     
-html, body, #wrapper, h1 {
-	margin: 0;
-	padding: 0;
-}
-
-img { border: 0; }
-
 #wrapper {
-	margin: auto;
-	text-align: center;
 	width: 708px;
-	position: relative;
 }
 
 
 h1 {
 	font-size: 25pt;
-	font-weight: 900;
-	color: white;
-	font-variant: small-caps;
-}
-
-h2 {
-	font-size: 12pt;
-	font-weight: 600;
-	color: white;
 }
 
 h3 {
@@ -40,76 +14,26 @@ h3 {
 	color: white;
 }
 
-.block {
-	display: block;
-}
-
-.clear {
-	clear: both;
-	height: 2px;
-	padding-top: 0;
-	margin-top: 0;
-	margin-bottom: 3px;
-	font-size: 1px;
-}
-
-.readmore {
-	text-align: right;
-}
-
-
-#inner {
-	border-left: 2px solid white;
-	border-right: 2px solid white;
-	background: white;
-	color: black;
-	margin-bottom: 10px;
-}
-
-#header {
-	background-color: #c80000;
-	padding: 5px;
-	margin-bottom: 10px;
-	position: relative;
-}
-
-#nav, #nav a {
-	text-align:center;
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-#nav a:hover {
-	text-decoration: underline;
-}
 
 
 #body {
-	float: right;
 	font-size: 12px;
 	width: 700px;
-	margin: 2px 1px 0 0;	
-	border: 2px solid #ad1c1c;
-	position: relative;
 }
 
 #body a {
 	text-align: center;
-	font-family: tahoma, helvetica, arial, sans-serif;
 	font-size: 12px;
 	font-weight: normal;
 }
 
 #body .leftbox,
 #body .rightbox {
-	margin-top: 5px;
 	color: Black;
 	height: 430px;
 }
 
 #body .leftbox {
-	float: left;
 	width: 330px;
 }
 
@@ -121,12 +45,8 @@ h3 {
 }
 
 #body h3 {
-	text-align: center;
-	font-family: tahoma, helvetica, arial, sans-serif;
 	font-size: 18px;
 	font-weight: normal;
 	color: black;
-	padding: 0 0 0 18px;
-	margin: 1px 0 3px 0;
 }
 
