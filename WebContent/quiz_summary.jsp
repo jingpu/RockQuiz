@@ -51,20 +51,22 @@
 <link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="CSS/table.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
-.alignleft {
+#body div.alignleft {
 	text-align: left
 }
-.alignright {
+
+#body div.alignright {
 	text-align: right
 }
+
 #body {
 	font-size: 14px;
 }
-#body h2{
+
+#body h2 {
 	font-size: 20px;
 	color: #227293;
 }
-
 </style>
 </head>
 <body>
@@ -180,7 +182,8 @@
 				<div class="clear"></div>
 				<!-- The text description of the quiz. -->
 				<h2><%=quiz.getQuizName()%></h2>
-				<h4 class="alignright">
+				<div class="alignright">
+				<h4 >
 					<%
 						SimpleDateFormat simpleDateFormat =
 					        new SimpleDateFormat("MMM d, yyyy");
@@ -190,6 +193,7 @@
 					on
 					<%=simpleDateFormat.format(quiz.getCreateTime())%>
 				</h4>
+				</div>
 				<div class="alignleft">
 				<h4>Quiz Description</h4>
 					<p>
