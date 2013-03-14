@@ -87,8 +87,8 @@
 		new_category_box.disabled = false;
 	}
 	
-	function changeOnePage(checkbox){
-		if(checkbox.checked == true){
+	function changeOnePage(){
+		if(document.getElementById("OnePage").checked == true){
 			document.getElementById("isImmCorrection").disabled = true;
 			document.getElementById("isImmCorrection").checked = false;
 			//Hide class time_limit_div, disable and reset time_limit
@@ -111,6 +111,13 @@
 				elements[i].disable = false;
 		}
 	}
+	function changeImmCorr(){
+		if(document.getElementById("isImmCorrection").checked == true){
+			document.getElementById("OnePage").disabled = true;
+		}else{
+			document.getElementById("OnePage").disabled = false;
+		}
+	}
 </script>
 <meta charset="UTF-8">
 <title>Create Quiz</title>
@@ -119,7 +126,7 @@
 .question{border-bottom:1px dotted}
 </style>
 </head>
-<body>
+<body onload="changeOnePage(); changeImmCorr();">
 	<%
 		/*
 		 * prepare the page for creating quiz
@@ -209,8 +216,8 @@
 		Tags: <input type="text" name="tagString" value="<%=tagString%>"><br> 
 			<input type="checkbox" name="canPractice" value="true" <%=canPractice%>>Allow practice mode<br> 
 			<input type="checkbox" name="isRandom" value="true" <%=isRandom%>>Automatically randomized question order<br> 
-			<input type="checkbox" name="isOnePage" value="true" onchange="changeOnePage(this);" <%=isOnePage%>>Displays in one page<br> 
-			<input type="checkbox" name="isImmCorrection" value="true" id="isImmCorrection" <%=isImmCorrection%> >Allow immediate Correction if Multi-Page mode
+			<input type="checkbox" name="isOnePage" value="true" onchange="changeOnePage();" id="OnePage" <%=isOnePage%>>Displays in one page<br> 
+			<input type="checkbox" name="isImmCorrection" value="true" onchange="changeImmCorr();" id="isImmCorrection" <%=isImmCorrection%> >Allow immediate Correction if Multi-Page mode
 			enabled<br>
 		</div>
 
