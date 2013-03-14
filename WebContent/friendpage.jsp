@@ -51,7 +51,7 @@
 						<%
 		if (friends.isEmpty()) {
 	%>
-						<p>You don't have any friends yet.</p>
+						<p>I don't have any friends yet.</p>
 						<%
 		} else {
 			for (String friend : friends) {

@@ -220,9 +220,11 @@ public final class MyQuizManager implements QuizManager {
 		List<Quiz> list1 = searchForQuizDescription(pattern, 
 				sortMethod);
 		List<Quiz> list2 = searchForQuizName(pattern,  sortMethod);
+		List<Quiz> list3 = searchForCategory(pattern, sortMethod);
 		// merge list1 and list2 to list
-		list1.addAll(list);
-		for(Quiz quiz1 : list1){
+		list3.addAll(list1);
+		list3.addAll(list);
+		for(Quiz quiz1 : list3){
 			boolean exist = false;
 			for(Quiz quiz2 : list2){
 				if(quiz1.getQuizName().equals(quiz2.getQuizName())){
@@ -308,7 +310,16 @@ public final class MyQuizManager implements QuizManager {
 			e.printStackTrace();
 		}
 		// sort list
-		sortQuizList(list, sortMethod);
+		if(sortMethod == SORT_BY_RELATIVITY){
+			Collections.sort(list, new Comparator<Quiz>() {
+				@Override
+				public int compare(Quiz o1, Quiz o2) {
+					return o2.getCategory().length() - o1.getCategory().length();
+				}
+			});
+		} else {
+			sortQuizList(list, sortMethod);
+		}
 		// return sublist of the first numEntries elements
 		return list;
 	}
