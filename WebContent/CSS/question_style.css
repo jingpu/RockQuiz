@@ -36,3 +36,16 @@
 		font-style: italic;
 		font-size: 50;
 }
+
+.example {
+		font-family: "Times New Roman", Time, serif;
+		font-style: italic;
+		font-size: 30;
+}
+.notice {
+		font-family: "Times New Roman", Time, serif;
+		font-style: italic;
+		font-weight: bold;
+		color: #C80000;
+		font-size: 30;
+}

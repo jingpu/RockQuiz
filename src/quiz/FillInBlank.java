@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
  * 
  */
 public class FillInBlank extends QuestionBase {
-	private static final String typeIntro = "In this type of question, given a question with a blank, user need to fill in the blank"
+	private static final String typeIntro = "In this type of question, given a question with a blank, user needs to fill in the blank"
 			+ " Correct answer will get full score, while the wrong answer will get zero";
 
 	public FillInBlank(String questionType, String creatorId, int timeLimit,
@@ -85,22 +85,23 @@ public class FillInBlank extends QuestionBase {
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>This page will guide you to create a Fill-In-Blank question</h4>\n");
-		html.append("<p>Please enter proposed question description and answer. In order to insert a blank, please follow the format #blank# \n</p>\n");
+		html.append("Please enter proposed question description and answer. In order to insert a blank, please press the button \"add a blank\"<br>");
 
-		html.append("<p> i.e. In order to express a question: I think _____ is awesome. You should type it as \"I think #blank# is awesome\"\n</p>\n");
+		html.append("<span class='example'>i.e. In order to express a question: I think _____ is awesome. The correct input is \"I think #blank# is awesome\"</span><br>");
+		html.append("<p class='notice'> Notice: one question should and only contain one blank</p>");
 		html.append("<span class=\"description\">Question Description:<br></span>");
 
 		// textarea and add button
 		html.append("<div class=\"combo\">");
 		html.append("<textarea class=\"FIB\" name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea><br>");
+				+ "\" required></textarea>");
 		html.append("<input type=\"button\" value=\"add a blank\" onclick=\"addBlank(this);\" /><br>");
 		html.append("</div>");
 
 		// add answer field
-		html.append("Answer:   <input type=\"text\" name=\"answer\""
+		html.append("Answer:<input type=\"text\" name=\"answer\""
 				+ "\" required></input><br>");
-		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\""
+		html.append("Score:<input class=\"max_score\" type=\"text\" name=\"maxScore\""
 				+ "\" required></input><br>");
 
 		// add timeLimit field

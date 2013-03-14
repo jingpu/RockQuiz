@@ -31,12 +31,17 @@ function submitForm() {
 }
 
 function checkMatch() {
-	val 
+	for (var i = 0; i < 4; i++) {
+		var choiceId = "#cs" + i;	
+		var val = document.getElementById(choiceId).value;
+		if ( val == null || val =="") 
+			return false;
+	}
+	return true;
 }
 //For creation check
 function checkScore() {
-	var elements = document.getElementByClass("max_score");
-	 alert("score should be an integer!");
+	var elements = document.forms[0].getElementsByClassName("max_score");
 	for (var i = 0; i < elements.length; i++){
 		var val = elements[i].value;
 		if (isNaN (val-0) || val == null || val =="") {
@@ -50,7 +55,7 @@ function checkScore() {
 
 
 function checkBlank() {
-	var elements = document.getElementByClass("FIB");
+	var elements = document.getElementsByClassName("FIB");
 
 	for (var i = 0; i < elements.length; i++){
 		var elem = elements[i];

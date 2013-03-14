@@ -27,7 +27,7 @@ $(document).ready(function() {
         }
     });
     
-    $("#clear").click(function(){
-         $("#match").match("clear");
-    });
+//    $("#clear").click(function(){
+//         $("#match").match("clear");
+//    });
 });
