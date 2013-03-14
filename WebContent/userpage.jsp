@@ -2,12 +2,10 @@
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
 <%@ page import="user.Account"%>
-<%@ page import="user.Administrator"%>
 <%@ page import="user.UserManager"%>
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
-<%@ page import="user.TimeTrsf"%>
-<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="util.Helper"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -30,10 +28,10 @@
 		return;
 	}
 	String title = id + "'s Page";
-	
+	System.out.println(guest+id);
 	Account pageOwner = new Account(id);
 	List<String> friends = pageOwner.getFriendsList();
-	boolean forbid = pageOwner.equals(guest)?false : (pageOwner.getInfo("privacy").equals("1")?(friends.contains(guest)?false:true):false);
+	boolean forbid = id.equals(guest)?false : (pageOwner.getInfo("privacy").equals("1")?(friends.contains(guest)?false:true):false);
 	// generate achievements history
 	List<Activity> achieves = pageOwner.getAchievements(3);
 	// generate quizzes taken history
@@ -124,8 +122,8 @@
 				<%
 					} else {
 							for (Activity act : achieves) {
-								out.println("<li class='activity'>"
-										+ act.toStringMe(true) + "</li>");
+								out.println("<li>"
+										+ Helper.getTitleNDescription(act.type) + "</li>");
 							}
 						}
 					}

@@ -223,19 +223,19 @@ h3 {
 	list-style-type: square;
 	text-align: left;
 	margin-left: 20px;
-	padding-bottom: 10px;
+	padding-top: 10px;
 	word-wrap: break-all;
 }
 
 #body li.activity a {
 	color: #202020;
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 #body li.activity a:hover {
 	text-decoration: underline;
+	background: #ffffff;
 }
-
 
 #body .br {
 	border-bottom: 2px solid #659db4;

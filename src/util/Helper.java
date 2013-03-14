@@ -174,6 +174,12 @@ public final class Helper {
 		return "";
 	}
 	
+	public static String getTitleNDescription(String type){
+		return "<a href='#' title='"
+				+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
+				+ Helper.getTitle(type) + "</a>";
+	}
+	
 	public static String displayQuiz(Quiz quiz, boolean showCreator){
 		String quizUrl = quiz.getSummaryPage();
 		String creator = quiz.getCreatorId();

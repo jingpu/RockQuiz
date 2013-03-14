@@ -174,7 +174,6 @@ public class MyQuiz implements Quiz {
 							+ quizName + "\"");
 			rs.next();
 			creatorId = rs.getString("creatorId");
-			System.out.println(creatorId);
 			quizDescription = rs.getString("quizDescription");
 			canPractice = rs.getBoolean("canPractice");
 			isRandom = rs.getBoolean("isRandom");

@@ -28,7 +28,7 @@
 <title>Following fields - <%=userId%></title>
 </head>
 
-<Frameset cols="25%,*">
+<Frameset cols="35%,*">
 	<frame src="myfields_browse.jsp?id=<%=userId%>" marginheight=60 framebolder="0">
 	<frame src="myfields_search.jsp?s=d&q=<%=first%>" name=another
 		marginheight=60 framebolder="0">

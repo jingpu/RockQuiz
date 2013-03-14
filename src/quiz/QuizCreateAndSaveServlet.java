@@ -176,6 +176,9 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 						html.append("</body>");
 						html.append("</html>");
 						out.print(html.toString());
+						removeFromSession(session);
+						response.setHeader("Refresh","0.2;"+ quiz.getSummaryPage());
+						return;
 					}
 				}
 
@@ -183,7 +186,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 				removeFromSession(session);
 
 				// redirect to the quiz summary page
-				response.setHeader("Refresh","0.2;"+ quiz.getSummaryPage());
+				RequestDispatcher dispatch = request.getRequestDispatcher(quiz.getSummaryPage());
+				dispatch.forward(request, response);
 
 			}
 		}

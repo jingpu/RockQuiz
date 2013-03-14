@@ -9,7 +9,7 @@
 <html>
 <head>
 <script type="text/javascript" src="searchpage.js"></script>
-<link href="myfields.css" rel="stylesheet" type="text/css" />
+<link href="myfields_style.css" rel="stylesheet" type="text/css" />
 <%
 	String query = request.getParameter("q");
 	String pquery = query == null ? "" : query;
@@ -29,11 +29,17 @@
 	}
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="myfield_style.css" rel="stylesheet" type="text/css" />
 <title>Search Category Results</title>
 </head>
 <body>
-	<p><%=byCreateDate%> | <%=byTakenCount%></p>
-	<h3><%=pquery%></h3>
+	<div id="body">
+	<br>
+				<h3>
+					<%=byCreateDate%> | <%=byTakenCount%>
+				</h3>
+
+	<h4><%=pquery%></h4>
 	<%
 		if (query != null && (resultList == null || resultList.isEmpty())) {
 			out.println("<p>There is no related quiz.</p>");
@@ -66,6 +72,8 @@
 	<%
 		}
 	%>
+	</div>
+
 </body>
 <script type="text/javascript">
 	highlight("<%=pquery%>","g");
