@@ -46,7 +46,6 @@
 	} else if (box.equals("sent")){
 		retUrl = "Mailbox_sent.jsp";
 	}
-	System.out.println(retUrl);
 %>
 <body>
 	<div id="wrapper">
@@ -73,9 +72,6 @@
 	</div>
 	<p>
 	<form action="<%=retUrl%>">
-	<%
-		System.out.println(retUrl);
-	%>
 		<input type="hidden" name="id" value="<%=userId%>">
 		<input type="submit" value="Back">
 	</form>

@@ -22,8 +22,7 @@
 	if (guest == null || guest.equals("guest") || !UserManager.alreadyExist(guest)) {
 		response.sendRedirect("index.html");
 		return;
-	} else if (!UserManager.getAccountInfo(guest, "status")
-					.equals("s")) {
+	} else if (!UserManager.getAccountInfo(guest, "status").equals("s")) {
 		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	} else if (userId == null || !guest.equals(userId)){
@@ -145,6 +144,11 @@
 
 					<div class="rightbox">
 						<h3>RockQuiz Statistics</h3>
+						Register Users: <div id='usernumber' style='display: inline'></div>
+						<form action="CountUser" method="post">
+						<p>From:<input type="text" name="fromTime"> (YYYY-MM-DD)</p>
+						<p>To:
+						</form>
 					</div>
 				</div>
 			</div>
