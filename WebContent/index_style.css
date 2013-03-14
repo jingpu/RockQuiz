@@ -20,6 +20,7 @@ h1 {
 
 #browse {
 	width: 230px;
+	border: 2px solid #CCCCCC;
 }
 
 #browse dt {
@@ -28,6 +29,7 @@ h1 {
 }
 
 #browse dd {
+	background: white;
 	color: black;
 	border-bottom: 1px solid #CCCCCC;
 }
@@ -47,5 +49,6 @@ h1 {
 }
 
 #body {
-	width: 560px;
+	width: 550px;
+	border: 2px solid white;
 }
