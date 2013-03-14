@@ -436,7 +436,7 @@ public class UserManager{
 		close();
 		Collections.sort(userList, new Comparator<String>() {
 			public int compare(String a, String b) {
-				return (b.length() - a.length());
+				return (a.length() - b.length());
 			}
 		});
 		return userList;

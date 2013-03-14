@@ -42,7 +42,7 @@
 					<%--quizzes/users search box--%>
 					<form action="UserSearch" method="post">
 						<div>
-							<input type="search" name="query" value="<%=query%>" size="40">
+							<input type="search" name="query" value="<%=query%>" size="35">
 						</div>
 						<div class="readmore">
 							<input type="image" src="images/search.gif" />
@@ -53,6 +53,7 @@
 
 			<div id="body">
 				<%-- matched user results--%>
+				<p>Related Users</p>
 				<%
 					if(query != ""){
 							List<String> userResult = UserManager.getUserList(query);
@@ -60,7 +61,6 @@
 									out.println("<p>There is no related user.</p>");
 								} else {
 				%>
-				<p>Related users</p>
 				<ul>
 					<%
 						for (String str : userResult) {

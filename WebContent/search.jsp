@@ -42,10 +42,10 @@
 			+ "'>Creator ID</a>";
 	String byCategory = "<a href='search.jsp?s=g&q=" + pquery
 			+ "'>Category</a>";
-	if (query != null && request.getParameter("s") == null) {
+	if (pquery != "" && request.getParameter("s") == null) {
 		byRelavance = "Relavence";
 		resultList = man.searchForQuiz(query, 3);
-	} else if (query != null && request.getParameter("s") != null
+	} else if (pquery != "" && request.getParameter("s") != null
 			&& request.getParameter("s").equals("c")) {
 		byCreator = "Creator ID";
 		byCreateDate = "<a href='search.jsp?s=dc&q=" + pquery
@@ -53,7 +53,7 @@
 		byTakenCount = "<a href='search.jsp?s=tc&q=" + pquery
 				+ "'>Taken count</a>";
 		resultList = man.searchForQuizCreator(query, 3);
-	} else if (query != null && request.getParameter("s") != null
+	} else if (pquery != "" && request.getParameter("s") != null
 			&& request.getParameter("s").equals("g")) {
 		byCategory = "Category";
 		byCreateDate = "<a href='search.jsp?s=dg&q=" + pquery
@@ -61,36 +61,36 @@
 		byTakenCount = "<a href='search.jsp?s=tg&q=" + pquery
 				+ "'>Taken count</a>";
 		resultList = man.searchForCategory(query, 3);
-	} else if (query != null && request.getParameter("s") != null
+	} else if (pquery != "" && request.getParameter("s") != null
 			&& request.getParameter("s").equals("d")) {
 		byCreateDate = "Create date";
 		resultList = man.searchForQuiz(query, 1);
-	} else if (query != null && request.getParameter("s") != null
+	} else if (pquery != "" && request.getParameter("s") != null
 			&& request.getParameter("s").equals("dc")) {
 		byCreateDate = "Create date";
 		byCreator = "Creator ID";
 		byTakenCount = "<a href='search.jsp?s=tc&q=" + pquery
 				+ "'>Taken count</a>";
 		resultList = man.searchForQuizCreator(query, 1);
-	} else if (query != null && request.getParameter("s") != null
+	} else if (pquery != "" && request.getParameter("s") != null
 			&& request.getParameter("s").equals("dg")) {
 		byCreateDate = "Create date";
 		byCategory = "Category";
 		byTakenCount = "<a href='search.jsp?s=tg&q=" + pquery
 				+ "'>Taken count</a>";
 		resultList = man.searchForCategory(query, 1);
-	} else if (query != null && request.getParameter("s") != null
+	} else if (pquery != "" && request.getParameter("s") != null
 			&& request.getParameter("s").equals("t")) {
 		byTakenCount = "Taken count";
 		resultList = man.searchForQuiz(query, 2);
-	} else if (query != null && request.getParameter("s") != null
+	} else if (pquery != "" && request.getParameter("s") != null
 			&& request.getParameter("s").equals("tc")) {
 		byTakenCount = "Taken count";
 		byCreator = "Creator ID";
 		byCreateDate = "<a href='search.jsp?s=dc&q=" + pquery
 				+ "'>Create date</a>";
 		resultList = man.searchForQuizCreator(query, 2);
-	} else if (query != null && request.getParameter("s") != null
+	} else if (pquery != "" && request.getParameter("s") != null
 			&& request.getParameter("s").equals("tg")) {
 		byTakenCount = "Taken count";
 		byCategory = "Category";
@@ -157,10 +157,11 @@
 
 				<%--related quizzes search results--%>
 				<%
-					if (query != null && (resultList == null || resultList.isEmpty())) {
+					out.println("<p>Related Quizzes</p>");
+					if (pquery != "" && (resultList == null || resultList.isEmpty())) {
 						out.println("<p>There is no related quiz.</p>");
-					} else if (query != null) {
-						out.println("<p>Related quizzes</p>");
+					} else if (pquery != "") {
+						
 				%>
 					<ul>
 						<%
@@ -185,7 +186,7 @@
 				<%
 					}
 				%>
-				</div>
+				
 			</div>
 		</div>
 	</div>

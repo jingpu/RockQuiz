@@ -5,6 +5,7 @@
 <%@ page import="user.UserManager"%>
 <%@ page import="user.Message"%>
 <%@ page import="user.Activity"%>
+<%@ page import="util.Helper"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -121,8 +122,8 @@
 				<%
 					} else {
 							for (Activity act : achieves) {
-								out.println("<li class='activity'>"
-										+ act.toStringMe(true) + "</li>");
+								out.println("<li>"
+										+ Helper.getTitleNDescription(act.type) + "</li>");
 							}
 						}
 					}
