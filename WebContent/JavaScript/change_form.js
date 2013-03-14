@@ -6,28 +6,31 @@ $(document).ready(function() { //unload in javascript
 			submitForm();
 			},timeLimit * 1000);	
 	}
-
-////TODO: this part is still problematic
-//	$('#submit').click(function () {
-//	    $(':input:not(:button)').each(function(index, element) {
-//	        if (element.value === '') {
-//	            alert("please fill up all fields");
-//	        }
-//	    });
-//	    
-//	});
-    
 });
 
 function validateForm() {
 	if (!checkScore()) return false;
 	if (!checkBlank()) return false;
-	return false;
+	if (!checkTimeLimit()) return false;
+	return true;
 }
 
 //used for multi-page read mode
 function submitForm() {
 	document.forms[0].submit();
+}
+
+function checkTimeLimit() {
+	var elements = document.forms[0].getElementsByClassName("time_limit");
+	for (var i = 0; i < elements.length; i++){
+		var val = elements[i].value;
+		if (isNaN (val-0) || val == null || val =="") {
+			 alert("Time should be an integer!");
+			 elements[i].focus();  //val is an element type
+			 return false;
+		}
+	}
+	return true;
 }
 
 function checkMatch() {
@@ -55,7 +58,7 @@ function checkScore() {
 
 
 function checkBlank() {
-	var elements = document.getElementsByClassName("FIB");
+	var elements = document.forms[0].getElementsByClassName("FIB");
 
 	for (var i = 0; i < elements.length; i++){
 		var elem = elements[i];
@@ -94,7 +97,7 @@ function addBlank(button) {
 		return;
 	}
 	var questionDescription = button.parentNode.firstChild;
-	questionDescription.value += "#blank#";
+	questionDescription.value += " #blank# ";
 }
 
 /**
