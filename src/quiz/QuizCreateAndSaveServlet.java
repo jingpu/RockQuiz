@@ -32,16 +32,20 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("guest");
 		if (userName == null) {
@@ -53,6 +57,9 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 
 		// get parameters from HTTP request
 		String quizName = request.getParameter("quizName");
+
+		// Take care of space, escape to "_"
+		quizName = Helper.replaceSpace(quizName);
 		String tagString = request.getParameter("tagString");
 		String quizDescription = request.getParameter("quizDescription");
 
@@ -88,8 +95,7 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 			// write html
 			response.setContentType("text/html");
 			PrintWriter out = response.getWriter();
-			String message = "Quiz name \"" + quizName
-					+ "\" already exists. "
+			String message = "Quiz name \"" + quizName + "\" already exists. "
 					+ "Please go back and use a valid quiz name.";
 			out.print(printCreationFailPage(message));
 
@@ -135,7 +141,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 						categoryType, category);
 			} else {
 				// construct the quiz class and store it to database
-				Timestamp createTime = new Timestamp(new java.util.Date().getTime());
+				Timestamp createTime = new Timestamp(
+						new java.util.Date().getTime());
 				List<String> tags = Helper.parseTags(tagString);
 				MyQuiz quiz = new MyQuiz(quizName, creatorId, quizDescription,
 						tags, Boolean.parseBoolean(canPractice),
@@ -148,16 +155,16 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 				// add quiz to user's database
 				String newAchieve = "0";
 				Account user = new Account(userName);
-				if(quizName != null){
+				if (quizName != null) {
 					user.addQuizCreated(quizName);
-					if(user.countHistory("c") == 1){
+					if (user.countHistory("c") == 1) {
 						newAchieve = "a1";
-					} else if(user.countHistory("c") == 5){
+					} else if (user.countHistory("c") == 5) {
 						newAchieve = "a2";
-					} else if(user.countHistory("c") == 10){
+					} else if (user.countHistory("c") == 10) {
 						newAchieve = "a3";
 					}
-					if(!newAchieve.equals("0")){
+					if (!newAchieve.equals("0")) {
 						user.addAchievement(newAchieve, quizName);
 						String title = Helper.getTitle(newAchieve);
 						response.setContentType("text/html");
@@ -167,7 +174,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 						html.append("<html>");
 						html.append("<head>");
 						html.append("<script language=javascript>");
-						html.append("alert('New Achievement - ").append(title).append("');");
+						html.append("alert('New Achievement - ").append(title)
+								.append("');");
 						html.append("</script>");
 						html.append("<meta charset=\"UTF-8\">");
 						html.append("<title></title>");
@@ -177,7 +185,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 						html.append("</html>");
 						out.print(html.toString());
 						removeFromSession(session);
-						response.setHeader("Refresh","0.2;"+ quiz.getSummaryPage());
+						response.setHeader("Refresh",
+								"0.2;" + quiz.getSummaryPage());
 						return;
 					}
 				}
@@ -186,7 +195,8 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 				removeFromSession(session);
 
 				// redirect to the quiz summary page
-				RequestDispatcher dispatch = request.getRequestDispatcher(quiz.getSummaryPage());
+				RequestDispatcher dispatch = request.getRequestDispatcher(quiz
+						.getSummaryPage());
 				dispatch.forward(request, response);
 
 			}
