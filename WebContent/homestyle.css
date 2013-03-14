@@ -186,7 +186,7 @@ h3 {
 #body .rightbox {
 	float: right;
 	width: 312px;
-	margin-right: 18px;
+	padding-right: 18px;
 	border-left: 2px solid #659db4;
 }
 

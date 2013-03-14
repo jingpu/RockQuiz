@@ -48,7 +48,28 @@
 <meta charset="UTF-8">
 <title>Quiz Summary - <%=quiz.getQuizName()%></title>
 <link href="homestyle.css" rel="stylesheet" type="text/css" />
-<style type="text/css"></style>
+<link href="CSS/table.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.alignleft {
+	text-align: left
+}
+
+body {
+	font-size: 14px;
+}
+
+#body .leftbox {
+	width: 300px;
+	padding-left: 10px;
+	padding-right: 5px;
+}
+
+#body .rightbox {
+	width: 300px;
+	padding-left: 15px;
+	padding-right: 10px;
+}
+</style>
 </head>
 <body>
 	<div id="wrapper">
@@ -164,67 +185,77 @@
 				</dd>
 			</dl>
 			<div id="body">
-
 				<!-- The text description of the quiz. -->
-				<h2>Quiz Description</h2>
-				<p>
-					<%=quiz.getQuizDescription()%>
-				</p>
+				<h3>Quiz Description</h3>
+				<div class="alignleft">
+					<p>
+						<%=quiz.getQuizDescription()%>
+					</p>
 
-				<h2>Quiz Category</h2>
-				<p>
-					<a href='search.jsp?s=g&q=<%=quiz.getCategory()%>'><%=quiz.getCategory()%></a>
-				</p>
+					<p>
+						<b>Category: </b> <a
+							href='search.jsp?s=g&q=<%=quiz.getCategory()%>'><%=quiz.getCategory()%></a>
+					</p>
 
-
-				<h3>Tags</h3>
-				<p>
-					<%
-						for (String tag : quiz.getTags()) {
-							out.print("#" + tag + ", \n");
-						}
-					%>
-				</p>
-
+					<p>
+						<b>Tags: </b>
+						<%
+							for (String tag : quiz.getTags()) {
+								out.print("#" + tag + ", \n");
+							}
+						%>
+					</p>
+				</div>
 
 				<!-- A way to initiate taking the quiz. A way to
 		start the quiz in practice mode, if available.-->
+				<table bolder="0">
+					<tr>
+						<td>
+							<%--challenge --%> <input name='' type='button'
+							value='Challenge my friends!' onclick='AddElement()' />
+							<form action='ChallengeLetterSent' target='hidFrame'
+								method='post' id='letter'>
+								<input type='hidden' name='quizName' value=<%=quizName%>>
+								<div id='msg'></div>
+							</form> <iframe name='hidFrame' style='display: none'></iframe> <%--challenge --%>
+						</td>
+						<td>
+							<%
+								// A way to start editing the quiz, if the user is the quizowner. 
+								if (userName.equals(quiz.getCreatorId())) {
+							%>
+							<form action="<%=quiz.getQuizEditPage()%>" method="POST">
+								<input type="hidden" name="quizName"
+									value="<%=quiz.getQuizName()%>"> <input type="submit"
+									value="Edit Quiz">
+							</form> <%
+ 	}
+ %>
+						</td>
 
-				<form action="<%=quiz.getQuizStartPage()%>" method="POST">
-					<input type="hidden" name="quizName" value=<%=quiz.getQuizName()%>>
-					<%
-						String disabledAttr = "";
-						if (!quiz.isCanPractice())
-							disabledAttr = "disabled";
-					%>
-					<input type="checkbox" name="practiceMode" value="true"
-						<%=disabledAttr%>> Start in practice mode<br> <input
-						type="submit" value="Start Quiz">
-				</form>
+						<form action="<%=quiz.getQuizStartPage()%>" method="POST">
+							<input type="hidden" name="quizName"
+								value=<%=quiz.getQuizName()%>>
+							<%
+								String disabledAttr = "";
+								if (!quiz.isCanPractice())
+									disabledAttr = "disabled";
+							%>
+						
+						<td><input type="checkbox" name="practiceMode" value="true"
+							<%=disabledAttr%>> Start in practice mode<br></td>
 
-				<%
-					// A way to start editing the quiz, if the user is the quizowner. 
-					if (userName.equals(quiz.getCreatorId())) {
-				%>
-				<form action="<%=quiz.getQuizEditPage()%>" method="POST">
-					<input type="hidden" name="quizName"
-						value="<%=quiz.getQuizName()%>"> <input type="submit"
-						value="Edit Quiz">
-				</form>
-				<%
-					}
-				%>
+						<td><input type="submit" value="Start Quiz"></td>
 
-				<%--challenge --%>
-				<input name='' type='button' value='Challenge my friends!'
-					onclick='AddElement()' />
-				<form action='ChallengeLetterSent' target='hidFrame' method='post'
-					id='letter'>
-					<input type='hidden' name='quizName' value=<%=quizName%>>
-					<div id='msg'></div>
-				</form>
-				<iframe name='hidFrame' style='display: none'></iframe>
-				<%--challenge --%>
+						</form>
+					</tr>
+				</table>
+
+
+
+
+
 
 				<div class="clear br"></div>
 				<!-- TODO A list of the user’s past performance on this specific quiz. -->
@@ -232,16 +263,16 @@
 				<!-- A list of the highest performers of all time. -->
 				<div class="leftbox">
 					<h3>High Scores</h3>
-					<table border="1">
+					<table class="fancy">
 						<tr>
 							<th>User Name</th>
 							<th>Score</th>
 							<th>Time Used</th>
-							<th>Date Submitted</th>
 						</tr>
 						<%
 							List<QuizEvent> highScores = quiz.highScoreEvents(5);
-							for (QuizEvent e : highScores) {
+							for (int i = 0; i < highScores.size(); i++) {
+								QuizEvent e = highScores.get(i);
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
@@ -250,11 +281,10 @@
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);
 						%>
-						<tr>
+						<tr <%= (i%2==0)?"":"class=\"alt\"" %> >
 							<td><%=taker%></td>
 							<td><%=e.getScore()%></td>
 							<td><%=e.getTimeElapsed() / 1000.0%>s</td>
-							<td><%=e.getSubmitTime()%></td>
 						</tr>
 						<%
 							}
@@ -267,16 +297,16 @@
 				<div class="rightbox">
 					<!-- A list of top performers in the last day. List -->
 					<h3>High Scores in the Last Day</h3>
-					<table border="1">
+					<table  class="fancy">
 						<tr>
 							<th>User Name</th>
 							<th>Score</th>
 							<th>Time Used</th>
-							<th>Date Submitted</th>
 						</tr>
 						<%
 							List<QuizEvent> highScoresLastday = quiz.highScoreLastDayEvents(5);
-							for (QuizEvent e : highScoresLastday) {
+						for (int i = 0; i < highScoresLastday.size(); i++) {
+							QuizEvent e = highScores.get(i);
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
@@ -285,11 +315,10 @@
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);
 						%>
-						<tr>
+						<tr <%= (i%2==0)?"":"class=\"alt\"" %> >
 							<td><%=taker%></td>
 							<td><%=e.getScore()%></td>
 							<td><%=e.getTimeElapsed() / 1000.0%>s</td>
-							<td><%=e.getSubmitTime()%></td>
 						</tr>
 						<%
 							}
@@ -304,16 +333,16 @@
 				<div class="leftbox">
 					<!-- A list showing the performance of recent test takers List -->
 					<h3>Recent Taken Log</h3>
-					<table border="1">
+					<table  class="fancy">
 						<tr>
 							<th>User Name</th>
 							<th>Score</th>
 							<th>Time Used</th>
-							<th>Date Submitted</th>
 						</tr>
 						<%
 							List<QuizEvent> recentEvents = quiz.recentTakenEvents(5);
-							for (QuizEvent e : recentEvents) {
+						for (int i = 0; i < recentEvents.size(); i++) {
+							QuizEvent e = recentEvents.get(i);
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
@@ -322,11 +351,10 @@
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);
 						%>
-						<tr>
+						<tr <%= (i%2==0)?"":"class=\"alt\"" %> >
 							<td><%=taker%></td>
 							<td><%=e.getScore()%></td>
 							<td><%=e.getTimeElapsed() / 1000.0%>s</td>
-							<td><%=e.getSubmitTime()%></td>
 						</tr>
 						<%
 							}
