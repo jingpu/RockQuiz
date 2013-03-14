@@ -13,13 +13,11 @@
 <%
 	String userId = request.getParameter("id");
 	String guest = (String) session.getAttribute("guest");
-	if (guest == null || guest.equals("guest")) {
+	if (guest == null || guest.equals("guest") || !UserManager.alreadyExist(guest)) {
 		response.sendRedirect("index.html");
 		return;
-	} else if(userId == null && UserManager.alreadyExist(guest)){
+	} else if(userId == null || !guest.equals(userId)){
 		response.sendRedirect("profile.jsp?id=" + guest);
-	} else if (!guest.equals(userId)) {
-		response.sendRedirect("home.jsp?id=" + guest);
 		return;
 	}
 
