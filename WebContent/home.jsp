@@ -63,6 +63,7 @@
 			</div>
 
 			<dl id="browse">
+				<dt><a href="quiz_create.jsp">Create Quiz</a></dt>
 				<dt>Announcements</dt>
 				<%
 					Announce ann = user.getLatestAnnounce();
