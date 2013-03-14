@@ -149,7 +149,7 @@ public class QuestionFactory {
 	public static QuestionBase createQuestion(String questionType,
 			HttpServletRequest request, int suffix) {
 		HttpSession session = request.getSession();
-		String creatorId = (String) session.getAttribute("guest_" + suffix);
+		String creatorId = (String) session.getAttribute("guest");
 		int timeLimit = Integer.parseInt(request.getParameter("timeLimit_"
 				+ suffix));
 		String questionDescription = request
