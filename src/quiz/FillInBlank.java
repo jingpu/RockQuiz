@@ -84,7 +84,7 @@ public class FillInBlank extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a Fill-In-Blank question</h1>\n");
+		html.append("<h4>This page will guide you to create a Fill-In-Blank question</h4>\n");
 		html.append("<p>Please enter proposed question description and answer. In order to insert a blank, please follow the format #blank# \n</p>\n");
 
 		html.append("<p> i.e. In order to express a question: I think _____ is awesome. You should type it as \"I think #blank# is awesome\"\n</p>\n");
@@ -135,7 +135,7 @@ public class FillInBlank extends QuestionBase {
 
 		// Hidden information - questionType and questionId information
 		// TODO: timeLimit pass to javascript
-		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+		html.append("<p><input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 
 		html.append("<p><input type=\"hidden\" name=\"questionType_"

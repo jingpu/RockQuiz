@@ -103,7 +103,7 @@ public class MultiChoice extends QuestionBase {
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multiChoice question</h1>\n");
+		html.append("<h4>This page will guide you to create a multiChoice question</h4>\n");
 		html.append("<p> Please enter proposed question description and answer </p><br>");
 		html.append("<span class= 'description'>Question Description:</span><br>");
 		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
@@ -174,7 +174,7 @@ public class MultiChoice extends QuestionBase {
 
 		// Hidden information - questionType and questionId information
 
-		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+		html.append("<p><input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
 				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
@@ -205,6 +205,7 @@ public class MultiChoice extends QuestionBase {
 
 	// TODO: change the multi-choice table structure, and merge different choice
 	// options into one field
+	@Deprecated
 	public static String getCreatedChoices(HttpServletRequest request) {
 		int numChoices = Integer.parseInt(request.getParameter("numChoices"));
 		StringBuilder choices = new StringBuilder();

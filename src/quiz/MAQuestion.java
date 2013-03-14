@@ -126,7 +126,7 @@ public class MAQuestion extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
+		html.append("<h4>This page will guide you to create a multi-answer question</h4>\n");
 		html.append("Please enter proposed question description and answer <br>");
 		html.append("<span class= 'description'>Question Description:</span><br>");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
@@ -193,7 +193,7 @@ public class MAQuestion extends QuestionBase {
 		}
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit: <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+		html.append("<p><input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"numAnswers_"
 				+ getQuestionId() + "\" value=\"" + answerList.size()
@@ -307,6 +307,7 @@ public class MAQuestion extends QuestionBase {
 	 * @param request
 	 * @return
 	 */
+	@Deprecated
 	public static String getCreatedAnswer(HttpServletRequest request) {
 		int numAnswers = Integer.parseInt(request.getParameter("numAnswers"));
 		StringBuilder answer = new StringBuilder();

@@ -123,6 +123,7 @@ public class MCMAQuestion extends QuestionBase {
 	 * @param request
 	 * @return
 	 */
+	@Deprecated
 	public static String getCreatedChoices(HttpServletRequest request) {
 		// TODO: changeable numChoices
 		// int numChoices = request.getParameter("numChoices"));
@@ -138,9 +139,9 @@ public class MCMAQuestion extends QuestionBase {
 
 	public static String getCreatedChoices(HttpServletRequest request,
 			int suffix) {
-		// TODO: changeable numChoices
-		// int numChoices = request.getParameter("numChoices"));
-		int numChoices = 4;
+
+		int numChoices = Integer.parseInt(request.getParameter("numChoices"
+				+ "_" + suffix));
 		StringBuilder choices = new StringBuilder();
 		for (int i = 0; i < numChoices; i++) {
 			choices.append("#");
@@ -219,7 +220,7 @@ public class MCMAQuestion extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multiChoice-MultiAnswer question</h1>\n");
+		html.append("<h4>This page will guide you to create a multiChoice-MultiAnswer question</h4>\n");
 		html.append("<p> Please enter proposed question description here: </p>\n");
 		html.append("<p class=\"description\">Question Description:</p>\n");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
@@ -293,11 +294,12 @@ public class MCMAQuestion extends QuestionBase {
 		}
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+		html.append("<p><input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
 
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
-				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
+				+ getQuestionId() + "\" value=\"" + choicesList.length
+				+ "\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
 				+ "\"></input></p>\n");
