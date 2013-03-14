@@ -16,7 +16,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<link href="home_style.css" rel="stylesheet" type="text/css" />
+<link href="homestyle.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
 	String guest = (String) session.getAttribute("guest");
@@ -63,7 +63,7 @@
 			</div>
 
 			<dl id="browse">
-				<dt class='createquiz'>
+				<dt>
 					<a href="quiz_create.jsp">Create Quiz</a>
 				</dt>
 				<dt>Announcements</dt>

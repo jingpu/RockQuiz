@@ -17,8 +17,6 @@
 	String userId = request.getParameter("id");
 	session = request.getSession();
 	String guest = (String) session.getAttribute("guest");
-	System.out.println(guest);
-	System.out.println(userId);
 	if (userId == null || guest.equals("guest")) {
 		response.sendRedirect("index.html");
 		return;
@@ -51,12 +49,10 @@
 
 			<%
 				List<String> msgsSent = user.getMessageSent();
-				System.out.println("msgsSent=" + msgsSent);
 				if (msgsSent == null || msgsSent.isEmpty()) {
 					out.println("<tr><td></td><td>(empty)</td><td></td></tr>");
 				} else {
 					for (String msgCode : msgsSent) {
-						//System.out.println(msgCode);
 						Message msg = user.getMessage("sent", msgCode);
 						SimpleDateFormat sdf = new SimpleDateFormat(
 								"yyyy-MM-dd HH:mm:ss.S");

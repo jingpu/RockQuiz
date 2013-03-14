@@ -56,7 +56,7 @@
 				<p>Related Users</p>
 				<%
 					if(query != ""){
-							List<String> userResult = UserManager.getUserList(query);
+							List<String> userResult = UserManager.getUserList(query, "2013", new Date().toString());
 								if (userResult.isEmpty()) {
 									out.println("<p>There is no related user.</p>");
 								} else {

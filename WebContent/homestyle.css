@@ -192,16 +192,13 @@ h3 {
 
 #body .leftbox {
 	float: left;
-	width: 300px;
-	padding-left: 10px;
-	padding-right: 15px;
+	width: 310px;
 }
 
 #body .rightbox {
 	float: right;
-	width: 300px;
-	padding-left: 13px;
-	padding-right: 10px;
+	width: 312px;
+	margin-right: 18px;
 	border-left: 2px solid #659db4;
 }
 
