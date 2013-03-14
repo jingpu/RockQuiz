@@ -67,7 +67,7 @@
 				<td>To:<%=toDisplay%></td>
 			</tr>
 			<tr>
-				<td><%=msg.getContent()%></td>
+				<td><%=msg.getContent()%><br><br><br></td>
 			</tr>
 		</table>
 	</div>
