@@ -264,6 +264,8 @@ public class MyQuiz implements Quiz {
 			Collections.shuffle(questionList);
 			// populate quizName_Content_Table
 			for (int i = 0; i < questionList.size(); i++) {
+				System.out.println("questionList size is "
+						+ questionList.size());
 				QuestionBase q = questionList.get(i);
 				String contentRow = "\"" + i + "\",\"" + q.getQuestionType()
 						+ "\",\"" + q.getQuestionId() + "\"";

@@ -139,7 +139,7 @@ public class Matching extends MCMAQuestion {
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a Matching question</h1>");
+		html.append("<h4>This page will guide you to create a Matching question</h4>");
 		html.append("<p> Please enter proposed question description and answer </p>");
 		html.append("<p class=\"description\">Question Description:</p>\n");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>");

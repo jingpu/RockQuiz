@@ -229,7 +229,7 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<div class=\"MCMA_div\">");
 		// Choice options and answers
 		html.append("<div class=\"choices\">");
-		for (int i = 1; i <= 4; i++) {
+		for (int i = 0; i < 4; i++) {
 			html.append("<div class=\"combo\">");
 			html.append("<span class='option'>Choice"
 					+ i
