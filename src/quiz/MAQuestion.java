@@ -144,7 +144,7 @@ public class MAQuestion extends QuestionBase {
 		// hidden answer option template
 		html.append("<div class=\"answer_template\" hidden=\"hidden\">");
 		html.append("<span class='option'></span><input type=\"text\" name=\"answer\""
-				+ "\" required></input><br>");
+				+ " class=\"requiredField\"></input><br>");
 		html.append("</div>");
 
 		// add, delete button

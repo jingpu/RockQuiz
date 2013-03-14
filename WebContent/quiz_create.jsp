@@ -20,7 +20,7 @@
 		questions.appendChild(question);
 		incMaxNum();
 	}
-
+	
 	function addSuffix(question) {
 		var maxNum = document.getElementById("max_num");
 		var curIndex = parseInt(maxNum.value);
@@ -33,19 +33,6 @@
 				var name = e.name + "_" + curIndex;
 				e.name = name;
 			}
-			/*
-			// add suffix to id
-			if (e.hasAttribute("id")) {
-				var id = e.id + "_" + curIndex;
-				e.id = id;
-			}
-			// add suffix to js call parameter
-			if (e.type === "button") {
-				// replace "addBlank();" with "addBlank(curIndex);"
-				var regexp = /\(\s*\)/;
-				e.onclick.replace(regexp, "(" + curIndex + ")");
-			}
-			 */
 		}
 	}
 
@@ -179,7 +166,7 @@
 		}
 	%>
 	<h1>Create Quiz</h1>
-	<form action="QuizCreateAndSaveServlet" method="post" onsubmit="return validateForm2()">
+	<form action="QuizCreateAndSaveServlet" method="post" onsubmit="return validateForm()">
 		<h2>Quiz Information</h2>
 		<div>
 			Quiz Name: <input type="text" name="quizName" required

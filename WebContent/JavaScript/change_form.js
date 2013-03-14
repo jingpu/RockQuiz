@@ -19,10 +19,10 @@ $(document).ready(function() { //unload in javascript
     
 });
 
-function validateForm2() {
+function validateForm() {
 	if (!checkScore()) return false;
 	if (!checkBlank()) return false;
-	return true;
+	return false;
 }
 
 //used for multi-page read mode
@@ -33,12 +33,12 @@ function submitForm() {
 //For creation check
 function checkScore() {
 	var elements = document.getElementByClass("max_score");
-	
+	 alert("score should be an integer!");
 	for (var i = 0; i < elements.length; i++){
-		var val = elements[i];
+		var val = elements[i].value;
 		if (isNaN (val-0) || val == null || val =="") {
 			 alert("score should be an integer!");
-			 val.focus();  //val is an element type
+			 elements[i].focus();  //val is an element type
 			 return false;
 		}
 	}
@@ -109,14 +109,20 @@ function addOptionSuffix(newChoiceDiv, suffix) {
 	var elements = newChoiceDiv.querySelectorAll("input");
 	for ( var i = 0; i < elements.length; i++) {
 		var e = elements[i];
+		
 		// add suffix to name
 		if (e.hasAttribute("name")) {
-			if(e.name == "choice")
-				e.name += suffix;
+			var name = e.name;
+			if(name.indexOf("choice") > -1){
+				e.name = name.replace("choice", "choice" + (suffix-1));
+			}			
 		}
+		// add suffix to value
 		if (e.hasAttribute("value")) {
-			if (e.value == "choice")
-				e.value += suffix;
+			var val = e.value;
+			if(val.indexOf("choice") > -1){
+				e.val = val.replace("choice", "choice" + (suffix-1));
+			}			
 		}
 	}
 }
@@ -158,6 +164,24 @@ function deleteChoice(button) {
 }
 
 
+function addAnswerSuffix(newAnswer, suffix) {
+	var elements = newAnswer.querySelectorAll("input");
+	for ( var i = 0; i < elements.length; i++) {
+		var e = elements[i];
+		// add suffix to name
+		if (e.hasAttribute("name")) {
+			var name = e.name;
+			if(name.indexOf("answer") > -1){
+				e.name = name.replace("answer", "answer" + (suffix-1));
+				if (e.classname == "requiredField") {
+					e.required=true;
+				}
+			}			
+		}
+	}
+}
+
+
 /**
  * Function for multi-answer questions
  */
@@ -174,7 +198,7 @@ function addAnswer(button) {
     newAnswer.removeAttribute("hidden");
   
     newAnswer.firstChild.innerHTML = "Answer" + (numMA -1) + ": ";
-    addOptionSuffix(newAnswer, numMA);
+    addAnswerSuffix(newAnswer, numMA);
     answerDiv.appendChild(newAnswer);
 }
 
@@ -231,10 +255,15 @@ function addMatchOptionSuffix(newOption, suffix) {
 	var elements = newOption.querySelectorAll("input");
 	for ( var i = 0; i < elements.length; i++) {
 		var e = elements[i];
-		// add suffix to name
+		
 		if (e.hasAttribute("name")) {
-			if(e.name == "choice" || e.name == "anwser")
-				e.name += suffix;
+			var name = e.name;
+			if(name.indexOf("choice") > -1){
+				e.name = name.replace("choice", "choice" + (suffix-1));
+			}
+			if(name.indexOf("answer") > -1){
+				e.name = name.replace("answer", "answer" + (suffix-1));
+			}
 		}
 	}
 }
