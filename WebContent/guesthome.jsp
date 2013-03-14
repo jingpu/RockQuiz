@@ -14,6 +14,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="homestyle.css" rel="stylesheet" type="text/css" />
 
 <title>RockQuiz - Guest</title>

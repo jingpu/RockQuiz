@@ -71,7 +71,7 @@ public final class Helper {
 		return replacedName;
 	}
 
-	public static String replacePound(String quizName) {
+	public static String replaceUnderscore(String quizName) {
 		String[] str = quizName.split("_");
 		String replacedName = "";
 		if (str.length == 1)

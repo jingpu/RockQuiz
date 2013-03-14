@@ -1,156 +1,36 @@
 @CHARSET "UTF-8";
 
-body {
-	font-family: tahoma, helvetica, arial, sans-serif;
-	font-size: 10px;
-	text-align: center;
-	background: url(images/home_bg.gif);
-}
 
-html,body,#wrapper,h1 {
-	margin: 0;
-	padding: 0;
-}
-
-img {
-	border: 0;
-}
 
 #wrapper {
 	padding-top: 50pt;
-	margin-left: 20px;
-	text-align: center;
 	width: 250px;
-	position: relative;
 }
 
 h1 {
 	font-size: 20pt;
-	font-weight: 900;
-	color: white;
-	font-variant: small-caps;
-}
-
-h2 {
-	font-size: 12pt;
-	font-weight: 600;
-	color: white;
-}
-
-h3 {
-	font-size: 8pt;
-	color: white;
-}
-
-.block {
-	display: block;
-}
-
-.clear {
-	clear: both;
-	height: 2px;
-	padding-top: 0;
-	margin-top: 0;
-	margin-bottom: 3px;
-	font-size: 1px;
-}
-
-#inner {
-	border-left: 2px solid white;
-	border-right: 2px solid white;
-	background: white;
-	color: black;
-	margin-bottom: 10px;
-}
-
-#header {
-	background-color: #c80000;
-	padding: 5px;
-	margin-bottom: 10px;
-	position: relative;
-}
-
-#nav,#nav a {
-	text-align: center;
-	color: white;
-	font-weight: bold;
-	text-decoration: underline;
-}
-
-#nav a:hover {
-	text-decoration: underline;
 }
 
 #browse {
-	float: left;
 	width: 250px;
-	margin: 0;
-	padding: 0;
-	background: white;
-	border-bottom: 2px solid white;
 }
 
 #browse dt {
 	background: #ad1c1c;
-	font-size: 10pt;
-	color: white;
-	margin: 2px 2px 1px 2px;
-	padding: 6px 0;
-	text-align: center;
-	font-weight: bold;
 }
 
 #browse dt a {
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-	display: block;
 	padding: 6px 22px;
 }
 
-#browse dt a:hover {
-	background: #f73838;
-}
 
 #browse dd {
 	background: url(images/home_bg.gif);
 	font-size: 10pt;
-	color: white;
-	margin: 1px 1px 1px 1px;
-	border-bottom: 1px solid #659db4;
-	padding: 3px 0;
-	margin: 0 2px;
 }
 
 #browse dd a {
 	background: #227293;
-	color: white;
-	font-weight: bold;
-	text-decoration: none;
-	display: block;
-	padding: 3px 22px;
-}
-
-#browse dd a:hover {
-	background: #74a7b7;
-}
-
-#browse .searchform {
-	padding: 10px;
-}
-
-#browse .text,#browse select {
-	width: 160px;
-}
-
-#browse form {
-	margin: 0;
-	padding: 0;
-}
-
-#browse form div {
-	padding-bottom: 8px;
-	width: 160px;
 }
 
 #body {
@@ -165,23 +45,8 @@ table {
 	font-size: 12px;
 }
 
-#body p {
-	margin: 1em 0;
-	padding: 0;
-}
-
 #body .br {
 	border-bottom: 2px solid #659db4;
-}
-
-#body h3 {
-	text-align: center;
-	font-family: tahoma, helvetica, arial, sans-serif;
-	font-size: 15px;
-	font-weight: normal;
-	color: #5d5d5d;
-	padding: 0 0 0 18px;
-	margin: 1px 0 3px 0;
 }
 
 #box {

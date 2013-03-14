@@ -374,7 +374,7 @@ public class MyQuiz implements Quiz {
 
 	@Override
 	public String getQuizName() {
-		return quizName;
+		return Helper.replaceUnderscore(quizName);
 	}
 
 	public List<QuestionBase> getQuestionList() {

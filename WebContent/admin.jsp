@@ -15,6 +15,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="admin_style.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
@@ -178,7 +179,7 @@
 								for (String id : userList) {
 									Account user = new Account(id);
 							%>
-							<li><%=Helper.displayUser(id)%> <%=user.getInfo("registrationTime")%></li>
+							<li><%=Helper.displayUser(id)%> registers on <%=user.getInfo("registrationTime")%></li>
 							<%
 								}
 							%>
@@ -198,7 +199,7 @@
 										if (quiz.getTakenTimes() > 0)
 											count++;
 								%>
-								<li><%=Helper.displayQuiz(quiz, false)%><%=quiz.getTakenTimes()%></li>
+								<li><%=Helper.displayQuiz(quiz, false)%> taken counts:<%=quiz.getTakenTimes()%></li>
 								<%
 									}
 								%>

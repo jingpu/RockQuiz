@@ -13,6 +13,7 @@
 <head>
 <script type="text/javascript" src="searchpage.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="search_style.css" rel="stylesheet" type="text/css" />
 <%
 	String query = request.getParameter("q");

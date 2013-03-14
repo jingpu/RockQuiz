@@ -69,8 +69,9 @@ public class MultiChoice extends QuestionBase {
 	public static String printCreateHtml() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multiChoice question</h1>\n");
+		html.append("<h4>This page will guide you to create a multiChoice question</h4>\n");
 		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\"><br>");
+		html.append("<p class='notice'> Notice: User should first create a certain number of choices, and label the right answer right behind the choice.<br>One Multi-Choice question could contain only one right answer</p>");
 		html.append("<p> Please enter proposed question description and answer </p><br>");
 		html.append("Question Description<br>: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
 
@@ -81,7 +82,7 @@ public class MultiChoice extends QuestionBase {
 		html.append("Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"radio\" name=\"answer\" value=\"choice2\"></input><br>");
 		html.append("Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"radio\" name=\"answer\" value=\"choice3\"></input><br>");
 		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice();\" /><br>");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice();\" />");
 		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice();\" /><br>");
 		html.append("</div><br>");
 
@@ -104,7 +105,8 @@ public class MultiChoice extends QuestionBase {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>This page will guide you to create a multiChoice question</h4>\n");
-		html.append("<p> Please enter proposed question description and answer </p><br>");
+		html.append("Please enter proposed question description and answer, and label the right answer. Add and delete button could allow user to customize the number of choices.<br>");
+		html.append("<p class='notice'> Notice: User should first create a certain number of choices, and label the right answer right behind the choice.<br>One Multi-Choice question could contain only one right answer</p>");
 		html.append("<span class= 'description'>Question Description:</span><br>");
 		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
 
@@ -129,7 +131,7 @@ public class MultiChoice extends QuestionBase {
 		html.append("</div>");
 
 		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice(this);\" /><br>");
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice(this);\" />");
 		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice(this);\" /><br>");
 
 		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" value =\"4\" ></input>");
