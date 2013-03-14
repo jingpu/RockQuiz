@@ -2,10 +2,10 @@
 @CHARSET "UTF-8";
 
 body {
-	font-family: tahoma, helvetica, arial, sans-serif;
+	font-family: lato, tahoma, helvetica, arial, sans-serif;
 	font-size: 10px;
 	text-align: center;
-	background: url(images/home_bg.gif);
+	background: url(../images/home_bg.gif);
 }
 
 html,body,#wrapper,h1 {

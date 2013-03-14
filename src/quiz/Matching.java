@@ -222,7 +222,7 @@ public class Matching extends MCMAQuestion {
 		html.append("<p>Question Creator: " + creatorId + "</p>\n");
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\"> onsubmit=false");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\"> onsubmit=\"return checkMatch()\"");
 		html.append("<span class= 'description'>Question Description:</span><br>");
 		html.append(questionDescription + "<br>");
 
