@@ -7,15 +7,15 @@ $(document).ready(function() { //unload in javascript
 			},timeLimit * 1000);	
 	}
 
-//TODO: this part is still problematic
-	$('#submit').click(function () {
-	    $(':input:not(:button)').each(function(index, element) {
-	        if (element.value === '') {
-	            alert("please fill up all fields");
-	        }
-	    });
-	    
-	});
+////TODO: this part is still problematic
+//	$('#submit').click(function () {
+//	    $(':input:not(:button)').each(function(index, element) {
+//	        if (element.value === '') {
+//	            alert("please fill up all fields");
+//	        }
+//	    });
+//	    
+//	});
     
 	
 	$('#questionRead').submit(function() {
@@ -33,7 +33,7 @@ $(document).ready(function() { //unload in javascript
 	});
 });
 
-function validateForm() {
+function validateForm2() {
 	if (!checkScore()) return false;
 	if (!checkBlank()) return false;
 	return true;
@@ -261,7 +261,7 @@ function addMatchOption(button) {
 	
 	var parentDiv = button.parentNode;
 	var choiceDiv = getElem(parentDiv, "choices");
-	//update numMCMA
+	//update numMatch
 	var numMatch = parentDiv.lastChild.value - 0 + 1;
 	parentDiv.lastChild.value = numMatch;
 	

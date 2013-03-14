@@ -92,7 +92,7 @@ public class PResponse extends QuestionBase {
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a picture-response question</h1><br>");
+		html.append("<h4>This page will guide you to create a picture-response question</h4><br>");
 		html.append("<p> Please enter proposed question description and answer </p><br>");
 		html.append("<p class=\"description\">Question Description:</p><br>");
 		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
@@ -137,8 +137,8 @@ public class PResponse extends QuestionBase {
 				+ getQuestionId() + "\" ></input></p>\n");
 
 		// Hidden information - questionType and questionId information
-		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
-				+ timeLimit + "\" ></input></p>");
+		html.append("<input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
+				+ timeLimit + "\" ></input>");
 
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()

@@ -179,7 +179,7 @@
 		}
 	%>
 	<h1>Create Quiz</h1>
-	<form action="QuizCreateAndSaveServlet" method="post" onsubmit="return validateForm()">
+	<form action="QuizCreateAndSaveServlet" method="post" onsubmit="return validateForm2()">
 		<h2>Quiz Information</h2>
 		<div>
 			Quiz Name: <input type="text" name="quizName" required

@@ -20,6 +20,8 @@ public class Matching extends MCMAQuestion {
 	private static final String typeIntro = "Matching question: user should try to match every option and answer"
 			+ "Correct answer will get positive points, while the wrong answer will get negative points";
 
+	// private final String choices;
+
 	/**
 	 * @param questionType
 	 * @param creatorId
@@ -36,6 +38,7 @@ public class Matching extends MCMAQuestion {
 			String tagString, float correctRation, String choices) {
 		super(questionType, creatorId, timeLimit, questionDescription, answer,
 				maxScore, tagString, correctRation, choices);
+		// this.choices = choices;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -46,8 +49,47 @@ public class Matching extends MCMAQuestion {
 	public Matching(String questionType, String questionId) {
 		super(questionType, questionId);
 		// TODO Auto-generated constructor stub
+		// String tmpChoices = "error";
+		//
+		// try {
+		// Connection con = MyDB.getConnection();
+		// Statement stmt = con.createStatement();
+		// stmt.executeQuery("USE c_cs108_yzhao3");
+		// ResultSet rs = stmt.executeQuery(queryStmt);
+		// rs.next();
+		// tmpChoices = rs.getString("choices");
+		// } catch (SQLException e) {
+		// e.printStackTrace();
+		// }
+		// choices = tmpChoices;
+		System.out.println(queryStmt);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#getQuerySaveString()
+	 */
+	@Override
+	public String getQuerySaveString() {
+		return "INSERT INTO " + MATCH_Table + " VALUES (\""
+				+ super.getBaseQuerySaveString() + ", \"" + choices + "\")";
+	}
+
+	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
+		int numAnswers = Integer.parseInt(request.getParameter("numChoices"
+				+ "_" + suffix));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+			answer.append(request.getParameter("answer" + i + "_" + suffix));
+			answer.append("#");
+		}
+		return answer.toString();
+	}
+
+	@Deprecated
 	public static String printCreateHtml() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
@@ -124,11 +166,10 @@ public class Matching extends MCMAQuestion {
 		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\"></input><input type=\"text\" name=\"answer\"></input>");
 		html.append("</div>");
 
-		html.append("<input type=\"hidden\" name=\"numOptions\" value=\"4\"></input>");
+		html.append("<input type=\"hidden\" name=\"numChoices\" value=\"4\"></input>");
 		html.append("</div>"); // for Match_div
 
 		// Full Score
-		html.append("<div id='option'>");
 		html.append("<p>Score:   <input type=\"text\" name=\"maxScore\" ></input></p>");
 		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>");
 
@@ -136,7 +177,6 @@ public class Matching extends MCMAQuestion {
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MATCH + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>");
-		html.append("</div>");
 
 		return html.toString();
 
@@ -155,36 +195,44 @@ public class Matching extends MCMAQuestion {
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">");
-		html.append("<p class=\"description\">Question Description:</p>\n");
-		html.append(questionDescription + "</p>");
+		html.append("<span class= 'description'>Question Description:</span><br>");
+		html.append(questionDescription);
 
+		html.append("<div id=\"match\"></div>");
+		html.append("<div id=\"results\"></div>");
 		// create choice options
-		List<String> choicesList = Helper.parseTags(choices);
-		for (int i = 0; i < choicesList.size(); i++) {
-			html.append("<span> id=" + "\"choice" + i + "\""
-					+ choicesList.get(i) + "</span>");
+		List<String> choiceList = Helper.parseTags(choices);
+		for (int i = 0; i < choiceList.size(); i++) {
+			String choiceIndex = "choice" + i;
+			html.append("<span id=" + "'" + choiceIndex + "'>"
+					+ "<input type=\"hidden\" name=\"" + choiceIndex
+					+ "\"></input>" + choiceList.get(i) + "</span>");
 		}
 
 		// create answer options
-		List<String> answersList = Helper.parseTags(answer);
-		for (int i = 0; i < answersList.size(); i++) {
-			html.append("<span> id=" + "\"answer" + i + "\""
-					+ answersList.get(i) + "</span>");
-			// html.append("<p><input type=\"hidden\" name=\"answer_"
-			// + getQuestionId() + "\" value= \"" + "\" id = \"answer" + i
-			// + "\">" + answersList.get(i) + "</input></p>");
+		List<String> answerList = Helper.parseTags(answer);
+		for (int i = 0; i < answerList.size(); i++) {
+			String answerIndex = "answer" + i;
+			html.append("<span id=" + "'" + answerIndex + "'>"
+					+ "<input type=\"hidden\" name=\"" + answerIndex
+					+ "\"></input>" + answerList.get(i) + "</span>");
 		}
+
 		// Hidden information - questionType and questionId information
 		html.append("<p>Time Limit:  <input id=\"time_limit\" type=\"hidden\" name=\"timeLimit\" value=\""
 				+ timeLimit + "\" ></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"numOption_"
-				+ getQuestionId() + "\" value=\"4\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"numChoices_"
+				+ getQuestionId() + "\"  value=\"" + answerList.size()
+				+ "\"></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
 				+ "\"></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>");
+
+		html.append("<button id=\"vals\">Results</button>");
+		html.append("<button id=\"clear\">Clear</button>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>");
 
 		System.out.println(html.toString());
@@ -201,26 +249,6 @@ public class Matching extends MCMAQuestion {
 	public String printReadHtmlForSingle() {
 		// TODO Auto-generated method stub
 		return super.printReadHtmlForSingle();
-	}
-
-	/**
-	 * Create answer in the format: #answer0##answer1##answer2#..#
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static String getCreatedAnswer(HttpServletRequest request) {
-		StringBuilder answer = new StringBuilder();
-		int numAnswers = Integer.parseInt(request.getParameter("numOptions"));
-		for (int i = 0; i < numAnswers; i++) {
-			answer.append("#");
-			// delete "answer=" will get choice index i.e. choice0
-			// then use request.getParameter(choice0) to get answerBody
-			String answerBody = request.getParameter("answer" + i);
-			answer.append(answerBody);
-			answer.append("#");
-		}
-		return answer.toString();
 	}
 
 	/*
