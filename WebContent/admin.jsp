@@ -131,7 +131,7 @@
 	<h3>Write Announcement</h3>
 	<form action="WriteAnnounce" method="post" id="announce"></form>
 	<p>
-		<textarea rows="6" cols="50" name="content" form="announce"
+		<textarea rows="6" cols="40" name="content" form="announce"
 			placeholder="Write new announcement"></textarea>
 	</p>
 	<input type="submit" value="Post" form="announce" margin-bottom="35">
@@ -142,8 +142,8 @@
 	<form action="DeleteAccount" method="post"
 		onsubmit="return confirmDeletion()">
 		<p>
-			<input type="text" name="id" placeholder="User name"> <input
-				type="submit" value="Delete Account">
+			Delete <input type="text" name="id" placeholder="User name"> <input
+				type="submit" value="Submit">
 		</p>
 	</form>
 	<form action="ChangeStatus" method="post"
