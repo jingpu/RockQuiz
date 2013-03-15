@@ -283,7 +283,7 @@
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
-								boolean forbid = takerAccount.equals(userName) ? false
+								boolean forbid = taker.equals(userName) ? false
 										: (takerAccount.getInfo("privacy").equals("1") ? (friends
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);
@@ -317,7 +317,7 @@
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
-								boolean forbid = takerAccount.equals(userName) ? false
+								boolean forbid = taker.equals(userName) ? false
 										: (takerAccount.getInfo("privacy").equals("1") ? (friends
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);
@@ -353,7 +353,7 @@
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
-								boolean forbid = takerAccount.equals(userName) ? false
+								boolean forbid = taker.equals(userName) ? false
 										: (takerAccount.getInfo("privacy").equals("1") ? (friends
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);

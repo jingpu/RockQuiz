@@ -178,7 +178,7 @@ public class QuestionProcessServlet extends HttpServlet {
 					newAchieve1 = true;
 					user.addAchievement("4", quizName);
 				}
-				if (currentScore >= quiz.getBestScore()) {
+				if (user.containsAchievement("a5") && currentScore >= quiz.getBestScore()) {
 					newAchieve2 = true;
 					user.addAchievement("5", quizName);
 				}
