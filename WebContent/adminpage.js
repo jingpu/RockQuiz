@@ -1,7 +1,7 @@
 function checkAnn(){
 	var announce = document.forms[0].content.value;
 	if(announce == "") {
-		document.getElementById('errorNotice').innerHTML = '<p>Announcement cannot be empty.</p>';
+		document.getElementById('errorNotice').innerHTML = '<h5>Announcement cannot be empty.</h5>';
 		return false;
 	}
 	return true;
@@ -10,7 +10,7 @@ function checkAnn(){
 function checkDeletion(){
 	var name = document.forms[1].id.value;
 	if(name == "") {
-		document.getElementById('errorNotice').innerHTML = '<p>User name cannot be empty.</p>';
+		document.getElementById('errorNotice').innerHTML = '<h5>User name cannot be empty.</h5>';
 		return false;
 	}
 	var r = confirm("Are you sure to delete " + name + "?");
@@ -23,7 +23,7 @@ function checkDeletion(){
 function checkAppointment(){
 	var name = document.forms[2].id.value;
 	if(name == "") {
-		document.getElementById('errorNotice').innerHTML = '<p>User name cannot be empty.</p>';
+		document.getElementById('errorNotice').innerHTML = '<h5>User name cannot be empty.</h5>';
 		return false;
 	}
 	var r = confirm("Are you sure to change " + name + "'s authority?");
@@ -36,7 +36,7 @@ function checkAppointment(){
 function checkDeleteQuiz() {
 	var name = document.forms[3].quiz.value;
 	if(name == "") {
-		document.getElementById('errorNotice').innerHTML = '<p>Quiz name cannot be empty.</p>';
+		document.getElementById('errorNotice').innerHTML = '<h5>Quiz name cannot be empty.</h5>';
 		return false;
 	}
 	var e = document.getElementById("quizOp");
@@ -55,7 +55,7 @@ function checkTime(){
 	var t2 = document.getElementById('toTime').value;
 	if(t1.search(/[\d]{4}-[\d]{2}-[\d]{2}/g) == -1 ||
 			t2.search(/[\d]{4}-[\d]{2}-[\d]{2}/g) == -1){
-		document.getElementById('errorNotice').innerHTML = '<p>Time format incorrect.</p>';
+		document.getElementById('errorNotice').innerHTML = '<h5>Time format incorrect.</h5>';
 		return false;
 	}
 	return true;

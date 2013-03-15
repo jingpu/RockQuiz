@@ -56,16 +56,16 @@
 
 
 			<div id="body">
-				<div id='errorNotice' align='center'>
+				<div id='errorNotice'>
 					<%
 						String del = request.getParameter("del");
 						if (del != null) {
 					%>
-					<p>
+					<h5>
 						Deleting Account Failed.
 						<%=del%>
 						Doesn't Exist.
-					</p>
+					</h5>
 					<%
 						}
 					%>
@@ -73,11 +73,11 @@
 						String apt = request.getParameter("adm");
 						if (apt != null) {
 					%>
-					<p>
+					<h5>
 						Appointing Administrator Failed.
 						<%=apt%>
 						Doesn't Exist.
-					</p>
+					</h5>
 					<%
 						}
 					%>
@@ -85,7 +85,7 @@
 						String ann = request.getParameter("ann");
 						if (ann != null) {
 					%>
-					<p>New Announcement is Posted.</p>
+					<h5>New Announcement is Posted.</h5>
 					<%
 						}
 					%>
@@ -93,11 +93,11 @@
 						String delq = request.getParameter("delq");
 						if (delq != null) {
 					%>
-					<p>
+					<h5>
 						Quiz Operation Failed.
 						<%=delq%>
 						Doesn't Exist.
-					</p>
+					</h5>
 					<%
 						}
 					%>
