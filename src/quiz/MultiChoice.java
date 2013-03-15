@@ -73,7 +73,7 @@ public class MultiChoice extends QuestionBase {
 		html.append("Please enter proposed question description and answer, and label the right answer. Add and delete button could allow user to customize the number of choices.<br>");
 		html.append("<p class='notice'> Notice: User should first create a certain number of choices, and label the right answer right behind the choice.<br>One Multi-Choice question could contain only one right answer</p>");
 		html.append("<span class= 'description'>Question Description:</span><br>");
-		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\" required></textarea><br>");
 
 		html.append("<div class=\"MC_div\">");
 		// Choice options
@@ -84,7 +84,7 @@ public class MultiChoice extends QuestionBase {
 					+ i
 					+ "</span>: <input type=\"text\" name=\"choice"
 					+ i
-					+ "\" ></input><input type=\"radio\" name=\"answer\" value=\"choice"
+					+ "\" required ></input><input type=\"radio\" name=\"answer\" value=\"choice"
 					+ i + "\"></input>");
 			html.append("</div>");
 		}
@@ -92,7 +92,7 @@ public class MultiChoice extends QuestionBase {
 
 		// hidden choice option template
 		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
-		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\"></input><input type=\"radio\" name=\"answer\" value=\"choice\"></input>");
+		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\" class=\"requiredField\"></input><input type=\"radio\" name=\"answer\" value=\"choice\"></input>");
 		html.append("</div>");
 
 		// add/delete choices
@@ -164,8 +164,6 @@ public class MultiChoice extends QuestionBase {
 	@Override
 	public int getScore(String userInput) {
 		// TODO Auto-generated method stub
-		System.out.println("userINput is " + userInput);
-		System.out.println("answer is " + answer);
 		if (userInput.equals(answer))
 			return maxScore;
 		return 0;

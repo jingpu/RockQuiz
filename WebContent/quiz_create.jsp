@@ -5,8 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%= QuestionFactory.printReference() %>
 
+<%= QuestionFactory.printReference() %>
 <script type="text/javascript">
 
 	function addQuestion() {
@@ -106,6 +106,7 @@
 		}
 	}
 </script>
+
 <meta charset="UTF-8">
 <title>Create Quiz</title>
 <link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
