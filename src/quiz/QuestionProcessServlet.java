@@ -48,10 +48,9 @@ public class QuestionProcessServlet extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("guest");
-		if (userName == null) {
-			// TODO remove it and do error checking instead
-			userName = "guest";
-			session.setAttribute("guest", userName);
+		if (userName == null || userName.equals("guest")) {
+			response.sendRedirect("index.html");
+			return;
 		}
 
 		// get quizName questionIndex currentScore from session
@@ -60,9 +59,11 @@ public class QuestionProcessServlet extends HttpServlet {
 		Integer currentScore = (Integer) session.getAttribute("currentScore");
 		boolean comingFromLastQuestionPage = false;
 		MyQuiz quiz;
-		if (quizName == null) {
+
+		if (request.getParameter("quizName") != null) {
 			// if there is no such attribute, we are just coming into this
 			// QuizDisplay page and there should be quizName in HTTP request
+			clearSessionAttr(session);
 			quizName = request.getParameter("quizName");
 			quiz = new MyQuiz(quizName);
 			if (quiz.isOnePage()) {
@@ -89,6 +90,8 @@ public class QuestionProcessServlet extends HttpServlet {
 			comingFromLastQuestionPage = true;
 			quiz = new MyQuiz(quizName);
 		}
+
+		assert quiz != null;
 
 		// then get the question list
 		List<QuestionBase> questionList = quiz.getQuestionList();
@@ -222,11 +225,15 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("</html>");
 
 			// remove all the session attributes defined in this servlet
-			session.removeAttribute("quizName");
-			session.removeAttribute("questionIndex");
-			session.removeAttribute("currentScore");
-			session.removeAttribute("quizStartTime");
+			clearSessionAttr(session);
 		}
+		
+	}
 
+	private void clearSessionAttr(HttpSession session) {
+		session.removeAttribute("quizName");
+		session.removeAttribute("questionIndex");
+		session.removeAttribute("currentScore");
+		session.removeAttribute("quizStartTime");
 	}
 }
