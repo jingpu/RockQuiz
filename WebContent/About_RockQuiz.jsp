@@ -6,6 +6,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="friendpage_style.css" rel="stylesheet" type="text/css" />
+<style>
+#body li {
+	list-style-type: square;
+	margin: 1em;
+}
+</style>
 <title>About RockQuiz</title>
 </head>
 <body>
@@ -136,7 +142,6 @@
 									<li>Search quizzes/users</li>
 									<li>Forbidden to take quizzes</li>
 								</ul>
-								<li>
 							</ul>
 						</li>
 						<li>Privacy Setting
