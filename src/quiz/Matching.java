@@ -21,8 +21,6 @@ public class Matching extends MCMAQuestion {
 	private static final String typeIntro = "Matching question: user should try to match every option and answer"
 			+ "Correct answer will get positive points, while the wrong answer will get negative points";
 
-	// private final String choices;
-
 	/**
 	 * @param questionType
 	 * @param creatorId
@@ -71,7 +69,7 @@ public class Matching extends MCMAQuestion {
 	public int getMaxScore() {
 		// TODO if allow expanding matching option, should change this hard code
 		// "4"
-		return super.getMaxScore() * 4;
+		return maxScore * 4;
 	}
 
 	/*
@@ -81,12 +79,10 @@ public class Matching extends MCMAQuestion {
 	 */
 	@Override
 	public int getScore(String userInput) {
-		System.out.println("user input is " + userInput);
 		List<String> inputList = Helper.parseTags(userInput);
 		List<String> solutionList = Helper.parseTags(answer);
 		int score = 0;
 		for (int i = 0; i < solutionList.size(); i++) {
-			System.out.println(inputList);
 			if (inputList.get(i).equals(solutionList.get(i)))
 				score += maxScore;
 		}
@@ -100,16 +96,10 @@ public class Matching extends MCMAQuestion {
 		StringBuilder answer = new StringBuilder();
 		for (int i = 0; i < numAnswers; i++) {
 			answer.append("#");
-			// if there is no input in answer field, it should be null
-			// In matching problem, answer is inserted into the value field of
-			// choice
-			// since choice order(solution order) is fixed, while presented
-			// answer is shuffled
 			String userAnswer = request.getParameter("choice" + i + "_"
 					+ getQuestionId());
-			if (userAnswer == null)
+			if (userAnswer == null || userAnswer == "")
 				userAnswer = " ";
-			System.out.println("userAnswer in getUserWgwne is " + userAnswer);
 			answer.append(userAnswer);
 			answer.append("#");
 		}
@@ -137,7 +127,7 @@ public class Matching extends MCMAQuestion {
 		html.append("<p class='notice'> Notice: For RockQuiz -alpha0.0, only one matching problem is allowed in \"one-page\" quiz creation.<br>");
 		html.append("Also, the matching question currently only supports 4 choices and answers.</p>");
 		html.append("<p class=\"description\">Question Description:</p>\n");
-		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea>");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\" required></textarea>");
 
 		html.append("<div class=\"Match_div\">");
 
@@ -147,8 +137,8 @@ public class Matching extends MCMAQuestion {
 			html.append("<div class=\"combo\">");
 			html.append("<span class='option'>Choice" + i + " & Answer" + i
 					+ ": </span><input type=\"text\" name=\"choice" + i
-					+ "\" ></input><input type=\"text\" name=\"answer" + i
-					+ "\"></input>");
+					+ "\" required></input><input type=\"text\" name=\"answer"
+					+ i + "\" required></input>");
 			html.append("</div>");
 		}
 		html.append("</div>"); // for choices div
@@ -157,8 +147,12 @@ public class Matching extends MCMAQuestion {
 		html.append("</div>"); // for Match_div
 
 		// Full Score
-		html.append("Score per answer:   <input type=\"text\" name=\"maxScore\" ></input>");
-		html.append("Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input>");
+		html.append("Score per answer:   <input class=\"max_score\"  type=\"text\" name=\"maxScore\" required></input>");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
+		html.append("</div>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""

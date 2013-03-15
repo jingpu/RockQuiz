@@ -83,7 +83,7 @@ public class MAQuestion extends QuestionBase {
 	@Override
 	public int getMaxScore() {
 		List<String> answerList = Helper.parseTags(answer);
-		return super.getMaxScore() * answerList.size();
+		return maxScore * answerList.size();
 	}
 
 	/*
@@ -95,6 +95,135 @@ public class MAQuestion extends QuestionBase {
 	public String getQuerySaveString() {
 		return "INSERT INTO " + MA_Table + " VALUES (\""
 				+ super.getBaseQuerySaveString() + ", \"" + isOrder + "\")";
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuestionBase#getScore(java.lang.String)
+	 */
+	@Override
+	public int getScore(String userInput) {
+		String[] answerList = parseAnswer(answer);
+		String[] inputList = parseAnswer(userInput);
+
+		if (isOrder.equals("true"))
+			return getOrderedScore(answerList, inputList);
+		else
+			return getUnorderedScore(answerList, inputList);
+	}
+
+	private int getOrderedScore(String[] answerList, String[] inputList) {
+		int score = 0;
+		for (int i = 0; i < answerList.length; i++) {
+			if (inputList[i].equals(answerList[i]))
+				score += maxScore;
+		}
+		return score;
+	}
+
+	private int getUnorderedScore(String[] answerList, String[] inputList) {
+		int score = 0;
+		HashSet<String> answerSet = new HashSet<String>();
+		for (String str : answerList) {
+			answerSet.add(str);
+		}
+		for (String str : inputList) {
+			if (answerSet.contains(str))
+				score += maxScore;
+		}
+		return score;
+	}
+
+	private String[] parseAnswer(String answerString) {
+		String[] splits = answerString.split("#");
+		List<String> answerList = new ArrayList<String>(splits.length);
+		for (int i = 0; i < splits.length; i++) {
+			if (!splits[i].equals(""))
+				answerList.add(splits[i]);
+		}
+		String[] answerArray = new String[answerList.size()];
+		return answerList.toArray(answerArray);
+	}
+
+	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
+		int numAnswers = Integer.parseInt(request.getParameter("numAnswers"
+				+ "_" + suffix));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+			answer.append(request.getParameter("answer" + i + "_" + suffix));
+			answer.append("#");
+		}
+		return answer.toString();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		int numAnswers = Integer.parseInt(request.getParameter("numAnswers_"
+				+ getQuestionId()));
+		StringBuilder answer = new StringBuilder();
+		for (int i = 0; i < numAnswers; i++) {
+			answer.append("#");
+			// if there is no input in answer field, it should be null
+
+			String userAnswer = request.getParameter("answer" + i + "_"
+					+ getQuestionId());
+			if (userAnswer == null)
+				userAnswer = "";
+
+			answer.append(userAnswer);
+			answer.append("#");
+		}
+		return answer.toString();
+	}
+
+	public Element toElement(Document doc) {
+		Element questionElem = null;
+		questionElem = doc.createElement("question");
+
+		// set question type as attribute to the root
+		Attr typeAttr = doc.createAttribute("type");
+		typeAttr.setValue("multi-answer");
+		questionElem.setAttributeNode(typeAttr);
+
+		// add question descritpion(query)
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(questionDescription));
+		questionElem.appendChild(query);
+
+		// add answers
+		List<String> answers = Helper.parseTags(answer);
+		for (int i = 0; i < answers.size(); i++) {
+			Element option = doc.createElement("answer");
+			option.appendChild(doc.createTextNode(answers.get(i)));
+			questionElem.appendChild(option);
+		}
+
+		// add time-limit
+		Element timeLimit = doc.createElement("time-limit");
+		timeLimit.appendChild(doc.createTextNode(Integer
+				.toString(this.timeLimit)));
+		questionElem.appendChild(timeLimit);
+
+		// add score
+		Element maxScore = doc.createElement("score");
+		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
+		questionElem.appendChild(maxScore);
+
+		// add tag
+		Element tag = doc.createElement("tag");
+		tag.appendChild(doc.createTextNode(this.tagString));
+		questionElem.appendChild(tag);
+
+		return questionElem;
 	}
 
 	public static String printCreateHtmlSinglePage() {
@@ -187,55 +316,6 @@ public class MAQuestion extends QuestionBase {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see quiz.QuestionBase#getScore(java.lang.String)
-	 */
-	@Override
-	public int getScore(String userInput) {
-		String[] answerList = parseAnswer(answer);
-		String[] inputList = parseAnswer(userInput);
-
-		if (isOrder.equals("true"))
-			return getOrderedScore(answerList, inputList);
-		else
-			return getUnorderedScore(answerList, inputList);
-	}
-
-	private int getOrderedScore(String[] answerList, String[] inputList) {
-		int score = 0;
-		for (int i = 0; i < answerList.length; i++) {
-			if (inputList[i].equals(answerList[i]))
-				score += maxScore;
-		}
-		return score;
-	}
-
-	private int getUnorderedScore(String[] answerList, String[] inputList) {
-		int score = 0;
-		HashSet<String> answerSet = new HashSet<String>();
-		for (String str : answerList) {
-			answerSet.add(str);
-		}
-		for (String str : inputList) {
-			if (answerSet.contains(str))
-				score += maxScore;
-		}
-		return score;
-	}
-
-	private String[] parseAnswer(String answerString) {
-		String[] splits = answerString.split("#");
-		List<String> answerList = new ArrayList<String>(splits.length);
-		for (int i = 0; i < splits.length; i++) {
-			if (!splits[i].equals(""))
-				answerList.add(splits[i]);
-		}
-		String[] answerArray = new String[answerList.size()];
-		return answerList.toArray(answerArray);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see quiz.QuestionBase#printReadHtmlForSingle()
 	 */
 	@Override
@@ -270,105 +350,6 @@ public class MAQuestion extends QuestionBase {
 				+ "\"  ></input></p>\n");
 
 		return html.toString();
-	}
-
-	/**
-	 * GetCreatedAnswer, static, for QuestionFactory
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@Deprecated
-	public static String getCreatedAnswer(HttpServletRequest request) {
-		int numAnswers = Integer.parseInt(request.getParameter("numAnswers"));
-		StringBuilder answer = new StringBuilder();
-		for (int i = 0; i < numAnswers; i++) {
-			answer.append("#");
-			// if there is no input in answer field, it should be null
-			answer.append(request.getParameter("answer" + i));
-			answer.append("#");
-		}
-		return answer.toString();
-	}
-
-	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
-		int numAnswers = Integer.parseInt(request.getParameter("numAnswers"
-				+ "_" + suffix));
-		StringBuilder answer = new StringBuilder();
-		for (int i = 0; i < numAnswers; i++) {
-			answer.append("#");
-			// if there is no input in answer field, it should be null
-			answer.append(request.getParameter("answer" + i + "_" + suffix));
-			answer.append("#");
-		}
-		return answer.toString();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	public String getUserAnswer(HttpServletRequest request) {
-		int numAnswers = Integer.parseInt(request.getParameter("numAnswers_"
-				+ getQuestionId()));
-		StringBuilder answer = new StringBuilder();
-		for (int i = 0; i < numAnswers; i++) {
-			answer.append("#");
-			// if there is no input in answer field, it should be null
-
-			String userAnswer = request.getParameter("answer" + i + "_"
-					+ getQuestionId());
-			if (userAnswer == null)
-				userAnswer = "";
-
-			answer.append(userAnswer);
-			answer.append("#");
-		}
-		return answer.toString();
-	}
-
-	public Element toElement(Document doc) {
-		Element questionElem = null;
-		questionElem = doc.createElement("question");
-
-		// set question type as attribute to the root
-		Attr typeAttr = doc.createAttribute("type");
-		typeAttr.setValue("multi-answer");
-		questionElem.setAttributeNode(typeAttr);
-
-		// add question descritpion(query)
-		Element query = doc.createElement("query");
-		query.appendChild(doc.createTextNode(questionDescription));
-		questionElem.appendChild(query);
-
-		// add answers
-		List<String> answers = Helper.parseTags(answer);
-		for (int i = 0; i < answers.size(); i++) {
-			Element option = doc.createElement("answer");
-			option.appendChild(doc.createTextNode(answers.get(i)));
-			questionElem.appendChild(option);
-		}
-
-		// add time-limit
-		Element timeLimit = doc.createElement("time-limit");
-		timeLimit.appendChild(doc.createTextNode(Integer
-				.toString(this.timeLimit)));
-		questionElem.appendChild(timeLimit);
-
-		// add score
-		Element maxScore = doc.createElement("score");
-		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
-		questionElem.appendChild(maxScore);
-
-		// add tag
-		Element tag = doc.createElement("tag");
-		tag.appendChild(doc.createTextNode(this.tagString));
-		questionElem.appendChild(tag);
-
-		return questionElem;
 	}
 
 }
