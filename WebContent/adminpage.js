@@ -49,3 +49,14 @@ function checkDeleteQuiz() {
 				+ "'s history'?");
 	}
 }
+
+function checkTime(){
+	var t1 = document.getElementById('fromTime').value;
+	var t2 = document.getElementById('toTime').value;
+	if(t1.search(/[\d]{4}-[\d]{2}-[\d]{2}/g) == -1 ||
+			t2.search(/[\d]{4}-[\d]{2}-[\d]{2}/g) == -1){
+		document.getElementById('errorNotice').innerHTML = '<p>Time format incorrect.</p>';
+		return false;
+	}
+	return true;
+}

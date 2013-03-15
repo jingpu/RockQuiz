@@ -175,7 +175,7 @@ public class Matching extends MCMAQuestion {
 		html.append("<p>Question Creator: " + creatorId + "</p>\n");
 		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
-		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\"> onsubmit=\"return checkMatch()\"");
+		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">");
 		html.append("<span class= 'description'>Question Description:</span><br>");
 		html.append(questionDescription + "<br>");
 
@@ -212,16 +212,15 @@ public class Matching extends MCMAQuestion {
 		html.append("<p><input type=\"hidden\" name=\"numChoices_"
 				+ getQuestionId() + "\"  value=\"" + answerList.size()
 				+ "\"></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"questionType_"
+		html.append("<input type=\"hidden\" name=\"questionType_"
 				+ getQuestionId() + "\" value=\"" + getQuestionType()
-				+ "\"></input></p>");
-		html.append("<p><input type=\"hidden\" name=\"questionId_"
+				+ "\"></input>");
+		html.append("<input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
-				+ "\" ></input></p>");
+				+ "\" ></input>");
 
-		html.append("<button id=\"clear\">Clear</button>");
 		html.append("<input id=\"result\" type=\"submit\" value = \"Next\"/></form>");
-
+		html.append("<button id=\"clear\">Clear</button>");
 		return html.toString();
 
 	}

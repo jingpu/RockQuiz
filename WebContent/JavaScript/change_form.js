@@ -33,15 +33,6 @@ function checkTimeLimit() {
 	return true;
 }
 
-function checkMatch() {
-	for (var i = 0; i < 4; i++) {
-		var choiceId = "#cs" + i;	
-		var val = document.getElementById(choiceId).value;
-		if ( val == null || val =="") 
-			return false;
-	}
-	return true;
-}
 //For creation check
 function checkScore() {
 	var elements = document.forms[0].getElementsByClassName("max_score");
