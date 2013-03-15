@@ -108,64 +108,90 @@
 </script>
 <meta charset="UTF-8">
 <title>Create Quiz</title>
-<link href="CSS/style.css" rel="stylesheet" type="text/css" >
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
-.question{border-bottom:1px dotted}
+.question {
+	border: 1px dotted gray; padding：15px;
+	padding: 0px 15px 15px;
+	margin: 20px 0px;
+	background: rgb(241, 210, 202);
+}
+
+#body {
+	text-align: left
+}
+
+.inner {
+	padding: 0px 20px 20px
+}
 </style>
 </head>
-<body onload="changeOnePage(); changeImmCorr();">
-	<%
-		/*
-		 * prepare the page for creating quiz
-		 */
-		// set default values for form inputs
-		String quizName = "";
-		String tagString = "";
-		String quizDescription = "";
-		String canPractice = "checked";
-		String isRandom = "checked";
-		String isOnePage = "";
-		String isImmCorrection = "";
-		String category = "";
-		String existingRadio = "checked";
-		String newRadio = "";
+<%
+	/*
+	 * prepare the page for creating quiz
+	 */
+	// set default values for form inputs
+	String quizName = "";
+	String tagString = "";
+	String quizDescription = "";
+	String canPractice = "checked";
+	String isRandom = "checked";
+	String isOnePage = "";
+	String isImmCorrection = "";
+	String category = "";
+	String existingRadio = "checked";
+	String newRadio = "";
 
-		// get form input values from session
-		String tmp;
-		tmp = (String) session.getAttribute("quizName");
-		if (tmp != null)
-			quizName = tmp;
-		tmp = (String) session.getAttribute("tagString");
-		if (tmp != null)
-			tagString = tmp;
-		tmp = (String) session.getAttribute("quizDescription");
-		if (tmp != null)
-			quizDescription = tmp;
-		tmp = (String) session.getAttribute("canPractice");
-		if (tmp != null && tmp.equals("false"))
-			canPractice = "";
-		tmp = (String) session.getAttribute("isRandom");
-		if (tmp != null && tmp.equals("false"))
-			isRandom = "";
-		tmp = (String) session.getAttribute("isOnePage");
-		if (tmp != null && tmp.equals("true"))
-			isOnePage = "checked";
-		tmp = (String) session.getAttribute("isImmCorrection");
-		if (tmp != null && tmp.equals("true"))
-			isImmCorrection = "checked";
-		tmp = (String) session.getAttribute("categoryType");
-		if (tmp != null) {
-			category = (String) session.getAttribute("category");
-			if (tmp.equals("new_category")) {
-				existingRadio = "";
-				newRadio = "checked";
-			} else {
-				existingRadio = "checked";
-				newRadio = "";
-			}
+	// get form input values from session
+	String tmp;
+	tmp = (String) session.getAttribute("quizName");
+	if (tmp != null)
+		quizName = tmp;
+	tmp = (String) session.getAttribute("tagString");
+	if (tmp != null)
+		tagString = tmp;
+	tmp = (String) session.getAttribute("quizDescription");
+	if (tmp != null)
+		quizDescription = tmp;
+	tmp = (String) session.getAttribute("canPractice");
+	if (tmp != null && tmp.equals("false"))
+		canPractice = "";
+	tmp = (String) session.getAttribute("isRandom");
+	if (tmp != null && tmp.equals("false"))
+		isRandom = "";
+	tmp = (String) session.getAttribute("isOnePage");
+	if (tmp != null && tmp.equals("true"))
+		isOnePage = "checked";
+	tmp = (String) session.getAttribute("isImmCorrection");
+	if (tmp != null && tmp.equals("true"))
+		isImmCorrection = "checked";
+	tmp = (String) session.getAttribute("categoryType");
+	if (tmp != null) {
+		category = (String) session.getAttribute("category");
+		if (tmp.equals("new_category")) {
+			existingRadio = "";
+			newRadio = "checked";
+		} else {
+			existingRadio = "checked";
+			newRadio = "";
 		}
-	%>
-	<h1>Create Quiz</h1>
+	}
+%>
+<body onload="changeOnePage(); changeImmCorr();">
+	<div id="wrapper">
+		<div id="inner">
+			<div id="header">
+			<h1>Create Quiz</h1>
+				<h3><%=new Date()%></h3>
+				<div id="nav">
+					<h2>
+						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
+					</h2>
+				</div>
+			</div>
+			<div id="body">
+				<div class="inner">
 	<form action="QuizCreateAndSaveServlet" method="post" onsubmit="return validateForm()">
 		<h2>Quiz Information</h2>
 		<div>
@@ -234,11 +260,16 @@
 		<%
 			out.println(QuestionFactory.printCreateHtmlSinglePage(questionType));
 		%>
-		<input type="button" value="Delete" onclick="deleteQuestion(this);">
+		<input type="button" value="Delete Question" onclick="deleteQuestion(this);">
 	</div>
 	
 	<%
 		}
 	%>
+	</div>
+	</div>
+	</div>
+	</div>
+	 
 </body>
 </html>

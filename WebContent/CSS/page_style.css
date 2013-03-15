@@ -257,6 +257,10 @@ h3 {
 	color: #f73838;
 }
 
+#body h2 {
+	color: #5d5d5d;
+}
+
 #body h3 {
 	text-align: center;
 	font-family: tahoma, helvetica, arial, sans-serif;
