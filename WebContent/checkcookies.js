@@ -19,7 +19,6 @@ function checkCookie()
 	var username = getCookie("username");
 	if (username!=null && username!="")
 	{
-		alert("Welcome again " + username);
 		window.location.href="home.jsp?id="+username;
 	}
 }
