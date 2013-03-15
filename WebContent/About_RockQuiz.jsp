@@ -162,7 +162,7 @@
 								they don't log out.
 						</ul>
 						
-						<li>Quiz Editing(TODO)</li>
+						<li>Quiz Editing</li>
 						<li>Rating and Review System(TODO)</li>
 						<li>Reporting System(TODO)</li>
 						<li>Error Handling(TODO-MUST DO)</li>

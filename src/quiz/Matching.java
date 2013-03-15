@@ -226,13 +226,19 @@ public class Matching extends MCMAQuestion {
 	@Override
 	public String printReadHtml() {
 		StringBuilder html = new StringBuilder();
+
+		html.append("<p class='creator'>Question Creator: " + creatorId
+				+ "</p>\n");
 		html.append("<h2>Question Type Introduction</h2>\n");
-		html.append("<p>Question Creator: " + creatorId + "</p>\n");
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">");
-		html.append("<span class= 'description'>Question Description:</span><br>");
-		html.append(questionDescription + "<br>");
+
+		// question description
+		html.append("<div class=\"question\">");
+		html.append("<div class='description'>Question Description:</div>");
+		html.append("<p>");
+		html.append(questionDescription);
+		html.append("</p>");
 
 		html.append("<div id=\"match\"></div>");
 		html.append("<div id=\"results\"></div>");
@@ -273,9 +279,13 @@ public class Matching extends MCMAQuestion {
 		html.append("<input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input>");
+		html.append("</div>");
 
-		html.append("<input id=\"result\" type=\"submit\" value = \"Next\"/></form>");
+		html.append("<input class=\"submmit_btn\" id=\"result\" type=\"submit\" value = \"Next\"/>");
+		html.append("</form>");
+		html.append("<div class=\"clear_btn\">");
 		html.append("<button id=\"clear\">Clear</button>");
+		html.append("</div>");
 		return html.toString();
 
 	}

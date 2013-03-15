@@ -121,7 +121,9 @@
 								}
 							%>
 						</div>
+						<div id = "submit_btn">
 						<input type="submit" value="Save">
+						</div>
 					</form>
 				</div>
 			</div>

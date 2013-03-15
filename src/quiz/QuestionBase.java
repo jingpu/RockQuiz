@@ -208,14 +208,9 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 
 	public String printReadHtml() {
 		StringBuilder html = new StringBuilder();
-
-		// TODO: may be integrated into jsp
+		html.append("<br><div class='creator'>Question Creator: " + creatorId
+				+ "</div>\n");
 		html.append("<h2>Question Type Introduction</h2>\n");
-		// html.append("<p>" + typeIntro + "</p>\n");
-
-		// The creator of the question TODO: link to User's profile page
-		html.append("<p>Question Creator: " + creatorId + "</p>\n");
-
 		return html.toString();
 	}
 
@@ -258,6 +253,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 	public int getTimeLimit() {
 		return timeLimit;
 	}
+
 	public static String printReference() {
 		StringBuilder refString = new StringBuilder();
 		refString

@@ -34,7 +34,10 @@
 .description {
 		font-family: "Times New Roman", Time, serif;
 		font-style: italic;
-		font-size: 50;
+		font-weight: bold;
+		padding-top: 5px;
+		font-size: 18px;
+		
 }
 
 .example {
@@ -48,4 +51,11 @@
 		font-weight: bold;
 		color: #C80000;
 		font-size: 30;
+}
+.creator {
+		font-family: "Times New Roman", Time, serif;
+		font-style: italic;
+		font-weight: bold;
+		font-size: 40;
+		text-align:right;
 }

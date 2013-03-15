@@ -18,7 +18,7 @@ public class QResponse extends QuestionBase {
 	// TODO: add partial score feature here -> be handed by human grader
 	private static final String typeIntro = "In this type of question, given a question, "
 			+ "user need to answer the question in the answer area. Correct answer will get full score, "
-			+ "while the wrong answer will get zero";
+			+ "while the wrong answer will get zero.";
 
 	public QResponse(String questionType, String creatorId, int timeLimit,
 			String questionDescription, String answer, int maxScore,
@@ -110,11 +110,14 @@ public class QResponse extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">");
-		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>");
+
+		// question description
+		html.append("<div class=\"question\">");
+		html.append("<div class='description'>Question Description:</div>");
+		html.append(questionDescription);
+
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
 				+ getQuestionId() + "\" ></input></p>");
 
@@ -127,8 +130,11 @@ public class QResponse extends QuestionBase {
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\"  ></input></p>");
-		html.append("<input type=\"submit\" value = \"Next\"/></form>");
-
+		html.append("</div>");
+		html.append("<div id = \"submit_btn\">");
+		html.append("<input type=\"submit\" value = \"Next\"/>");
+		html.append("</div>");
+		html.append("</form>\n");
 		return html.toString();
 
 	}
