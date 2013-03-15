@@ -15,6 +15,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<script type="text/javascript" src="checkcookies.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="homestyle.css" rel="stylesheet" type="text/css" />
@@ -64,9 +65,6 @@
 			</div>
 
 			<dl id="browse">
-				<dt>
-					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
-				</dt>
 				<dt>Announcements</dt>
 				<%
 					Announce ann = user.getLatestAnnounce();
@@ -120,6 +118,10 @@
 				%>
 
 				<dt>Quick Link</dt>
+				
+				<dd>
+					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
+				</dd>
 				<%
 					if (user.getInfo("status").equals("s")) {
 				%>
@@ -139,7 +141,9 @@
 				<dd>
 					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
 				</dd>
-
+				<dd>
+					<a href="About_RockQuiz.html">About RockQuiz</a>
+				</dd>
 				<dt>Search Quizzes Or Users</dt>
 				<dd class="searchform">
 					<form action="Search" method="post">
