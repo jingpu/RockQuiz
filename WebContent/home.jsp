@@ -68,6 +68,7 @@
 					<a href="quiz_create.jsp">Create Quiz</a>
 				</dt>
 				<dt>Announcements</dt>
+				<dd>
 				<%
 					Announce ann = user.getLatestAnnounce();
 					if (ann != null) {
@@ -86,6 +87,7 @@
 				<%
 					}
 				%>
+				</dd>
 				<dd class="readmore">
 					<a href="announce.jsp"><b>MORE</b></a>
 				</dd>
@@ -249,8 +251,8 @@
 					</div>
 
 					<div class="clear br"></div>
-
-					<div class="leftbox">
+					
+					<div class="leftbox2">
 						<h3>My Achievements</h3>
 						<%
 							if (achieves.isEmpty()) {
@@ -274,7 +276,7 @@
 						</p>
 						<div class="clear"></div>
 					</div>
-					<div class="rightbox">
+					<div class="rightbox2">
 						<h3>Friends Activities</h3>
 						<%
 							if (friendsAct.isEmpty()) {

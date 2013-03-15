@@ -81,7 +81,7 @@
 						<ul>
 							<%
 								QuizManager man = new MyQuizManager();
-								List<Quiz> popQuizzes = man.getPopularQuiz(10);
+								List<Quiz> popQuizzes = man.getPopularQuiz(5);
 								//System.out.println(popQuizzes);
 								for (Quiz quiz : popQuizzes) {
 									String display = Helper.displayQuiz(quiz, false);
@@ -98,7 +98,7 @@
 						<h3>Recent Quizzes</h3>
 						<ul>
 							<%
-								List<Quiz> recentQuizzes = man.getRecentCreateQuiz(10);
+								List<Quiz> recentQuizzes = man.getRecentCreateQuiz(5);
 								//System.out.println(popQuizzes);
 								for (Quiz quiz : recentQuizzes) {
 									String display = Helper.displayQuiz(quiz, false);
@@ -113,8 +113,6 @@
 						</ul>
 						<div class="clear"></div>
 					</div>
-
-					<div class="clear br"></div>
 
 				</div>
 			</div>

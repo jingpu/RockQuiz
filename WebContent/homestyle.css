@@ -1,2 +1,26 @@
 @CHARSET "UTF-8";
 
+#body .leftbox,#body .rightbox {
+	height: 200px;
+}
+
+#body .leftbox2,#body .rightbox2 {
+	margin-top: 5px;
+	color: #464646;
+	height: 250px;
+}
+
+#body .leftbox2 {
+	float: left;
+	width: 300px;
+	padding-left: 10px;
+	padding-right: 15px;
+}
+
+#body .rightbox2 {
+	float: right;
+	width: 300px;
+	padding-left: 13px;
+	padding-right: 10px;
+	border-left: 2px solid #659db4;
+}
