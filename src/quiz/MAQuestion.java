@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -104,8 +103,8 @@ public class MAQuestion extends QuestionBase {
 	 */
 	@Override
 	public int getScore(String userInput) {
-		String[] answerList = parseAnswer(answer);
-		String[] inputList = parseAnswer(userInput);
+		List<String> answerList = Helper.parseTags(answer);
+		List<String> inputList = Helper.parseTags(userInput);
 
 		if (isOrder.equals("true"))
 			return getOrderedScore(answerList, inputList);
@@ -113,16 +112,17 @@ public class MAQuestion extends QuestionBase {
 			return getUnorderedScore(answerList, inputList);
 	}
 
-	private int getOrderedScore(String[] answerList, String[] inputList) {
+	private int getOrderedScore(List<String> answerList, List<String> inputList) {
 		int score = 0;
-		for (int i = 0; i < answerList.length; i++) {
-			if (inputList[i].equals(answerList[i]))
+		for (int i = 0; i < answerList.size(); i++) {
+			if (inputList.get(i).equals(answerList.get(i)))
 				score += maxScore;
 		}
 		return score;
 	}
 
-	private int getUnorderedScore(String[] answerList, String[] inputList) {
+	private int getUnorderedScore(List<String> answerList,
+			List<String> inputList) {
 		int score = 0;
 		HashSet<String> answerSet = new HashSet<String>();
 		for (String str : answerList) {
@@ -133,17 +133,6 @@ public class MAQuestion extends QuestionBase {
 				score += maxScore;
 		}
 		return score;
-	}
-
-	private String[] parseAnswer(String answerString) {
-		String[] splits = answerString.split("#");
-		List<String> answerList = new ArrayList<String>(splits.length);
-		for (int i = 0; i < splits.length; i++) {
-			if (!splits[i].equals(""))
-				answerList.add(splits[i]);
-		}
-		String[] answerArray = new String[answerList.size()];
-		return answerList.toArray(answerArray);
 	}
 
 	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
@@ -177,7 +166,7 @@ public class MAQuestion extends QuestionBase {
 			String userAnswer = request.getParameter("answer" + i + "_"
 					+ getQuestionId());
 			if (userAnswer == null)
-				userAnswer = "";
+				userAnswer = " ";
 
 			answer.append(userAnswer);
 			answer.append("#");

@@ -126,28 +126,6 @@ public class MCMAQuestion extends QuestionBase {
 		return answer.toString();
 	}
 
-	/**
-	 * Get Choices string from several distinct choice(input) fields Since input
-	 * fields are different from checkbox field, here we have to use multiple
-	 * fields(parameters) rather than a single parameter
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@Deprecated
-	public static String getCreatedChoices(HttpServletRequest request) {
-		// TODO: changeable numChoices
-		// int numChoices = request.getParameter("numChoices"));
-		int numChoices = 4;
-		StringBuilder choices = new StringBuilder();
-		for (int i = 0; i < numChoices; i++) {
-			choices.append("#");
-			choices.append(request.getParameter("choice" + i));
-			choices.append("#");
-		}
-		return choices.toString();
-	}
-
 	public static String getCreatedChoices(HttpServletRequest request,
 			int suffix) {
 
@@ -187,40 +165,78 @@ public class MCMAQuestion extends QuestionBase {
 		return score;
 	}
 
-	public static String printCreateHtml() {
-		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multiChoice-MultiAnswer question</h1>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
-		html.append("<p> Please enter proposed question description here: </p>\n");
-		html.append("<p class=\"description\">Question Description:</p>\n");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
-		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>\n");
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
+	 */
+	@Override
+	public String getUserAnswer(HttpServletRequest request) {
+		String answerList[] = request.getParameterValues("answer_"
+				+ getQuestionId());
+		if (answerList == null)
+			return "";
+		StringBuilder answer = new StringBuilder();
+		for (String str : answerList) {
+			answer.append("#");
+			answer.append(str);
+			answer.append("#");
+		}
+		return answer.toString();
+	}
 
-		// Choice options and answers
-		html.append("<div id=\"MCMA\"");
-		html.append("<p>Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice0\"></input></p>\n");
-		html.append("<p>Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice1\"></input></p>\n");
-		html.append("<p>Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice2\"></input></p>\n");
-		html.append("<p>Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice3\"></input></p>\n");
-		html.append("</div>\n");
+	private Set<String> getAnswerSet() {
+		List<String> answerList = Helper.parseTags(answer);
+		HashSet<String> answerSet = new HashSet<String>(answerList);
+		return answerSet;
+	}
 
-		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice();\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice();\" />\n");
+	public Element toElement(Document doc) {
+		Element questionElem = null;
+		questionElem = doc.createElement("question");
 
-		// Full Score
-		html.append("<p>Score per correct answer:   <input class=\"max_score\" type=\"text\" name=\"maxScore\" ></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
+		// set question type as attribute to the root
+		Attr typeAttr = doc.createAttribute("type");
+		typeAttr.setValue("multi-choice-multi-answer");
+		questionElem.setAttributeNode(typeAttr);
 
-		// Hidden information - question Type and tag information
-		html.append("<p><input type=\"hidden\" name=\"numChoices\" id=\"numChoices\"></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ QuestionBase.MCMA + "\" ></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>\n");
+		// add question descritpion(query)
+		Element query = doc.createElement("query");
+		query.appendChild(doc.createTextNode(questionDescription));
+		questionElem.appendChild(query);
 
-		return html.toString();
+		// add choices and answers
+		List<String> options = Helper.parseTags(choices);
+		Set<String> answerSet = getAnswerSet();
+		for (int i = 0; i < options.size(); i++) {
+			Element option = doc.createElement("option");
+			option.appendChild(doc.createTextNode(options.get(i)));
+			if (answerSet.contains(options.get(i))) {
+				Attr answerAttr = doc.createAttribute("answer");
+				answerAttr.setValue("answer");
+				option.setAttributeNode(answerAttr);
+			}
+			questionElem.appendChild(option);
+		}
 
+		// add time-limit
+		Element timeLimit = doc.createElement("time-limit");
+		timeLimit.appendChild(doc.createTextNode(Integer
+				.toString(this.timeLimit)));
+		questionElem.appendChild(timeLimit);
+
+		// add score
+		Element maxScore = doc.createElement("score");
+		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
+		questionElem.appendChild(maxScore);
+
+		// add tag
+		Element tag = doc.createElement("tag");
+		tag.appendChild(doc.createTextNode(this.tagString));
+		questionElem.appendChild(tag);
+
+		return questionElem;
 	}
 
 	public static String printCreateHtmlSinglePage() {
@@ -229,7 +245,7 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("Please enter proposed question description and answer, and label the right answer. Add and delete button could allow user to customize the number of choices.<br>");
 		html.append("<p class='notice'> Notice: one question could have one or more answer.</p>");
 		html.append("<p class=\"description\">Question Description:</p>\n");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea></p>\n");
+		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\" required></textarea></p>\n");
 		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>\n");
 
 		html.append("<div class=\"MCMA_div\">");
@@ -241,15 +257,15 @@ public class MCMAQuestion extends QuestionBase {
 					+ i
 					+ "</span>: <input type=\"text\" name=\"choice"
 					+ i
-					+ "\" ></input><input type=\"checkbox\" name=\"answer\" value=\"choice"
-					+ i + "\"></input>");
+					+ "\" required></input><input type=\"checkbox\" name=\"answer\" value=\"choice"
+					+ i + "\" ></input>");
 			html.append("</div>");
 		}
 		html.append("</div>"); // div for choices
 
 		// hidden choice option template
 		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
-		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\"></input><input type=\"checkbox\" name=\"answer\" value=\"choice\"></input>");
+		html.append("<span class='option'></span> <input type=\"text\" name=\"choice\" class=\"requiredField\"></input><input type=\"checkbox\" name=\"answer\" value=\"choice\"></input>");
 		html.append("</div>");
 
 		// add/delete choices
@@ -357,87 +373,6 @@ public class MCMAQuestion extends QuestionBase {
 				+ "\"  ></input></p>\n");
 
 		return html.toString();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * quiz.QuestionBase#getUserAnswer(javax.servlet.http.HttpServletRequest)
-	 */
-	@Override
-	public String getUserAnswer(HttpServletRequest request) {
-		String answerList[] = request.getParameterValues("answer_"
-				+ getQuestionId());
-		if (answerList == null)
-			return "";
-		StringBuilder answer = new StringBuilder();
-		for (String str : answerList) {
-			answer.append("#");
-			answer.append(str);
-			answer.append("#");
-		}
-		return answer.toString();
-	}
-
-	private Set<String> getAnswerSet() {
-		List<String> answerList = Helper.parseTags(answer);
-		HashSet<String> answerSet = new HashSet<String>(answerList);
-		return answerSet;
-	}
-
-	public Element toElement(Document doc) {
-		Element questionElem = null;
-		questionElem = doc.createElement("question");
-
-		// set question type as attribute to the root
-		Attr typeAttr = doc.createAttribute("type");
-		typeAttr.setValue("multi-choice-multi-answer");
-		questionElem.setAttributeNode(typeAttr);
-
-		// add question descritpion(query)
-		Element query = doc.createElement("query");
-		query.appendChild(doc.createTextNode(questionDescription));
-		questionElem.appendChild(query);
-
-		// add choices and answers
-		List<String> options = Helper.parseTags(choices);
-		Set<String> answerSet = getAnswerSet();
-		for (int i = 0; i < options.size(); i++) {
-			Element option = doc.createElement("option");
-			option.appendChild(doc.createTextNode(options.get(i)));
-			if (answerSet.contains(options.get(i))) {
-				Attr answerAttr = doc.createAttribute("answer");
-				answerAttr.setValue("answer");
-				option.setAttributeNode(answerAttr);
-			}
-			questionElem.appendChild(option);
-		}
-
-		// add time-limit
-		Element timeLimit = doc.createElement("time-limit");
-		timeLimit.appendChild(doc.createTextNode(Integer
-				.toString(this.timeLimit)));
-		questionElem.appendChild(timeLimit);
-
-		// add score
-		Element maxScore = doc.createElement("score");
-		maxScore.appendChild(doc.createTextNode(Integer.toString(this.maxScore)));
-		questionElem.appendChild(maxScore);
-
-		// add tag
-		Element tag = doc.createElement("tag");
-		tag.appendChild(doc.createTextNode(this.tagString));
-		questionElem.appendChild(tag);
-
-		return questionElem;
-	}
-
-	/**
-	 * @return
-	 */
-	public static String printReference() {
-		return QuestionBase.printReference();
 	}
 
 }

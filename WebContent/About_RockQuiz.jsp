@@ -89,14 +89,14 @@
 							</ul>
 						</li>
 						<li>Administration</li>
-						<ul>
+							<ul>
 							<li>Create announcements</li>
 							<li>Remove user accounts</li>
 							<li>Remove quizzes</li>
 							<li>Clear all history information for a certain quiz</li>
 							<li>Change users' rights</li>
 							<li>See site statistics</li>
-						</ul>
+							</ul>
 					</ul>
 
 
@@ -104,9 +104,6 @@
 						<b><i>Extension</i></b>
 					</p>
 					<ul>
-						<li>categorize quiz</li>
-						<li>categorize questions(TODO)</li>
-						<li>search by category(TODO)</li>
 						<li>Question Type:
 							<ul>
 								<li>Multi-Answer Question(ordered/unordered answer)</li>
@@ -119,9 +116,9 @@
 						</li>
 						<li>Tags and Categories:
 							<ul>
-								<li>categorize quiz(TODO)</li>
-								<li>categorize questions(TODO)</li>
-								<li>search by category(TODO)</li>
+								<li>categorize quiz</li>
+								<li>categorize questions</li>
+								<li>search by category</li>
 							</ul>
 						</li>
 						<li>Non-Registered Access</li>
