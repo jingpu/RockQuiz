@@ -52,7 +52,7 @@ public class FillInBlank extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a Fill-In-Blank question</h4>\n");
+		html.append("<h4>This section will guide you to create a Fill-In-Blank question</h4>\n");
 		html.append("Please enter proposed question description and answer. In order to insert a blank, please press the button \"add a blank\"<br>");
 
 		html.append("<span class='example'>i.e. In order to express a question: I think _____ is awesome. The correct input is \"I think #blank# is awesome\"</span><br>");
@@ -62,7 +62,7 @@ public class FillInBlank extends QuestionBase {
 		// textarea and add button
 		html.append("<div class=\"combo\">");
 		html.append("<textarea class=\"FIB\" name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea>");
+				+ " required></textarea>");
 		html.append("<input type=\"button\" value=\"add a blank\" onclick=\"addBlank(this);\" /><br>");
 		html.append("</div>");
 
@@ -84,6 +84,55 @@ public class FillInBlank extends QuestionBase {
 
 		return html.toString();
 
+	}
+
+	@Override
+	public String printEditHtml(int suffix) {
+
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>Fill-In-Blank Question</h4>\n");
+		html.append("Please enter proposed question description and answer. In order to insert a blank, please press the button \"add a blank\"<br>");
+
+		html.append("<span class='example'>i.e. In order to express a question: I think _____ is awesome. The correct input is \"I think #blank# is awesome\"</span><br>");
+		html.append("<p class='notice'> Notice: one question should and only contain one blank</p>");
+		html.append("<span class=\"description\">Question Description:<br></span>");
+
+		// textarea and add button
+		html.append("<div class=\"combo\">");
+		html.append("<textarea class=\"FIB\" name=\"questionDescription_"
+				+ suffix + "\" rows=\"10\" cols=\"50\""
+				+ " required>"
+				+ getQuestionDescription()
+				+ "</textarea>");
+		html.append("<input type=\"button\" value=\"add a blank\" onclick=\"addBlank(this);\" /><br>");
+		html.append("</div>");
+
+		// add answer field
+		html.append("Answer:   <input type=\"text\" name=\"answer_" + suffix
+				+ "\" required value=\"" + getAnswer() + "\" ></input><br>\n");
+		html.append("Score:<input class=\"max_score\" type=\"text\" name=\"maxScore_"
+				+ suffix
+				+ "\" required value=\""
+				+ getMaxScore()
+				+ "\" ></input>\n");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   \n");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit_"
+				+ suffix
+				+ "\" value=\""
+				+ getTimeLimit()
+				+ "\" ></input><br>\n");
+		html.append("</div>\n");
+
+		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
+				+ "\" value=\""
+				+ QuestionBase.FIB + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
+				+ "\" value=\"not_implemeted\"></input></p>\n");
+
+		return html.toString();
 	}
 
 	@Override
@@ -146,8 +195,7 @@ public class FillInBlank extends QuestionBase {
 		html.append("<p>" + typeIntro + "</p>\n");
 
 		// form action should be here
-		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>\n");
+		html.append("<p>Question Description: </p>\n");
 
 		// every form field will be renamed as xx_questionId
 		// create prefix, blank, suffix
