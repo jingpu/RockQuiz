@@ -9,7 +9,12 @@
 #browse {
 	width: 230px;
 }
-
+#browse form div{
+	width: 100%;
+}
+#browse input[type="search"]{
+	width:100%;
+	}
 #body {
 	width: 600px;
 }
