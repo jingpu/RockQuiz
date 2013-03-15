@@ -141,7 +141,7 @@
 					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
 				</dd>
 				<dd>
-					<a href="About_RockQuiz.html">About Rock Quiz</a>
+					<a href="About_RockQuiz.html">About RockQuiz</a>
 				</dd>
 				<dt>Search Quizzes Or Users</dt>
 				<dd class="searchform">
