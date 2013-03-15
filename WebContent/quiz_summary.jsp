@@ -13,8 +13,7 @@
 	String userName = (String) session.getAttribute("guest");
 	String quizName = request.getParameter("quizName");
 	MyQuiz quiz = new MyQuiz(quizName);
-%>
-<%
+	
 	// copied from home.jsp
 	String userId = userName;
 	String guest = userName;

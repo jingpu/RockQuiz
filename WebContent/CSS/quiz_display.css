@@ -1,0 +1,16 @@
+@CHARSET "UTF-8";
+
+.question {
+	border: 1px dotted gray; padding：15px;
+	padding: 0px 15px 15px;
+	margin: 20px 0px;
+	background: rgb(241, 210, 202);
+}
+
+#body {
+	text-align: left
+}
+
+.inner {
+	padding: 0px 20px 20px
+}

@@ -294,7 +294,7 @@ public class MyQuiz implements Quiz {
 	 * @return String of the hyper link to edit a quiz
 	 */
 	public String getQuizEditPage() {
-		return null;
+		return "quiz_edit.jsp?quizName=" + quizName;
 	}
 
 	public Timestamp getCreateTime() {
