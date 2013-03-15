@@ -30,6 +30,8 @@ function checkRadioChkBox() {
 				break;
 			}
 		}
+		if (answer.length == 0) 
+			flag = true;
 		if (!flag) {
 			alert("You should at least assign one choice as answer!");
 			return false;
@@ -153,7 +155,7 @@ function addOptionSuffix(newChoiceDiv, suffix) {
 		if (e.hasAttribute("value")) {
 			var val = e.value;
 			if(val.indexOf("choice") > -1){
-				e.val = val.replace("choice", "choice" + (suffix-1));
+				e.value = val.replace("choice", "choice" + (suffix-1));
 			}			
 		}
 	}

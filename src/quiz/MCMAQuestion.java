@@ -77,7 +77,7 @@ public class MCMAQuestion extends QuestionBase {
 	@Override
 	public int getMaxScore() {
 		List<String> answerList = Helper.parseTags(answer);
-		return super.getMaxScore() * answerList.size();
+		return maxScore * answerList.size();
 	}
 
 	/*
@@ -91,36 +91,16 @@ public class MCMAQuestion extends QuestionBase {
 				+ super.getBaseQuerySaveString() + ", \"" + choices + "\")";
 	}
 
-	/**
-	 * Create answer in the format: #answer0##answer1##answer2#..#
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static String getCreatedAnswer(HttpServletRequest request) {
-		String answerList[] = request.getParameterValues("answer");
-		StringBuilder answer = new StringBuilder();
-		for (String str : answerList) {
-			answer.append("#");
-			// delete "answer=" will get choice index i.e. choice0
-			// then use request.getParameter(choice0) to get answerBody
-			String answerBody = request.getParameter(str);
-			answer.append(answerBody);
-			answer.append("#");
-		}
-		return answer.toString();
-	}
-
 	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
 		String answerList[] = request.getParameterValues("answer" + "_"
 				+ suffix);
 		StringBuilder answer = new StringBuilder();
 		for (String str : answerList) {
 			answer.append("#");
-			// delete "answer=" will get choice index i.e. choice0
-			// then use request.getParameter(choice0) to get answerBody
+			// use request.getParameter(choice0) to get answerBody
 			String answerBody = request.getParameter(str + "_" + suffix);
 			answer.append(answerBody);
+			System.out.println("answer " + answerBody);
 			answer.append("#");
 		}
 		return answer.toString();
@@ -128,7 +108,6 @@ public class MCMAQuestion extends QuestionBase {
 
 	public static String getCreatedChoices(HttpServletRequest request,
 			int suffix) {
-
 		int numChoices = Integer.parseInt(request.getParameter("numChoices"
 				+ "_" + suffix));
 		StringBuilder choices = new StringBuilder();
@@ -179,6 +158,7 @@ public class MCMAQuestion extends QuestionBase {
 			return "";
 		StringBuilder answer = new StringBuilder();
 		for (String str : answerList) {
+			System.out.println("user answer " + str);
 			answer.append("#");
 			answer.append(str);
 			answer.append("#");
@@ -253,9 +233,9 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<div class=\"choices\">");
 		for (int i = 0; i < 4; i++) {
 			html.append("<div class=\"combo\">");
-			html.append("<span class='option'>Choice"
+			html.append("<span class='option'>Choice :"
 					+ i
-					+ "</span>: <input type=\"text\" name=\"choice"
+					+ "</span><input type=\"text\" name=\"choice"
 					+ i
 					+ "\" required></input><input type=\"checkbox\" name=\"answer\" value=\"choice"
 					+ i + "\" ></input>");
