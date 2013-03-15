@@ -70,9 +70,9 @@
 		} else {
 				for (Activity act : achieves) {
 					if (guest.equals(userId)) {
-						out.println("<p>" + act.toStringMe(false) + "</p>");
+						out.println("<li class='activity'>" + act.toStringMe(false) + "</li>");
 					} else {
-						out.println("<p>" + act.toString(false) + "</p>");
+						out.println("<li class='activity'>" + act.toString(false) + "</li>");
 					}
 				}
 			}

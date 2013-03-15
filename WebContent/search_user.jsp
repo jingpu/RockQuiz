@@ -37,7 +37,7 @@
 			<dl id="browse">
 				<%--choose whether to search user--%>
 				<dt>
-					<a href=<%=searchQuiz%>>Quizzes Search</a> | Users Search
+					<a href=<%=searchQuiz%>>Quizzes Search</a> Users Search
 				</dt>
 				<dd class="searchform">
 					<%--quizzes/users search box--%>

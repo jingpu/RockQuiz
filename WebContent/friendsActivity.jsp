@@ -57,7 +57,7 @@
 					<%
 						} else {
 								for (Activity act : friendsAct) {
-									out.println("<p>" + act.toString(false) + "</p>");
+									out.println("<li class='activity'>" + act.toString(false) + "</li>");
 								}
 							}
 						} else {
