@@ -49,20 +49,47 @@ public class QResponse extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a question-response question</h4>\n");
-		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<span class= 'description'>Question Description:</span><br>");
+		html.append("<h4>This  ection will guide you to create a question-response question</h4>\n");
+		html.append("<p>Please enter proposed question description and answer </p>\n");
+		html.append("<span class= 'description'>Question Description:</span><br>\n");
 		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea><br>");
+				+ "\" required></textarea><br>\n");
 		html.append("Answer:   <input type=\"text\" name=\"answer\""
-				+ "\" required></input><br>");
+				+ "\" required></input><br>\n");
 		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\""
-				+ "\" required></input><br>");
+				+ "\" required></input><br>\n");
 
 		// add timeLimit field
-		html.append("<div class=time_limit_div>Time Limit:   ");
-		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
-		html.append("</div>");
+		html.append("<div class=time_limit_div>Time Limit:   \n");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>\n");
+		html.append("</div>\n");
+
+		// Hidden information - questionType and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
+				+ QuestionBase.QR + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
+		return html.toString();
+	}
+
+	public String printEditHtml() {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>Question-Response Question</h4>\n");
+		html.append("<p>Please enter proposed question description and answer </p>\n");
+		html.append("<span class= 'description'>Question Description:</span><br>\n");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required>"
+				+ getQuestionDescription()
+				+ "</textarea><br>\n");
+		html.append("Answer:   <input type=\"text\" name=\"answer\""
+				+ "\" required value=\"" + getAnswer() + "\" ></input><br>\n");
+		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\""
+				+ "\" required value=\"" + getMaxScore() + "\" ></input><br>\n");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   \n");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\""
+				+ getTimeLimit() + "\" ></input><br>\n");
+		html.append("</div>\n");
 
 		// Hidden information - questionType and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
