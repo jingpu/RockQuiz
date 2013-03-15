@@ -51,11 +51,11 @@
 <link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="CSS/table.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
-#body div.alignleft {
+#body div.alignleft, #body  h4.alignleft {
 	text-align: left
 }
 
-#body div.alignright {
+#body h4.alignright {
 	text-align: right
 }
 
@@ -134,13 +134,12 @@
 						}
 					}
 				%>
-				<dt>
-					<form action="quiz_create.jsp" target="_blank" method="post">
-						<input type="submit" value="Create Quiz">
-					</form>
 
-				</dt>
 				<dt>Quick Link</dt>
+				
+				<dd>
+					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
+				</dd>
 				<%
 					if (user.getInfo("status").equals("s")) {
 				%>
@@ -154,16 +153,14 @@
 					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
 				</dd>
 				<dd>
-					<a href="profile.jsp?id=<%=userId%>">Edit Profile</a>
+					<a href="profile.jsp?id=<%=userId%>" target='_blank'>Edit
+						Profile</a>
 				</dd>
 				<dd>
-					<a href="myfields.jsp?id=<%=userId%>">Interesting Fields</a>
+					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
 				</dd>
 				<dd>
-					<a href="">555</a>
-				</dd>
-				<dd>
-					<a href="">666</a>
+					<a href="About_RockQuiz.html">About Rock Quiz</a>
 				</dd>
 				<dt>Search Quizzes Or Users</dt>
 				<dd class="searchform">
@@ -182,8 +179,7 @@
 				<div class="clear"></div>
 				<!-- The text description of the quiz. -->
 				<h2><%=quiz.getQuizName()%></h2>
-				<div class="alignright">
-				<h4 >
+				<h4 class="alignright">
 					<%
 						SimpleDateFormat simpleDateFormat =
 					        new SimpleDateFormat("MMM d, yyyy");
@@ -193,9 +189,8 @@
 					on
 					<%=simpleDateFormat.format(quiz.getCreateTime())%>
 				</h4>
-				</div>
 				<div class="alignleft">
-				<h4>Quiz Description</h4>
+				<h4 class="alignleft" >Quiz Description</h4>
 					<p>
 						<%=quiz.getQuizDescription()%>
 					</p>

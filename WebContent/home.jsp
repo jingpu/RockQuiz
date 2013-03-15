@@ -64,9 +64,6 @@
 			</div>
 
 			<dl id="browse">
-				<dt>
-					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
-				</dt>
 				<dt>Announcements</dt>
 				<%
 					Announce ann = user.getLatestAnnounce();
@@ -120,6 +117,10 @@
 				%>
 
 				<dt>Quick Link</dt>
+				
+				<dd>
+					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
+				</dd>
 				<%
 					if (user.getInfo("status").equals("s")) {
 				%>
@@ -139,7 +140,9 @@
 				<dd>
 					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
 				</dd>
-
+				<dd>
+					<a href="About_RockQuiz.html">About Rock Quiz</a>
+				</dd>
 				<dt>Search Quizzes Or Users</dt>
 				<dd class="searchform">
 					<form action="Search" method="post">
