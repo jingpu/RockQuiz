@@ -20,7 +20,7 @@ $(document).ready(function() {
 
     $("#result").click(function(){
         var res = $("#match").match("getValues");
-        for (var i = 0; i < res.length; i++) {
+        for (var i = 0; i < 4; i++) {
             var item = res[i];
             choiceId = "#choice" + i;
             $(choiceId).val(item.response.text);

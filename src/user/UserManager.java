@@ -423,6 +423,7 @@ public class UserManager{
 	public static List<String> getUserList(String query, String fromTime, String toTime, boolean orderByTime){
 		List<String> userList = new LinkedList<String>();
 		setDriver();
+		toTime += " 23:59:59.9";
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * from " 
 					+ userTable + " WHERE userId LIKE '%" 

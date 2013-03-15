@@ -228,14 +228,16 @@ h3 {
 	word-wrap: break-all;
 }
 
-#body li.activity a {
+#body li.activity a:link {
 	color: #202020;
 	text-decoration: underline;
+	background-color: transparent ;
 }
 
 #body li.activity a:hover {
 	text-decoration: underline;
-	background: #ffffff;
+	background-color: #505050 ;
+	color: #ffffff;
 }
 
 #body .br {
@@ -255,6 +257,10 @@ h3 {
 
 #body .readmore a:hover {
 	color: #f73838;
+}
+
+#body h2 {
+	color: #5d5d5d;
 }
 
 #body h3 {
@@ -278,25 +284,4 @@ h3 {
 	margin-left: 20px;
 	font-family: tahoma, helvetica, arial, sans-serif;
 	font-size: 13px;
-}
-#body li.activity {
-	color: #202020;
-	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-	font-size: 13px;
-	font-weight: normal;
-	list-style-type: square;
-	text-align: left;
-	margin-left: 20px;
-	padding-top: 10px;
-	word-wrap: break-all;
-}
-
-#body li.activity a {
-	color: #202020;
-	text-decoration: underline;
-}
-
-#body li.activity a:hover {
-	text-decoration: underline;
-	 background: #ffffff;
 }

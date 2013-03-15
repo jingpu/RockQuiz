@@ -72,6 +72,17 @@ public class MCMAQuestion extends QuestionBase {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see quiz.QuestionBase#getMaxScore()
+	 */
+	@Override
+	public int getMaxScore() {
+		List<String> answerList = Helper.parseTags(answer);
+		return super.getMaxScore() * answerList.size();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see quiz.QuestionBase#getQuerySaveString()
 	 */
 	@Override
@@ -165,7 +176,6 @@ public class MCMAQuestion extends QuestionBase {
 	}
 
 	// overload
-	// TODO: dynamically assign score based on maxScore
 	private int getScore(Set<String> answerSet, List<String> inputList) {
 		int score = 0;
 		for (String str : inputList) {
