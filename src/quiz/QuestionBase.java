@@ -219,6 +219,10 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return html.toString();
 	}
 
+	public String printEditHtml() {
+		return null;
+	}
+
 	public abstract String printReadHtmlForSingle();
 
 	public abstract String getUserAnswer(HttpServletRequest request);
@@ -251,6 +255,9 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return answer;
 	}
 
+	public int getTimeLimit() {
+		return timeLimit;
+	}
 	public static String printReference() {
 		StringBuilder refString = new StringBuilder();
 		refString
