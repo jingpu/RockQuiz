@@ -649,4 +649,27 @@ public class MyQuiz implements Quiz {
 		return bestScore;
 	}
 
+	public int getLowestScore() {
+		List<QuizEvent> list = allEvents();
+		int LowScore = 0;
+		for (int i = 0; i < list.size(); i++) {
+			int curScore = list.get(i).getScore();
+			if (LowScore > curScore)
+				LowScore = curScore;
+		}
+		assert LowScore <= getTotalScore();
+		return LowScore;
+	}
+
+	public double getAvgScore() {
+		List<QuizEvent> list = allEvents();
+		double total = 0;
+		for (int i = 0; i < list.size(); i++) {
+			total += list.get(i).getScore();
+		}
+		double avg = total / getTakenTimes();
+		assert avg <= getTotalScore();
+		return avg;
+	}
+
 }

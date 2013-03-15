@@ -205,11 +205,7 @@
 
 					<p>
 						<b>Tags: </b>
-						<%
-							for (String tag : quiz.getTags()) {
-								out.print("#" + tag + ", \n");
-							}
-						%>
+						<%=Helper.displayTags(quiz.getTags(), false)%>
 					</p>
 				</div>
 
@@ -287,7 +283,7 @@
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
-								boolean forbid = takerAccount.equals(userName) ? false
+								boolean forbid = taker.equals(userName) ? false
 										: (takerAccount.getInfo("privacy").equals("1") ? (friends
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);
@@ -321,7 +317,7 @@
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
-								boolean forbid = takerAccount.equals(userName) ? false
+								boolean forbid = taker.equals(userName) ? false
 										: (takerAccount.getInfo("privacy").equals("1") ? (friends
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);
@@ -357,7 +353,7 @@
 								String taker = e.getUserName();
 								Account takerAccount = new Account(taker);
 								List<String> friends = takerAccount.getFriendsList();
-								boolean forbid = takerAccount.equals(userName) ? false
+								boolean forbid = taker.equals(userName) ? false
 										: (takerAccount.getInfo("privacy").equals("1") ? (friends
 												.contains(userName) ? false : true) : false);
 								taker = forbid ? "anonymous" : Helper.displayUser(taker);
@@ -377,6 +373,22 @@
 				<div class="rightbox">
 					<!-- TODO Summary statistics on how well all users have performed on the quiz-->
 					<h3>Quiz Statistics</h3>
+					<table  class="fancy">
+						<tr>
+							<th>Out of</th>
+							<th>Avg</th>
+							<th>Lowest</th>
+							<th>Hightest</th>
+							<th>Total #</th>
+						</tr>
+						<tr>
+							<td><%=quiz.getMaxScore() %></td>
+							<td><%=String.format("%.2f", quiz.getAvgScore()) %></td>
+							<td><%=quiz.getLowestScore() %></td>
+							<td><%=quiz.getBestScore() %></td>
+							<td><%=quiz.getTakenTimes() %></td>		
+						</tr>
+					</table>
 
 					<div class="clear"></div>
 				</div>

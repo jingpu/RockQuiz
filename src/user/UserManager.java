@@ -237,7 +237,6 @@ public class UserManager{
 				close();
 				return true;
 			}
-			rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -817,6 +816,23 @@ public class UserManager{
 		}
 		close();
 		return true;
+	}
+
+	public static boolean containsAchievement(String userId, String achieveId){
+		setDriver();
+		try{
+			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_history" 
+					+ " WHERE Type LIKE '"+ achieveId +"'");
+			if(rs.next()){
+				close();
+				return true;
+			}
+		} catch(SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+		return false;
 	}
 
 	public static boolean addAchievement(String userId, String achieveId, String quizName){

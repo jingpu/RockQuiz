@@ -14,6 +14,8 @@
 <link href="CSS/quiz_display.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 </style>
+<script type="text/javascript">
+</script>
 </head>
 <%
 	/*
@@ -84,7 +86,8 @@
 		<h2>Quiz Information</h2>
 		<div>
 			Quiz Name: <input type="text" name="quizName" required
-				value="<%=quizName%>"><br> Quiz Description:<br>
+				value="<%=quizName%>" id="quizName"><span id="quizNameStatus"></span><br> 
+			Quiz Description:<br>
 			<textarea name="quizDescription" rows="10" cols="50" required><%=quizDescription%></textarea>
 			<br>
 		

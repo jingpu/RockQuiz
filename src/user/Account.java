@@ -70,6 +70,11 @@ public class Account implements User{
 		UserManager.addAchievement(userId, achieveId, quizName);
 	}
 	
+	public boolean containsAchievement(String achieveId) {
+		// TODO Auto-generated method stub
+		return UserManager.containsAchievement(userId, achieveId);
+	}
+	
 	/**Get certain number achievements list in desc time order
 	 * If number == -1, take out all pieces.
 	 * @return achievement List<String>

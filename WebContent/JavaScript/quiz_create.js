@@ -1,3 +1,27 @@
+
+$(document).ready(function() {
+	$('#quizName').change(function() {
+		$.ajax({
+			type: "GET",
+			url: "CheckQuizNameServlet",
+			data: {quizName: $('#quizName').val()},
+			dataType: "text",
+			success: function(data)
+			{
+				if(data.indexOf("ok") > -1){
+					$('#quizNameStatus').css("color", "green");
+					$('#quizNameStatus').html("ok");
+				}else{
+					$('#quizNameStatus').css("color", "red");
+					$('#quizNameStatus').html("<b>name already exists</b>");
+					$('#quizName').focus();
+				}
+			}
+		});
+	});
+});
+
+
 function addQuestion() {
 		var questionType = document.getElementById("questionTypeList").value;
 		var questions = document.getElementById("questions");
