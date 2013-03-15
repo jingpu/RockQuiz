@@ -13,14 +13,14 @@
 #body .leftbox2 {
 	float: left;
 	width: 300px;
-	padding-left: 10px;
+	padding-left: 0px;
 	padding-right: 15px;
 }
 
 #body .rightbox2 {
 	float: right;
-	width: 300px;
-	padding-left: 13px;
+	width: 325px;
+	padding-left: 0px;
 	padding-right: 10px;
 	border-left: 2px solid #659db4;
 }

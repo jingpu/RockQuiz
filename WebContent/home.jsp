@@ -78,24 +78,24 @@
 			<dl id="browse">
 				<dt>Announcements</dt>
 				<dd>
-				<%
-					Announce ann = user.getLatestAnnounce();
-					if (ann != null) {
-						SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-						Date time = sdf2.parse(ann.getTime());
-				%>
-				<p><%=ann.getContent()%></p>
-				<p>
-					-
-					<%=ann.getAdmin()%>
-					<%=sdf2.format(time)%></p>
-				<%
-					} else {
-				%>
-				<p>There is No Announcement Now.</p>
-				<%
-					}
-				%>
+					<%
+						Announce ann = user.getLatestAnnounce();
+						if (ann != null) {
+							SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+							Date time = sdf2.parse(ann.getTime());
+					%>
+					<p><%=ann.getContent()%></p>
+					<p>
+						-
+						<%=ann.getAdmin()%>
+						<%=sdf2.format(time)%></p>
+					<%
+						} else {
+					%>
+					<p>There is No Announcement Now.</p>
+					<%
+						}
+					%>
 				</dd>
 				<dd class="readmore">
 					<a href="announce.jsp"><b>MORE</b></a>
@@ -135,6 +135,17 @@
 				<dd>
 					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
 				</dd>
+				<dd>
+					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
+				</dd>
+
+				<dd>
+					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
+				</dd>
+				<dd>
+					<a href="profile.jsp?id=<%=userId%>" target='_blank'>Edit
+						Profile</a>
+				</dd>
 				<%
 					if (user.getInfo("status").equals("s")) {
 				%>
@@ -144,16 +155,6 @@
 				<%
 					}
 				%>
-				<dd>
-					<a href="friendpage.jsp?id=<%=userId%>">Friends</a>
-				</dd>
-				<dd>
-					<a href="profile.jsp?id=<%=userId%>" target='_blank'>Edit
-						Profile</a>
-				</dd>
-				<dd>
-					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>
-				</dd>
 				<dd>
 					<a href="About_RockQuiz.html">About RockQuiz</a>
 				</dd>
@@ -266,7 +267,7 @@
 					</div>
 
 					<div class="clear br"></div>
-					
+
 					<div class="leftbox2">
 						<h3>My Achievements</h3>
 						<%

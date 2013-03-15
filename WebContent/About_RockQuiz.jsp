@@ -156,6 +156,7 @@
 								their logging information will last for as long as 1 month if
 								they don't log out.
 						</ul>
+						
 						<li>Quiz Editing(TODO)</li>
 						<li>Rating and Review System(TODO)</li>
 						<li>Reporting System(TODO)</li>
