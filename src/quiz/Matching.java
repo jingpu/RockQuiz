@@ -81,16 +81,16 @@ public class Matching extends MCMAQuestion {
 	 */
 	@Override
 	public int getScore(String userInput) {
+		System.out.println("user input is " + userInput);
 		List<String> inputList = Helper.parseTags(userInput);
 		List<String> solutionList = Helper.parseTags(answer);
 		int score = 0;
 		for (int i = 0; i < solutionList.size(); i++) {
+			System.out.println(inputList);
 			if (inputList.get(i).equals(solutionList.get(i)))
 				score += maxScore;
-			else
-				score -= 1;
 		}
-		return score > 0 ? score : 0;
+		return score;
 	}
 
 	@Override
@@ -108,8 +108,8 @@ public class Matching extends MCMAQuestion {
 			String userAnswer = request.getParameter("choice" + i + "_"
 					+ getQuestionId());
 			if (userAnswer == null)
-				userAnswer = "";
-
+				userAnswer = " ";
+			System.out.println("userAnswer in getUserWgwne is " + userAnswer);
 			answer.append(userAnswer);
 			answer.append("#");
 		}
@@ -225,7 +225,6 @@ public class Matching extends MCMAQuestion {
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>");
 
-		// html.append("<button id=\"vals\">Results</button>");
 		html.append("<button id=\"clear\">Clear</button>");
 		html.append("<input id=\"result\" type=\"submit\" value = \"Next\"/></form>");
 
