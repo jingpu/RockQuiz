@@ -160,9 +160,7 @@
 										new Date().toString(), true);
 							}
 						%>
-						Number of Users:
-						<%=userList.size()%>
-						<div id='usernumber' style='display: inline'></div>
+												<div id='usernumber' style='display: inline'></div>
 						<form action="admin.jsp?id=<%=guest%>" method="post">
 							<p>
 								From:<input type="text" name="fromTime" value="<%=fromTime%>">
@@ -172,7 +170,10 @@
 								To:<input type="text" name="toTime" value="<%=toTime%>">
 								<input type="submit">
 						</form>
-						Users List:
+						<h4>Number of Users:
+						<%=userList.size()%></h4>
+
+						<h4>Users List:</h4>
 						<div id='userlist'
 							style="height: 120px; width: 300px; border: 1px solid #ccc; font: 16px/26px Georgia, Garamond, Serif; overflow: auto;">
 							<%
@@ -188,8 +189,10 @@
 							QuizManager man = new MyQuizManager();
 							List<Quiz> resultList = man.searchForQuizCreator("", 2);
 						%>
-						Number of Quizzes:
-						<%=resultList.size()%><br> Quizzes List:
+						<br>
+						<h4>Number of Quizzes:
+						<%=resultList.size()%></h4>
+						<h4>Quizzes List:</h4>
 						<div
 							style="height: 120px; width: 300px; border: 1px solid #ccc; font: 16px/26px Georgia, Garamond, Serif; overflow: auto;">
 							<ul>
@@ -205,7 +208,7 @@
 								%>
 							</ul>
 						</div>
-						Number of Taken Quizzes: <%=count%>
+						<h4>Number of Taken Quizzes: <%=count%></h4>
 
 					</div>
 				</div>

@@ -65,7 +65,7 @@
 
 			<dl id="browse">
 				<dt>
-					<a href="quiz_create.jsp">Create Quiz</a>
+					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
 				</dt>
 				<dt>Announcements</dt>
 				<%

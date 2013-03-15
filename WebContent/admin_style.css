@@ -19,6 +19,7 @@ h3 {
 #body {
 	font-size: 12px;
 	width: 700px;
+	border: 2px solid #ad1c1c;
 }
 
 #body a {
@@ -30,7 +31,7 @@ h3 {
 #body .leftbox,
 #body .rightbox {
 	color: Black;
-	height: 430px;
+	height: 600px;
 }
 
 #body .leftbox {
@@ -38,14 +39,27 @@ h3 {
 }
 
 #body .rightbox {
+	text-align: left;
 	float: right;
 	width: 322px;
 	border-left: 2px solid #ad1c1c;
+	font-size: 12px;
 }
 
 #body h3 {
 	font-size: 18px;
 	font-weight: normal;
 	color: black;
+}
+
+#body h4 {
+	font-size: 14px;
+	text-align: left;
+	font-weight: 500;
+	color: black;
+}
+
+#body li {
+	font-size: 12px;
 }
 
