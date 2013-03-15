@@ -79,30 +79,27 @@ public class QResponse extends QuestionBase {
 		html.append("<span class= 'description'>Question Description:</span><br>\n");
 		html.append("<textarea name=\"questionDescription_" + suffix
 				+ "\" rows=\"10\" cols=\"50\"" + " required>"
-				+ getQuestionDescription()
-				+ "</textarea><br>\n");
+				+ getQuestionDescription() + "</textarea><br>\n");
 		html.append("Answer:   <input type=\"text\" name=\"answer_" + suffix
 				+ "\" required value=\"" + getAnswer() + "\" ></input><br>\n");
-		html.append("Score:   <input disable type=\"text\" name=\"max_score_only_for_display\" value=\""
-				+ getMaxScore() + "\" ></input><br>\n");
-		html.append("<input class=\"max_score\" type=\"hidden\" name=\"maxScore_"
+		html.append("Score: <input class=\"max_score\" type=\"text\" name=\"maxScore_"
 				+ suffix
 				+ "\" required value=\""
 				+ getMaxScore()
-				+ "\" ></input>\n");
+				+ "\" ></input><br>\n");
 
 		// add timeLimit field
 		html.append("<div class=time_limit_div>Time Limit:   \n");
 		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit_"
 				+ suffix
 				+ "\" value=\""
-				+ getTimeLimit() + "\" ></input><br>\n");
+				+ getTimeLimit()
+				+ "\" ></input><br>\n");
 		html.append("</div>\n");
 
 		// Hidden information - questionType and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
-				+ "\"  value=\""
-				+ QuestionBase.QR + "\" ></input></p>\n");
+				+ "\"  value=\"" + QuestionBase.QR + "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
 				+ "\" value=\"not_implemeted\"></input></p>\n");
 		return html.toString();
