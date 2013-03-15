@@ -133,7 +133,7 @@
 				<dt>Quick Link</dt>
 
 				<dd>
-					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
+					<a href="quiz_create.jsp">Create Quiz</a>
 				</dd>
 				<dd>
 					<a href="myfields_frame.jsp?id=<%=userId%>">Interesting Fields</a>

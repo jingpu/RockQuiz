@@ -66,6 +66,9 @@
 	font-size: 20px;
 	color: #227293;
 }
+#quizInfo{
+	padding: 0px 15px 0px;
+}
 </style>
 </head>
 <body>
@@ -137,7 +140,7 @@
 				<dt>Quick Link</dt>
 				
 				<dd>
-					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
+					<a href="quiz_create.jsp" >Create Quiz</a>
 				</dd>
 				<%
 					if (user.getInfo("status").equals("s")) {
@@ -178,6 +181,7 @@
 				<div class="clear"></div>
 				<!-- The text description of the quiz. -->
 				<h2><%=quiz.getQuizName()%></h2>
+				<div id="quizInfo">
 				<h4 class="alignright">
 					<%
 						SimpleDateFormat simpleDateFormat =
@@ -249,6 +253,7 @@
 					<%
 						}
 					%>
+				</div>
 				</div>
 				<div class="clear"></div>
 				
