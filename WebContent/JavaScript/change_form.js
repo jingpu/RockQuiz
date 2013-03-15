@@ -1,5 +1,5 @@
 $(document).ready(function() { //unload in javascript
-	var timeLimit = $(".time_limit").val();
+	var timeLimit = $("#time_limit").val();
 	if (timeLimit != "" && timeLimit != null && timeLimit != 0) {
 		setTimeout(function(){
 			alert("Your time is out, please move forward to next question!");

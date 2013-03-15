@@ -78,50 +78,23 @@ public class MAQuestion extends QuestionBase {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see quiz.QuestionBase#getMaxScore()
+	 */
+	@Override
+	public int getMaxScore() {
+		List<String> answerList = Helper.parseTags(answer);
+		return super.getMaxScore() * answerList.size();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see quiz.QuestionBase#getQuerySaveString()
 	 */
 	@Override
 	public String getQuerySaveString() {
 		return "INSERT INTO " + MA_Table + " VALUES (\""
 				+ super.getBaseQuerySaveString() + ", \"" + isOrder + "\")";
-	}
-
-	public static String printCreateHtml() {
-		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
-		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p class= 'description'>Question Description:</p>\n");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p>\n");
-
-		// add answers, can be expanded
-		html.append("<div id=\"form_input\">\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\""
-				+ "\" required></input></p>\n");
-		html.append("</div>\n");
-
-		html.append("<div id='option'>\n");
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" />\n");
-		html.append("</div>\n");
-
-		html.append("<p>Point per correct answer: <input type=\"text\" name=\"maxScore\""
-				+ "\" required></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
-
-		// checkbox: tick means true, otherwise null means false
-		html.append("<p><input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input></p>\n");
-
-		// Hidden information - questionType,tag and number of answers
-		// TODO: numAnswer will be automatically generated in javascript??
-		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
-				+ QuestionBase.MA + "\" ></input></p>\n");
-		html.append("<p><input id=\"numAnswers\" type=\"hidden\" name=\"numAnswers\"></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>\n");
-
-		return html.toString();
 	}
 
 	public static String printCreateHtmlSinglePage() {
@@ -131,8 +104,8 @@ public class MAQuestion extends QuestionBase {
 		html.append("Creator could also specify whether the answer should be answered in order or not by ticking the corresponding checkbox");
 		html.append("<p class='notice'> Notice: Creator should also specify the score per correct answer.</p>");
 		html.append("<span class= 'description'>Question Description:</span><br>");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p>");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea>");
 
 		html.append("<div class=\"MA_div\">");
 		// answers
@@ -232,10 +205,8 @@ public class MAQuestion extends QuestionBase {
 		for (int i = 0; i < answerList.length; i++) {
 			if (inputList[i].equals(answerList[i]))
 				score += maxScore;
-			else
-				score -= 1;
 		}
-		return score >= 0 ? score : 0;
+		return score;
 	}
 
 	private int getUnorderedScore(String[] answerList, String[] inputList) {
@@ -247,10 +218,8 @@ public class MAQuestion extends QuestionBase {
 		for (String str : inputList) {
 			if (answerSet.contains(str))
 				score += maxScore;
-			else
-				score -= 1;
 		}
-		return score >= 0 ? score : 0;
+		return score;
 	}
 
 	private String[] parseAnswer(String answerString) {
@@ -400,13 +369,6 @@ public class MAQuestion extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
-	}
-
-	/**
-	 * @return
-	 */
-	public static String printReference() {
-		return QuestionBase.printReference();
 	}
 
 }
