@@ -1,4 +1,4 @@
-USE c_cs108_yzhao3;
+USE c_cs108_jingpu;
 
 DROP TABLE IF EXISTS Global_Quiz_Info_Table;
 
