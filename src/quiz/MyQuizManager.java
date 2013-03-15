@@ -241,26 +241,7 @@ public final class MyQuizManager implements QuizManager {
 		return list2;
 	}
 
-	private void sortQuizList(List<Quiz> list, int sortMethod) {
-		switch (sortMethod) {
-		case QuizManager.SORT_BY_CREATION_TIME:
-			Collections.sort(list, new Comparator<Quiz>() {
-				@Override
-				public int compare(Quiz o1, Quiz o2) {
-					return o2.getCreateTime().compareTo(o1.getCreateTime());
-				}
-			});
-			break;
-		case QuizManager.SORT_BY_TAKEN_TIMES:
-			Collections.sort(list, new Comparator<Quiz>() {
-				@Override
-				public int compare(Quiz o1, Quiz o2) {
-					return o2.getTakenTimes() - o1.getTakenTimes();
-				}
-			});
-			break;
-		}
-	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -310,16 +291,7 @@ public final class MyQuizManager implements QuizManager {
 			e.printStackTrace();
 		}
 		// sort list
-		if(sortMethod == SORT_BY_RELATIVITY){
-			Collections.sort(list, new Comparator<Quiz>() {
-				@Override
-				public int compare(Quiz o1, Quiz o2) {
-					return o2.getCategory().length() - o1.getCategory().length();
-				}
-			});
-		} else {
-			sortQuizList(list, sortMethod);
-		}
+		sortQuizList(list, sortMethod);
 		// return sublist of the first numEntries elements
 		return list;
 	}
@@ -349,4 +321,59 @@ public final class MyQuizManager implements QuizManager {
 		return list;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see quiz.QuizManager#searchForTag(java.lang.String, int)
+	 */
+	@Override
+	public List<Quiz> searchForTag(String pattern, int sortMethod) {
+		List<Quiz> list = new ArrayList<Quiz>();
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// query Global_Quiz_Info_Table
+			ResultSet rs = stmt
+					.executeQuery("SELECT quizName FROM Global_Quiz_Info_Table"
+							+ " WHERE tagString LIKE '%" + pattern + "%'");
+			while (rs.next()) {
+				String quizName = rs.getString("quizName");
+				list.add(new MyQuiz(quizName));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		sortQuizList(list, sortMethod);
+		return list;
+	}
+
+	private void sortQuizList(List<Quiz> list, int sortMethod) {
+		switch (sortMethod) {
+		case QuizManager.SORT_BY_CREATION_TIME:
+			Collections.sort(list, new Comparator<Quiz>() {
+				@Override
+				public int compare(Quiz o1, Quiz o2) {
+					return o2.getCreateTime().compareTo(o1.getCreateTime());
+				}
+			});
+			break;
+		case QuizManager.SORT_BY_TAKEN_TIMES:
+			Collections.sort(list, new Comparator<Quiz>() {
+				@Override
+				public int compare(Quiz o1, Quiz o2) {
+					return o2.getTakenTimes() - o1.getTakenTimes();
+				}
+			});
+			break;
+		case QuizManager.SORT_BY_RELATIVITY:
+			Collections.sort(list, new Comparator<Quiz>() {
+				@Override
+				public int compare(Quiz o1, Quiz o2) {
+					return o2.getCategory().length()
+							- o1.getCategory().length();
+				}
+			});
+			break;
+		}
+	}
 }

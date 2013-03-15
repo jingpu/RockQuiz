@@ -114,4 +114,6 @@ public interface QuizManager {
 
 	public Set<String> getCategories();
 
+	public List<Quiz> searchForTag(String pattern, int sortMethod);
+
 }
