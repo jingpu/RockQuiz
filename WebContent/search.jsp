@@ -32,6 +32,7 @@
 	// t - order by taken times
 	// c - order by creator;
 	// g - order by category;
+	// a - order by tag;
 	// combo: dc, dg, tc, tg
 	String byRelavance = "<a href='search.jsp?q=" + pquery
 	+ "'>Relavance</a>";
@@ -43,6 +44,8 @@
 	+ "'>Creator ID</a>";
 	String byCategory = "<a href='search.jsp?s=g&q=" + pquery
 	+ "'>Category</a>";
+	String byTag = "<a href='search.jsp?s=da&q=" + pquery
+			+ "'>Tag</a>";
 	if (pquery != "" && request.getParameter("s") == null) {
 		byRelavance = "Relavence";
 		resultList = man.searchForQuiz(query, 3);
@@ -67,6 +70,13 @@
 		byCreateDate = "Create date";
 		resultList = man.searchForQuiz(query, 1);
 	} else if (pquery != "" && request.getParameter("s") != null
+	&& request.getParameter("s").equals("da")) {
+		byCreateDate = "Create date";
+		byTag = "Tag";
+		byTakenCount = "<a href='search.jsp?s=ta&q=" + pquery
+				+ "'>Taken count</a>";
+		resultList = man.searchForTag("#"+query+"#", 1);
+	} else if (pquery != "" && request.getParameter("s") != null
 	&& request.getParameter("s").equals("dc")) {
 		byCreateDate = "Create date";
 		byCreator = "Creator ID";
@@ -84,6 +94,13 @@
 	&& request.getParameter("s").equals("t")) {
 		byTakenCount = "Taken count";
 		resultList = man.searchForQuiz(query, 2);
+	} else if (pquery != "" && request.getParameter("s") != null
+	&& request.getParameter("s").equals("ta")) {
+		byTakenCount = "Taken count";
+		byTag = "Tag";
+		byCreateDate = "<a href='search.jsp?s=da&q=" + pquery
+				+ "'>Create date</a>";
+		resultList = man.searchForTag("#"+query+"#", 2);
 	} else if (pquery != "" && request.getParameter("s") != null
 	&& request.getParameter("s").equals("tc")) {
 		byTakenCount = "Taken count";
@@ -153,6 +170,8 @@
 					|
 					<%=byCategory%>
 					|
+					<%=byTag%>
+					|
 					<%=byCreator%>
 					||
 					<%=byCreateDate%>
@@ -183,12 +202,14 @@
 												int takenTimes = quiz.getTakenTimes();
 												Timestamp time = quiz.getCreateTime();
 												String category =quiz.getCategory();
+												List<String> tags = quiz.getTags();
 												SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					%>
 					<li><a href='<%=quizUrl%>'><div name='resultset'
 								style='display: inline;'><%=quiz.getQuizName()%>
 							</div></a> Category: <a href='search.jsp?s=g&q=<%=category%>'><div
 								name='categoryset' style='display: inline;'><%=category%></div></a>
+								Tag: <%=Helper.displayTags(tags, true)%>
 						<br>Created by: <a href="userpage.jsp?id=<%=creator%>"><div
 								name='creatorset' style='display: inline;'><%=creator%></div></a> On
 						<%=sdf.format(time)%> Taken counts: <%=takenTimes%><br>Description:

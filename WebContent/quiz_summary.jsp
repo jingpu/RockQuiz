@@ -205,11 +205,7 @@
 
 					<p>
 						<b>Tags: </b>
-						<%
-							for (String tag : quiz.getTags()) {
-								out.print("#" + tag + ", \n");
-							}
-						%>
+						<%=Helper.displayTags(quiz.getTags(), false)%>
 					</p>
 				</div>
 
