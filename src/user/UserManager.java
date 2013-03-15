@@ -97,7 +97,7 @@ public class UserManager{
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println("exception");
+			//System.out.println("exception");
 		}
 		close();
 		return null;
@@ -135,6 +135,17 @@ public class UserManager{
 		close();
 	}
 
+	public static void deleteAllAnnouncement(){
+		setDriver();
+		try {
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + announceTable);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		close();
+	}
+	
 	// account management
 
 	/** Method addNewAccount is to add a new user tuple into userstats.sql and create 
@@ -165,7 +176,7 @@ public class UserManager{
 						"registrationTime datetime, status char(1), gender char(1), email char(50), category text, privacy char(1));");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
-				System.out.println("Adding new table fails.");
+				//System.out.println("Adding new table fails.");
 				close();
 				return false;
 			}
@@ -219,7 +230,7 @@ public class UserManager{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-			System.out.println("Adding new account fails.");
+			//System.out.println("Adding new account fails.");
 			close();
 			return false;
 		}
@@ -278,7 +289,7 @@ public class UserManager{
 					"WHERE userId = '" + userId + "' AND password = '" + hashValue + "'");
 			if(!rs.next()) {
 				close();
-				System.out.println("not found");
+				//System.out.println("not found");
 				return false;
 			}
 			rs.close();
@@ -301,14 +312,14 @@ public class UserManager{
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable + " " +
 					"WHERE userId LIKE '" + userId + "'");
 			if(!rs.next()) {
-				System.out.println("This account doesn't exist.");
+				//System.out.println("This account doesn't exist.");
 				close();
 				return false;
 			}
 			rs.close();
 		} catch (SQLException e) {
 			//e.printStackTrace();
-			System.out.println("Deletion fails (1).");
+			//System.out.println("Deletion fails (1).");
 			close();
 			return false;
 		}
@@ -342,7 +353,6 @@ public class UserManager{
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userTable);
 			while(rs.next()){
-				System.out.println(rs.getString("userId"));
 				deleteAccount(rs.getString("userId"));
 			}
 			stmt.executeUpdate("DROP TABLE IF EXISTS " + userTable);
@@ -350,7 +360,7 @@ public class UserManager{
 			return true;
 		} catch(SQLException e){
 			//e.printStackTrace();
-			System.out.println("Deletion fails.");
+			//System.out.println("Deletion fails.");
 			close();
 			return false;
 		}
@@ -375,7 +385,7 @@ public class UserManager{
 
 	public static void setAccountInfo(String userId, String column, String content){
 		if(column.equals("userId") || column.equals("registrationTime")) {
-			System.out.println(column + " is not allowed to be modified.");
+			//System.out.println(column + " is not allowed to be modified.");
 			return;
 		}
 		if(column.equals("password")) {
@@ -504,7 +514,7 @@ public class UserManager{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Message failed.");
+			//System.out.println("Message failed.");
 		}
 		close();
 		return "x";
@@ -542,7 +552,7 @@ public class UserManager{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Message failed.");
+			//System.out.println("Message failed.");
 		}
 		close();
 	}
@@ -673,10 +683,10 @@ public class UserManager{
 				close();
 				return msg;
 			} else {
-				System.out.println("Message does not exist.");
+				//System.out.println("Message does not exist.");
 			}
 			if(rs.next()){
-				System.out.println("Message Hashcode duplicates.");
+				//System.out.println("Message Hashcode duplicates.");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -705,10 +715,10 @@ public class UserManager{
 				}
 				msg.setTime(rs.getString("Time"));
 			} else {
-				System.out.println("Message does not exist.");
+				//System.out.println("Message does not exist.");
 			}
 			if(rs.next()){
-				System.out.println("Message Hashcode duplicates.");
+				//System.out.println("Message Hashcode duplicates.");
 			}
 			if(box.equals("inbox")){
 				stmt.executeUpdate("UPDATE " + userId + "_inbox SET ifRead='1' " + "WHERE code='" 

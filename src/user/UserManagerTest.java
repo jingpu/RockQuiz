@@ -82,24 +82,17 @@ public class UserManagerTest {
 	@Test
 	public void admin(){
 		UserManager.deleteAll();
+		UserManager.deleteAllAnnouncement();
 		UserManager.addNewAccount("yy", "123", "s", "f", "asf@asdf.edu", "Science#Engineering");
-		UserManager.addNewAccount("y1", "123", "u", "f", "asf@asdf.edu", "Science#Engineering");
+		UserManager.addNewAccount("y1", "123", "u", "f", "asf@asdf.edu", "Science#Engineering#Geology");
 		UserManager.addNewAccount("hj", "123", "s", "f", "asf@asdf.edu", "Science#Engineering");
 		UserManager.addNewAccount("zy", "123", "s", "m", "asf@asdf.edu", "Science#Engineering");
 		UserManager.addNewAccount("pj", "123", "s", "m", "asf@asdf.edu", "Science#Engineering");
-		UserManager.addNewAccount("Jim", "123", "u", "m", "asf@asdf.edu", "Science#Engineering");
-		UserManager.addNewAccount("Molly", "123", "u", "m", "asf@asdf.edu", "Science#Engineering");
-		UserManager.addNewAccount("Patrick", "123", "u", "m", "asf@asdf.edu", "Science#Engineering");
-		UserManager.addNewAccount("Kate", "123", "u", "m", "asf@asdf.edu", "Science#Engineering");
 	}
 	
 	@Test
 	public void charProcess(){
-		String admin="admin";
-		String announce = "\"test\"";
-		UserManager.setAnnouncement(announce, admin);
-		Announce ann = UserManager.getLatestAnnounce();
-		UserManager.deleteAnnouncement(ann.getTime(), ann.getAdmin());
-		UserManager.addAchievement("yy", "a2", "quizExample0");
+		UserManager.setAnnouncement("Ready?!", "yy");
 	}
+	
 }
