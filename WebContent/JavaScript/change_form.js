@@ -6,14 +6,39 @@ $(document).ready(function() { //unload in javascript
 			submitForm();
 			},timeLimit * 1000);	
 	}
+	
 });
+
 
 function validateForm() {
 	if (!checkScore()) return false;
 	if (!checkBlank()) return false;
 	if (!checkTimeLimit()) return false;
+	if (!checkRadioChkBox()) return false;
 	return true;
 }
+
+
+function checkRadioChkBox() {
+	var maxNum = document.getElementById("max_num").value;
+	for (var i = 0; i < maxNum; i++) {
+		var answer = document.getElementsByName("answer" + "_" + i);
+		var flag = false;
+		for (var j = 0; j < answer.length; j++) {
+			if(answer[j].checked) {
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			alert("You should at least assign one choice as answer!");
+			return false;
+		}
+	}
+	return true;
+}
+
+
 
 //used for multi-page read mode
 function submitForm() {
@@ -32,6 +57,8 @@ function checkTimeLimit() {
 	}
 	return true;
 }
+
+
 
 //For creation check
 function checkScore() {
@@ -117,6 +144,9 @@ function addOptionSuffix(newChoiceDiv, suffix) {
 			var name = e.name;
 			if(name.indexOf("choice") > -1){
 				e.name = name.replace("choice", "choice" + (suffix-1));
+				if (e.className == "requiredField") {
+					e.required=true;
+				}
 			}			
 		}
 		// add suffix to value
@@ -175,7 +205,7 @@ function addAnswerSuffix(newAnswer, suffix) {
 			var name = e.name;
 			if(name.indexOf("answer") > -1){
 				e.name = name.replace("answer", "answer" + (suffix-1));
-				if (e.classname == "requiredField") {
+				if (e.className == "requiredField") {
 					e.required=true;
 				}
 			}			

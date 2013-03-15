@@ -162,10 +162,9 @@ public class MAQuestion extends QuestionBase {
 		for (int i = 0; i < numAnswers; i++) {
 			answer.append("#");
 			// if there is no input in answer field, it should be null
-
 			String userAnswer = request.getParameter("answer" + i + "_"
 					+ getQuestionId());
-			if (userAnswer == null)
+			if (userAnswer == null || userAnswer == "")
 				userAnswer = " ";
 
 			answer.append(userAnswer);
