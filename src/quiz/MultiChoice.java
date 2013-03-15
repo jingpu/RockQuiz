@@ -66,41 +66,6 @@ public class MultiChoice extends QuestionBase {
 				+ super.getBaseQuerySaveString() + ", \"" + choices + "\")";
 	}
 
-	public static String printCreateHtml() {
-		// TODO Auto-generated method stub
-		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a multiChoice question</h4>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\"><br>");
-		html.append("<p class='notice'> Notice: User should first create a certain number of choices, and label the right answer right behind the choice.<br>One Multi-Choice question could contain only one right answer</p>");
-		html.append("<p> Please enter proposed question description and answer </p><br>");
-		html.append("Question Description<br>: <textarea name=\"questionDescription\" rows=\"10\" cols=\"50\"></textarea><br>");
-
-		// Choice options
-		html.append("<div class=\"multi_choice\">");
-		html.append("Choice0:   <input type=\"text\" name=\"choice0\" ></input><input type=\"radio\" name=\"answer\" value=\"choice0\"></input><br>");
-		html.append("Choice1:   <input type=\"text\" name=\"choice1\" ></input><input type=\"radio\" name=\"answer\" value=\"choice1\"></input><br>");
-		html.append("Choice2:   <input type=\"text\" name=\"choice2\" ></input><input type=\"radio\" name=\"answer\" value=\"choice2\"></input><br>");
-		html.append("Choice3:   <input type=\"text\" name=\"choice3\" ></input><input type=\"radio\" name=\"answer\" value=\"choice3\"></input><br>");
-		// add/delete choices
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice();\" />");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice();\" /><br>");
-		html.append("</div><br>");
-
-		// Answer and Full Score
-		html.append("Score:   <input type=\"text\" name=\"maxScore\" ></input><br>");
-		html.append("Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
-
-		// Hidden information - question Type and tag information
-		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
-				+ QuestionBase.MC + "\" ></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"numChoices\" id=\"numChoices\"></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>\n");
-
-		return html.toString();
-
-	}
-
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
@@ -199,23 +164,11 @@ public class MultiChoice extends QuestionBase {
 	@Override
 	public int getScore(String userInput) {
 		// TODO Auto-generated method stub
+		System.out.println("userINput is " + userInput);
+		System.out.println("answer is " + answer);
 		if (userInput.equals(answer))
 			return maxScore;
 		return 0;
-	}
-
-	// TODO: change the multi-choice table structure, and merge different choice
-	// options into one field
-	@Deprecated
-	public static String getCreatedChoices(HttpServletRequest request) {
-		int numChoices = Integer.parseInt(request.getParameter("numChoices"));
-		StringBuilder choices = new StringBuilder();
-		for (int i = 0; i < numChoices; i++) {
-			choices.append("#");
-			choices.append(request.getParameter("choice" + i));
-			choices.append("#");
-		}
-		return choices.toString();
 	}
 
 	public static String getCreatedChoices(HttpServletRequest request,
@@ -270,20 +223,9 @@ public class MultiChoice extends QuestionBase {
 		return html.toString();
 	}
 
-	/**
-	 * Create answer in the format: #answer0##answer1##answer2#..#
-	 * 
-	 * @param request
-	 * @return
-	 */
-	public static String getCreatedAnswer(HttpServletRequest request) {
-		// str is a string, i.e. "choice0"
-		String str = request.getParameter("answer");
-		return request.getParameter(str);
-	}
-
 	public static String getCreatedAnswer(HttpServletRequest request, int suffix) {
-		return request.getParameter("answer_" + suffix);
+		String str = request.getParameter("answer_" + suffix);
+		return request.getParameter(str + "_" + suffix);
 	}
 
 	/*
@@ -297,6 +239,7 @@ public class MultiChoice extends QuestionBase {
 		String userAnswer = request.getParameter("answer_" + getQuestionId());
 		if (userAnswer == null)
 			userAnswer = "";
+
 		return userAnswer;
 	}
 
