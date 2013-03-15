@@ -164,7 +164,7 @@ h3 {
 
 #body {
 	float: left;
-	width: 650px;
+	width: 670px;
 	margin: 2px 1px 0 0;
 	border: 2px solid #659db4;
 	position: relative;
@@ -187,14 +187,14 @@ h3 {
 #body .leftbox {
 	float: left;
 	width: 300px;
-	padding-left: 10px;
+	padding-left: 0px;
 	padding-right: 15px;
 }
 
 #body .rightbox {
 	float: right;
-	width: 300px;
-	padding-left: 13px;
+	width: 325px;
+	padding-left: 0px;
 	padding-right: 10px;
 	border-left: 2px solid #659db4;
 }
@@ -228,7 +228,7 @@ h3 {
 	font-weight: normal;
 	list-style-type: square;
 	text-align: left;
-	margin-left: 20px;
+	margin-right: 2px;
 	padding-top: 10px;
 	word-wrap: break-all;
 }
