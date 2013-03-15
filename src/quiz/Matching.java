@@ -65,6 +65,18 @@ public class Matching extends MCMAQuestion {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see quiz.QuestionBase#getMaxScore()
+	 */
+	@Override
+	public int getMaxScore() {
+		// TODO if allow expanding matching option, should change this hard code
+		// "4"
+		return super.getMaxScore() * 4;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see quiz.QuestionBase#getScore(java.lang.String)
 	 */
 	@Override
@@ -188,8 +200,11 @@ public class Matching extends MCMAQuestion {
 		}
 		html.append("</div>"); // for choices div
 
+		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" value =\"4\" ></input>");
+		html.append("</div>"); // for Match_div
+
 		// Full Score
-		html.append("Score:   <input type=\"text\" name=\"maxScore\" ></input>");
+		html.append("Score per answer:   <input type=\"text\" name=\"maxScore\" ></input>");
 		html.append("Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input>");
 
 		// Hidden information - question Type and tag information

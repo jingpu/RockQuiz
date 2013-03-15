@@ -78,6 +78,17 @@ public class MAQuestion extends QuestionBase {
 	/*
 	 * (non-Javadoc)
 	 * 
+	 * @see quiz.QuestionBase#getMaxScore()
+	 */
+	@Override
+	public int getMaxScore() {
+		List<String> answerList = Helper.parseTags(answer);
+		return super.getMaxScore() * answerList.size();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see quiz.QuestionBase#getQuerySaveString()
 	 */
 	@Override
@@ -131,8 +142,8 @@ public class MAQuestion extends QuestionBase {
 		html.append("Creator could also specify whether the answer should be answered in order or not by ticking the corresponding checkbox");
 		html.append("<p class='notice'> Notice: Creator should also specify the score per correct answer.</p>");
 		html.append("<span class= 'description'>Question Description:</span><br>");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p>");
+		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
+				+ "\" required></textarea>");
 
 		html.append("<div class=\"MA_div\">");
 		// answers
@@ -232,10 +243,8 @@ public class MAQuestion extends QuestionBase {
 		for (int i = 0; i < answerList.length; i++) {
 			if (inputList[i].equals(answerList[i]))
 				score += maxScore;
-			else
-				score -= 1;
 		}
-		return score >= 0 ? score : 0;
+		return score;
 	}
 
 	private int getUnorderedScore(String[] answerList, String[] inputList) {
@@ -247,10 +256,8 @@ public class MAQuestion extends QuestionBase {
 		for (String str : inputList) {
 			if (answerSet.contains(str))
 				score += maxScore;
-			else
-				score -= 1;
 		}
-		return score >= 0 ? score : 0;
+		return score;
 	}
 
 	private String[] parseAnswer(String answerString) {
