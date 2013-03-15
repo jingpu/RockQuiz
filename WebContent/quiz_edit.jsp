@@ -61,8 +61,7 @@
 						<input type="hidden" name="quizName" value="<%=quiz.getQuizName()%>">
 						<div>
 							Quiz Description:<br>
-							<textarea name="quizDescription" rows="10" cols="50" required>
-								<%=quiz.getQuizDescription()%></textarea>
+							<textarea name="quizDescription" rows="10" cols="50" required><%=quiz.getQuizDescription()%></textarea>
 							<div id="category_type">
 								Category:
 								<table>
