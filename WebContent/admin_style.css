@@ -57,9 +57,44 @@ h3 {
 	text-align: left;
 	font-weight: 500;
 	color: black;
+	margin-bottom: 0.7em;
 }
 
-#body li {
+#body p {
 	font-size: 12px;
+	text-align: left;
+	font-weight: 500;
+	color: black;
+	margin: 0.3em;
 }
+
+#infolist {
+	height: 120px;
+	width: 280px;
+	border: 2px dotted #ccc;
+	font-size: 12px;
+	font-family: "Book Antiqua", Palatino, serif;
+	overflow: auto;
+}
+
+#infolist li{
+	margin-bottom: 0.3em;
+}
+
+#infolist li a{
+	color: #202020;
+	text-decoration: underline;
+}
+
+#infolist li a:hover{
+	text-decoration: underline;
+	background-color: #cc6666;
+	color: #ffffff;
+}
+
+#body .button {
+	text-align: right;
+	margin-right: 20px;
+}
+
 

@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
 						if (cookie1.getName().equals("username")) {
 							foundCookie = true;
 							cookie1.setValue(usrname);
-							cookie1.setMaxAge(90*24*60*60);
+							cookie1.setMaxAge(30*24*60*60);
 							System.out.println(cookie1.getName());
 							System.out.println(cookie1.getValue());
 						}
