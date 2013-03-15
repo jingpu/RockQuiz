@@ -41,7 +41,7 @@ public class GetScoreServlet extends HttpServlet {
 		QuestionBase lastQuestion = questionList.get(questionIndex - 1);
 		String answer = lastQuestion.getUserAnswer(request);
 		int score = lastQuestion.getScore(answer);
-		String maxScore = quiz.getMaxScore();
+		int maxScore = lastQuestion.getMaxScore();
 		// write html
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
