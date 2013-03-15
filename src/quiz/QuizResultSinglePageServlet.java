@@ -89,7 +89,7 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 		Account user = new Account(userName);
 		if(quizName != null){
 			user.addQuizTaken(quizName, quizId);
-			if(user.countHistory("t") == 9){
+			if(user.countHistory("t") == 10){
 				newAchieve1 = true;
 				user.addAchievement("4", quizName);
 			}
