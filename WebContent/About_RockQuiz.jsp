@@ -72,7 +72,7 @@
 						</li>
 						<li>History
 							<ul>
-								<li>Quiz performance</li>
+								<li>Quiz performance - Taking or Creating quizzes</li>
 							</ul>
 						</li>
 					</ul>
@@ -85,18 +85,23 @@
 						<li>Achievements
 							<ul>
 								<li>Add achievement whenever finishing a quiz</li>
-								<li>Achievement list</li>
+								<li>Achievement list page</li>
 							</ul>
 						</li>
 						<li>Administration</li>
-							<ul>
+						<ul>
 							<li>Create announcements</li>
 							<li>Remove user accounts</li>
 							<li>Remove quizzes</li>
 							<li>Clear all history information for a certain quiz</li>
-							<li>Change users' rights</li>
-							<li>See site statistics</li>
-							</ul>
+							<li>Change users' rights - Normal user or Admin</li>
+							<li>See site statistics:
+								<ul>
+									<li>Registered users list</li>
+									<li>Quizzes list and taken counts</li>
+								</ul>
+							</li>
+						</ul>
 					</ul>
 
 
@@ -119,17 +124,42 @@
 								<li>categorize quiz</li>
 								<li>categorize questions</li>
 								<li>search by category</li>
+								<li>user can follow interesting categories(*)</li>
 							</ul>
 						</li>
-						<li>Non-Registered Access</li>
-						<li>Privacy Setting</li>
+						<li>Non-Registered Access
+							<ul>
+								<li>Guest home</li>
+								<ul>
+									<li>Popular quizzes</li>
+									<li>Recent quizzes</li>
+									<li>Search quizzes/users</li>
+									<li>Forbidden to take quizzes</li>
+								</ul>
+								<li>
+							</ul>
+						</li>
+						<li>Privacy Setting
+							<ul>
+								<li>if user sets privacy,</li>
+								<ul>
+									<li>non-friends cannot get access to their page</li>
+									<li>their names become "anonymous" when shown to
+										non-friends</li>
+								</ul>
+							</ul>
+						</li>
 
+						<li>Cookies</li>
+						<ul>
+							<li>If users tick "Keep me logged in" when they log in,
+								their logging information will last for as long as 1 month if
+								they don't log out.
+						</ul>
 						<li>Quiz Editing(TODO)</li>
 						<li>Rating and Review System(TODO)</li>
 						<li>Reporting System(TODO)</li>
 						<li>Error Handling(TODO-MUST DO)</li>
-						<li>Cookies(TODO)</li>
-						<li>Privacy Setting(TODO)</li>
 					</ul>
 
 				</div>

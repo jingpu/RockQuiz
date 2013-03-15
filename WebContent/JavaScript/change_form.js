@@ -25,11 +25,13 @@ function checkRadioChkBox() {
 		var answer = document.getElementsByName("answer" + "_" + i);
 		var flag = false;
 		for (var j = 0; j < answer.length; j++) {
-			if(answer[j].checked) {
+			if((answer[j].type != "radio" && answer[j].type != "checkbox") || answer[j].checked) {
 				flag = true;
 				break;
 			}
 		}
+		if (answer.length == 0) 
+			flag = true;
 		if (!flag) {
 			alert("You should at least assign one choice as answer!");
 			return false;
@@ -153,7 +155,7 @@ function addOptionSuffix(newChoiceDiv, suffix) {
 		if (e.hasAttribute("value")) {
 			var val = e.value;
 			if(val.indexOf("choice") > -1){
-				e.val = val.replace("choice", "choice" + (suffix-1));
+				e.value = val.replace("choice", "choice" + (suffix-1));
 			}			
 		}
 	}
