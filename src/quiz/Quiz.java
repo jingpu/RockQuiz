@@ -4,6 +4,7 @@
 package quiz;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author Jing Pu
@@ -41,5 +42,7 @@ public interface Quiz {
 	public int getBestScore();
 	
 	public String getCategory();
+	
+	public List<String> getTags();
 
 }
