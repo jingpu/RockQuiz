@@ -18,10 +18,10 @@ import java.sql.SQLException;
  */
 public class MyDB {
 	
-	private static final String MYSQL_USERNAME = "ccs108yzhao3";
-	private static final String MYSQL_PASSWORD = "deefaijo";
+	private static final String MYSQL_USERNAME = "ccs108jingpu";
+	private static final String MYSQL_PASSWORD = "neemoono";
 	private static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
-	private static final String MYSQL_DATABASE_NAME = "c_cs108_yzhao3";
+	private static final String MYSQL_DATABASE_NAME = "c_cs108_jingpu";
 	
 	private static Connection con;
 	
