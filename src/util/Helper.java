@@ -115,20 +115,13 @@ public final class Helper {
 		return sb.toString();
 	}
 
-<<<<<<< HEAD
 	public static String[] string2Array(String cateStr) {
-=======
-	public static String[] string2Array(String cateStr){
->>>>>>> 52525e1f69091b87d5a844b80ce9babb58996fba
 		String[] category = cateStr.split("[#]+");
 		return category;
 	}
 
-<<<<<<< HEAD
 	public static String getTitle(String str) {
-=======
-	public static String getTitle(String str){
->>>>>>> 52525e1f69091b87d5a844b80ce9babb58996fba
+
 		/*
 		 * achieveId- 1- Amateur Author 2- Prolific Author 3- Prodigious Author
 		 * 4- Quiz Machine 5- I am the Greatest 6- Practice Makes Perfect
@@ -172,7 +165,6 @@ public final class Helper {
 		return "";
 	}
 
-<<<<<<< HEAD
 	public static String getTitleNDescription(String type) {
 		return "<a href='#' title='" + Helper.getTitleDescription(type)
 				+ "' style='font-weight:bold;'>" + Helper.getTitle(type)
@@ -180,15 +172,7 @@ public final class Helper {
 	}
 
 	public static String displayQuiz(Quiz quiz, boolean showCreator) {
-=======
-	public static String getTitleNDescription(String type){
-		return "<a href='#' title='"
-				+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
-				+ Helper.getTitle(type) + "</a>";
-	}
 
-	public static String displayQuiz(Quiz quiz, boolean showCreator){
->>>>>>> 52525e1f69091b87d5a844b80ce9babb58996fba
 		String quizUrl = quiz.getSummaryPage();
 		String creator = quiz.getCreatorId();
 		String description = quiz.getQuizName() + "\n"
@@ -200,31 +184,21 @@ public final class Helper {
 		if (!showCreator) {
 			return result.toString();
 		} else {
-<<<<<<< HEAD
 			result.append(" (by:<a href='userpage.jsp?id=" + creator + "'>"
 					+ creator + "</a>)");
-=======
-			result.append(" (by:<a href='userpage.jsp?id="
-					+ creator +"'>"+ creator +"</a>)");
->>>>>>> 52525e1f69091b87d5a844b80ce9babb58996fba
+
 			return result.toString();
 		}
 	}
 
-<<<<<<< HEAD
 	public static String displayUser(String user) {
 		return "<a href=\"userpage.jsp?id=" + user + "\">" + user + "</a>";
 	}
 
-=======
-	public static String displayUser(String user){
-		return "<a href=\"userpage.jsp?id=" + user + "\">" + user + "</a>";
-	}
-
-	public static String displayTag(String tag, boolean onSearchPage){
-		if(onSearchPage){
+	public static String displayTag(String tag, boolean onSearchPage) {
+		if (onSearchPage) {
 			StringBuilder sb = new StringBuilder();
-			sb.append("<a href='search.jsp?s=da&q="+ tag + "'>");
+			sb.append("<a href='search.jsp?s=da&q=" + tag + "'>");
 			sb.append("<div name='tagset' style='display: inline;'>#");
 			sb.append(tag + "</div><a>");
 			return sb.toString();
@@ -232,15 +206,16 @@ public final class Helper {
 		return "<a href='search.jsp?s=da&q=" + tag + "'>#" + tag + "</a>";
 	}
 
-	public static String displayTags(List<String> tags, boolean onSearchPage){
-		if(tags == null || tags.isEmpty()) return "";
+	public static String displayTags(List<String> tags, boolean onSearchPage) {
+		if (tags == null || tags.isEmpty())
+			return "";
 		StringBuilder sb = new StringBuilder();
 		String delim = "";
-		for(String tag : tags){
+		for (String tag : tags) {
 			sb.append(delim).append(displayTag(tag, onSearchPage));
 			delim = ", ";
 		}
 		return sb.toString();
 	}
->>>>>>> 52525e1f69091b87d5a844b80ce9babb58996fba
+
 }
