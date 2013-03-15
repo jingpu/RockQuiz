@@ -8,7 +8,6 @@ $(document).ready(function() {
 			dataType: "text",
 			success: function(data)
 			{
-				alert(data);
 				if(data.indexOf("ok") > -1){
 					$('#quizNameStatus').css("color", "green");
 					$('#quizNameStatus').html("ok");
