@@ -248,3 +248,27 @@ h3 {
 	font-weight: 100;
 	background-color: #ffff99;
 }
+
+#body li.activity {
+	color: #202020;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: 13px;
+	font-weight: normal;
+	list-style-type: square;
+	text-align: left;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	word-wrap: break-all;
+}
+
+#body li.activity a:link {
+	color: #202020;
+	text-decoration: underline;
+	background-color: transparent;
+}
+
+#body li.activity a:hover {
+	text-decoration: underline;
+	background-color: #cc6666;
+	color: #ffffff;
+}
