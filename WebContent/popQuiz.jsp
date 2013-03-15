@@ -45,7 +45,7 @@
 			String category =quiz.getCategory();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	%>
-	<li style='list-style-type: decimal; margin-top: 1em;'>
+	<li class='quizlist' style='text-align: left; margin-top: 0.5em'>
 		<%=Helper.displayQuiz(quiz, true)%><br>
 		Category: <a href='search.jsp?s=g&q=<%=category%>'><%=category%></a>
 		On <%=sdf.format(time)%> Taken counts: <%=takenTimes%>

@@ -130,7 +130,7 @@
 			<dl id="browse">
 				<%--choose whether to search user--%>
 				<dt>
-					Quizzes Search | <a href=<%=searchUser%>>Users Search</a>
+					Quizzes Search <a href=<%=searchUser%>>Users Search</a>
 				</dt>
 				<dd class="searchform">
 					<%--quizzes/users search box--%>
@@ -209,8 +209,6 @@
 
 </body>
 <script type="text/javascript">
-	highlight("<%=pquery%>
-	", "
-<%=psort%>");
+	highlight("<%=pquery%>","<%=psort%>");
 </script>
 </html>

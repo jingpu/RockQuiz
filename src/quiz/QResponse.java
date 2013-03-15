@@ -82,7 +82,7 @@ public class QResponse extends QuestionBase {
 				+ "</textarea><br>\n");
 		html.append("Answer:   <input type=\"text\" name=\"answer\""
 				+ "\" required value=\"" + getAnswer() + "\" ></input><br>\n");
-		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\""
+		html.append("Score:   <input disabled class=\"max_score\" type=\"text\" name=\"maxScore\""
 				+ "\" required value=\"" + getMaxScore() + "\" ></input><br>\n");
 
 		// add timeLimit field
