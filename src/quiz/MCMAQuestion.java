@@ -329,7 +329,6 @@ public class MCMAQuestion extends QuestionBase {
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>\n");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
-		System.out.println(html.toString());
 		return html.toString();
 
 	}

@@ -6,15 +6,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%=QuestionFactory.printReference()%>
+<%= QuestionFactory.printReference() %>
 <script src="JavaScript/quiz_create.js"></script>
 <meta charset="UTF-8">
 <title>Create Quiz</title>
 <link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="friendpage_style.css" rel="stylesheet" type="text/css" />
 <link href="CSS/quiz_display.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-</style>
+<style type="text/css"></style>
+
 </head>
 <%
 	String userName = (String) session.getAttribute("guest");

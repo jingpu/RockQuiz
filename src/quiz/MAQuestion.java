@@ -255,7 +255,7 @@ public class MAQuestion extends QuestionBase {
 		html.append("</div>");
 
 		// checkbox: tick means true, otherwise null means false
-		html.append("<input class=\"isOrder\" type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input><br>");
+		html.append("<input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input><br>");
 
 		// Hidden information - questionType,tag and number of answers
 		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""

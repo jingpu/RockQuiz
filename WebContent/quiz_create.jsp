@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%= QuestionFactory.printReference() %>
 <script src="JavaScript/quiz_create.js"></script>
 <meta charset="UTF-8">
 <title>Create Quiz</title>

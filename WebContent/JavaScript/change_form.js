@@ -25,7 +25,7 @@ function checkRadioChkBox() {
 		var answer = document.getElementsByName("answer" + "_" + i);
 		var flag = false;
 		for (var j = 0; j < answer.length; j++) {
-			if(answer[j].checked) {
+			if((answer[j].type != "radio" && answer[j].type != "checkbox") || answer[j].checked) {
 				flag = true;
 				break;
 			}
