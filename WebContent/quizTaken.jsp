@@ -66,9 +66,9 @@
 		} else {
 				for (Activity act : taken) {
 					if (guest.equals(userId)) {
-						out.println("<p>" + act.toStringMe(false) + "</p>");
+						out.println("<li class='activity' style='text-align: center'>" + act.toStringMe(false) + "</li>");
 					} else {
-						out.println("<p>" + act.toString(false) + "</p>");
+						out.println("<li class='activity' style='text-align: center'>" + act.toString(false) + "</li>");
 					}
 				}
 			}

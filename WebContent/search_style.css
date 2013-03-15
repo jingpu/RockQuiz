@@ -1,7 +1,5 @@
 @CHARSET "UTF-8";
 
-
-
 #wrapper {
 	width: 870px;
 }
@@ -9,12 +7,15 @@
 #browse {
 	width: 230px;
 }
-#browse form div{
+
+#browse form div {
 	width: 100%;
 }
-#browse input[type="search"]{
-	width:100%;
-	}
+
+#browse input[type="search"] {
+	width: 100%;
+}
+
 #body {
 	width: 600px;
 }
@@ -41,19 +42,17 @@
 	border-left: 2px solid #659db4;
 }
 
-
-
 #body li {
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: normal;
 	list-style-type: decimal;
 	text-align: left;
 	margin-left: 20px;
+	margin-right: 20px;
 	padding-bottom: 8px;
 }
 
-#body ul {
-	list-style-type: none;
+#body li a:hover {
+	text-decoration: underline;
+	background-color: #ffff33;
 }
-
-
