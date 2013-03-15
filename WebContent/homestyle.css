@@ -4,23 +4,55 @@
 	height: 200px;
 }
 
-#body .leftbox2,#body .rightbox2 {
-	margin-top: 5px;
-	color: #464646;
-	height: 250px;
+
+
+#body .leftbox2 .rightbox2 {
+	height:auto;
 }
 
-#body .leftbox2 {
-	float: left;
-	width: 300px;
-	padding-left: 10px;
-	padding-right: 15px;
+
+#body li.quizlist {
+	color: #202020;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: 13px;
+	font-weight: normal;
+	list-style-type: decimal;
+	text-align: left;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
-#body .rightbox2 {
-	float: right;
-	width: 300px;
-	padding-left: 13px;
-	padding-right: 10px;
-	border-left: 2px solid #659db4;
+#body li.quizlist a {
+	color: #202020;
+	text-decoration: underline;
+}
+
+#body li.quizlist a:hover {
+	text-decoration: underline;
+	background-color: #cc6666;
+	color: #ffffff;
+}
+
+#body li.activity {
+	color: #202020;
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size: 13px;
+	font-weight: normal;
+	list-style-type: square;
+	text-align: left;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	word-wrap: break-all;
+}
+
+#body li.activity a:link {
+	color: #202020;
+	text-decoration: underline;
+	background-color: transparent;
+}
+
+#body li.activity a:hover {
+	text-decoration: underline;
+	background-color: #cc6666;
+	color: #ffffff;
 }

@@ -108,6 +108,7 @@
 						</div>
 
 						<h2>Questions:</h2>
+						<p class='notice'> Notice: changing scores and the number of correct answers in multi-answer question may result in a change of total score.</p>
 						<div id="questions">
 							<%
 								for (int i = 0; i < questionList.size(); i++) {

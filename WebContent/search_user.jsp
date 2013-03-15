@@ -27,6 +27,7 @@
 		<div id="inner">
 			<div id="header">
 				<h1>Search Page</h1>
+				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
 						<a href="home.jsp">Home</a> | <a href="Logout">Log out</a>
@@ -37,7 +38,7 @@
 			<dl id="browse">
 				<%--choose whether to search user--%>
 				<dt>
-					<a href=<%=searchQuiz%>>Quizzes Search</a> Users Search
+					<a href=<%=searchQuiz%>>Quizzes Search</a> <u>Users Search</u>
 				</dt>
 				<dd class="searchform">
 					<%--quizzes/users search box--%>

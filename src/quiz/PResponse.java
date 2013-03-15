@@ -62,13 +62,12 @@ public class PResponse extends QuestionBase {
 	}
 
 	public static String printCreateHtmlSinglePage() {
-		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a picture-response question</h4>");
+		html.append("<h4>This section will guide you to create a picture-response question</h4>");
 		html.append("Please enter proposed question description, answer and absolute picture url.");
 		html.append("<p class=\"description\">Question Description:</p>");
 		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea><br>");
+				+ " required></textarea><br>");
 
 		// url information
 		html.append("Picture URL: <input type=\"text\" name=\"url\""
@@ -88,7 +87,45 @@ public class PResponse extends QuestionBase {
 				+ QuestionBase.PR + "\" ></input></p>");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>");
 		return html.toString();
+	}
 
+	@Override
+	public String printEditHtml(int suffix) {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>Picture-Response Question</h4>");
+		html.append("Please enter proposed question description, answer and absolute picture url.");
+		html.append("<p class=\"description\">Question Description:</p>");
+		html.append("<textarea name=\"questionDescription_" + suffix
+				+ "\" rows=\"10\" cols=\"50\"" + " required>"
+				+ getQuestionDescription() + "</textarea><br>");
+
+		// url information
+		html.append("Picture URL: <input type=\"text\" name=\"url_" + suffix
+				+ "\" required value=\"" + url + "\"></input><br>");
+		// add answer field
+		html.append("Answer:   <input type=\"text\" name=\"answer_" + suffix
+				+ "\" required value=\"" + getAnswer() + "\" ></input><br>\n");
+		html.append("Score:<input class=\"max_score\" type=\"text\" name=\"maxScore_"
+				+ suffix
+				+ "\" required value=\""
+				+ getMaxScore()
+				+ "\" ></input>\n");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   \n");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit_"
+				+ suffix
+				+ "\" value=\""
+				+ getTimeLimit()
+				+ "\" ></input><br>\n");
+		html.append("</div>\n");
+
+		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
+				+ "\" value=\"" + QuestionBase.PR + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
+				+ "\" value=\"not_implemeted\"></input></p>");
+		return html.toString();
 	}
 
 	@Override

@@ -192,7 +192,7 @@ public class Account implements User{
 		}
 		Collections.sort(friendsActivity, new Comparator<Activity>() {
 			public int compare(Activity a, Activity b) {
-				return (a.time.compareTo(b.time));
+				return (b.time.compareTo(a.time));
 			}
 		});
 		return friendsActivity;

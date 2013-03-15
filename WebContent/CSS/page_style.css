@@ -164,7 +164,7 @@ h3 {
 
 #body {
 	float: left;
-	width: 650px;
+	width: 670px;
 	margin: 2px 1px 0 0;
 	border: 2px solid #659db4;
 	position: relative;
@@ -178,72 +178,27 @@ h3 {
 	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }
 
-#body .leftbox,#body .rightbox {
-	margin-top: 5px;
+#body .leftbox,#body .rightbox, #body .leftbox2, #body .rightbox2{
+	padding-top: 5px;
 	color: #464646;
 	height: 180px;
 }
 
-#body .leftbox {
+#body .leftbox, #body .leftbox2 {
 	float: left;
-	width: 300px;
-	padding-left: 10px;
-	padding-right: 15px;
+	width: 310px;
+	padding-left: 15px;
+	padding-right: 10px;
 }
 
-#body .rightbox {
+#body .rightbox, #body .rightbox2 {
 	float: right;
-	width: 300px;
-	padding-left: 13px;
-	padding-right: 10px;
+	width: 310px;
+	padding-left: 8px;
+	padding-right: 15px;
 	border-left: 2px solid #659db4;
 }
 
-#body li.quizlist {
-	color: #202020;
-	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-	font-size: 13px;
-	font-weight: normal;
-	list-style-type: decimal;
-	text-align: center;
-	margin-left: 20px;
-	padding-bottom: 5px;
-}
-
-#body li.quizlist a {
-	color: #202020;
-	text-decoration: underline;
-}
-
-#body li.quizlist a:hover {
-	text-decoration: underline;
-	background-color: #cc6666;
-	color: #ffffff;
-}
-
-#body li.activity {
-	color: #202020;
-	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-	font-size: 13px;
-	font-weight: normal;
-	list-style-type: square;
-	text-align: left;
-	margin-left: 20px;
-	padding-top: 10px;
-	word-wrap: break-all;
-}
-
-#body li.activity a:link {
-	color: #202020;
-	text-decoration: underline;
-	background-color: transparent;
-}
-
-#body li.activity a:hover {
-	text-decoration: underline;
-	background-color: #cc6666;
-	color: #ffffff;
-}
 
 #body .br {
 	border-bottom: 2px solid #659db4;

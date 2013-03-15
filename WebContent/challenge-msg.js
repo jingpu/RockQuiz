@@ -2,15 +2,13 @@ function AddElement() {
 	var blank = document.getElementById('msg');
 	if(document.all('toUser') != null) 
 		return;
-	var newline1 = document.createElement('br');
-	newline1.id = 'br1';
-	blank.appendChild(newline1);
-
+	
 	var newInput1 = document.createElement('input');
 	newInput1.type = 'text';
 	newInput1.name = 'toUser';
 	newInput1.form = 'letter';
 	newInput1.placeholder = 'User name';
+	newInput1.size = '17';
 	blank.appendChild(newInput1);
 
 	var newline2 = document.createElement('br');
@@ -18,8 +16,8 @@ function AddElement() {
 	blank.appendChild(newline2);
 
 	var newInput2 = document.createElement('textarea');
-	newInput2.rows = '8';
-	newInput2.cols = '30';
+	newInput2.rows = '5';
+	newInput2.cols = '20';
 	newInput2.name = 'content';
 	newInput2.form = 'letter';
 	newInput2.placeholder = 'Composing message here';
@@ -41,8 +39,6 @@ function DelElement(){
 		e1.parentNode.removeChild(e1);
 		var e2 = document.forms['letter'].elements['content'];
 		e2.parentNode.removeChild(e2);
-		var e3 = document.getElementById('br1');
-		e3.parentNode.removeChild(e3);
 		var e4 = document.getElementById('br2');
 		e4.parentNode.removeChild(e4);
 		var e5 = document.forms['letter'].elements['send'];
