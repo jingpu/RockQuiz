@@ -138,7 +138,9 @@
 		</select> 
 		<input type="button" value="Add New Question" onclick="addQuestion();"><br> 
 		<input type="hidden" name="max_num" value="0" id="max_num">
+		<div id = "submit_btn">
 		<input type="submit" value="Submit Quiz">
+		</div>
 	</form>
 	<!-- question templates of all supported question -->
 	<%

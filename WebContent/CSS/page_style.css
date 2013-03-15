@@ -71,7 +71,7 @@ h3 {
 }
 
 #header {
-	background-color: #c80000;
+	background-color: #b80000;
 	padding: 5px;
 	margin-bottom: 10px;
 	position: relative;
@@ -163,11 +163,12 @@ h3 {
 }
 
 #body {
-	float: right;
+	float: left;
 	width: 650px;
 	margin: 2px 1px 0 0;
 	border: 2px solid #659db4;
 	position: relative;
+
 }
 
 #body p {
