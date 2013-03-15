@@ -236,7 +236,7 @@ h3 {
 
 #body li.activity a:hover {
 	text-decoration: underline;
-	background-color: #505050 ;
+	background-color: #cc6666;
 	color: #ffffff;
 }
 
@@ -280,8 +280,11 @@ h3 {
 }
 
 #body h5 {
-	text-align: left;
-	margin-left: 20px;
+	margin: 0;
+	text-decoration: underline;
+	text-align: center;
 	font-family: tahoma, helvetica, arial, sans-serif;
-	font-size: 13px;
+	font-size: 15px;
+	font-weight: 100;
+	background-color: #ffff99;
 }
