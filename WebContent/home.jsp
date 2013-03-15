@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
 	pageEncoding="US-ASCII"%>
 <%@ page import="java.util.*"%>
-<%@ page import="user.Account"%>
-<%@ page import="user.Message"%>
-<%@ page import="user.Activity"%>
-<%@ page import="user.Announce"%>
-<%@ page import="user.TimeTrsf"%>
+<%@ page import="user.*"%>
 <%@ page import="quiz.Quiz"%>
 <%@ page import="quiz.QuizManager"%>
 <%@ page import="quiz.MyQuizManager"%>
@@ -15,12 +11,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script type="text/javascript" src="checkcookies.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
 <link href="homestyle.css" rel="stylesheet" type="text/css" />
 <%
 	String userId = request.getParameter("id");
+	Cookie[] cookies = request.getCookies();
+	if (cookies != null) {
+		for (int i = 0; i < cookies.length; i++) {
+			Cookie cookie1 = cookies[i];
+			if (cookie1.getName().equals("username")
+					&& cookie1.getValue() != null
+					&& !cookie1.getValue().equals("")
+					&& !cookie1.getValue().equals("guest")
+					&& UserManager.alreadyExist(cookie1.getValue())) {
+				session.setAttribute("guest", cookie1.getValue());
+			}
+		}
+	}
+
 	String guest = (String) session.getAttribute("guest");
 	if (guest == null || guest.equals("guest")) {
 		response.sendRedirect("index.html");
@@ -43,7 +52,9 @@
 
 	// mail messages
 	List<String> unread = user.getUnreadMessage();
-	int unreadCount = unread.size();
+	int unreadCount = 0;
+	if (unread != null)
+		unreadCount = unread.size();
 
 	String mailBoxUrl = "Mailbox_frame.jsp?id=" + userId;
 	String userpageUrl = "userpage.jsp?id=" + userId;
@@ -94,7 +105,7 @@
 					</a>
 				</dt>
 				<%
-					if (unread.isEmpty()) {
+					if (unread == null || unread.isEmpty()) {
 						out.println("<dd>No New Message</dd>");
 					} else {
 						int i = 0;
@@ -120,7 +131,7 @@
 				%>
 
 				<dt>Quick Link</dt>
-				
+
 				<dd>
 					<a href="quiz_create.jsp" target="_blank">Create Quiz</a>
 				</dd>

@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,14 +19,14 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/Logout")
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LogoutServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public LogoutServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,6 +35,18 @@ public class LogoutServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		session.setAttribute("guest", "guest");
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null){
+			for(int i = 0; i < cookies.length; i++) { 
+				Cookie cookie1 = cookies[i];
+				if (cookie1.getName().equals("username")) {
+					cookie1.setValue("");
+					cookie1.setMaxAge(0);
+					response.addCookie(cookie1);
+				}
+			}  
+		}
+
 		RequestDispatcher dispatch = request.getRequestDispatcher("index.html");
 		dispatch.forward(request, response);
 	}
