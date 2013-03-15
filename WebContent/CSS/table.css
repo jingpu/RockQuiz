@@ -26,3 +26,21 @@ color:#ffffff;
 color:#000000;
 background-color:rgb(211, 222, 242);
 }
+
+.index_table
+{
+width:100%;
+border-collapse:collapse;
+}
+.index_table td, .index_table th
+{
+font-size:1em;
+border:1px solid rgb(33, 140, 191);
+}
+.index_table th
+{
+font-size:1em;
+text-align:left;
+background-color:rgb(66, 163, 201);
+color:#ffffff;
+}

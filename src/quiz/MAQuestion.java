@@ -97,44 +97,6 @@ public class MAQuestion extends QuestionBase {
 				+ super.getBaseQuerySaveString() + ", \"" + isOrder + "\")";
 	}
 
-	public static String printCreateHtml() {
-		StringBuilder html = new StringBuilder();
-		html.append("<h1>This page will guide you to create a multi-answer question</h1>\n");
-		html.append("<form action=\"QuizCreationServlet\" method=\"post\" OnSubmit=\"return checkScore()\">\n");
-		html.append("<p> Please enter proposed question description and answer </p>\n");
-		html.append("<p class= 'description'>Question Description:</p>\n");
-		html.append("<p><textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea></p>\n");
-
-		// add answers, can be expanded
-		html.append("<div id=\"form_input\">\n");
-		html.append("<p>Answer:   <input type=\"text\" name=\"answer0\""
-				+ "\" required></input></p>\n");
-		html.append("</div>\n");
-
-		html.append("<div id='option'>\n");
-		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer();\" />\n");
-		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer();\" />\n");
-		html.append("</div>\n");
-
-		html.append("<p>Point per correct answer: <input type=\"text\" name=\"maxScore\""
-				+ "\" required></input></p>\n");
-		html.append("<p>Time Limit:   <input type=\"text\" name=\"timeLimit\" value=\"0\" ></input></p>\n");
-
-		// checkbox: tick means true, otherwise null means false
-		html.append("<p><input type=\"checkbox\" name=\"isOrder\" value=\"true\">isOrder</input></p>\n");
-
-		// Hidden information - questionType,tag and number of answers
-		// TODO: numAnswer will be automatically generated in javascript??
-		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
-				+ QuestionBase.MA + "\" ></input></p>\n");
-		html.append("<p><input id=\"numAnswers\" type=\"hidden\" name=\"numAnswers\"></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
-		html.append("<input type=\"submit\" value = \"Save\"/></form>\n");
-
-		return html.toString();
-	}
-
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>This page will guide you to create a multi-answer question</h4>");
@@ -407,13 +369,6 @@ public class MAQuestion extends QuestionBase {
 		questionElem.appendChild(tag);
 
 		return questionElem;
-	}
-
-	/**
-	 * @return
-	 */
-	public static String printReference() {
-		return QuestionBase.printReference();
 	}
 
 }

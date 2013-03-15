@@ -348,10 +348,4 @@ public class MultiChoice extends QuestionBase {
 		return questionElem;
 	}
 
-	/**
-	 * @return
-	 */
-	public static String printReference() {
-		return QuestionBase.printReference();
-	}
 }
