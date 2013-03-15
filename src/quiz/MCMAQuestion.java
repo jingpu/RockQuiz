@@ -42,7 +42,6 @@ public class MCMAQuestion extends QuestionBase {
 		try {
 			Connection con = MyDB.getConnection();
 			Statement stmt = con.createStatement();
-			stmt.executeQuery("USE c_cs108_yzhao3");
 			ResultSet rs = stmt.executeQuery(queryStmt);
 			rs.next();
 			tmpChoices = rs.getString("choices");
