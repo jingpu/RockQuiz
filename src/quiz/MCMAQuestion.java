@@ -100,7 +100,6 @@ public class MCMAQuestion extends QuestionBase {
 			// use request.getParameter(choice0) to get answerBody
 			String answerBody = request.getParameter(str + "_" + suffix);
 			answer.append(answerBody);
-			System.out.println("answer " + answerBody);
 			answer.append("#");
 		}
 		return answer.toString();
@@ -158,7 +157,6 @@ public class MCMAQuestion extends QuestionBase {
 			return "";
 		StringBuilder answer = new StringBuilder();
 		for (String str : answerList) {
-			System.out.println("user answer " + str);
 			answer.append("#");
 			answer.append(str);
 			answer.append("#");

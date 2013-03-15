@@ -123,6 +123,7 @@
 		</div>
 
 		<h2>Questions:</h2>
+		<div class="notice">Note: all "Time Limit" field is measured by second, and could only be an integer. <br></div>
 		<div id="questions"></div>
 		<select name="questionType" id="questionTypeList">
 			<%
