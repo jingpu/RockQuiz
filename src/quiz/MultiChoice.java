@@ -137,13 +137,12 @@ public class MultiChoice extends QuestionBase {
 		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices\" value =\"4\" ></input>");
 		html.append("</div>"); // for MC_div
 
+		// Answer and Full Score
+		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\" ></input><br>");
 		// add timeLimit field
 		html.append("<div class=time_limit_div>Time Limit:   ");
 		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\"0\" ></input><br>");
 		html.append("</div>");
-
-		// Answer and Full Score
-		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\" ></input><br>");
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
