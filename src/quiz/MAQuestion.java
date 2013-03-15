@@ -339,11 +339,13 @@ public class MAQuestion extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">\n");
-		html.append("<p>Question Description:\n ");
-		html.append(questionDescription + "</p>\n");
+
+		// question description
+		html.append("<div class=\"question\">");
+		html.append("<div class='description'>Question Description:</div>");
+		html.append(questionDescription);
 
 		List<String> answerList = Helper.parseTags(answer);
 		for (int i = 0; i < answerList.size(); i++) {
@@ -363,6 +365,7 @@ public class MAQuestion extends QuestionBase {
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\"  ></input></p>\n");
+		html.append("</div>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
 
 		return html.toString();

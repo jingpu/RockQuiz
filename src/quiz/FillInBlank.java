@@ -100,10 +100,8 @@ public class FillInBlank extends QuestionBase {
 		// textarea and add button
 		html.append("<div class=\"combo\">");
 		html.append("<textarea class=\"FIB\" name=\"questionDescription_"
-				+ suffix + "\" rows=\"10\" cols=\"50\""
-				+ " required>"
-				+ getQuestionDescription()
-				+ "</textarea>");
+				+ suffix + "\" rows=\"10\" cols=\"50\"" + " required>"
+				+ getQuestionDescription() + "</textarea>");
 		html.append("<input type=\"button\" value=\"add a blank\" onclick=\"addBlank(this);\" /><br>");
 		html.append("</div>");
 
@@ -127,8 +125,7 @@ public class FillInBlank extends QuestionBase {
 
 		// Hidden information - question Type and tag information
 		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
-				+ "\" value=\""
-				+ QuestionBase.FIB + "\" ></input></p>\n");
+				+ "\" value=\"" + QuestionBase.FIB + "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
 				+ "\" value=\"not_implemeted\"></input></p>\n");
 
@@ -141,10 +138,10 @@ public class FillInBlank extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">\n");
-		html.append("<p>Question Description: ");
+		html.append("<div class=\"question\">");
+		html.append("<div class='description'>Question Description:</div>");
 
 		// create prefix, blank, suffix
 		html.append("<p>" + parsePrefix()
@@ -162,6 +159,7 @@ public class FillInBlank extends QuestionBase {
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>\n");
+		html.append("</div>");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
 
 		return html.toString();

@@ -27,7 +27,7 @@ public class MultiChoice extends QuestionBase {
 	// choices
 	protected final String choices;
 	private static final String typeIntro = "MultiChoice question: user should choose one correct answer from choice options"
-			+ "Correct answer will get full score, while the wrong answer will get zero";
+			+ "Correct answer will get full score, while the wrong answer will get zero.";
 
 	public MultiChoice(String questionType, String creatorId, int timeLimit,
 			String questionDescription, String answer, int maxScore,
@@ -199,12 +199,13 @@ public class MultiChoice extends QuestionBase {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
-
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">\n");
-		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>\n");
+
+		// question description
+		html.append("<div class=\"question\">");
+		html.append("<div class='description'>Question Description:</div>");
+		html.append(questionDescription);
 
 		// create choice options
 		List<String> choiceList = Helper.parseTags(choices);
@@ -226,7 +227,12 @@ public class MultiChoice extends QuestionBase {
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>\n");
-		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
+		html.append("</div>");
+
+		html.append("<div id = \"submit_btn\">");
+		html.append("<input type=\"submit\" value = \"Next\"/>");
+		html.append("</div>");
+		html.append("</form>\n");
 
 		return html.toString();
 
@@ -268,7 +274,6 @@ public class MultiChoice extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 
 		// form action should be here

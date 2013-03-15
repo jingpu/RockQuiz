@@ -354,11 +354,13 @@ public class MCMAQuestion extends QuestionBase {
 		StringBuilder html = new StringBuilder();
 		html.append(super.printReadHtml());
 
-		html.append("<p>This is a question page, please read the question information, and make an answer</p>\n");
 		html.append("<p>" + typeIntro + "</p>\n");
 		html.append("<form action=\"QuestionProcessServlet\" method=\"post\" id=\"questionRead\">\n");
-		html.append("<p>Question Description: ");
-		html.append(questionDescription + "</p>\n");
+
+		// question description
+		html.append("<div class=\"question\">");
+		html.append("<div class='description'>Question Description:</div>");
+		html.append(questionDescription);
 
 		// create choice options
 		String choicesList[] = choices.split("#");
@@ -383,7 +385,11 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<p><input type=\"hidden\" name=\"questionId_"
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>\n");
-		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
+		html.append("</div>");
+		html.append("<div id = \"submit_btn\">");
+		html.append("<input type=\"submit\" value = \"Next\"/>");
+		html.append("<div id = \"submit_btn\">");
+		html.append("</form>\n");
 		return html.toString();
 
 	}

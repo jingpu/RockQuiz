@@ -120,8 +120,11 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("<head>");
 			out.println("<meta charset=\"UTF-8\">");
 			out.println("<title>Question " + (questionIndex + 1) + "</title>");
-			out.println("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\" >");
-			// TODO: why no questionType parameter
+
+			// print reference to import CSS and JS
+			out.println("<link href=\"CSS/page_style.css\" rel=\"stylesheet\" type=\"text/css\" />");
+			out.println("<link href=\"friendpage_style.css\" rel=\"stylesheet\" type=\"text/css\" />");
+			out.println("<link href=\"CSS/quiz_display.css\" rel=\"stylesheet\" type=\"text/css\" />");
 			out.println(QuestionFactory.printReference());
 
 			out.println("<script type=\"text/javascript\">");
@@ -129,9 +132,9 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("$('#questionRead').submit(function() {");
 			if (quiz.isImmCorrection()) {
 				out.println("$.ajax({");
-			out.println("type: \"GET\",");
-			out.println("url: \"GetScoreServlet\",");
-			out.println("data: $(\"#questionRead\").serialize(), ");
+				out.println("type: \"GET\",");
+				out.println("url: \"GetScoreServlet\",");
+				out.println("data: $(\"#questionRead\").serialize(), ");
 				out.println("success: function(data)");
 				out.println("{");
 				out.println("alert(data);");
@@ -146,11 +149,31 @@ public class QuestionProcessServlet extends HttpServlet {
 			out.println("});");
 			out.println("});");
 			out.println("</script>");
-
 			out.println("</head>");
 			out.println("<body>");
+
+			out.println("<div id=\"wrapper\">");
+			out.println("<div id=\"inner\">");
+			out.println("<div id=\"header\">");
+			out.println("<h1>" + quizName + "</h1>");
+			out.println("<h3  style=\"font-size:12px\"> Question "
+					+ (questionIndex + 1) + " | "
+					+ quiz.getQuestionList().size() + "</h3>");
+			out.println("<div id=\"nav\">");
+			out.println("<h2><a href=\"quiz_summary.jsp?quizName=" + quizName
+					+ "\">Quit</a> | <a href=\"Logout\">Log out</a></h2>");
+			out.println("</div>"); // div_nav
+			out.println("</div>"); // div_header
+			out.println("<div id=\"body\">");
+			out.println("<div class=\"inner\">");
+
 			QuestionBase question = questionList.get(questionIndex);
 			out.println(question.printReadHtml());
+
+			out.println("</div>"); // div_inner
+			out.println("</div>"); // div_body
+			out.println("</div>"); // div_inner
+			out.println("</div>"); // div_wrapper
 			out.println("</body>");
 			out.println("</html>");
 
@@ -227,7 +250,7 @@ public class QuestionProcessServlet extends HttpServlet {
 			// remove all the session attributes defined in this servlet
 			clearSessionAttr(session);
 		}
-		
+
 	}
 
 	private void clearSessionAttr(HttpSession session) {

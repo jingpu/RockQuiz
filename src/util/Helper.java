@@ -87,7 +87,7 @@ public final class Helper {
 	}
 
 	public static String replaceComma(String quizName) {
-		String str = quizName.replaceAll("'","''");
+		String str = quizName.replaceAll("'", "''");
 		return str;
 	}
 
@@ -103,102 +103,93 @@ public final class Helper {
 		return tagString;
 	}
 
-	public static String array2String(String[] category){
+	public static String array2String(String[] category) {
 		StringBuilder sb = new StringBuilder();
 		String delim = "";
-		if(category.length >= 1){
-			for(int i = 0; i < category.length; i++){
+		if (category.length >= 1) {
+			for (int i = 0; i < category.length; i++) {
 				sb.append(delim).append(category[i]);
 				delim = "#";
 			}
 		}
 		return sb.toString();
 	}
-	
-	public static String[] string2Array(String cateStr){
+
+	public static String[] string2Array(String cateStr) {
 		String[] category = cateStr.split("[#]+");
 		return category;
 	}
-	
-	public static String getTitle(String str){
+
+	public static String getTitle(String str) {
 		/*
-		achieveId-
-		1- Amateur Author
-		2- Prolific Author
-		3- Prodigious Author
-		4- Quiz Machine
-		5- I am the Greatest
-		6- Practice Makes Perfect
+		 * achieveId- 1- Amateur Author 2- Prolific Author 3- Prodigious Author
+		 * 4- Quiz Machine 5- I am the Greatest 6- Practice Makes Perfect
 		 */
 		String title = str.substring(1);
-		if(title.equals("1")){
+		if (title.equals("1")) {
 			return "Amateur Author";
-		} else if(title.equals("2")){
+		} else if (title.equals("2")) {
 			return "Prolific Author";
-		} else if(title.equals("3")){
+		} else if (title.equals("3")) {
 			return "Prodigious Author";
-		} else if(title.equals("4")){
+		} else if (title.equals("4")) {
 			return "Quiz Machine";
-		} else if(title.equals("5")){
+		} else if (title.equals("5")) {
 			return "I am the Greatest";
-		} else if(title.equals("6")){
+		} else if (title.equals("6")) {
 			return "Practice Makes Perfect";
 		}
 		return "";
 	}
 
-	public static String getTitleDescription(String str){
+	public static String getTitleDescription(String str) {
 		/*
-		achieveId-
-		1- Amateur Author
-		2- Prolific Author
-		3- Prodigious Author
-		4- Quiz Machine
-		5- I am the Greatest
-		6- Practice Makes Perfect
+		 * achieveId- 1- Amateur Author 2- Prolific Author 3- Prodigious Author
+		 * 4- Quiz Machine 5- I am the Greatest 6- Practice Makes Perfect
 		 */
 		String title = str.substring(1);
-		if(title.equals("1")){
+		if (title.equals("1")) {
 			return "When user created a quiz";
-		} else if(title.equals("2")){
+		} else if (title.equals("2")) {
 			return "When user created five quizzes";
-		} else if(title.equals("3")){
+		} else if (title.equals("3")) {
 			return "When user created ten quizzes";
-		} else if(title.equals("4")){
+		} else if (title.equals("4")) {
 			return "When user took ten quizzes";
-		} else if(title.equals("5")){
+		} else if (title.equals("5")) {
 			return "When user had the highest score on a quiz";
-		} else if(title.equals("6")){
+		} else if (title.equals("6")) {
 			return "The user took a quiz in practice mode";
 		}
 		return "";
 	}
-	
-	public static String getTitleNDescription(String type){
-		return "<a href='#' title='"
-				+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
-				+ Helper.getTitle(type) + "</a>";
+
+	public static String getTitleNDescription(String type) {
+		return "<a href='#' title='" + Helper.getTitleDescription(type)
+				+ "' style='font-weight:bold;'>" + Helper.getTitle(type)
+				+ "</a>";
 	}
-	
-	public static String displayQuiz(Quiz quiz, boolean showCreator){
+
+	public static String displayQuiz(Quiz quiz, boolean showCreator) {
 		String quizUrl = quiz.getSummaryPage();
 		String creator = quiz.getCreatorId();
 		String description = quiz.getQuizName() + "\n"
 				+ quiz.getQuizDescription();
-		
+
 		StringBuilder result = new StringBuilder();
-		result.append("<a href='"+ quizUrl +"' title='"+ description 
-				+"'>"+ quiz.getQuizName() +"</a>");
-		if(!showCreator){
+		result.append("<a href='" + quizUrl + "' title='" + description + "'>"
+				+ quiz.getQuizName() + "</a>");
+		if (!showCreator) {
 			return result.toString();
 		} else {
-			result.append(" (by:<a href='userpage.jsp?id="
-				+ creator +"'>"+ creator +"</a>)");
+			result.append(" (by:<a href='userpage.jsp?id=" + creator + "'>"
+					+ creator + "</a>)");
 			return result.toString();
 		}
 	}
-	
-	public static String displayUser(String user){
+
+	public static String displayUser(String user) {
 		return "<a href=\"userpage.jsp?id=" + user + "\">" + user + "</a>";
 	}
+
 }
