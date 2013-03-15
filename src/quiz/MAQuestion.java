@@ -266,6 +266,73 @@ public class MAQuestion extends QuestionBase {
 		return html.toString();
 	}
 
+	public String printEditHtml(int suffix) {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>Multi-answer Question</h4>");
+		html.append("Please enter proposed question description and answer. Every Multi-Answer question could contain more than one answer.<br>");
+		html.append("Creator could also specify whether the answer should be answered in order or not by ticking the corresponding checkbox");
+		html.append("<p class='notice'> Notice: Creator should also specify the score per correct answer.</p>");
+		html.append("<span class= 'description'>Question Description:</span><br>");
+		html.append("<textarea name=\"questionDescription_" + suffix
+				+ "\"  rows=\"10\" cols=\"50\" required>"
+				+ getQuestionDescription() + "</textarea><br>");
+
+		html.append("<div class=\"MA_div\">");
+		// answers
+		html.append("<div class=\"answers\">");
+		html.append("<div class=\"combo\">");
+		List<String> answerList = Helper.parseTags(answer);
+		for (int i = 0; i < answerList.size(); i++) {
+			html.append("<span class='option'>Answer" + i
+					+ "<input type=\"text\" name=\"answer" + i + "_" + suffix
+					+ "\" value=\"" + answerList.get(i) + "\" required><br>\n");
+		}
+		html.append("</div>"); // div for combo
+		html.append("</div>"); // div for answers
+
+		// hidden answer option template
+		html.append("<div class=\"answer_template\" hidden=\"hidden\">");
+		html.append("<span class='option'></span><input type=\"text\" name=\"answer_"
+				+ suffix + "\" class=\"requiredField\"></input><br>");
+		html.append("</div>");
+
+		// add, delete button
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addAnswer(this);\" />");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteAnswer(this);\" /><br>");
+
+		html.append("<input class=\"numAnswers\" type=\"hidden\" name=\"numAnswers_"
+				+ suffix + "\" value =\"" + answerList.size() + "\" ></input>");
+		html.append("</div>"); // div for MA_div
+
+		html.append("Score per correct answer:   <input class=\"max_score\" type=\"text\" name=\"maxScore_"
+				+ suffix + "\" value=\"" + maxScore + "\" required><br>");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit_"
+				+ suffix
+				+ "\" value=\""
+				+ getTimeLimit()
+				+ "\" required></input><br>");
+		html.append("</div>");
+
+		// checkbox: tick means true, otherwise null means false
+		String checked = "";
+		if (isOrder.equals("true"))
+			checked = "checked";
+		html.append("<input type=\"checkbox\" name=\"isOrder_" + suffix
+				+ "\" value=\"true\"" + checked + ">isOrder</input><br>");
+
+		// Hidden information - questionType,tag and number of answers
+		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
+				+ "\" value=\"" + QuestionBase.MA + "\" ></input></p>\n");
+
+		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
+				+ "\" value=\"not_implemeted\" ></input></p>\n");
+
+		return html.toString();
+	}
+
 	@Override
 	public String printReadHtml() {
 		// TODO Auto-generated method stub

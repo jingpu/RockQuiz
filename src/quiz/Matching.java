@@ -120,7 +120,6 @@ public class Matching extends MCMAQuestion {
 	}
 
 	public static String printCreateHtmlSinglePage() {
-		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>This page will guide you to create a Matching question</h4>");
 		html.append("<p> Please enter proposed question description and answer </p>");
@@ -161,6 +160,62 @@ public class Matching extends MCMAQuestion {
 
 		return html.toString();
 
+	}
+
+	public String printEditHtml(int suffix) {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>This page will guide you to create a Matching question</h4>");
+		html.append("<p> Please enter proposed question description and answer </p>");
+		html.append("<p class='notice'> Notice: For RockQuiz -alpha0.0, only one matching problem is allowed in \"one-page\" quiz creation.<br>");
+		html.append("Also, the matching question currently only supports 4 choices and answers.</p>");
+		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<textarea name=\"questionDescription_" + suffix
+				+ "\"  rows=\"10\" cols=\"50\" required>"
+				+ getQuestionDescription() + "</textarea><br>");
+
+		html.append("<div class=\"Match_div\">");
+
+		// Choice options
+		html.append("<div class=\"choices\">");
+		List<String> choiceList = Helper.parseTags(choices);
+		List<String> answerList = Helper.parseTags(answer);
+		for (int i = 0; i < choiceList.size(); i++) {
+			html.append("<div class=\"combo\">");
+			html.append("<span class='option'>Choice" + i + " & Answer" + i
+					+ ": </span><input type=\"text\" name=\"choice" + i + "_"
+					+ suffix + "\" value=\"" + choiceList.get(i)
+					+ "\" required></input><input type=\"text\" name=\"answer"
+					+ i + "_" + suffix + "\" value=\"" + answerList.get(i)
+					+ "\" required></input>");
+			html.append("</div>");
+		}
+		html.append("</div>"); // for choices div
+
+		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices_"
+				+ suffix + "\" value =\"" + choiceList.size() + "\" ></input>");
+		html.append("</div>"); //
+		html.append("</div>"); // for Match_div
+
+		// Full Score
+		html.append("Score per correct answer:   <input class=\"max_score\" type=\"text\" name=\"maxScore_"
+				+ suffix + "\" value=\"" + maxScore + "\" required><br>");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit_"
+				+ suffix
+				+ "\" value=\""
+				+ getTimeLimit()
+				+ "\" required></input><br>");
+		html.append("</div>");
+
+		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
+				+ "\" value=\"" + QuestionBase.MATCH + "\" ></input></p>");
+		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
+				+ "\" value=\"not_implemeted\" ></input></p>\n");
+
+		return html.toString();
 	}
 
 	/*

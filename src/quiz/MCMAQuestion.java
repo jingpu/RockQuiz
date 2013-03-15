@@ -231,9 +231,9 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<div class=\"choices\">");
 		for (int i = 0; i < 4; i++) {
 			html.append("<div class=\"combo\">");
-			html.append("<span class='option'>Choice :"
+			html.append("<span class='option'>Choice "
 					+ i
-					+ "</span><input type=\"text\" name=\"choice"
+					+ ":</span><input type=\"text\" name=\"choice"
 					+ i
 					+ "\" required></input><input type=\"checkbox\" name=\"answer\" value=\"choice"
 					+ i + "\" ></input>");
@@ -266,6 +266,83 @@ public class MCMAQuestion extends QuestionBase {
 		html.append("<p><input type=\"hidden\" name=\"questionType\" value=\""
 				+ QuestionBase.MCMA + "\" ></input></p>\n");
 		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\" ></input></p>\n");
+
+		return html.toString();
+
+	}
+
+	@Override
+	public String printEditHtml(int suffix) {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>This page will guide you to create a multiChoice-MultiAnswer question</h4>\n");
+		html.append("Please enter proposed question description and answer, and label the right answer. Add and delete button could allow user to customize the number of choices.<br>");
+		html.append("<p class='notice'> Notice: one question could have one or more answer.</p>");
+		html.append("<p class=\"description\">Question Description:</p>\n");
+		html.append("<textarea name=\"questionDescription_" + suffix
+				+ "\"  rows=\"10\" cols=\"50\" required>"
+				+ getQuestionDescription() + "</textarea><br>");
+		html.append("<p> Please enter proposed choices, and tick the checkbox if it is one of the answers </p>\n");
+
+		html.append("<div class=\"MCMA_div\">");
+		// Choice options and answers
+		html.append("<div class=\"choices\">");
+		List<String> choiceList = Helper.parseTags(choices);
+		Set<String> answerSet = getAnswerSet();
+		for (int i = 0; i < choiceList.size(); i++) {
+			String checked = "";
+			if (answerSet.contains(choiceList.get(i)))
+				checked = "checked";
+			html.append("<div class=\"combo\">");
+			html.append("<span class='option'>Choice"
+					+ i
+					+ ":</span><input type=\"text\" name=\"choice"
+					+ i
+					+ "_"
+					+ suffix
+					+ "\""
+					+ "value=\""
+					+ choiceList.get(i)
+					+ "\" required ></input><input type=\"checkbox\" name=\"answer_"
+					+ suffix + "\" value=\"choice" + i + "\"" + checked
+					+ "></input>");
+			html.append("</div>");
+		}
+		html.append("</div>"); // div for choices
+
+		// hidden choice option template
+		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
+		html.append("<span class='option'></span> <input type=\"text\" name=\"choice_"
+				+ suffix
+				+ "\" class=\"requiredField\"></input><input type=\"checkbox\" name=\"answer_"
+				+ suffix + "\" value=\"choice\"></input>");
+		html.append("</div>");
+		// add/delete choices
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addMCMAChoice(this);\" />");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteMCMAChoice(this);\" /><br>");
+
+		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices_"
+				+ suffix + "\" value =\"" + choiceList.size() + "\" ></input>");
+		html.append("</div>"); // div for MCMA_div
+
+		// Answer and Full Score
+		html.append("Score per correct answer:   <input class=\"max_score\" type=\"text\" name=\"maxScore_"
+				+ suffix + "\" value=\"" + maxScore + "\"><br>");
+
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit_"
+				+ suffix
+				+ "\" value=\""
+				+ getTimeLimit()
+				+ "\" required></input><br>");
+		html.append("</div>");
+
+		// Hidden information - question Type and tag information
+
+		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
+				+ "\" value=\"" + QuestionBase.MCMA + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
+				+ "\" value=\"not_implemeted\" ></input></p>\n");
 
 		return html.toString();
 

@@ -69,9 +69,10 @@ public class MultiChoice extends QuestionBase {
 	public static String printCreateHtmlSinglePage() {
 		// TODO Auto-generated method stub
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This page will guide you to create a multiChoice question</h4>\n");
+		html.append("<h4>This section will guide you to create a multiChoice question</h4>\n");
 		html.append("Please enter proposed question description and answer, and label the right answer. Add and delete button could allow user to customize the number of choices.<br>");
-		html.append("<p class='notice'> Notice: User should first create a certain number of choices, and label the right answer right behind the choice.<br>One Multi-Choice question could contain only one right answer</p>");
+		html.append("<p class='notice'> Notice: User should first create a certain number of choices, and label the right answer right behind the choice.");
+		html.append("<br>One Multi-Choice question could contain only one right answer</p>");
 		html.append("<span class= 'description'>Question Description:</span><br>");
 		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\" required></textarea><br>");
 
@@ -82,7 +83,7 @@ public class MultiChoice extends QuestionBase {
 			html.append("<div class=\"combo\">");
 			html.append("<span class='option'>Choice"
 					+ i
-					+ "</span>: <input type=\"text\" name=\"choice"
+					+ ":</span><input type=\"text\" name=\"choice"
 					+ i
 					+ "\" required ></input><input type=\"radio\" name=\"answer\" value=\"choice"
 					+ i + "\"></input>");
@@ -116,6 +117,81 @@ public class MultiChoice extends QuestionBase {
 
 		return html.toString();
 
+	}
+
+	@Override
+	public String printEditHtml(int suffix) {
+		StringBuilder html = new StringBuilder();
+		html.append("<h4>MultiChoice Question</h4>\n");
+		html.append("Please enter proposed question description and answer, and label the right answer. Add and delete button could allow user to customize the number of choices.<br>\n");
+		html.append("<p class='notice'> Notice: User should first create a certain number of choices, and label the right answer right behind the choice.\n");
+		html.append("One Multi-Choice question could contain only one right answer</p>");
+		html.append("<span class= 'description'>Question Description:</span><br>");
+		html.append("<textarea name=\"questionDescription_" + suffix
+				+ "\"  rows=\"10\" cols=\"50\" required>"
+				+ getQuestionDescription() + "</textarea><br>");
+
+		html.append("<div class=\"MC_div\">");
+
+		// Choice options
+		html.append("<div class=\"choices\">");
+		List<String> choiceList = Helper.parseTags(choices);
+
+		for (int i = 0; i < choiceList.size(); i++) {
+			String checked = "";
+			if (answer.equals(choiceList.get(i)))
+				checked = "checked";
+			html.append("<div class=\"combo\">");
+			html.append("<span class='option'>Choice"
+					+ i
+					+ ":</span><input type=\"text\" name=\"choice"
+					+ i
+					+ "_"
+					+ suffix
+					+ "\" value=\""
+					+ choiceList.get(i)
+					+ "\" required ></input><input type=\"radio\" name=\"answer_"
+					+ suffix + "\" value=\"choice" + i + "\"" + checked
+					+ "></input>");
+			html.append("</div>");
+		}
+		html.append("</div>"); // choices div
+
+		// hidden choice option template
+		html.append("<div class=\"choice_template\" hidden=\"hidden\">");
+		html.append("<span class='option'></span> <input type=\"text\" name=\"choice_"
+				+ suffix
+				+ "\" class=\"requiredField\"></input><input type=\"radio\" name=\"answer_"
+				+ suffix + "\" value=\"choice\"></input>");
+		html.append("</div>");
+
+		// add/delete choices
+		html.append("<input type=\"button\" value=\"add\" onclick=\"addChoice(this);\" />");
+		html.append("<input type=\"button\" value=\"delete\" onclick=\"deleteChoice(this);\" /><br>");
+
+		html.append("<input class=\"numChoices\" type=\"hidden\" name=\"numChoices_"
+				+ suffix + "\" value =\"" + choiceList.size() + "\" ></input>");
+		html.append("</div>"); // for MC_div
+
+		// Answer and Full Score
+		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore_"
+				+ suffix + "\" value=\"" + getMaxScore() + "\" required><br>");
+		// add timeLimit field
+		html.append("<div class=time_limit_div>Time Limit:   ");
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit_"
+				+ suffix
+				+ "\" value=\""
+				+ getTimeLimit()
+				+ "\" required></input><br>");
+		html.append("</div>");
+
+		// Hidden information - question Type and tag information
+		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
+				+ "\" value=\"" + QuestionBase.MC + "\" ></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
+				+ "\" value=\"not_implemeted\" ></input></p>\n");
+
+		return html.toString();
 	}
 
 	@Override
