@@ -7,7 +7,7 @@ $(document).ready(function() {
            {id: 0,text: $("#cs0").text()},
            {id: 1,text: $("#cs1").text()},
            {id: 2,text: $("#cs2").text()},
-           {id: 3,text: $("#cs3").text()},], 
+           {id: 3,text: $("#cs3").text()},],
         
         responses: [
            {id: 0,text: $("#as0").text()},
@@ -20,14 +20,10 @@ $(document).ready(function() {
 
     $("#result").click(function(){
         var res = $("#match").match("getValues");
-        for (var i = 0; i < res.length; i++) {
+        for (var i = 0; i < 4; i++) {
             var item = res[i];
             choiceId = "#choice" + i;
             $(choiceId).val(item.response.text);
-        }
-        for (var i = res.length; i < 4; i++) {
-        	  choiceId = "#choice" + i;
-              $(choiceId).val("");
         }
     });
     
