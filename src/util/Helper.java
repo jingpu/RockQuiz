@@ -114,12 +114,12 @@ public final class Helper {
 		}
 		return sb.toString();
 	}
-	
+
 	public static String[] string2Array(String cateStr){
 		String[] category = cateStr.split("[#]+");
 		return category;
 	}
-	
+
 	public static String getTitle(String str){
 		/*
 		achieveId-
@@ -173,19 +173,19 @@ public final class Helper {
 		}
 		return "";
 	}
-	
+
 	public static String getTitleNDescription(String type){
 		return "<a href='#' title='"
 				+ Helper.getTitleDescription(type) +"' style='font-weight:bold;'>"
 				+ Helper.getTitle(type) + "</a>";
 	}
-	
+
 	public static String displayQuiz(Quiz quiz, boolean showCreator){
 		String quizUrl = quiz.getSummaryPage();
 		String creator = quiz.getCreatorId();
 		String description = quiz.getQuizName() + "\n"
 				+ quiz.getQuizDescription();
-		
+
 		StringBuilder result = new StringBuilder();
 		result.append("<a href='"+ quizUrl +"' title='"+ description 
 				+"'>"+ quiz.getQuizName() +"</a>");
@@ -193,12 +193,34 @@ public final class Helper {
 			return result.toString();
 		} else {
 			result.append(" (by:<a href='userpage.jsp?id="
-				+ creator +"'>"+ creator +"</a>)");
+					+ creator +"'>"+ creator +"</a>)");
 			return result.toString();
 		}
 	}
-	
+
 	public static String displayUser(String user){
 		return "<a href=\"userpage.jsp?id=" + user + "\">" + user + "</a>";
+	}
+
+	public static String displayTag(String tag, boolean onSearchPage){
+		if(onSearchPage){
+			StringBuilder sb = new StringBuilder();
+			sb.append("<a href='search.jsp?s=da&q="+ tag + "'>");
+			sb.append("<div name='tagset' style='display: inline;'>#");
+			sb.append(tag + "</div><a>");
+			return sb.toString();
+		}
+		return "<a href='search.jsp?s=da&q=" + tag + "'>#" + tag + "</a>";
+	}
+
+	public static String displayTags(List<String> tags, boolean onSearchPage){
+		if(tags == null || tags.isEmpty()) return "";
+		StringBuilder sb = new StringBuilder();
+		String delim = "";
+		for(String tag : tags){
+			sb.append(delim).append(displayTag(tag, onSearchPage));
+			delim = ", ";
+		}
+		return sb.toString();
 	}
 }
