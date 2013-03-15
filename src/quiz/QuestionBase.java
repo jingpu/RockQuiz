@@ -219,7 +219,7 @@ public abstract class QuestionBase { // abstract class cannot be instantiated,
 		return html.toString();
 	}
 
-	public String printEditHtml() {
+	public String printEditHtml(int suffix) {
 		return null;
 	}
 

@@ -71,30 +71,38 @@ public class QResponse extends QuestionBase {
 		return html.toString();
 	}
 
-	public String printEditHtml() {
+	@Override
+	public String printEditHtml(int suffix) {
 		StringBuilder html = new StringBuilder();
 		html.append("<h4>Question-Response Question</h4>\n");
 		html.append("<p>Please enter proposed question description and answer </p>\n");
 		html.append("<span class= 'description'>Question Description:</span><br>\n");
-		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required>"
+		html.append("<textarea name=\"questionDescription_" + suffix
+				+ "\" rows=\"10\" cols=\"50\"" + "\" required>"
 				+ getQuestionDescription()
 				+ "</textarea><br>\n");
-		html.append("Answer:   <input type=\"text\" name=\"answer\""
+		html.append("Answer:   <input type=\"text\" name=\"answer_" + suffix
+				+ "\""
 				+ "\" required value=\"" + getAnswer() + "\" ></input><br>\n");
-		html.append("Score:   <input disabled class=\"max_score\" type=\"text\" name=\"maxScore\""
+		html.append("Score:   <input disabled class=\"max_score\" type=\"text\" name=\"maxScore_"
+				+ suffix
+				+ "\""
 				+ "\" required value=\"" + getMaxScore() + "\" ></input><br>\n");
 
 		// add timeLimit field
 		html.append("<div class=time_limit_div>Time Limit:   \n");
-		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit\" value=\""
+		html.append("<input class=\"time_limit\" type=\"text\" name=\"timeLimit_"
+				+ suffix
+				+ "\" value=\""
 				+ getTimeLimit() + "\" ></input><br>\n");
 		html.append("</div>\n");
 
 		// Hidden information - questionType and tag information
-		html.append("<p><input type=\"hidden\" name=\"questionType\"  value=\""
+		html.append("<p><input type=\"hidden\" name=\"questionType_" + suffix
+				+ "\"  value=\""
 				+ QuestionBase.QR + "\" ></input></p>\n");
-		html.append("<p><input type=\"hidden\" name=\"tag\" value=\"not_implemeted\"></input></p>\n");
+		html.append("<p><input type=\"hidden\" name=\"tag_" + suffix
+				+ "\" value=\"not_implemeted\"></input></p>\n");
 		return html.toString();
 	}
 

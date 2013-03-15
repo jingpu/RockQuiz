@@ -61,8 +61,8 @@ public class QuestionFactory {
 				.getParameter("questionDescription_" + suffix);
 		String answer = getCreatedAnswer(questionType, request, suffix);
 		String tagString = request.getParameter("tag_" + suffix);
-		int maxScore = Integer.parseInt(request.getParameter("maxScore_"
-				+ suffix));
+		String tmp = request.getParameter("maxScore_" + suffix);
+		int maxScore = Integer.parseInt(tmp);
 
 		if (questionType.equals(QuestionBase.QR)) {
 			return new QResponse(questionType, creatorId, timeLimit,

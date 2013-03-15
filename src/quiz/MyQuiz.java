@@ -110,14 +110,14 @@ public class MyQuiz implements Quiz {
 	private final String creatorId;
 	private final Timestamp createTime;
 	private final int totalScore;
-	private final String quizDescription;
-	private final List<String> tags;
-	private final boolean canPractice;
-	private final boolean isRandom;
-	private final boolean isOnePage;
-	private final boolean isImmCorrection; // jvm optimization
-	private final List<QuestionBase> questionList;
-	private final String category;
+	private String quizDescription;
+	private List<String> tags;
+	private boolean canPractice;
+	private boolean isRandom;
+	private boolean isOnePage;
+	private boolean isImmCorrection; // jvm optimization
+	private List<QuestionBase> questionList;
+	private String category;
 
 	private static final String CREATECONTENTTABLEPARAMS = "questionNum CHAR(32), "
 			+ "questionType CHAR(32), " + "questionId CHAR(32)";
@@ -216,6 +216,20 @@ public class MyQuiz implements Quiz {
 		this.category = category;
 	}
 
+	public void edit(String quizDescription, List<String> tags,
+			boolean canPractice, boolean isRandom, boolean isOnePage,
+			boolean isImmCorrection, List<QuestionBase> questionList,
+			String category) {
+		this.quizDescription = quizDescription;
+		this.tags = tags;
+		this.canPractice = canPractice;
+		this.isRandom = isRandom;
+		this.isOnePage = isOnePage;
+		this.isImmCorrection = isImmCorrection;
+		this.questionList = questionList;
+		this.category = category;
+	}
+
 	public void saveToDatabase() {
 		Connection con = MyDB.getConnection();
 		try {
@@ -253,6 +267,40 @@ public class MyQuiz implements Quiz {
 		}
 	}
 
+	public void updateDatabase() {
+		Connection con = MyDB.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			// update Global_Quiz_Info_Table -- update a row
+			// hack here: delete and add again
+			String quizRow = "\"" + quizName + "\",\"" + creatorId + "\",\""
+					+ quizDescription + "\",\"" + Helper.generateTags(tags)
+					+ "\"," + canPractice + ", " + isRandom + ", " + isOnePage
+					+ ", " + isImmCorrection + ", \"" + createTime + "\",\""
+					+ category + "\"";
+			stmt.executeUpdate("DELETE FROM Global_Quiz_Info_Table WHERE quizName = \""
+					+ quizName + "\"");
+			stmt.executeUpdate("INSERT INTO Global_Quiz_Info_Table VALUES("
+					+ quizRow + ")");
+
+			// create quizName_Content_Table
+			stmt.executeUpdate("DROP TABLE IF EXISTS " + quizName
+					+ "_Content_Table");
+			stmt.executeUpdate("CREATE TABLE " + quizName + "_Content_Table ( "
+					+ CREATECONTENTTABLEPARAMS + ")");
+			// populate quizName_Content_Table
+			for (int i = 0; i < questionList.size(); i++) {
+				QuestionBase q = questionList.get(i);
+				String contentRow = "\"" + i + "\",\"" + q.getQuestionType()
+						+ "\",\"" + q.getQuestionId() + "\"";
+				stmt.executeUpdate("INSERT INTO " + quizName
+						+ "_Content_Table VALUES(" + contentRow + ")");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void shuffleQuestionListAndSave() {
 		Connection con = MyDB.getConnection();
 		try {
@@ -262,8 +310,9 @@ public class MyQuiz implements Quiz {
 			// shuffle current question list
 			Collections.shuffle(questionList);
 			// populate quizName_Content_Table
-			// TODO: why need save to database every time? ? can't it be saved
+			// Yang: why need save to database every time? ? can't it be saved
 			// to session?
+			// Jing: it is a hack to save work
 			for (int i = 0; i < questionList.size(); i++) {
 				QuestionBase q = questionList.get(i);
 				String contentRow = "\"" + i + "\",\"" + q.getQuestionType()
@@ -332,10 +381,6 @@ public class MyQuiz implements Quiz {
 	public boolean containsQuizEvent(String quizId) {
 		// below declare a set of non-final variable, which is a hack to get
 		// around the exception issue
-		String userName = "error";
-		Timestamp submitTime = new Timestamp(0);
-		long timeElapsed = 0;
-		int score = 0;
 
 		Connection con = MyDB.getConnection();
 		try {

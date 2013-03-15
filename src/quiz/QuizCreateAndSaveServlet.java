@@ -48,10 +48,9 @@ public class QuizCreateAndSaveServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String userName = (String) session.getAttribute("guest");
-		if (userName == null) {
-			// TODO remove it and do error checking instead
-			userName = "guest";
-			session.setAttribute("guest", userName);
+		if (userName == null || userName.equals("guest")) {
+			response.sendRedirect("index.html");
+			return;
 		}
 		String creatorId = userName;
 

@@ -4,18 +4,6 @@
 <%@ page import="quiz.*"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
-<html>
-<head>
-<%=QuestionFactory.printReference()%>
-<script src="JavaScript/quiz_create.js"></script>
-<meta charset="UTF-8">
-<title>Create Quiz</title>
-<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
-<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
-<link href="CSS/quiz_display.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-</style>
-</head>
 <%
 	String userName = (String) session.getAttribute("guest");
 	String quizName = request.getParameter("quizName");
@@ -41,11 +29,24 @@
 	String category = quiz.getCategory();
 	List<QuestionBase> questionList = quiz.getQuestionList();
 %>
+<html>
+<head>
+<%=QuestionFactory.printReference()%>
+<script src="JavaScript/quiz_create.js"></script>
+<meta charset="UTF-8">
+<title>Edit Quiz - <%=quiz.getQuizName()%></title>
+<link href="CSS/page_style.css" rel="stylesheet" type="text/css" />
+<link href="friendpage_style.css" rel="stylesheet" type="text/css" />
+<link href="CSS/quiz_display.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+</style>
+</head>
+
 <body onload="changeOnePage(); changeImmCorr();">
 	<div id="wrapper">
 		<div id="inner">
 			<div id="header">
-				<h1>Create Quiz</h1>
+				<h1>Edit Quiz</h1>
 				<h3><%=new Date()%></h3>
 				<div id="nav">
 					<h2>
@@ -55,8 +56,9 @@
 			</div>
 			<div id="body">
 				<div class="inner">
-					<form action="" method="post" onsubmit="return validateForm()">
+					<form action="QuizEditServlet" method="post" onsubmit="return validateForm()">
 						<h2><%=quiz.getQuizName()%></h2>
+						<input type="hidden" name="quizName" value="<%=quiz.getQuizName()%>">
 						<div>
 							Quiz Description:<br>
 							<textarea name="quizDescription" rows="10" cols="50" required>
@@ -113,7 +115,7 @@
 									QuestionBase q = questionList.get(i);
 							%>
 							<div id="question_<%=i %>" class="question">
-							<%= q.printEditHtml() %>
+							<%= q.printEditHtml(i) %>
 							</div>
 							<%
 								}
