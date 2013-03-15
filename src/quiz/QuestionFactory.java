@@ -51,103 +51,6 @@ public class QuestionFactory {
 		return null;
 	}
 
-	// MyQuiz create a question from a HTTP request
-	/**
-	 * create a question from webpage
-	 * 
-	 * @param questionType
-	 * @param request
-	 * @return
-	 */
-	@Deprecated
-	public static QuestionBase createQuestion(String questionType,
-			HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		String creatorId = (String) session.getAttribute("guest");
-		if (questionType.equals(QuestionBase.QR)) {
-			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
-			String questionDescription = request
-					.getParameter("questionDescription");
-			String answer = getCreatedAnswer(questionType, request);
-			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
-			String tagString = request.getParameter("tag");
-			return new QResponse(questionType, creatorId, timeLimit,
-					questionDescription, answer, maxScore, tagString, -1);
-
-		} else if (questionType.equals(QuestionBase.FIB)) {
-			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
-			String questionDescription = request
-					.getParameter("questionDescription");
-			String answer = getCreatedAnswer(questionType, request);
-			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
-			String tagString = request.getParameter("tag");
-			return new FillInBlank(questionType, creatorId, timeLimit,
-					questionDescription, answer, maxScore, tagString, -1);
-
-		} else if (questionType.equals(QuestionBase.MC)) {
-			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
-			String questionDescription = request
-					.getParameter("questionDescription");
-			String answer = getCreatedAnswer(questionType, request);
-			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
-			String tagString = request.getParameter("tag");
-			String choices = getCreatedChoices(questionType, request);
-			return new MultiChoice(questionType, creatorId, timeLimit,
-					questionDescription, answer, maxScore, tagString, -1,
-					choices);
-
-		} else if (questionType.equals(QuestionBase.PR)) {
-			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
-			String questionDescription = request
-					.getParameter("questionDescription");
-			String answer = getCreatedAnswer(questionType, request);
-			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
-			String tagString = request.getParameter("tag");
-			String url = request.getParameter("url");
-			return new PResponse(questionType, creatorId, timeLimit,
-					questionDescription, answer, maxScore, tagString, -1, url);
-
-		} else if (questionType.equals(QuestionBase.MA)) {
-			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
-			String questionDescription = request
-					.getParameter("questionDescription");
-			String answer = getCreatedAnswer(questionType, request);
-			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
-			String tagString = request.getParameter("tag");
-			String isOrder = request.getParameter("isOrder");
-			if (isOrder == null)
-				isOrder = "false";
-			return new MAQuestion(questionType, creatorId, timeLimit,
-					questionDescription, answer, maxScore, tagString, -1,
-					isOrder);
-
-		} else if (questionType.equals(QuestionBase.MCMA)) {
-			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
-			String questionDescription = request
-					.getParameter("questionDescription");
-			String answer = getCreatedAnswer(questionType, request);
-			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
-			String tagString = request.getParameter("tag");
-			String choices = getCreatedChoices(questionType, request);
-			return new MCMAQuestion(questionType, creatorId, timeLimit,
-					questionDescription, answer, maxScore, tagString, -1,
-					choices);
-
-		} else if (questionType.equals(QuestionBase.MATCH)) {
-			int timeLimit = Integer.parseInt(request.getParameter("timeLimit"));
-			String questionDescription = request
-					.getParameter("questionDescription");
-			String answer = getCreatedAnswer(questionType, request);
-			int maxScore = Integer.parseInt(request.getParameter("maxScore"));
-			String tagString = request.getParameter("tag");
-			String choices = getCreatedChoices(questionType, request);
-			return new Matching(questionType, creatorId, timeLimit,
-					questionDescription, answer, maxScore, tagString, -1,
-					choices);
-		}
-		return null;
-	}
-
 	public static QuestionBase createQuestion(String questionType,
 			HttpServletRequest request, int suffix) {
 		HttpSession session = request.getSession();
@@ -205,26 +108,6 @@ public class QuestionFactory {
 
 	// called by quiz to print html for every question
 	// essentially, it is a html-string
-	public static String printCreateHtml(String questionType) {
-		if (questionType.equals(QuestionBase.QR))
-			return QResponse.printCreateHtml();
-		else if (questionType.equals(QuestionBase.FIB))
-			return FillInBlank.printCreateHtml();
-		else if (questionType.equals(QuestionBase.MC))
-			return MultiChoice.printCreateHtml();
-		else if (questionType.equals(QuestionBase.PR))
-			return PResponse.printCreateHtml();
-		else if (questionType.equals(QuestionBase.MA))
-			return MAQuestion.printCreateHtml();
-		else if (questionType.equals(QuestionBase.MCMA))
-			return MCMAQuestion.printCreateHtml();
-		else if (questionType.equals(QuestionBase.MATCH))
-			return Matching.printCreateHtml();
-		return "error";
-	}
-
-	// called by quiz to print html for every question
-	// essentially, it is a html-string
 	public static String printCreateHtmlSinglePage(String questionType) {
 		if (questionType.equals(QuestionBase.QR))
 			return QResponse.printCreateHtmlSinglePage();
@@ -240,33 +123,6 @@ public class QuestionFactory {
 			return MCMAQuestion.printCreateHtmlSinglePage();
 		else if (questionType.equals(QuestionBase.MATCH))
 			return Matching.printCreateHtmlSinglePage();
-		return "error";
-	}
-
-	/**
-	 * Used by quiz servlet when creating multi-answer for a question
-	 * 
-	 * @param questionType
-	 * @param request
-	 * @return
-	 */
-	@Deprecated
-	public static String getCreatedAnswer(String questionType,
-			HttpServletRequest request) {
-		if (questionType.equals(QuestionBase.QR))
-			return QResponse.getCreatedAnswer(request);
-		else if (questionType.equals(QuestionBase.FIB))
-			return FillInBlank.getCreatedAnswer(request);
-		else if (questionType.equals(QuestionBase.MC))
-			return MultiChoice.getCreatedAnswer(request);
-		else if (questionType.equals(QuestionBase.PR))
-			return PResponse.getCreatedAnswer(request);
-		else if (questionType.equals(QuestionBase.MA))
-			return MAQuestion.getCreatedAnswer(request);
-		else if (questionType.equals(QuestionBase.MCMA))
-			return MCMAQuestion.getCreatedAnswer(request);
-		else if (questionType.equals(QuestionBase.MATCH))
-			return Matching.getCreatedAnswer(request);
 		return "error";
 	}
 
@@ -289,25 +145,6 @@ public class QuestionFactory {
 		return "error";
 	}
 
-	/**
-	 * Used by quiz servlet to wrap answers for MCMA and MultiChoice
-	 * 
-	 * @param questionType
-	 * @param request
-	 * @return
-	 */
-	@Deprecated
-	public static String getCreatedChoices(String questionType,
-			HttpServletRequest request) {
-		if (questionType.equals(QuestionBase.MC))
-			return MultiChoice.getCreatedChoices(request);
-		else if (questionType.equals(QuestionBase.MCMA))
-			return MCMAQuestion.getCreatedChoices(request);
-		else if (questionType.equals(QuestionBase.MATCH))
-			return Matching.getCreatedChoices(request);
-		return "error";
-	}
-
 	public static String getCreatedChoices(String questionType,
 			HttpServletRequest request, int suffix) {
 		if (questionType.equals(QuestionBase.MC))
@@ -319,36 +156,13 @@ public class QuestionFactory {
 		return "error";
 	}
 
+	public static String printReference() {
+		return QuestionBase.printReference();
+	}
+
 	public static void main(String[] args) {
 		String questionTypes[] = getQuestionTypes();
 		// test printSummaryPageHTML method
-		System.out.print(printCreateHtml(questionTypes[0]));
-	}
-
-	/**
-	 * @param questionType
-	 * @return
-	 */
-	public static String printReference(String questionType) {
-		if (questionType.equals(QuestionBase.QR))
-			return QResponse.printReference();
-		else if (questionType.equals(QuestionBase.FIB))
-			return FillInBlank.printReference();
-		else if (questionType.equals(QuestionBase.MC))
-			return MultiChoice.printReference();
-		else if (questionType.equals(QuestionBase.PR))
-			return PResponse.printReference();
-		else if (questionType.equals(QuestionBase.MA))
-			return MAQuestion.printReference();
-		else if (questionType.equals(QuestionBase.MCMA))
-			return MCMAQuestion.printReference();
-		else if (questionType.equals(QuestionBase.MATCH))
-			return Matching.printReference();
-		return "error";
-	}
-
-	public static String printReference() {
-		return QuestionBase.printReference();
 	}
 
 }
