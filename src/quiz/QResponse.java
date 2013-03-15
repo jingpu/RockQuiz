@@ -53,7 +53,7 @@ public class QResponse extends QuestionBase {
 		html.append("<p>Please enter proposed question description and answer </p>\n");
 		html.append("<span class= 'description'>Question Description:</span><br>\n");
 		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
-				+ "\" required></textarea><br>\n");
+				+ " required></textarea><br>\n");
 		html.append("Answer:   <input type=\"text\" name=\"answer\""
 				+ "\" required></input><br>\n");
 		html.append("Score:   <input class=\"max_score\" type=\"text\" name=\"maxScore\""
@@ -78,16 +78,18 @@ public class QResponse extends QuestionBase {
 		html.append("<p>Please enter proposed question description and answer </p>\n");
 		html.append("<span class= 'description'>Question Description:</span><br>\n");
 		html.append("<textarea name=\"questionDescription_" + suffix
-				+ "\" rows=\"10\" cols=\"50\"" + "\" required>"
+				+ "\" rows=\"10\" cols=\"50\"" + " required>"
 				+ getQuestionDescription()
 				+ "</textarea><br>\n");
 		html.append("Answer:   <input type=\"text\" name=\"answer_" + suffix
-				+ "\""
 				+ "\" required value=\"" + getAnswer() + "\" ></input><br>\n");
-		html.append("Score:   <input disabled class=\"max_score\" type=\"text\" name=\"maxScore_"
+		html.append("Score:   <input disable type=\"text\" name=\"max_score_only_for_display\" value=\""
+				+ getMaxScore() + "\" ></input><br>\n");
+		html.append("<input class=\"max_score\" type=\"hidden\" name=\"maxScore_"
 				+ suffix
-				+ "\""
-				+ "\" required value=\"" + getMaxScore() + "\" ></input><br>\n");
+				+ "\" required value=\""
+				+ getMaxScore()
+				+ "\" ></input>\n");
 
 		// add timeLimit field
 		html.append("<div class=time_limit_div>Time Limit:   \n");
