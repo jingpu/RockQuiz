@@ -377,6 +377,22 @@
 				<div class="rightbox">
 					<!-- TODO Summary statistics on how well all users have performed on the quiz-->
 					<h3>Quiz Statistics</h3>
+					<table  class="fancy">
+						<tr>
+							<th>Out of</th>
+							<th>Avg</th>
+							<th>Lowest</th>
+							<th>Hightest</th>
+							<th>Total #</th>
+						</tr>
+						<tr>
+							<td><%=quiz.getMaxScore() %></td>
+							<td><%=String.format("%.2f", quiz.getAvgScore()) %></td>
+							<td><%=quiz.getLowestScore() %></td>
+							<td><%=quiz.getBestScore() %></td>
+							<td><%=quiz.getTakenTimes() %></td>		
+						</tr>
+					</table>
 
 					<div class="clear"></div>
 				</div>
