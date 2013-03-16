@@ -281,7 +281,7 @@ public class Matching extends MCMAQuestion {
 				+ "\" ></input>");
 		html.append("</div>");
 
-		html.append("<input class=\"submmit_btn\" id=\"result\" type=\"submit\" value = \"Next\"/>");
+		html.append("<input class=\"submit_btn\" id=\"result\" type=\"submit\" value = \"Next\"/>");
 		html.append("</form>");
 		html.append("<div class=\"clear_btn\">");
 		html.append("<button id=\"clear\">Clear</button>");
