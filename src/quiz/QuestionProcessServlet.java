@@ -201,7 +201,8 @@ public class QuestionProcessServlet extends HttpServlet {
 					newAchieve1 = true;
 					user.addAchievement("a4", quizName);
 				}
-				if (user.containsAchievement("a5") && currentScore >= quiz.getBestScore()) {
+
+				if (!user.containsAchievement("a5") && currentScore >= quiz.getBestScore()) {
 					newAchieve2 = true;
 					user.addAchievement("a5", quizName);
 				}

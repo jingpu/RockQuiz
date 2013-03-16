@@ -886,7 +886,7 @@ public class UserManager{
 		setDriver();
 		int count = 0;
 		try{
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM "+ userId 
+			ResultSet rs = stmt.executeQuery("SELECT * FROM "+ userId 
 					+ "_history WHERE Type LIKE '" + type + "%'");
 			Set<String> strs = new HashSet<String>();
 			while(rs.next()){
