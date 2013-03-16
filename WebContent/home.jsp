@@ -156,7 +156,7 @@
 					}
 				%>
 				<dd>
-					<a href="About_RockQuiz.html">About RockQuiz</a>
+					<a href="About_RockQuiz.jsp">About RockQuiz</a>
 				</dd>
 				<dt>Search Quizzes Or Users</dt>
 				<dd class="searchform">

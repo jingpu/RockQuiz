@@ -118,6 +118,7 @@
 		</div>
 
 		Tags: <input type="text" name="tagString" value="<%=tagString%>"><br> 
+		<span class="notice">Tags input format: #tagName1#tagName2 (requires a pound before each name, no other separators)<br></span>
 			<input type="checkbox" name="canPractice" value="true" <%=canPractice%>>Allow practice mode<br> 
 			<input type="checkbox" name="isRandom" value="true" <%=isRandom%>>Automatically randomized question order<br> 
 			<input type="checkbox" name="isOnePage" value="true" onchange="changeOnePage();" id="OnePage" <%=isOnePage%>>Displays in one page<br> 
@@ -126,7 +127,7 @@
 		</div>
 
 		<h2>Questions:</h2>
-		<div class="notice">Note: all "Time Limit" field is measured by second, and could only be an integer. <br></div>
+		<div class="notice">Note: all "Time Limit" field is measured by second, and could only be an integer. The default value '0' stands for no time limit.<br></div>
 		<div id="questions"></div>
 		<select name="questionType" id="questionTypeList">
 			<%
