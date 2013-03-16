@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import util.Helper;
+
 /**
  * Servlet implementation class CheckQuizNameServlet
  */
@@ -28,6 +30,8 @@ public class CheckQuizNameServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String quizName = request.getParameter("quizName");
+
+		quizName = Helper.replaceSpace(quizName);
 
 		// write html
 		response.setContentType("text");
