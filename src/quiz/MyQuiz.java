@@ -650,8 +650,9 @@ public class MyQuiz implements Quiz {
 	}
 
 	public int getLowestScore() {
+		if (getTakenTimes() > 0) {
 		List<QuizEvent> list = allEvents();
-		int LowScore = 0;
+			int LowScore = Integer.parseInt(getMaxScore());
 		for (int i = 0; i < list.size(); i++) {
 			int curScore = list.get(i).getScore();
 			if (LowScore > curScore)
@@ -659,6 +660,9 @@ public class MyQuiz implements Quiz {
 		}
 		assert LowScore <= getTotalScore();
 		return LowScore;
+		} else {
+			return 0;
+		}
 	}
 
 	public double getAvgScore() {
