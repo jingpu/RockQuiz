@@ -139,10 +139,10 @@ public class PResponse extends QuestionBase {
 		// question description
 		html.append("<div class=\"question\">");
 		html.append("<div class='description'>Question Description:</div>");
-		html.append(questionDescription);
+		html.append(questionDescription + "<br>");
 
 		html.append("<img border=\"0\" src=\"" + url
-				+ "\" width=\"304\" height=\"228\">\n");
+				+ "\" style=\"max-width:500px\" >\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
 				+ getQuestionId() + "\" ></input></p>\n");
 
@@ -158,7 +158,9 @@ public class PResponse extends QuestionBase {
 				+ "\" ></input></p>\n");
 		html.append("</div>");
 
+		html.append("<div id = \"submit_btn\">");
 		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
+		html.append("</div>");
 
 		return html.toString();
 
@@ -191,12 +193,11 @@ public class PResponse extends QuestionBase {
 		html.append("<p>" + typeIntro + "</p>\n");
 
 		// form action should be here
-		html.append("<p>Question Description: ");
+		html.append("<p>Question Description: <br>");
 		html.append(questionDescription + "</p>\n");
 
 		// every form field will be renamed as xx_questionId
-		html.append("<img border=\"0\" src=\"" + url
-				+ "\" width=\"304\" height=\"228\">\n");
+		html.append("<img border=\"0\" src=\"" + url + "\" width=\"304\">\n");
 		html.append("<p>Answer:   <input type=\"text\" name=\"answer_"
 				+ getQuestionId() + "\" ></input></p>\n");
 

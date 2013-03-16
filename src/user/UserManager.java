@@ -13,8 +13,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /** @author: youyuan
  *  A UserManager implemented based on interface User.
@@ -212,7 +214,7 @@ public class UserManager{
 			e.printStackTrace();
 		}
 
-
+		userId = userId.toLowerCase();
 		try {
 			stmt.executeUpdate("INSERT INTO " + userTable + " VALUES ('"
 					+ userId + "','" + hashValue + "',now(),'" + status + "','" 
@@ -323,7 +325,7 @@ public class UserManager{
 			close();
 			return false;
 		}
-
+		userId = userId.toLowerCase();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_network");
 			List<String> friends = new LinkedList<String>();
@@ -388,6 +390,7 @@ public class UserManager{
 			//System.out.println(column + " is not allowed to be modified.");
 			return;
 		}
+		userId = userId.toLowerCase();
 		if(column.equals("password")) {
 			String hashValue = "";
 			try {
@@ -463,6 +466,7 @@ public class UserManager{
 	public static List<String> getFriendsList(String userId){
 		setDriver();
 		List<String> friends = new LinkedList<String>();
+		userId = userId.toLowerCase();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_network" +
 					" WHERE status='f'");
@@ -484,6 +488,7 @@ public class UserManager{
 	public static List<String> getUnconfirmedFriendsList(String userId){
 		setDriver();
 		List<String> friends = new LinkedList<String>();
+		userId = userId.toLowerCase();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_network" +
 					" WHERE status LIKE 'u'");
@@ -500,6 +505,8 @@ public class UserManager{
 
 	public static String seeFriendStatus(String me, String other){
 		setDriver();
+		me = me.toLowerCase();
+		other = other.toLowerCase();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + me + "_network" +
 					" WHERE userId LIKE '" + other + "'");
@@ -526,6 +533,8 @@ public class UserManager{
 	 * **/
 	public static void requestFriend(String from, String to){
 		setDriver();
+		from = from.toLowerCase();
+		to = to.toLowerCase();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + to + "_network" +
 					" WHERE userId LIKE '" + from + "'");
@@ -563,6 +572,8 @@ public class UserManager{
 	 * **/
 	public static void confirmFriend(String me, String other){
 		setDriver();
+		me = me.toLowerCase();
+		other = other.toLowerCase();
 		try {
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + me + "_network" +
 					" WHERE userId LIKE '" + other + "'");
@@ -589,6 +600,8 @@ public class UserManager{
 	 * **/
 	public static void removeFriend(String me, String other){
 		setDriver();
+		me = me.toLowerCase();
+		other = other.toLowerCase();
 		try {
 			stmt.executeUpdate("DELETE FROM " + me + "_network WHERE userId='" + other + "'");
 			stmt.executeUpdate("DELETE FROM " + other + "_network WHERE userId='" + me + "'");		
@@ -640,11 +653,11 @@ public class UserManager{
 
 		setDriver();
 		try {
-			stmt.executeUpdate("INSERT INTO " + msg.from + "_sent" + " VALUES ('" + hashValue + "','" 
+			stmt.executeUpdate("INSERT INTO " + msg.from.toLowerCase() + "_sent" + " VALUES ('" + hashValue + "','" 
 					+ currentTime + "','" + msg.to + "','" + msg.type + "','" + msg.title + "','" 
 					+ msg.content + "')");
 
-			stmt.executeUpdate("INSERT INTO " + msg.to + "_inbox" + " VALUES ('"+ hashValue + "','" 
+			stmt.executeUpdate("INSERT INTO " + msg.to.toLowerCase() + "_inbox" + " VALUES ('"+ hashValue + "','" 
 					+ currentTime + "','" + msg.from + "','" + msg.type + "','" + msg.title + "','" 
 					+ msg.content + "','0')");
 
@@ -660,6 +673,7 @@ public class UserManager{
 	/** @return the information of the message without reading it.
 	 * **/
 	public static Message getMsg(String userId, String box, String msgCode){
+		userId = userId.toLowerCase();
 		String boxTable = userId + "_" + box;
 
 		setDriver();
@@ -699,6 +713,7 @@ public class UserManager{
 	/** @return the information of the message by reading it.
 	 * **/
 	public static Message readMsg(String userId, String box, String msgCode){
+		userId = userId.toLowerCase();
 		String boxTable = userId + "_" + box;
 		Message msg = null;
 		setDriver();
@@ -733,6 +748,7 @@ public class UserManager{
 	}
 
 	public static void deleteMsg(String userId, String box, String msgCode){
+		userId = userId.toLowerCase();
 		setDriver();
 		String boxTable = userId + "_" + box;
 		try {
@@ -745,6 +761,7 @@ public class UserManager{
 	}
 
 	public static List<String> getMessagesInbox(String userId){
+		userId = userId.toLowerCase();
 		setDriver();
 		try {
 			List<String> msgs = new LinkedList<String>(); 
@@ -763,6 +780,7 @@ public class UserManager{
 	}
 
 	public static List<String> getUnreadMessages(String userId){
+		userId = userId.toLowerCase();
 		setDriver();
 		try {
 			List<String> msgs = new LinkedList<String>(); 
@@ -782,6 +800,7 @@ public class UserManager{
 	}
 
 	public static List<String> getMessagesSent(String userId){
+		userId = userId.toLowerCase();
 		setDriver();
 		try {
 			List<String> msgs = new LinkedList<String>(); 
@@ -800,6 +819,7 @@ public class UserManager{
 	}
 
 	public static boolean addQuizTaken(String userId, String quizName, String quizId){
+		userId = userId.toLowerCase();
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
@@ -815,6 +835,7 @@ public class UserManager{
 	}
 
 	public static boolean addQuizCreated(String userId, String quizName){
+		userId = userId.toLowerCase();
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
@@ -829,6 +850,7 @@ public class UserManager{
 	}
 
 	public static boolean containsAchievement(String userId, String achieveId){
+		userId = userId.toLowerCase();
 		setDriver();
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT * FROM " + userId + "_history" 
@@ -846,6 +868,7 @@ public class UserManager{
 	}
 
 	public static boolean addAchievement(String userId, String achieveId, String quizName){
+		userId = userId.toLowerCase();
 		setDriver();
 		try{
 			stmt.executeUpdate("INSERT INTO " + userId + "_history" 
@@ -861,23 +884,26 @@ public class UserManager{
 
 	public static int countHistory(String userId, String type){
 		setDriver();
+		int count = 0;
 		try{
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM "+ userId 
-					+ "_history WHERE TYPE LIKE '" + type + "%'");
-			if(rs.next()){
-				String count = rs.getString("COUNT(*)");
-				close();
-				return Integer.parseInt(count);
+					+ "_history WHERE Type LIKE '" + type + "%'");
+			Set<String> strs = new HashSet<String>();
+			while(rs.next()){
+				String news = rs.getString("Type");
+				strs.add(news);
 			}
+			count = strs.size();
 		} catch(SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		close();
-		return 0;
+		return count;
 	}
 
 	public static List<Activity> getAchievements(String userId, int number){
+		userId = userId.toLowerCase();
 		List<Activity> achieves = new LinkedList<Activity>();
 		setDriver();
 		try{
@@ -900,6 +926,7 @@ public class UserManager{
 	}
 
 	public static List<Activity> getQuizTaken(String userId, int number){
+		userId = userId.toLowerCase();
 		List<Activity> taken = new LinkedList<Activity>();
 		setDriver();
 		try{
@@ -922,6 +949,7 @@ public class UserManager{
 	}
 
 	public static List<Activity> getQuizCreated(String userId, int number){
+		userId = userId.toLowerCase();
 		List<Activity> created = new LinkedList<Activity>();
 		setDriver();
 		try{
@@ -945,6 +973,7 @@ public class UserManager{
 
 
 	public static List<Activity> getRecentActivity(String userId, int number){
+		userId = userId.toLowerCase();
 		List<Activity> recent = new LinkedList<Activity>();
 		setDriver();
 		try{

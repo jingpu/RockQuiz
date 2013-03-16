@@ -63,24 +63,18 @@ public class LoginServlet extends HttpServlet {
 				if(cookies != null){
 					for(int i = 0; i < cookies.length; i++) { 
 						Cookie cookie1 = cookies[i];
-						System.out.println(cookie1.getName());
-						System.out.println(cookie1.getValue());
 						if (cookie1.getName().equals("username")) {
 							foundCookie = true;
 							cookie1.setValue(usrname);
 							cookie1.setMaxAge(30*24*60*60);
-							System.out.println(cookie1.getName());
-							System.out.println(cookie1.getValue());
 						}
 					}  
 				}
-				System.out.println(foundCookie);
 				if (!foundCookie) {
 					Cookie cookie1 = new Cookie("username",usrname);
 					cookie1.setMaxAge(30*24*60*60);
 					response.addCookie(cookie1); 
 				}
-				System.out.println(cookies);
 			}
 			
 			response.sendRedirect(homepage);

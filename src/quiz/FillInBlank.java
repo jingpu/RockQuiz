@@ -160,7 +160,10 @@ public class FillInBlank extends QuestionBase {
 				+ getQuestionId() + "\" value=\"" + getQuestionId()
 				+ "\" ></input></p>\n");
 		html.append("</div>");
-		html.append("<input type=\"submit\" value = \"Next\"/></form>\n");
+		html.append("<div id = \"submit_btn\">");
+		html.append("<input type=\"submit\" value = \"Next\"/>");
+		html.append("</div>");
+		html.append("</form>\n");
 
 		return html.toString();
 

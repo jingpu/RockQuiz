@@ -57,6 +57,7 @@ public class MsgSent extends HttpServlet {
 		out.println("<!DOCTYPE html>");
 		out.println("<html>");
 		out.println("<head>");
+		out.println("<link href='CSS/page_style.css' rel='stylesheet' type='text/css' />");
 		out.println("<meta charset=\"UTF-8\">");
 		out.println("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\">");
 		if(user.sendMessage(msg)) {

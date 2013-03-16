@@ -91,11 +91,11 @@ public class QuizResultSinglePageServlet extends HttpServlet {
 			user.addQuizTaken(quizName, quizId);
 			if(user.countHistory("t") == 10){
 				newAchieve1 = true;
-				user.addAchievement("4", quizName);
+				user.addAchievement("a4", quizName);
 			}
 			if (user.containsAchievement("a5") && currentScore >= quiz.getBestScore()) {
 				newAchieve2 = true;
-				user.addAchievement("5", quizName);
+				user.addAchievement("a5", quizName);
 			}
 		}
 
