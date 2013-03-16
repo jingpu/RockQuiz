@@ -182,6 +182,11 @@
 						</li>
 						<li>Awesome Naming :)</li>
 					</ul>
+					<ul> 
+					<li>Known Bugs:
+					<li>Timed matching question cannot correct return the score </li>
+					</li>
+					</ul>
 
 				</div>
 
