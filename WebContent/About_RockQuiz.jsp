@@ -183,9 +183,17 @@
 						<li>Awesome Naming :)</li>
 					</ul>
 					<ul> 
+					<li>Instruction for XML loading program:<br>
+						+ Run Java Resources/src/util/XMLParser.java<br>
+						+ getQuizFromXml(xmlFile) will load xmlFile to a MyQuiz<br>
+						+ exportQuizToXml(quiz, xmlFile) will export to xmlFile<br>
+						+ A sample is loading bunny.xml and exporting to textXml.xml</li>
 					<li>Known Bugs:
+					<ul>
 					<li>Timed matching question cannot correct return the score </li>
-					</li>
+					<li>XMLParser doesn't support Matching question</li>
+					<li>No SQL keywords allowed in any text input field </li>	
+					</ul>
 					</ul>
 
 				</div>
