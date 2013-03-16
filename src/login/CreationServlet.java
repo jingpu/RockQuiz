@@ -64,6 +64,7 @@ public class CreationServlet extends HttpServlet {
 		if (UserManager.alreadyExist(usrname)) {
 			RequestDispatcher dispatch = request.getRequestDispatcher("nameInUse.jsp");
 			dispatch.forward(request, response);
+			return;
 		} else {
 			String cateStr = null;
 			if(category != null) {
