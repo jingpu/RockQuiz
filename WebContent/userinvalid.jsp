@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link href="CSS/style.css" rel="stylesheet" type="text/css" />
 <%
 	String guest = (String) session.getAttribute("guest");
 	if (guest == null || guest.equals("guest")) {

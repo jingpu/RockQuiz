@@ -59,18 +59,19 @@ public class MsgSent extends HttpServlet {
 		out.println("<head>");
 		out.println("<link href='CSS/page_style.css' rel='stylesheet' type='text/css' />");
 		out.println("<meta charset=\"UTF-8\">");
+		out.println("<link href=\"CSS/style.css\" rel=\"stylesheet\" type=\"text/css\">");
 		if(user.sendMessage(msg)) {
 			System.out.println("sent");
 
 			out.println("<title>Message Sent Successfully</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h1>Message is sent successfully.<h1>");
+			out.println("<h1>Message is sent successfully.</h1>");
 		} else {
 			out.println("<title>Message Error</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("<h1>Message fails to be sent.<h1>");
+			out.println("<h1>Message fails to be sent.</h1>");
 			if(!UserManager.alreadyExist(toUser)){
 				out.println("<p>" + toUser + " doesn't exist.<p>");
 			}
