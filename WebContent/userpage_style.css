@@ -37,13 +37,15 @@ h3 {
 
 
 #body {
-	width: 650px;
+	width: 660px;
 }
 
 
 #body .leftbox,#body .rightbox {
 	height: 300px;
+	width: 305px;
 }
+
 
 
 
