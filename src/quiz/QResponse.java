@@ -49,7 +49,7 @@ public class QResponse extends QuestionBase {
 
 	public static String printCreateHtmlSinglePage() {
 		StringBuilder html = new StringBuilder();
-		html.append("<h4>This  ection will guide you to create a question-response question</h4>\n");
+		html.append("<h4>This Section will guide you to create a question-response question</h4>\n");
 		html.append("<p>Please enter proposed question description and answer </p>\n");
 		html.append("<span class= 'description'>Question Description:</span><br>\n");
 		html.append("<textarea name=\"questionDescription\" rows=\"10\" cols=\"50\""
