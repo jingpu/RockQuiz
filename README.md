@@ -7,10 +7,11 @@ RockQuiz is opensourced under [MIT license](http://opensource.org/licenses/mit-l
 Usage
 -----
 This is a Eclipse Java EE project. 
-1.    Import this project into Eclipse to work with.
-2.    Setup Tomcat v7 Apache Server for Eclipse.
-3.    Setup MySQL server and modify corresponding configurations in `src/database/MyDB.java`
-and `src/user/UserManager.java`
+
+1.	Import this project into Eclipse to work with.
+2.	Setup Tomcat v7 Apache Server for Eclipse.
+3.	Setup MySQL server and modify corresponding configurations in `src/database/MyDB.java`
+	and `src/user/UserManager.java`
 
 Copyright & License
 -------------------
