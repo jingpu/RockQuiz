@@ -38,11 +38,11 @@ furnished to do so, subject to the following conditions:
 
 Screenshots
 -----------
-![Login Page](screenshots/login.png “Login Page”)
-![Home Page](screenshots/home.png “Home Page”)
-![Quiz Summary](screenshots/quiz_summary.png “Quiz Summary”)
-![Quiz Create](screenshots/quiz_create.png “Quiz Create”)
-![Quiz](screenshots/quiz.png “Quiz")
+![Login Page](screenshots/login.png "Login Page")
+![Home Page](screenshots/home.png "Home Page")
+![Quiz Summary](screenshots/quiz_summary.png "Quiz Summary")
+![Quiz Create](screenshots/quiz_create.png "Quiz Create")
+![Quiz](screenshots/quiz.png "Quiz")
 ![Admin Page](screenshots/admin.png "Admin Page")
 ![Friend List](screenshots/friends.png "Friend List")
 ![Mailbox](screenshots/mailbox.png "Mailbox")
