@@ -12,18 +12,6 @@ This is a Eclipse Java EE project.
 3. Setup MySQL server and modify corresponding configurations in src/database/MyDB.java
 and src/user/UserManager.java
 
-Screenshots
------------
-![Login Page](screenshots/login.png)
-![Home Page](screenshots/home.png)
-![Quiz Summary](screenshots/quiz_summary.png)
-![Quiz Create](screenshots/quiz_create.png)
-![Quiz](screenshots/quiz.png)
-![Admin Page](screenshots/admin.png)
-![Friend List](screenshots/friends.png)
-![Mailbox](screenshots/mailbox.png)
-![User Page](screenshots/page.png)
-
 Copyright & License
 -------------------
 The MIT License (MIT)
@@ -36,13 +24,26 @@ rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
 sell copies of the Software, and to permit persons to whom the Software is 
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in 
-all copies or substantial portions of the Software.
+>The above copyright notice and this permission notice shall be included in 
+>all copies or substantial portions of the Software.
+>
+>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+>IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+>FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+>AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+>LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+>OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+>THE SOFTWARE.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-THE SOFTWARE.
+
+Screenshots
+-----------
+![Login Page](screenshots/login.png “Login Page”)
+![Home Page](screenshots/home.png “Home Page”)
+![Quiz Summary](screenshots/quiz_summary.png “Quiz Summary”)
+![Quiz Create](screenshots/quiz_create.png “Quiz Create”)
+![Quiz](screenshots/quiz.png “Quiz")
+![Admin Page](screenshots/admin.png "Admin Page")
+![Friend List](screenshots/friends.png "Friend List")
+![Mailbox](screenshots/mailbox.png "Mailbox")
+![User Page](screenshots/page.png "User Page")
