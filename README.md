@@ -16,6 +16,7 @@ This is a Eclipse Java EE project.
 Copyright & License
 -------------------
 The MIT License (MIT)
+
 Copyright (c) 2013 Jing Pu, Yang Zhao, You Yuan, Huijie Yu 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
